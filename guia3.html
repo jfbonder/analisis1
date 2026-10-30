@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Guía 3</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<div class="shell">
+<aside class="side" aria-label="Índice">
+  <a class="volver" href="index.html" style="display:block;margin:0 0 .6rem;font-size:.85rem;color:var(--accent,#2b59c3);text-decoration:none">&larr; Portada</a><div class="brand">Análisis 1 · FCEN-UBA</div>
+  <h2>Guía 3</h2>
+  <nav id="nav">
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#t1">Clase 14<small>Funciones vectoriales y definición de límite</small></a>
+    <a href="#t2">Clase 15<small>Caminos, sándwich y continuidad</small></a>
+    <a href="#rp">Coordenadas polares<small>Técnica para el ej. 5</small></a>
+    <div class="sep"></div>
+    <a href="#ejercicios">Ejercicios guiados<small>Los 12 de la guía, con pistas</small></a>
+  </nav>
+</aside>
+<main>
+<div class="tools" role="toolbar" aria-label="Opciones">
+  <button id="b-open">Abrir todo</button>
+  <button id="b-close">Cerrar todo</button>
+  <span class="sp"></span>
+  <button id="b-rev" aria-pressed="true" title="Mostrar u ocultar las marcas de revisión (para el docente)">Marcas de revisión</button>
+  <button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="kick">Matemática 1 · Análisis I · Análisis II (C) · Análisis Matemático I (Q)</div>
+  <h1>Guía 3: Límites y continuidad</h1>
+  <p class="lead">Límite y continuidad de funciones vectoriales y de funciones de varias variables: la definición con ε y δ, los límites iterados, el acercamiento por curvas, el sándwich y las funciones partidas. Cada tema tiene el enlace al minuto exacto del video, figuras para experimentar y los ejercicios de la guía resueltos paso a paso.</p>
+  <div class="map">
+    <a href="#t1"><em>Ejercicios 1 a 4</em><b>Clase 14</b><span>Repaso de una variable, funciones vectoriales, definición de límite en el plano, límites iterados.</span></a>
+    <a href="#t2"><em>Ejercicios 4 a 12</em><b>Clase 15</b><span>Acercarse por rectas y curvas, sándwich, continuidad y funciones partidas.</span></a>
+    <a href="#rp"><em>Ejercicio 5</em><b>Coordenadas polares</b><span>Una técnica para probar que un límite existe. No se dio en las clases grabadas.</span></a>
+  </div>
+  <div class="legend">
+    <span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+    <span><span class="tag vid">Video</span> se dijo en el video pero no está en la hoja</span>
+    <span><span class="tag add">Agregado</span> no se dijo en clase</span>
+    <span><span class="tag rev">Revisar</span> dudoso, a confirmar por el docente</span>
+    <span><a class="t" data-v="14" data-t="0:00">m:ss</a> abre el video en ese minuto</span>
+  </div>
+  <p class="hint">Las demostraciones rigurosas de los lemas (límites iterados, aproximación por curvas, álgebra de límites) están en los artifacts de los Anexos 1 y 2.</p>
+</section>
+
+<!-- ======================= CLASE 14 ======================= -->
+<section class="clase" id="t1">
+<header>
+  <div class="kick">CLASE 14 · Stewart 13.1 y 14.2 · ejercicios 1 a 4</div>
+  <h2>Funciones vectoriales y límite en varias variables</h2>
+  <div class="meta"><a class="t" data-v="14" data-t="0:00">Clase 14 (55 min)</a><span>Hoja de la clase: "Límite y continuidad" (Teórica 8 de 2020).</span></div>
+</header>
+
+<h3 class="b">Repaso de una variable <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="14" data-t="0:36">0:36</a></h3>
+<div class="box def"><span class="lab">Límite y continuidad en $\R$</span>
+<p>$\lim_{x\to x_0}f(x)=L$ si para todo $\varepsilon\gt0$ existe $\delta\gt0$ tal que $|f(x)-L|\lt\varepsilon$ siempre que $0\lt|x-x_0|\lt\delta$. Escribir $|f(x)-L|\lt\varepsilon$ es lo mismo que $f(x)\in(L-\varepsilon,L+\varepsilon)$, y $0\lt|x-x_0|\lt\delta$ es lo mismo que $x\in(x_0-\delta,x_0+\delta)$, $x\neq x_0$. <a class="t" data-v="14" data-t="2:40">2:40</a></p>
+<p>$f$ es <b>continua</b> en $x_0$ si $\lim_{x\to x_0}f(x)=f(x_0)$: el límite existe, $x_0$ está en el dominio y los dos valores coinciden. <a class="t" data-v="14" data-t="8:54">8:54</a></p></div>
+<div class="box obs"><span class="lab c-blue">Herramientas del CBC que siguen valiendo</span>
+<p>El <b>álgebra de límites</b> (suma, resta, producto, cociente si el denominador no tiende a $0$, potencias), "<b>cero por acotado</b> es cero" y la lista de funciones continuas conocidas (polinomios, seno, coseno, exponencial, logaritmo en los positivos…). Si el álgebra da $\frac00$, hay una indeterminación y hay que trabajar más. <a class="t" data-v="14" data-t="4:43">4:43</a> <a class="t" data-v="14" data-t="6:44">6:44</a></p></div>
+
+<h3 class="b">Funciones vectoriales <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="14" data-t="9:56">9:56</a></h3>
+<div class="box def"><span class="lab">Dos tipos de funciones nuevas</span>
+<p>Una <b>función vectorial</b> es aquella cuyo argumento es un número real y cuyo resultado es un vector: $\mathbf r:I\subset\R\to\R^2$ o $\R^3$, $\mathbf r(t)=\ang{f(t),g(t),h(t)}$. Toda función vectorial es la parametrización de una curva. Por ejemplo, $\mathbf r(t)=\ang{\cos t,\operatorname{sen}t,t}$ (una hélice). <a class="t" data-v="14" data-t="11:56">11:56</a></p>
+<p>Una <b>función de varias variables</b> es aquella cuyo argumento es un punto de $\R^2$ o $\R^3$ y cuyo resultado es un número real: $f:D\subset\R^2\text{ o }\R^3\to\R$. Por ejemplo, $f(x,y)=x^2+2y^2$ o $g(x,y,z)=\sqrt{6-x^2-y^2-z^2}$. <a class="t" data-v="14" data-t="21:12">21:12</a></p></div>
+<div class="box def"><span class="lab">Límite y continuidad de funciones vectoriales <a class="t" data-v="14" data-t="13:57">13:57</a></span>
+<p>Si $\mathbf r(t)=f(t)\,\hat\imath+g(t)\,\hat\jmath+h(t)\,\hat k$, se define
+$$\lim_{t\to a}\mathbf r(t)=\Big\langle\lim_{t\to a}f(t),\ \lim_{t\to a}g(t),\ \lim_{t\to a}h(t)\Big\rangle.$$
+$\mathbf r$ es continua en $t=a$ si $\lim_{t\to a}\mathbf r(t)=\mathbf r(a)$, lo que equivale a que <b>cada componente</b> sea continua en $a$. Todo se reduce a funciones de una variable. <a class="t" data-v="14" data-t="18:04">18:04</a> <a class="t" data-v="14" data-t="19:04">19:04</a></p></div>
+<div class="box ej"><span class="lab">Ejemplos de la hoja</span>
+<p>$\mathbf r(t)=\ang{t^2-1,\ \frac{e^t-1}{t},\ \frac{1-\cos t}{t}}$: componente a componente, $\lim_{t\to0}(t^2-1)=-1$, $\lim_{t\to0}\frac{e^t-1}{t}=1$ y $\lim_{t\to0}\frac{1-\cos t}{t}=0$. Entonces $\lim_{t\to0}\mathbf r(t)=\ang{-1,1,0}$.</p>
+<p>$\mathbf r(t)=\ang{\cos t,\operatorname{sen}t,t}$ es continua porque $\cos t$, $\operatorname{sen}t$ y $t$ lo son.</p></div>
+
+<h3 class="b">Límite de funciones de varias variables <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="14" data-t="22:13">22:13</a></h3>
+<p>En una variable, que $\lim_{x\to a}f(x)=L$ quiere decir que podemos hacer que $f(x)$ esté tan cerca de $L$ como queramos (dentro de una franja de ancho $\varepsilon$) con tal de tomar $x$ suficientemente cerca de $a$ (a distancia menor que $\delta$). El precio de un $\varepsilon$ más chico es un $\delta$ más chico. <a class="t" data-v="14" data-t="23:17">23:17</a> <a class="t" data-v="14" data-t="26:21">26:21</a></p>
+<p>Para extender esto a dos variables se razona con el gráfico de $f$: la franja se convierte en el "sándwich" entre los planos $z=L-\varepsilon$ y $z=L+\varepsilon$, y el intervalo alrededor de $a$ se convierte en un disco alrededor de $(a,b)$. <a class="t" data-v="14" data-t="29:23">29:23</a> <a class="t" data-v="14" data-t="31:30">31:30</a></p>
+<div class="box def"><span class="lab">Definición</span>
+<p>$\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=L$ si dado $\varepsilon\gt0$ existe $\delta\gt0$ tal que
+$$|f(x,y)-L|\lt\varepsilon\quad\text{si}\quad 0\lt\operatorname{dist}\big((x,y),(a,b)\big)=\sqrt{(x-a)^2+(y-b)^2}\lt\delta.$$
+En $\R^3$ es igual, con la distancia en $\R^3$. No importa qué pasa exactamente en $(a,b)$: solo cerca. <a class="t" data-v="14" data-t="33:32">33:32</a></p></div>
+<div class="viz" id="viz-eps"></div>
+<div class="box ej"><span class="lab"><span class="tag vid">Video</span> Si se puede usar el álgebra de límites, listo <a class="t" data-v="14" data-t="34:36">34:36</a></span>
+<p>Todas las propiedades del álgebra de límites valen igual en varias variables. Por ejemplo, $\displaystyle\lim_{(x,y)\to(1,2)}\frac{x^2+y^2}{x^2-y^2}=\frac{1+4}{1-4}=-\frac53$, porque el denominador no tiende a $0$.</p></div>
+
+<h3 class="b">Límites iterados <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="14" data-t="36:52">36:52</a></h3>
+<p>Con $\frac00$ no hay derecha e izquierda como en una variable: hay infinitas formas de acercarse a un punto del plano. Para empezar, dos formas particulares: moverse primero en una dirección y después en la otra.</p>
+<div class="box thm"><span class="lab">Lema de los límites iterados <a class="t" data-v="14" data-t="37:54">37:54</a></span>
+<p>Si $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=L$, entonces
+$$\lim_{y\to b}\Big(\lim_{x\to a}f(x,y)\Big)=L\qquad\text{y}\qquad\lim_{x\to a}\Big(\lim_{y\to b}f(x,y)\Big)=L$$
+(siempre que los límites de adentro existan). <b>La recíproca es falsa:</b> que los iterados coincidan no prueba que el límite exista. Lo que sí sirve es el contrarrecíproco: si los iterados dan distinto, el límite no existe. <a class="t" data-v="14" data-t="42:56">42:56</a> <a class="t" data-v="14" data-t="54:09">54:09</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo de la hoja: $\displaystyle\lim_{(x,y)\to(0,0)}\frac{3xy^2}{x^2+y^2}$</span>
+<p><b>1) Candidato.</b> $\lim_{x\to0}\frac{3xy^2}{x^2+y^2}=\frac{0}{y^2}=0$, así que el iterado da $0$; el otro también: $\lim_{y\to0}\frac{3xy^2}{x^2+y^2}=\frac0{x^2}=0$. Si el límite existe, vale $0$.</p>
+<p><b>2) Prueba por definición.</b> Las dos desigualdades que se usan todo el tiempo:
+$$|x|=\sqrt{x^2}\le\sqrt{x^2+y^2},\qquad |y|=\sqrt{y^2}\le\sqrt{x^2+y^2}.$$
+Entonces
+$$\left|\frac{3xy^2}{x^2+y^2}-0\right|=\frac{3|x|\,y^2}{x^2+y^2}\le\frac{3\sqrt{x^2+y^2}\,(x^2+y^2)}{x^2+y^2}=3\sqrt{x^2+y^2}\lt\varepsilon\quad\text{si}\quad\sqrt{x^2+y^2}\lt\frac{\varepsilon}{3}=\delta.$$
+<span class="tag vid">Video</span> En la Clase 14 el mismo ejemplo es con $2xy^2$ y sale $\delta=\frac\varepsilon2$ (cualquier $\delta$ más chico también sirve). <a class="t" data-v="14" data-t="45:00">45:00</a> <a class="t" data-v="14" data-t="48:02">48:02</a> <a class="t" data-v="14" data-t="50:06">50:06</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo de la hoja: $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^2-y^2}{x^2+y^2}$ <a class="t" data-v="14" data-t="52:08">52:08</a></span>
+<p>$\lim_{y\to0}\big(\lim_{x\to0}\frac{x^2-y^2}{x^2+y^2}\big)=\lim_{y\to0}\frac{-y^2}{y^2}=-1$ y $\lim_{x\to0}\big(\lim_{y\to0}\frac{x^2-y^2}{x^2+y^2}\big)=\lim_{x\to0}\frac{x^2}{x^2}=1$. <b>Conclusión: no existe el límite.</b></p></div>
+<div class="quiz" id="quiz-1"></div>
+</section>
+
+<!-- ======================= CLASE 15 ======================= -->
+<section class="clase" id="t2">
+<header>
+  <div class="kick">CLASE 15 · Stewart 14.2 · ejercicios 4 a 12</div>
+  <h2>Caminos, sándwich y continuidad</h2>
+  <div class="meta"><a class="t" data-v="15" data-t="0:00">Clase 15 (42 min)</a><span>Hoja de la clase: Teórica 9 de 2020.</span></div>
+</header>
+
+<h3 class="b">Acercarse por una recta <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="15" data-t="0:34">0:34</a></h3>
+<div class="box ej"><span class="lab">Ejemplo: $\displaystyle\lim_{(x,y)\to(0,0)}\frac{xy}{x^2+y^2}$</span>
+<p>Los dos iterados dan $0$: $\lim_{x\to0}\frac{xy}{x^2+y^2}=\frac{0}{y^2}=0$ y lo mismo al revés. Pero si nos acercamos por la recta $y=x$:
+$$\lim_{x\to0}f(x,x)=\lim_{x\to0}\frac{x^2}{x^2+x^2}=\frac12.$$
+Por un camino da $0$ y por otro $\frac12$. <b>Conclusión: no existe el límite.</b> <a class="t" data-v="15" data-t="1:35">1:35</a> <a class="t" data-v="15" data-t="3:36">3:36</a></p></div>
+<div class="box thm"><span class="lab">Lema 2 (aproximación por curvas) <a class="t" data-v="15" data-t="5:37">5:37</a></span>
+<p>Supongamos que $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=L$. Entonces, para toda función vectorial $\mathbf r(t)$ tal que $\lim_{t\to t_0}\mathbf r(t)=(a,b)$, se verifica que
+$$\lim_{t\to t_0}f(\mathbf r(t))=L.$$
+En el ejemplo anterior, $\mathbf r(t)=(t,t)$. Los iterados son dos casos particulares de esto. <a class="t" data-v="15" data-t="6:37">6:37</a> <a class="t" data-v="15" data-t="8:48">8:48</a></p></div>
+
+<h3 class="b">Todas las rectas no alcanzan <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="15" data-t="9:50">9:50</a></h3>
+<div class="box ej"><span class="lab">Ejemplo: $\displaystyle\lim_{(x,y)\to(0,0)}\frac{xy^2}{x^2+y^4}$</span>
+<p><b>Iterados:</b> los dos dan $0$. <b>Rectas</b> $y=mx$:
+$$\lim_{x\to0}f(x,mx)=\lim_{x\to0}\frac{m^2x^3}{x^2(1+m^4x^2)}=\lim_{x\to0}\frac{m^2x}{1+m^4x^2}=0$$
+para todo $m$ (y también por $x=0$). Sería un error grave concluir que el límite es $0$. <a class="t" data-v="15" data-t="12:54">12:54</a> <a class="t" data-v="15" data-t="15:55">15:55</a></p>
+<p><b>Parábola</b> $x=y^2$: elegida para que numerador y denominador tengan el mismo grado,
+$$\lim_{y\to0}f(y^2,y)=\lim_{y\to0}\frac{y^2\cdot y^2}{(y^2)^2+y^4}=\lim_{y\to0}\frac{y^4}{2y^4}=\frac12.$$
+<b>Conclusión: no existe el límite</b>, aunque por todas las rectas dé lo mismo. <a class="t" data-v="15" data-t="17:59">17:59</a> <a class="t" data-v="15" data-t="20:11">20:11</a></p></div>
+<div class="box obs"><span class="lab c-blue">Cómo elegir la curva</span>
+<p>Cuando $x\to0$ en un cociente de polinomios gana el término de menor grado. Si al reemplazar por una recta el numerador queda con grado mayor que el denominador, da $0$. Hay que buscar una curva ($y=x^2$, $x=y^2$, $y=x^3$…) que <b>iguale los grados</b>: ahí sale una constante que puede ser distinta. Muchas veces se prueba hasta acertar. <a class="t" data-v="15" data-t="14:55">14:55</a> <a class="t" data-v="15" data-t="19:11">19:11</a></p></div>
+<div class="viz" id="viz-paths"></div>
+
+<h3 class="b">Probar que un límite existe: sándwich y composición <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="15" data-t="21:22">21:22</a></h3>
+<div class="box ej"><span class="lab"><span class="tag vid">Video</span> Sándwich: $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^2\operatorname{sen}y}{x^2+y^2}$ <a class="t" data-v="15" data-t="22:43">22:43</a></span>
+<p>Por rectas y curvas todo da $0$, y se sospecha que el límite es $0$. En vez de la definición, se usa el <b>lema del sándwich</b>, que funciona igual que en una variable: como $x^2\le x^2+y^2$,
+$$0\le\left|\frac{x^2\operatorname{sen}y}{x^2+y^2}\right|=\underbrace{\frac{x^2}{x^2+y^2}}_{\le1}\,|\operatorname{sen}y|\le|\operatorname{sen}y|\xrightarrow[(x,y)\to(0,0)]{}0.$$
+Entonces el límite es $0$. Es "cero por acotado". <a class="t" data-v="15" data-t="24:45">24:45</a> <a class="t" data-v="15" data-t="27:46">27:46</a></p>
+<p class="hint"><b>Error típico:</b> acotar también $|\operatorname{sen}y|\le1$. Eso solo dice que $|f|\le1$, que no da ninguna información. Hay que acotar por algo que <b>tienda a 0</b>. <a class="t" data-v="15" data-t="26:46">26:46</a></p></div>
+<div class="box thm"><span class="lab">Lema (composición)</span>
+<p>Sea $\varphi:\R\to\R$ tal que $\lim_{t\to t_0}\varphi(t)=L$, y sea $f(x,y)$ tal que $\lim_{(x,y)\to(a,b)}f(x,y)=t_0$. Entonces $\displaystyle\lim_{(x,y)\to(a,b)}\varphi(f(x,y))=L$.</p>
+<div class="revnote"><b>Revisar</b>Así está en la hoja. Para que sea cierto hace falta además que $f(x,y)\neq t_0$ cerca de $(a,b)$ (o que $\varphi$ sea continua en $t_0$). En los ejemplos se cumple: $x^2y\neq0$ y $xy\neq0$ en el dominio de cada función. En el video del <a href="anexo2.html">Anexo 2</a> (minuto 35:20) se resuelve redefiniendo $\varphi(t_0)=L$, que equivale a pedir $\varphi$ continua en $t_0$. ¿Querés agregar la hipótesis en el resumen?</div></div>
+<div class="box ej"><span class="lab">Ejemplos de la hoja</span>
+<p>$\displaystyle\lim_{(x,y)\to(0,0)}\frac{\operatorname{sen}(x^2y)}{x^2+y^2}$: se escribe
+$$\frac{\operatorname{sen}(x^2y)}{x^2+y^2}=\underbrace{\frac{\operatorname{sen}(x^2y)}{x^2y}}_{\to1}\cdot\underbrace{\frac{x^2y}{x^2+y^2}}_{\to0},$$
+el primer factor por el lema con $\varphi(t)=\frac{\operatorname{sen}t}{t}$ y $\lim\frac{\operatorname{sen}t}{t}=1$; el segundo por un argumento como el de $\frac{3xy^2}{x^2+y^2}$. El límite es $0$.</p>
+<p>$\displaystyle\lim_{(x,y)\to(0,1)}\frac{e^{xy}-1}{xy}$: con $\varphi(t)=\frac{e^t-1}{t}$ y $f(x,y)=xy\to0$, y como $\lim_{t\to0}\frac{e^t-1}{t}=1$ (L'Hôpital), el límite es $1$.</p></div>
+
+<h3 class="b">Continuidad <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="15" data-t="29:47">29:47</a></h3>
+<div class="box def"><span class="lab">Definición</span>
+<p>Sea $f:D\subset\R^2\to\R$ y $(a,b)\in D$. $f$ es <b>continua en $(a,b)$</b> si $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=f(a,b)$. $f$ es continua en $D$ si es continua en todos los puntos de su dominio. En $\R^3$ es igual. <a class="t" data-v="15" data-t="30:47">30:47</a></p></div>
+<div class="box thm"><span class="lab">Funciones que ya sabemos que son continuas <a class="t" data-v="15" data-t="31:49">31:49</a></span>
+<p>Los <b>polinomios</b> (sumas de términos $c\,x^iy^j$) son continuos en todo $\R^2$. Los <b>cocientes de polinomios</b> son continuos en los puntos donde el denominador no se anula. Las <b>composiciones</b> de funciones continuas de una variable con polinomios son continuas donde tienen sentido: $\operatorname{sen}(x^2y+xy^5)$ es continua en $\R^2$, y $\ln(x^2+y^2+1)$ también, porque el argumento es $\ge1$. <a class="t" data-v="15" data-t="32:51">32:51</a> <a class="t" data-v="15" data-t="34:56">34:56</a></p></div>
+<div class="box ej"><span class="lab">Funciones partidas <a class="t" data-v="15" data-t="35:56">35:56</a></span>
+<p>$g(x,y)=\frac{x^2-y^2}{x^2+y^2}$ si $(x,y)\neq(0,0)$, $g(0,0)=0$. Fuera del origen es un cociente de polinomios con denominador no nulo: es continua. En el origen haría falta $\lim g=g(0,0)$, pero ese límite <b>no existe</b> (ya lo vimos: por un eje vale $1$ y por el otro $-1$). Entonces $g$ no es continua en $(0,0)$. <span class="tag vid">Video</span> En la clase el valor en el origen es $1$; la conclusión es la misma. <a class="t" data-v="15" data-t="37:57">37:57</a></p>
+<p>$f(x,y)=\frac{3x^2y}{x^2+y^2}$: ¿puede definirse en $(0,0)$ de forma que resulte continua? Hay que calcular el límite; si existe y da $L$, se define $f(0,0)=L$. Como $\lim\frac{3x^2y}{x^2+y^2}=0$ (igual que con $3xy^2$), se define $f(0,0)=0$ y queda continua. <a class="t" data-v="15" data-t="39:58">39:58</a></p></div>
+<div class="quiz" id="quiz-2"></div>
+</section>
+
+<!-- ======================= POLARES ======================= -->
+<section class="clase" id="rp">
+<header>
+  <div class="kick">TÉCNICA · ejercicio 5</div>
+  <h2>Límites con coordenadas polares <span class="tag add" style="vertical-align:middle">Agregado</span></h2>
+  <div class="meta"><span>El ejercicio 5 pide usar coordenadas polares, una técnica que no aparece en las Clases 14 y 15. Esta sección la explica brevemente.</span></div>
+</header>
+<p>Para un límite en $(0,0)$ se escribe $x=r\cos\theta$, $y=r\operatorname{sen}\theta$ con $r=\sqrt{x^2+y^2}$. Acercarse al origen es lo mismo que hacer $r\to0^+$, <b>para cualquier $\theta$</b>.</p>
+<div class="box thm"><span class="lab">Criterio</span>
+<p>Si se encuentra una función $g$ tal que
+$$|f(r\cos\theta,r\operatorname{sen}\theta)-L|\le g(r)\ \text{ para todo }\theta,\qquad\text{y}\qquad g(r)\xrightarrow[r\to0^+]{}0,$$
+entonces $\displaystyle\lim_{(x,y)\to(0,0)}f(x,y)=L$. Es el sándwich, con $r=\sqrt{x^2+y^2}$ como la distancia de la definición.</p></div>
+<div class="box ej"><span class="lab">Dos situaciones típicas</span>
+<p><b>La expresión depende solo de $r$.</b> Por ejemplo $\frac{\operatorname{sen}(x^2+y^2)}{x^2+y^2}=\frac{\operatorname{sen}(r^2)}{r^2}\to1$: queda un límite de una variable.</p>
+<p><b>Sobrevive un $\theta$.</b> Por ejemplo $\frac{xy}{x^2+y^2}=\frac{r^2\cos\theta\operatorname{sen}\theta}{r^2}=\cos\theta\operatorname{sen}\theta$: depende del ángulo por el que se llega, así que el límite no existe. Pero si queda algo como $r\,(\cos^3\theta+\operatorname{sen}^3\theta)$, como $|\cos^3\theta+\operatorname{sen}^3\theta|\le2$, se acota por $2r\to0$.</p>
+<p class="hint">Cuidado: no alcanza con que el límite en $r$ exista para cada $\theta$ fijo (eso es acercarse por rectas). Hace falta una cota que no dependa de $\theta$.</p>
+<p><button type="button" class="go" data-viz="viz-paths" data-p="xy:3">Ver xy/(x²+y²) en polares</button><button type="button" class="go" data-viz="viz-paths" data-p="e2:3">Ver 2xy²/(x²+y²) en polares</button></p></div>
+</section>
+
+<!-- ======================= EJERCICIOS ======================= -->
+<section class="clase" id="ejercicios">
+<header>
+  <div class="kick">PRÁCTICA 3 · 12 ejercicios</div>
+  <h2>Ejercicios guiados</h2>
+  <div class="meta"><span>Cada ejercicio tiene pistas que se abren de a una, la resolución y, cuando la respuesta es un número, un lugar para comprobar la tuya. Probá primero sin mirar.</span></div>
+</header>
+<div class="ctl" style="margin-bottom:14px"><span class="c-mut" id="ejprog" style="font:600 13.5px var(--f-mono)"></span></div>
+<div class="ejlist" id="ejlist"></div>
+</section>
+
+<div class="foot">Material basado en las clases grabadas del canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a> y en las hojas escritas durante las clases. Las secciones marcadas como <span class="tag add">Agregado</span> son material nuevo que no se dijo en clase. Versión preliminar de la Guía 3, para revisar antes de compartir.</div>
+</main>
+</div>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],macros:{"R": "\\mathbb{R}", "v": ["\\mathbf{#1}", 1], "ang": ["\\langle #1\\rangle", 1], "jh": "\\hat{\\jmath}"}},svg:{fontCache:'none'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']},startup:{typeset:false}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>
+window.G1IMG={};
+(function(){'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>Array.from(r.querySelectorAll(q));
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in (attrs||{})){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});return e;}
+function sv(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const f=(x,d=2)=>{let v=Number(Number(x).toFixed(d));if(Object.is(v,-0)||Math.abs(v)<1e-12)v=0;return String(v).replace('.',',').replace('-','−');};
+const fv=(v,d=2)=>'⟨'+v.map(x=>f(x,d)).join('; ')+'⟩';
+const fp=(v,d=2)=>'('+v.map(x=>f(x,d)).join('; ')+')';
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const add=(a,b)=>a.map((x,i)=>x+b[i]), sub=(a,b)=>a.map((x,i)=>x-b[i]), mul=(a,t)=>a.map(x=>x*t);
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), nrm=a=>Math.sqrt(dot(a,a));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=nrm(a);return n?mul(a,1/n):a;};
+const CL={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',violet:'var(--violet)',ink:'var(--ink)',mut:'var(--ink-2)',amber:'var(--amber)'};
+const TT={blue:'var(--blue-t)',red:'var(--red-t)',green:'var(--green-t)',violet:'var(--violet-t)'};
+
+function arrow(g,x1,y1,x2,y2,col,w,head){w=w||2.6;head=head||11;const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);if(L<1.5)return;
+  const ux=dx/L,uy=dy/L,hl=Math.min(head,L*.7),bx=x2-ux*hl,by=y2-uy*hl;
+  sv('line',{x1,y1,x2:bx,y2:by,style:`stroke:${col};stroke-width:${w};stroke-linecap:round`},g);
+  sv('polygon',{points:`${x2},${y2} ${bx-uy*hl*.42},${by+ux*hl*.42} ${bx+uy*hl*.42},${by-ux*hl*.42}`,style:`fill:${col}`},g);}
+function line(g,x1,y1,x2,y2,col,w,dash){return sv('line',{x1,y1,x2,y2,style:`stroke:${col};stroke-width:${w||1.5};${dash?'stroke-dasharray:'+dash+';':''}stroke-linecap:round`},g);}
+function text(g,x,y,t,col,anchor,cls){const e=sv('text',{x,y,'text-anchor':anchor||'middle',style:`fill:${col||CL.ink}`,class:cls||''},g);e.textContent=t;return e;}
+
+/* ---------- control helpers ---------- */
+function slider(label,o,cb){const inp=h('input',{type:'range',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':label});
+  const val=h('span',{},'');const upd=()=>{val.textContent=f(+inp.value,o.dec==null?1:o.dec)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();cb(+inp.value);});upd();
+  const l=h('label',{},label,inp,val);l.input=inp;l.set=v=>{inp.value=v;upd();};return l;}
+function numbox(o,cb){const i=h('input',{type:'number',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':o.label});
+  i.addEventListener('input',()=>{let v=parseFloat(i.value);if(isNaN(v))return;v=Math.max(o.min,Math.min(o.max,v));cb(v);});return i;}
+function tabs(names,cb,start){const bs=names.map((n,i)=>h('button',{type:'button','aria-pressed':i===(start||0)},n));
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===i));cb(i);}));return h('div',{class:'tabs'},bs);}
+function vhead(title,sub,tb){return h('div',{class:'vh'},h('b',{},title),sub?h('span',{},sub):null,tb||null);}
+
+/* ---------- plano 2D con puntos arrastrables ---------- */
+function Plane2D(host,o){
+  const xr=o.xr||[-6,6],yr=o.yr||[-4,4],W=o.W||640,sx=W/(xr[1]-xr[0]),H=sx*(yr[1]-yr[0]);
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Plano cartesiano interactivo'},host);
+  const X=x=>(x-xr[0])*sx,Y=y=>H-(y-yr[0])*sx;
+  const gb=sv('g',{},svg),gd=sv('g',{},svg),gh=sv('g',{},svg);
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){line(gb,X(x),0,X(x),H,'var(--grid)',1);if(x&&x%(o.tick||1)===0)text(gb,X(x),Y(0)+15,x,CL.mut,'middle','sm');}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){line(gb,0,Y(y),W,Y(y),'var(--grid)',1);if(y&&y%(o.ytick||o.tick||1)===0)text(gb,X(0)-7,Y(y)+4,y,CL.mut,'end','sm');}
+  arrow(gb,0,Y(0),W-2,Y(0),CL.mut,1.6,8);arrow(gb,X(0),H,X(0),2,CL.mut,1.6,8);
+  text(gb,W-10,Y(0)-8,o.xl||'x',CL.mut);text(gb,X(0)+12,12,o.yl||'y',CL.mut);
+  const api={svg,X,Y,sx,W,H,xr,yr,g:gd,handles:[]};
+  function toW(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x/sx+xr[0],(H-p.y)/sx+yr[0]];}
+  api.handle=function(obj,col,opt){opt=opt||{};const snap=opt.snap||.5,c=sv('circle',{r:11,class:'grab',tabindex:0,role:'slider','aria-label':opt.label||'Punto arrastrable',style:`fill:${col};stroke:var(--surface);stroke-width:3`},gh);
+    let drag=false;const clampSet=(x,y)=>{x=Math.round(x/snap)*snap;y=Math.round(y/snap)*snap;obj.x=Math.max(xr[0]+.3,Math.min(xr[1]-.3,x));obj.y=Math.max(yr[0]+.3,Math.min(yr[1]-.3,y));api.update();};
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);e.preventDefault();});
+    c.addEventListener('pointermove',e=>{if(!drag)return;const p=toW(e);clampSet(p[0],p[1]);});
+    const end=()=>{drag=false;};c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+    c.addEventListener('keydown',e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(d){e.preventDefault();clampSet(obj.x+d[0]*snap,obj.y+d[1]*snap);}});
+    api.handles.push({obj,c});return c;};
+  api.update=function(){gd.textContent='';o.draw(gd,api);api.handles.forEach(hd=>{hd.c.setAttribute('cx',X(hd.obj.x));hd.c.setAttribute('cy',Y(hd.obj.y));});if(o.onUpdate)o.onUpdate(api);};
+  return api;
+}
+
+/* ---------- vista 3D ortográfica, eje z hacia arriba, terna derecha ---------- */
+function View3D(host,o){
+  o=o||{};const W=o.W||640,H=o.H||430,scale=o.scale||40,ctr=o.ctr||[0,0,0];
+  const st={az:o.az==null?215:o.az,el:o.el==null?22:o.el};
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Vista tridimensional. Se puede girar arrastrando.'},host);
+  const g=sv('g',{},svg);
+  function P(p){const a=rad(st.az),e=rad(st.el),x=p[0]-ctr[0],y=p[1]-ctr[1],z=p[2]-ctr[2];
+    const x1=Math.cos(a)*x-Math.sin(a)*y,y1=Math.sin(a)*x+Math.cos(a)*y;
+    return [W/2+x1*scale,H/2-(z*Math.cos(e)+y1*Math.sin(e))*scale,y1*Math.cos(e)-z*Math.sin(e)];}
+  const api={svg,st,P,draw:null};
+  api.render=function(){g.textContent='';const polys=[],ops=[],txt=[];
+    const sc={
+      poly(pts,col,op,stroke){polys.push({pts:pts.map(P),col,op,stroke});},
+      line(a,b,col,w,dash){ops.push(()=>{const p=P(a),q=P(b);line(g,p[0],p[1],q[0],q[1],col,w,dash);});},
+      path(pts,col,w,dash,closed){ops.push(()=>{const q=pts.map(P);sv('polyline',{points:q.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' ')+(closed?' '+q[0][0].toFixed(1)+','+q[0][1].toFixed(1):''),style:`fill:none;stroke:${col};stroke-width:${w||1.4};${dash?'stroke-dasharray:'+dash+';':''}stroke-linejoin:round`},g);});},
+      arrow(a,b,col,w){ops.push(()=>{const p=P(a),q=P(b);arrow(g,p[0],p[1],q[0],q[1],col,w||2.8,11);});},
+      dot(a,col,r){ops.push(()=>{const p=P(a);sv('circle',{cx:p[0],cy:p[1],r:r||5,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);});},
+      disc(c,rpx,col){ops.push(()=>{const p=P(c);sv('circle',{cx:p[0],cy:p[1],r:rpx*scale,style:`fill:${col};stroke:none`},g);});},
+      text(a,t,col,dx,dy,anc){txt.push(()=>{const p=P(a);text(g,p[0]+(dx||0),p[1]+(dy||0),t,col,anc);});},
+      axes(L,neg){const ex=[[1,0,0,'x'],[0,1,0,'y'],[0,0,1,'z']];ex.forEach(e=>{const v=[e[0],e[1],e[2]];
+        if(neg!==false)sc.line(mul(v,-L),[0,0,0],'var(--line)',1.2,'4 4');
+        ops.push(()=>{const p=P([0,0,0]),q=P(mul(v,L));arrow(g,p[0],p[1],q[0],q[1],CL.mut,1.6,9);});
+        sc.text(mul(v,L*1.1),e[3],CL.mut,0,4);});},
+      box(lo,hi,col,op){const[x0,y0,z0]=lo,[x1,y1,z1]=hi;const C=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        [[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach(q=>sc.poly(q.map(i=>C[i]),col,op,col));},
+      patch(n,d,S,col,op,dashed){n=unit(n);const e=Math.abs(n[2])<.9?[0,0,1]:[1,0,0];const u=unit(cross(n,e)),v=cross(n,u),c=mul(n,d);
+        const q=[add(add(c,mul(u,S)),mul(v,S)),add(sub(c,mul(u,S)),mul(v,S)),sub(sub(c,mul(u,S)),mul(v,S)),sub(add(c,mul(u,S)),mul(v,S))];
+        sc.poly(q,col,op,col);if(dashed)sc.path(q,col,1.6,'6 5',true);return {q,c,n,u,v};},
+      circle(c,r,plane,col,w,dash){const pts=[];for(let i=0;i<=48;i++){const t=i/48*2*Math.PI,a=Math.cos(t)*r,b=Math.sin(t)*r;
+        pts.push(plane==='xy'?[c[0]+a,c[1]+b,c[2]]:plane==='xz'?[c[0]+a,c[1],c[2]+b]:[c[0],c[1]+a,c[2]+b]);}sc.path(pts,col,w||1.3,dash);},
+      surf(fn,ur,vr,nu,nv,col,op,stroke){for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const u0=ur[0]+(ur[1]-ur[0])*i/nu,u1=ur[0]+(ur[1]-ur[0])*(i+1)/nu,v0=vr[0]+(vr[1]-vr[0])*j/nv,v1=vr[0]+(vr[1]-vr[0])*(j+1)/nv;
+        const q=[fn(u0,v0),fn(u1,v0),fn(u1,v1),fn(u0,v1)];if(q.some(p=>!p||p.some(x=>!isFinite(x))))continue;polys.push({pts:q.map(P),col,op:op==null?.35:op,stroke:stroke||col,sw:.6});}},
+      sphere(c,r,col,dash){sc.disc(c,r,'var(--blue-t)');['xy','xz','yz'].forEach(p=>sc.circle(c,r,p,col||CL.blue,1.4,dash));
+        for(const k of[.5,-.5]){const rr=r*Math.sqrt(1-k*k);sc.circle([c[0],c[1],c[2]+r*k],rr,'xy',col||CL.blue,.9,dash);}}
+    };
+    if(api.draw)api.draw(sc);
+    polys.sort((a,b)=>mean(b.pts)-mean(a.pts));
+    polys.forEach(p=>{sv('polygon',{points:p.pts.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' '),style:`fill:${p.col};fill-opacity:${p.op==null?.25:p.op};stroke:${p.stroke||'none'};stroke-opacity:.55;stroke-width:${p.sw||1.2}`},g);});
+    ops.forEach(fn=>fn());txt.forEach(fn=>fn());};
+  function mean(pts){return pts.reduce((s,p)=>s+p[2],0)/pts.length;}
+  // arrastre para girar
+  let drag=null;svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,az:st.az,el:st.el};svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect(),k=W/r.width;st.az=drag.az-(e.clientX-drag.x)*k*.5;
+    if(e.pointerType==='mouse'){st.el=Math.max(-80,Math.min(85,drag.el+(e.clientY-drag.y)*k*.4));}
+    api.sync&&api.sync();api.render();});
+  const end=()=>{drag=null;};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  api.controls=function(){const a=slider('giro',{min:0,max:360,step:1,value:Math.round(((st.az%360)+360)%360),unit:'°',dec:0},v=>{st.az=v;api.render();});
+    const b=slider('inclinación',{min:-80,max:85,step:1,value:st.el,unit:'°',dec:0},v=>{st.el=v;api.render();});
+    api.sync=()=>{a.set(Math.round(((st.az%360)+360)%360));b.set(Math.round(st.el));};
+    const reset=h('button',{type:'button',onclick:()=>{st.az=o.az==null?215:o.az;st.el=o.el==null?22:o.el;api.sync();api.render();}},'Vista inicial');
+    return h('div',{class:'ctl'},a,b,reset);};
+  return api;
+}
+
+
+/* ---------- expresiones escritas por el usuario: expr('t^2-2t',['t']) -> función ---------- */
+function expr(src,vars){vars=vars||['x'];const s=String(src).replace(/\s+/g,'').replace(/\*\*/g,'^').replace(/π/g,'pi').replace(/θ/g,'th').replace(/·/g,'*').replace(/−/g,'-').replace(/,/g,'.');
+  const FN={sin:Math.sin,sen:Math.sin,cos:Math.cos,tan:Math.tan,tg:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,arcsen:Math.asin,arccos:Math.acos,arctan:Math.atan,sqrt:Math.sqrt,raiz:Math.sqrt,exp:Math.exp,ln:Math.log,log:Math.log,abs:Math.abs,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),sgn:Math.sign};
+  const C={pi:Math.PI,e:Math.E};let i=0;const err=m=>{throw new Error(m);};
+  const peek=()=>s[i];
+  function num(){const m=/^\d*\.?\d+(e[+-]?\d+)?/i.exec(s.slice(i));if(!m)err('número');i+=m[0].length;const v=parseFloat(m[0]);return ()=>v;}
+  function ident(){const m=/^[a-zA-Z_]+/.exec(s.slice(i));i+=m[0].length;let w=m[0];
+    // separar nombres pegados: "tsint" -> t, sin, t ; prioridad: funciones, constantes, variables
+    const names=[...Object.keys(FN),...Object.keys(C),...vars].sort((a,b)=>b.length-a.length);
+    const parts=[];while(w.length){const n=names.find(nm=>w.startsWith(nm));if(!n)err('nombre desconocido: '+w);parts.push(n);w=w.slice(n.length);}
+    return parts;}
+  function primary(){const c=peek();
+    if(c==='('){i++;const e=add_();if(peek()!==')')err('falta )');i++;return e;}
+    if(c==='|'){i++;const e=add_();if(peek()!=='|')err('falta |');i++;return v=>Math.abs(e(v));}
+    if(/[\d.]/.test(c))return num();
+    if(/[a-zA-Z_]/.test(c)){const parts=ident();
+      const build=k=>{const n=parts[k];
+        if(FN[n]){let arg;if(k+1<parts.length){arg=build(k+1);}else{arg=power();}const f=FN[n];return v=>f(arg(v));}
+        let a;if(n in C){const cv=C[n];a=()=>cv;}else{const j=vars.indexOf(n);a=v=>v[j];}
+        if(k+1<parts.length){const r=build(k+1);return v=>a(v)*r(v);}return a;};
+      return build(0);}
+    err('símbolo inesperado: '+(c||'fin'));}
+  function power(){const b=primary();if(peek()==='^'){i++;const e=unary();return v=>Math.pow(b(v),e(v));}return b;}
+  function unary(){if(peek()==='-'){i++;const u=unary();return v=>-u(v);}if(peek()==='+'){i++;return unary();}return power();}
+  function mul_(){let a=unary();for(;;){const c=peek();
+      if(c==='*'||c==='/'){i++;const b=unary(),l=a;a=c==='*'?(v=>l(v)*b(v)):(v=>l(v)/b(v));}
+      else if(c&&/[\d.a-zA-Z_(|]/.test(c)&&c!=='|'){const b=unary(),l=a;a=v=>l(v)*b(v);}
+      else return a;}}
+  function add_(){let a=mul_();for(;;){const c=peek();if(c==='+'||c==='-'){i++;const b=mul_(),l=a;a=c==='+'?(v=>l(v)+b(v)):(v=>l(v)-b(v));}else return a;}}
+  if(!s.length)err('vacía');const f=add_();if(i<s.length)err('sobra: '+s.slice(i));
+  return (...a)=>f(a);}
+
+/* ---------- curvas de nivel (marching squares): devuelve lista de segmentos [[x1,y1],[x2,y2]] ---------- */
+function contour(F,xr,yr,c,n){n=n||80;const dx=(xr[1]-xr[0])/n,dy=(yr[1]-yr[0])/n,segs=[];const G=[];
+  for(let i=0;i<=n;i++){G[i]=[];for(let j=0;j<=n;j++){const v=F(xr[0]+i*dx,yr[0]+j*dy);G[i][j]=isFinite(v)?((v-c)===0?1e-12:v-c):NaN;}}
+  const lerp=(a,b,pa,pb)=>{const t=a/(a-b);return [pa[0]+(pb[0]-pa[0])*t,pa[1]+(pb[1]-pa[1])*t];};
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=xr[0]+i*dx,y=yr[0]+j*dy;
+    const P=[[x,y],[x+dx,y],[x+dx,y+dy],[x,y+dy]],V=[G[i][j],G[i+1][j],G[i+1][j+1],G[i][j+1]];
+    if(V.some(isNaN))continue;const pts=[];
+    for(let k=0;k<4;k++){const a=V[k],b=V[(k+1)%4];if((a<0)!==(b<0))pts.push(lerp(a,b,P[k],P[(k+1)%4]));else if(a===0&&b!==0)pts.push(P[k]);}
+    if(pts.length===2)segs.push(pts);else if(pts.length===4){segs.push([pts[0],pts[1]]);segs.push([pts[2],pts[3]]);}}
+  return segs;}
+
+/* ---------- dibujar una curva en un Plane2D: pts = [[x,y],...] (cortes en NaN o saltos) ---------- */
+function poly2(g,api,pts,col,w,dash){let d='',pen=false,prev=null;const {X,Y}=api,lim=Math.max(api.W,api.H)*3;
+  pts.forEach(p=>{const ok=p&&isFinite(p[0])&&isFinite(p[1]);if(!ok){pen=false;prev=null;return;}const px=X(p[0]),py=Y(p[1]);
+    if(Math.abs(px)>lim||Math.abs(py)>lim){pen=false;prev=null;return;}
+    if(prev&&Math.hypot(px-prev[0],py-prev[1])>api.W*.35)pen=false;
+    d+=(pen?'L':'M')+px.toFixed(1)+' '+py.toFixed(1);pen=true;prev=[px,py];});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.5};stroke-linejoin:round;stroke-linecap:round;${dash?'stroke-dasharray:'+dash:''}`},g);}
+function segs2(g,api,segs,col,w){const {X,Y}=api;let d='';segs.forEach(s=>{d+='M'+X(s[0][0]).toFixed(1)+' '+Y(s[0][1]).toFixed(1)+'L'+X(s[1][0]).toFixed(1)+' '+Y(s[1][1]).toFixed(1);});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.2};stroke-linecap:round`},g);}
+window.G1={$,$$,h,sv,f,fv,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2};
+})();
+(function(){'use strict';
+const {$,h,sv,f,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+const PI=Math.PI;
+
+/* Funciones de ejemplo (todas alrededor de un punto (a,b)) */
+const FN={
+  e2:{n:'2xy²/(x²+y²) en (0,0)',f:(x,y)=>2*x*y*y/(x*x+y*y),a:0,b:0,L:0,ok:true,tag:'Clase 14'},
+  h8:{n:'3xy²/(x²+y²) en (0,0)',f:(x,y)=>3*x*y*y/(x*x+y*y),a:0,b:0,L:0,ok:true,tag:'Hoja'},
+  sq:{n:'x² + y² en (1,2)',f:(x,y)=>x*x+y*y,a:1,b:2,L:5,ok:true,tag:'Clase 14'},
+  xy:{n:'xy/(x²+y²) en (0,0)',f:(x,y)=>x*y/(x*x+y*y),a:0,b:0,L:0,ok:false,tag:'Hoja'},
+  dif:{n:'(x²−y²)/(x²+y²) en (0,0)',f:(x,y)=>(x*x-y*y)/(x*x+y*y),a:0,b:0,L:0,ok:false,tag:'Hoja'},
+  xy4:{n:'xy²/(x²+y⁴) en (0,0)',f:(x,y)=>x*y*y/(x*x+y**4),a:0,b:0,L:0,ok:false,tag:'Hoja'},
+  sxy:{n:'x² sen y/(x²+y²) en (0,0)',f:(x,y)=>x*x*Math.sin(y)/(x*x+y*y),a:0,b:0,L:0,ok:true,tag:'Clase 15'},
+  p4h:{n:'Ej. 4(h) xy/√(x²+y²)',f:(x,y)=>x*y/Math.sqrt(x*x+y*y),a:0,b:0,L:0,ok:true},
+  p4j:{n:'Ej. 4(j) y² sen²x/(x⁴+2y⁴)',f:(x,y)=>y*y*Math.sin(x)**2/(x**4+2*y**4),a:0,b:0,L:0,ok:false},
+  p6a:{n:'Ej. 6(a) x⁴y⁴/(x²+y⁴)³',f:(x,y)=>x**4*y**4/(x*x+y**4)**3,a:0,b:0,L:0,ok:false},
+  p6b:{n:'Ej. 6(b) x²/(x²+y²−x)',f:(x,y)=>x*x/(x*x+y*y-x),a:0,b:0,L:0,ok:false},
+  p7d:{n:'Ej. 7(d) xy/(x²+xy+y²)',f:(x,y)=>x*y/(x*x+x*y+y*y),a:0,b:0,L:0,ok:false},
+  p10:{n:'Ej. 10 2xy/(x²+y²)',f:(x,y)=>2*x*y/(x*x+y*y),a:0,b:0,L:0,ok:false}
+};
+
+/* ======================================================================
+   ε y δ: el "sándwich" entre los planos z = L ± ε
+   ====================================================================== */
+V.eps=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});
+  const keys=['e2','h8','sq','sxy','xy','dif','p4h'];let cur='e2',eps=.4,del=.5;
+  const sel=h('select',{'aria-label':'Elegir función'},...keys.map(k=>h('option',{value:k},FN[k].n)));
+  host.append(vhead('La definición de límite','Elegí ε (la franja entre los dos planos) y buscá un δ (el disco) que funcione'),h('div',{class:'ctl'},sel),body);
+  const v=View3D(body,{scale:110,H:440,ctr:[0,0,0],az:225,el:22});
+  let worst=0,bad=[],good=[];
+  function sample(){const F=FN[cur];bad=[];good=[];worst=0;const n=22;
+    for(let i=0;i<=n;i++)for(let j=0;j<=n;j++){const u=-1+2*i/n,w=-1+2*j/n;if(u*u+w*w>1||(u===0&&w===0))continue;
+      const x=F.a+u*del,y=F.b+w*del,z=F.f(x,y);if(!isFinite(z))continue;const d=Math.abs(z-F.L);worst=Math.max(worst,d);(d<eps?good:bad).push([u*del,w*del,z-F.L]);}}
+  v.draw=sc=>{const F=FN[cur];const R=1.2,zc=1.3;const clip=z=>Math.max(-zc,Math.min(zc,z));
+    sc.axes(1.45);
+    sc.surf((u,w)=>{const x=F.a+u,y=F.b+w;let z=F.f(x,y);if(!isFinite(z))return null;return [u,w,clip(z-F.L)];},[-R,R],[-R,R],22,22,'var(--blue)',.14,'var(--blue)');
+    [eps,-eps].forEach(e=>sc.poly([[-R,-R,e],[R,-R,e],[R,R,e],[-R,R,e]],'var(--amber)',.16,'var(--amber)'));
+    sc.circle([0,0,-zc],del,'xy',CL.green,2.4);sc.circle([0,0,0],del,'xy',CL.green,1.4,'4 4');
+    good.forEach(p=>sc.dot([p[0],p[1],clip(p[2])],CL.green,2.6));bad.forEach(p=>sc.dot([p[0],p[1],clip(p[2])],CL.red,3.4));
+    sc.text([R,R,eps],'L + ε',CL.amber,6,-4,'start');sc.text([R,R,-eps],'L − ε',CL.amber,6,12,'start');};
+  const se=slider('ε',{min:.02,max:1,step:.01,value:eps,dec:2},x=>{eps=x;upd();});
+  const sd=slider('δ',{min:.02,max:1,step:.01,value:del,dec:2},x=>{del=x;upd();});
+  body.append(h('div',{class:'ctl'},se,sd),v.controls(),out);
+  function upd(){sample();v.render();const F=FN[cur];
+    const ok=bad.length===0;
+    out.innerHTML=`${F.n}, candidato L = ${f(F.L)}. Puntos del disco de radio δ alrededor de (${f(F.a)}, ${f(F.b)}): <b class="c-green">${good.length} dentro de la franja</b>, <b class="c-red">${bad.length} afuera</b>. Mayor |f − L| en el disco ≈ ${f(worst,3)}.<br>`+
+      (ok?'<b class="c-green">Este δ sirve para este ε.</b> Achicá ε y fijate si siempre podés encontrar un δ.':'<b class="c-red">Este δ no sirve: achicalo.</b>')+
+      (F.ok?'':' <span class="c-mut">Ojo: para esta función, con ε chico ningún δ sirve, porque el límite no existe.</span>');}
+  sel.addEventListener('change',()=>{cur=sel.value;upd();});
+  API['viz-eps']={set(k){if(FN[k]){if(!keys.includes(k)){sel.append(h('option',{value:k},FN[k].n));keys.push(k);}cur=k;sel.value=k;upd();}}};
+  upd();
+};
+
+/* ======================================================================
+   Acercarse por caminos: iterados, rectas, parábolas y polares
+   ====================================================================== */
+V.paths=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});
+  const keys=['xy','dif','xy4','e2','sxy','p4j','p6a','p6b','p7d','p10'];let cur='xy',mode=1,m=1,k=1,t=.6;
+  const sel=h('select',{'aria-label':'Elegir función'},...keys.map(q=>h('option',{value:q},FN[q].n)),h('option',{value:'cus'},'Escribir la mía…'));
+  const inp=h('input',{type:'text',value:'x^2y/(x^4+y^2)',size:16,'aria-label':'f(x,y)'}),msg=h('span',{class:'res'});
+  const cus=h('div',{class:'ctl',hidden:''},h('label',{},'f(x,y) =',inp),h('button',{type:'button',onclick:()=>{try{const g=expr(inp.value,['x','y']);FN.cus={n:inp.value,f:g,a:0,b:0,L:0};cur='cus';msg.textContent='';build();}catch(e){msg.className='res bad';msg.textContent='No entiendo la fórmula ('+e.message+').';}}},'Usar'),msg,h('span',{class:'c-mut',style:'font-size:13px'},'(siempre hacia el origen)'));
+  const tb=tabs(['iterados','rectas y = mx','curvas x = k·y²','polares'],i=>{mode=i;build();},1);
+  host.append(vhead('Acercarse por caminos','Si el límite existe, por cualquier camino tiene que dar lo mismo'),h('div',{class:'ctl'},sel,tb),cus,body);
+  const L=h('div',{class:'half'}),Rr=h('div',{class:'half'});body.append(L,Rr);const ctl=h('div',{class:'ctl'});body.after(ctl,out);
+  let pa=null,pb=null;
+  const F=()=>FN[cur];
+  // colores de la función en el plano
+  function heat(g,A,R){const n=48;for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=-R+2*R*(i+.5)/n,y=-R+2*R*(j+.5)/n;let z=F().f(x,y);if(!isFinite(z))continue;
+      z=Math.max(-1.5,Math.min(1.5,z));const c=z>=0?`rgba(214,64,69,${Math.min(.55,z/1.5*.55)})`:`rgba(43,94,214,${Math.min(.55,-z/1.5*.55)})`;
+      sv('rect',{x:A.X(x-R/n),y:A.Y(y+R/n),width:2*R/n*A.sx+.5,height:2*R/n*A.sx+.5,style:'fill:'+c},g);}}
+  function pathPts(s){// devuelve [x,y] para parámetro s ∈ (0,1]
+    if(mode===1)return [s,m*s];if(mode===2)return [k*s*s,s];return null;}
+  function build(){cus.hidden=cur!=='cus';L.textContent='';Rr.textContent='';ctl.textContent='';const R=1;
+    pa=Plane2D(L,{W:440,xr:[-R,R],yr:[-R,R],tick:1,label:'Valores de f cerca del origen (rojo positivo, azul negativo)',draw(g,A){heat(g,A,R);
+      if(mode===0){line(g,A.X(.8),A.Y(.6),A.X(0),A.Y(.6),CL.green,3);line(g,A.X(0),A.Y(.6),A.X(0),A.Y(0),CL.green,3,'6 4');
+        line(g,A.X(.8),A.Y(.6),A.X(.8),A.Y(0),CL.violet,3);line(g,A.X(.8),A.Y(0),A.X(0),A.Y(0),CL.violet,3,'6 4');
+        text(g,A.X(.4),A.Y(.6)-8,'x → 0, después y → 0',CL.green,'middle','sm');text(g,A.X(.4),A.Y(0)+16,'y → 0, después x → 0',CL.violet,'middle','sm');}
+      else if(mode===3){[.25,.5,.75].forEach(rr=>sv('circle',{cx:A.X(0),cy:A.Y(0),r:rr*A.sx,style:'fill:none;stroke:var(--ink-2);stroke-width:1;stroke-dasharray:3 4'},g));
+        sv('circle',{cx:A.X(0),cy:A.Y(0),r:t*A.sx,style:'fill:none;stroke:var(--green);stroke-width:2.6'},g);}
+      else{const pts=[];for(let i=-100;i<=100;i++){const s=i/100;pts.push(pathPts(s));}poly2(g,A,pts,CL.green,2.6);const p=pathPts(t);sv('circle',{cx:A.X(p[0]),cy:A.Y(p[1]),r:6,style:'fill:var(--green);stroke:var(--surface);stroke-width:2'},g);}
+      sv('circle',{cx:A.X(0),cy:A.Y(0),r:4,style:'fill:var(--ink)'},g);}});
+    pb=Plane2D(Rr,{W:440,xr:mode===3?[-.2,6.6]:[-.15,3.3],yr:[-1.6,1.6],tick:mode===3?1:10,ytick:1,xl:mode===3?'θ':' ',yl:'f',label:'f a lo largo del camino',draw(g,A){
+      if(mode===3){const pts=[];for(let i=0;i<=300;i++){const th=i/300*2*PI;pts.push([th,F().f(t*Math.cos(th),t*Math.sin(th))]);}poly2(g,A,pts,CL.green,2.6);
+        text(g,A.X(6.4),A.Y(0)-8,'θ',CL.mut,'end');text(g,A.X(.1),A.Y(1.5),'f(r cos θ, r sen θ) con r = '+f(t,2),CL.green,'start','sm');return;}
+      const curves=mode===0?[[s=>F().f(s,.0)],[]]:null;
+      if(mode===0){// iterados: g1(y)=lim_{x→0} f(x,y) ≈ f(1e-7,y); g2(x)=lim_{y→0} f(x,y)
+        const g1=[],g2=[];for(let i=1;i<=200;i++){const s=i/200;g1.push([3*s,F().f(1e-7*s,s)]);g2.push([3*s,F().f(s,1e-7*s)]);}
+        poly2(g,A,g1,CL.green,2.6);poly2(g,A,g2,CL.violet,2.6);text(g,A.X(3.25),A.Y(1.45),'verde: lím (x→0) f(x,y), en función de y',CL.green,'end','sm');text(g,A.X(3.25),A.Y(1.27),'violeta: lím (y→0) f(x,y), en función de x',CL.violet,'end','sm');}
+      else{const pts=[];for(let i=-200;i<=200;i++){const s=i/200;if(Math.abs(s)<1e-9)continue;const p=pathPts(s);pts.push([3*Math.abs(s),F().f(p[0],p[1])]);}
+        poly2(g,A,pts.filter((_,i)=>i<200),CL.green,2.4);poly2(g,A,pts.filter((_,i)=>i>=200),CL.green,2.4,'5 4');
+        const p=pathPts(t);sv('circle',{cx:A.X(3*t),cy:A.Y(F().f(p[0],p[1])),r:6,style:'fill:var(--green);stroke:var(--surface);stroke-width:2'},g);
+        text(g,A.X(3.25),A.Y(1.45),'hacia la izquierda: te acercás al origen',CL.mut,'end','sm');text(g,A.X(3.25),A.Y(1.27),'(línea llena de un lado, punteada del otro)',CL.mut,'end','sm');}}});
+    if(mode===1)ctl.append(slider('m',{min:-3,max:3,step:.1,value:m,dec:1},x=>{m=x;upd();}));
+    if(mode===2)ctl.append(slider('k',{min:-3,max:3,step:.1,value:k,dec:1},x=>{k=x;upd();}));
+    if(mode!==0)ctl.append(slider(mode===3?'r':'acercarse',{min:.01,max:mode===3?.9:1,step:.01,value:t,dec:2},x=>{t=x;upd();}));
+    upd();}
+  function lim(fn){const vals=[1e-3,1e-4,1e-5].map(fn);const a=vals[2];if(!isFinite(a))return NaN;return Math.abs(vals[1]-vals[2])<1e-3?a:NaN;}
+  function upd(){pa.update();pb.update();const G=F().f;let msg2='';
+    if(mode===0){const a=lim(s=>G(s,1e-9*s)),b=lim(s=>G(1e-9*s,s));
+      msg2=`Iterados: primero x → 0 y después y → 0 da ≈ <b class="c-green">${f(b,3)}</b>; primero y → 0 y después x → 0 da ≈ <b class="c-violet">${f(a,3)}</b>.`+(Math.abs(a-b)>1e-3?' <b class="c-red">Son distintos: el límite no existe.</b>':' Coinciden: si el límite existe, vale eso (pero todavía no sabemos si existe).');}
+    else if(mode===1){const v=lim(s=>G(s,m*s));msg2=`Por la recta y = ${f(m,1)}x el límite da ≈ <b class="c-green">${f(v,3)}</b>. Mové m: si cambia con m, el límite no existe.`;}
+    else if(mode===2){const v=lim(s=>G(k*s*s,s));msg2=`Por la curva x = ${f(k,1)}·y² el límite da ≈ <b class="c-green">${f(v,3)}</b>.`;}
+    else{let lo=Infinity,hi=-Infinity;for(let i=0;i<=360;i++){const th=i/360*2*PI;const z=G(t*Math.cos(th),t*Math.sin(th));if(isFinite(z)){lo=Math.min(lo,z);hi=Math.max(hi,z);}}
+      msg2=`En la circunferencia de radio r = ${f(t,2)}, f va de <b>${f(lo,3)}</b> a <b>${f(hi,3)}</b>. Si al achicar r toda la curva se aplasta contra un valor L (sin depender de θ), el límite existe y vale L.`;}
+    out.innerHTML=msg2;}
+  sel.addEventListener('change',()=>{if(sel.value==='cus'){cus.hidden=false;return;}cur=sel.value;build();});
+  API['viz-paths']={set(key){const [q,md]=key.split(':');if(FN[q]){if(!keys.includes(q)){sel.append(h('option',{value:q},FN[q].n));keys.push(q);}cur=q;sel.value=q;}if(md!=null){mode=+md;[...tb.children].forEach((b,j)=>b.setAttribute('aria-pressed',j===mode));}build();}};
+  build();
+};
+})();
+(function(){const R=String.raw;
+window.A1={key:'g3',
+ vid:{14:'t4xgdexI2_U',15:'qjzYlwRqqng'},
+ viz:{'viz-eps':'eps','viz-paths':'paths'}};
+window.A1.quiz={
+'quiz-1':{t:'Autoevaluación de la Clase 14',qs:[
+ {p:R`$\lim_{t\to0}\ang{\frac{\operatorname{sen}t}{t},\ t^2+1,\ \cos t}$ es:`,o:[R`$\ang{1,1,1}$`,R`$\ang{0,1,1}$`,R`no existe`,R`$\ang{1,0,1}$`],c:0,w:R`Componente a componente: $\frac{\operatorname{sen}t}{t}\to1$, $t^2+1\to1$, $\cos t\to1$.`},
+ {p:R`Si los dos límites iterados de $f$ en $(0,0)$ valen $0$, entonces:`,o:['si el límite existe, vale 0','el límite existe y vale 0','el límite no existe','f es continua en el origen'],c:0,w:R`El lema solo dice que si el límite existe, los iterados valen lo mismo. Al revés no: $\frac{xy}{x^2+y^2}$ tiene iterados $0$ y no tiene límite.`},
+ {p:R`Para probar que $\frac{2xy^2}{x^2+y^2}\to0$ en el origen, ¿qué δ sirve para cada ε?`,o:[R`$\delta=\varepsilon/2$`,R`$\delta=2\varepsilon$`,R`$\delta=\sqrt{\varepsilon}$`,R`ninguno`],c:0,w:R`$\left|\frac{2xy^2}{x^2+y^2}\right|\le2|x|\le2\sqrt{x^2+y^2}\lt\varepsilon$ si $\sqrt{x^2+y^2}\lt\frac\varepsilon2$.`},
+ {p:R`Si los límites iterados de $f$ en $(a,b)$ dan $1$ y $-1$:`,o:['el límite no existe','el límite vale 0','el límite vale 1','no se puede saber'],c:0,w:R`Es el contrarrecíproco del lema: si el límite existiera, los dos iterados darían lo mismo.`},
+ {p:R`¿Cuál de estas desigualdades es la que más se usa para acotar?`,o:[R`$|x|\le\sqrt{x^2+y^2}$`,R`$x^2+y^2\le|x|$`,R`$|x|+|y|\le\sqrt{x^2+y^2}$`,R`$\sqrt{x^2+y^2}\le|x|$`],c:0,w:R`Porque $y^2\ge0$. Lo mismo con $|y|$. Las otras son falsas en general.`}]},
+'quiz-2':{t:'Autoevaluación de la Clase 15',qs:[
+ {p:R`Si por todas las rectas $y=mx$ el límite de $f$ en el origen da $0$:`,o:['todavía no se puede afirmar nada','el límite existe y vale 0','el límite no existe','f es continua'],c:0,w:R`$\frac{xy^2}{x^2+y^4}$ da $0$ por todas las rectas y $\frac12$ por la parábola $x=y^2$.`},
+ {p:R`Para $f(x,y)=\frac{x^2y}{x^4+y^2}$, ¿qué curva conviene probar?`,o:[R`$y=x^2$`,R`$y=x$`,R`$x=0$`,R`$x=y^2$`],c:0,w:R`Con $y=x^2$ numerador y denominador quedan de grado 4: $\frac{x^4}{2x^4}=\frac12$, mientras que por rectas da $0$.`},
+ {p:R`¿Por qué $\left|\frac{x^2\operatorname{sen}y}{x^2+y^2}\right|\le|\operatorname{sen}y|$ prueba que el límite en el origen es 0?`,o:['porque la cota tiende a 0 (sándwich)','porque el seno está acotado por 1','porque los iterados dan 0','porque es un cociente de polinomios'],c:0,w:R`Lo que importa es que la cota tiende a $0$. Acotar además $|\operatorname{sen}y|\le1$ solo daría $|f|\le1$, que no sirve.`},
+ {p:R`$f(x,y)=\frac{x^2-y^2}{x^2+y^2}$ fuera del origen. ¿Qué valor $f(0,0)$ la hace continua?`,o:['ninguno','0','1','−1'],c:0,w:R`El límite en el origen no existe (por los ejes da $1$ y $-1$), así que ningún valor sirve.`},
+ {p:R`¿Dónde es continua $\ln(x^2+y^2+1)$?`,o:[R`en todo $\R^2$`,R`en $\R^2$ menos el origen`,R`donde $x^2+y^2\gt1$`,R`en ningún punto`],c:0,w:R`El argumento es $\ge1\gt0$ siempre, y el logaritmo es continuo en los positivos.`}]}
+};
+})();
+(function(){'use strict';
+const R=String.raw;
+const go=(viz,p,txt)=>`<button type="button" class="go" data-viz="${viz}" data-p="${p}">${txt||'Ver en la figura'}</button>`;
+const EJ=[
+{n:1,t:'Continuidad de curvas',s:'Dominio y continuidad de funciones vectoriales',
+ enun:R`<p>Para cada una de las siguientes curvas determinar dominio y conjunto de puntos en los cuales resulta continua.</p>
+<p class="items">(a) $\mathbf r(t)=(\operatorname{sen}t,\cos t)$ &emsp; (b) $\mathbf r(t)=\left(\frac{\operatorname{sen}t}{t},\ \ln(t^2-t),\ t^2\right)$</p>
+<p>(c) $\mathbf r(t)=(r_1(t),r_2(t))$ donde $r_1(t)=\sqrt t$ y $r_2(t)=\frac{\operatorname{sen}t}{t}$ si $t\neq0$, $r_2(0)=1$.</p>`,
+ pistas:[R`<p>Una función vectorial está definida donde lo están todas sus componentes, y es continua donde lo son todas.</p>`,
+  R`<p>En (b), $\ln(t^2-t)$ pide $t^2-t=t(t-1)\gt0$. En (c), mirá si $\lim_{t\to0}\frac{\operatorname{sen}t}{t}$ coincide con $r_2(0)$.</p>`],
+ sol:R`<p><b>(a)</b> Dominio $\R$; seno y coseno son continuas, así que $\mathbf r$ es continua en todo $\R$.</p>
+<p><b>(b)</b> $\frac{\operatorname{sen}t}{t}$ pide $t\neq0$; $\ln(t^2-t)$ pide $t(t-1)\gt0$, o sea $t\lt0$ o $t\gt1$; $t^2$ siempre. Dominio: $(-\infty,0)\cup(1,+\infty)$. Las tres componentes son continuas en sus dominios, así que $\mathbf r$ es continua en todo su dominio.</p>
+<p><b>(c)</b> $\sqrt t$ pide $t\ge0$, y $r_2$ está definida en todo $\R$. Dominio: $[0,+\infty)$. $r_2$ es continua para $t\neq0$ (cociente de continuas) y también en $0$, porque $\lim_{t\to0}\frac{\operatorname{sen}t}{t}=1=r_2(0)$. Entonces $\mathbf r$ es continua en todo su dominio $[0,+\infty)$ (en $t=0$, por la derecha, que es lo único que tiene sentido en ese dominio).</p>`,
+ ref:[[14,'13:57','límite de funciones vectoriales'],[14,'18:04','continuidad']]},
+
+{n:2,t:'Límites por definición',s:'Encontrar δ en función de ε',
+ enun:R`<p>(a) Usando la definición de límite demostrar que: i. $\displaystyle\lim_{(x,y)\to(1,0)}x+y=1$, &nbsp; ii. $\displaystyle\lim_{(x,y)\to(-1,8)}xy=-8$.</p>
+<p>(b) Para $\varepsilon=1$ y $\varepsilon=1/100$, encontrar $\delta\gt0$ tal que $\|(x,y)-(-1,8)\|\lt\delta\Longrightarrow|xy+8|\lt\varepsilon$.</p>`,
+ pistas:[R`<p>Llamá $d=\sqrt{(x-a)^2+(y-b)^2}$ a la distancia al punto. Usá que $|x-a|\le d$ y $|y-b|\le d$.</p>`,
+  R`<p>En ii conviene escribir $x=-1+u$, $y=8+v$ y desarrollar $xy+8$ en términos de $u$ y $v$.</p>`,
+  R`<p>Te va a quedar algo como $d^2+9d$. Pidiendo además $d\le1$, $d^2\le d$.</p>`],
+ sol:R`<p><b>i.</b> $|x+y-1|=|(x-1)+y|\le|x-1|+|y|\le2d$. Dado $\varepsilon$, con $\delta=\frac\varepsilon2$: si $d\lt\delta$, $|x+y-1|\lt\varepsilon$.</p>
+<p><b>ii.</b> Con $u=x+1$, $v=y-8$: $xy=(u-1)(v+8)=uv+8u-v-8$, así que $xy+8=uv+8u-v$ y
+$$|xy+8|\le|u||v|+8|u|+|v|\le d^2+9d.$$
+Si además $d\le1$, $d^2\le d$ y queda $\le10d$. Entonces $\delta=\min\{1,\frac{\varepsilon}{10}\}$ sirve.</p>
+<p><b>(b)</b> Con la fórmula: $\varepsilon=1\Rightarrow\delta=\frac1{10}$; $\varepsilon=\frac1{100}\Rightarrow\delta=\frac1{1000}$. Cualquier $\delta$ más chico también sirve. (El mejor $\delta$ que da esta cota es la solución de $d^2+9d=\varepsilon$: $\approx0{,}1098$ y $\approx0{,}00111$.)</p>
+<p>${go('viz-eps','sq','Ver la definición con ε y δ en un ejemplo')}</p>`,
+ chk:{p:'(b) un δ para ε = 1 (se acepta 0,1)',vals:[0.1]},
+ ref:[[14,'33:32','definición'],[14,'45:00','acotar para encontrar δ']]},
+
+{n:3,t:'Otro límite por definición',s:'Acotar el seno',
+ enun:R`<p>Probar por definición que $\displaystyle\lim_{(x,y)\to(2,3)}y\operatorname{sen}(xy-6)=0$.</p>`,
+ pistas:[R`<p>$|\operatorname{sen}s|\le|s|$ para todo $s$. Acotá $|y|$ y $|xy-6|$ por separado cerca de $(2,3)$.</p>`,
+  R`<p>Con $x=2+u$, $y=3+v$: $xy-6=uv+3u+2v$. Si $d\le1$, $|y|\le4$.</p>`],
+ sol:R`<p>Sea $d=\sqrt{(x-2)^2+(y-3)^2}$, $u=x-2$, $v=y-3$. Como $|\operatorname{sen}s|\le|s|$,
+$$|y\operatorname{sen}(xy-6)|\le|y|\,|xy-6|=|y|\,|uv+3u+2v|.$$
+Si $d\le1$: $|y|\le3+|v|\le4$ y $|uv+3u+2v|\le d^2+5d\le6d$. Entonces $|y\operatorname{sen}(xy-6)|\le24d$. Dado $\varepsilon$, tomando $\delta=\min\{1,\frac{\varepsilon}{24}\}$, si $d\lt\delta$ queda $\lt\varepsilon$.</p>`,
+ ref:[[14,'45:00','acotar'],[15,'26:46','no acotar de más']]},
+
+{n:4,t:'Existencia de límites',s:'Álgebra, caminos y cotas',
+ enun:R`<p>Analizar la existencia de los siguientes límites.</p>
+<p class="items">(a) $\displaystyle\lim_{(x,y)\to(7,2)}x^2+y^2-xy$ &emsp; (b) $\displaystyle\lim_{(x,y)\to(0,1)}xe^{xy}$ &emsp; (c) $\displaystyle\lim_{(x,y)\to(2,1)}\frac{4-xy}{x^2+3y^2}$ &emsp; (d) $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x-y}{x+y}$ &emsp; (e) $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^4-4y^2}{x^2+2y^2}$ &emsp; (f) $\displaystyle\lim_{(x,y)\to(0,0)}\frac{xy}{x^2+y^2}$</p>
+<p class="items">(g) $\displaystyle\lim_{(x,y)\to(1,0)}\frac{xy-y}{(x-1)^2+y^2}$ &emsp; (h) $\displaystyle\lim_{(x,y)\to(0,0)}\frac{xy}{\sqrt{x^2+y^2}}$ &emsp; (i) $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^4-y^4}{x^2+y^2}$ &emsp; (j) $\displaystyle\lim_{(x,y)\to(0,0)}\frac{y^2\operatorname{sen}^2x}{x^4+2y^4}$ &emsp; (k) $\displaystyle\lim_{(x,y)\to(0,3)}\frac{x^2(y-3)^2e^x}{x^2+(y-3)^2}$</p>`,
+ pistas:[R`<p>Primero probá el álgebra de límites: si el denominador no tiende a $0$, es reemplazar.</p>`,
+  R`<p>Con $\frac00$, calculá los iterados y probá rectas. Si dan distinto, no existe. Si dan lo mismo, buscá una cota que tienda a $0$ (sándwich) o una curva que dé otro valor.</p>`,
+  R`<p>En (g) y (k) conviene trasladar: $u=x-1$ o $v=y-3$. En (i), factorizá $x^4-y^4$. En (j), $\operatorname{sen}x\approx x$: probá $y=x$.</p>`],
+ sol:R`<ul style="margin:.3em 0;padding-left:1.2em">
+<li><b>(a)</b> Polinomio: $49+4-14=39$. <b>(b)</b> $0\cdot e^0=0$. <b>(c)</b> El denominador tiende a $7\neq0$: $\frac{4-2}{7}=\frac27$.</li>
+<li><b>(d)</b> Iterados: $\lim_{y\to0}\lim_{x\to0}\frac{x-y}{x+y}=\lim\frac{-y}{y}=-1$ y el otro da $1$. <b>No existe.</b></li>
+<li><b>(e)</b> Por $x=0$: $\frac{-4y^2}{2y^2}=-2$. Por $y=0$: $\frac{x^4}{x^2}=x^2\to0$. <b>No existe.</b></li>
+<li><b>(f)</b> Iterados $0$, recta $y=x$: $\frac12$. <b>No existe</b> (es el ejemplo de la Clase 15). ${go('viz-paths','xy:1','Ver')}</li>
+<li><b>(g)</b> Con $u=x-1$: $\frac{xy-y}{(x-1)^2+y^2}=\frac{uy}{u^2+y^2}$, que es (f) corrido al punto $(1,0)$. <b>No existe.</b></li>
+<li><b>(h)</b> $\left|\frac{xy}{\sqrt{x^2+y^2}}\right|=\frac{|x|\,|y|}{\sqrt{x^2+y^2}}\le|x|\to0$ (usando $|y|\le\sqrt{x^2+y^2}$). <b>Vale 0.</b></li>
+<li><b>(i)</b> $\frac{x^4-y^4}{x^2+y^2}=\frac{(x^2-y^2)(x^2+y^2)}{x^2+y^2}=x^2-y^2\to0$. <b>Vale 0.</b></li>
+<li><b>(j)</b> Por $y=0$ da $0$. Por $y=x$: $\frac{x^2\operatorname{sen}^2x}{3x^4}=\frac13\left(\frac{\operatorname{sen}x}{x}\right)^2\to\frac13$. <b>No existe.</b> (Por $y=mx$ da $\frac{m^2}{1+2m^4}$, que depende de $m$.) ${go('viz-paths','p4j:1','Ver')}</li>
+<li><b>(k)</b> Con $v=y-3$: $\frac{x^2v^2}{x^2+v^2}e^x$ y $\frac{x^2}{x^2+v^2}\le1$, así que $\le v^2e^x\to0$. <b>Vale 0.</b></li></ul>`,
+ chk:{p:'(a), (b) y (c), en orden',vals:[39,0,0.2857]},
+ ref:[[14,'37:54','límites iterados'],[15,'9:50','rectas y curvas'],[15,'22:43','sándwich']]},
+
+{n:5,t:'Límites en coordenadas polares',s:'Una cota que no dependa de θ',
+ enun:R`<p>Utilizar coordenadas polares para analizar la existencia de los siguientes límites.</p>
+<p class="items">(a) $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^3+y^3}{x^2+y^2}$ &emsp; (b) $\displaystyle\lim_{(x,y)\to(0,0)}(x^2+y^2)\ln(x^2+y^2)$ &emsp; (c) $\displaystyle\lim_{(x,y)\to(0,0)}\frac{e^{-(x^2+y^2)}-1}{x^2+y^2}$ &emsp; (d) $\displaystyle\lim_{(x,y)\to(0,0)}\frac{\operatorname{sen}(x^2+y^2)}{x^2+y^2}$</p>`,
+ pistas:[R`<p>Reemplazá $x=r\cos\theta$, $y=r\operatorname{sen}\theta$. Recordá que $x^2+y^2=r^2$.</p>`,
+  R`<p>En (b), (c) y (d) todo queda en función de $r^2$: llamá $s=r^2\to0^+$ y es un límite de una variable.</p>`],
+ sol:R`<p><b>(a)</b> $\frac{r^3(\cos^3\theta+\operatorname{sen}^3\theta)}{r^2}=r(\cos^3\theta+\operatorname{sen}^3\theta)$, y $|\cos^3\theta+\operatorname{sen}^3\theta|\le2$, así que el módulo es $\le2r\to0$. <b>Vale 0.</b></p>
+<p><b>(b)</b> $r^2\ln r^2=s\ln s$ con $s\to0^+$, que tiende a $0$ (L'Hôpital en $\frac{\ln s}{1/s}$). <b>Vale 0.</b></p>
+<p><b>(c)</b> $\frac{e^{-s}-1}{s}\to-1$ cuando $s\to0$ (es la derivada de $e^{-s}$ en $0$). <b>Vale −1.</b></p>
+<p><b>(d)</b> $\frac{\operatorname{sen}s}{s}\to1$. <b>Vale 1.</b></p>
+<p>Como en (b), (c) y (d) no queda ningún $\theta$, la cota no depende del ángulo y el criterio se aplica directamente.</p>`,
+ chk:{p:'los cuatro límites, en orden',vals:[0,0,-1,1]},
+ ref:[]},
+
+{n:6,t:'Por todas las rectas da 0, pero…',s:'Encontrar la curva que rompe el límite',
+ enun:R`<p>Demostrar que las siguientes funciones tienden a cero si $(x,y)$ se aproxima al origen a lo largo de cualquier recta, pero que para ninguna de ellas existe el límite cuando $(x,y)\to(0,0)$.</p>
+<p class="items">(a) $f(x,y)=\dfrac{x^4y^4}{(x^2+y^4)^3}$ &emsp; (b) $f(x,y)=\dfrac{x^2}{x^2+y^2-x}$</p>`,
+ pistas:[R`<p>Primero las rectas $y=mx$ y la recta $x=0$.</p>`,
+  R`<p>Para la curva: buscá una que haga que numerador y denominador tengan el mismo grado. En (a), probá $x=y^2$. En (b), buscá que el denominador quede como $x^2$: $y^2=x$.</p>`],
+ sol:R`<p><b>(a)</b> Por $y=mx$: $\frac{m^4x^8}{x^6(1+m^4x^2)^3}=\frac{m^4x^2}{(1+m^4x^2)^3}\to0$; por $x=0$, $f=0$. Pero por $x=y^2$:
+$$f(y^2,y)=\frac{y^8\,y^4}{(2y^4)^3}=\frac{y^{12}}{8y^{12}}=\frac18.$$
+<b>No existe el límite.</b> ${go('viz-paths','p6a:2','Ver')}</p>
+<p><b>(b)</b> Por $y=mx$: $\frac{x^2}{(1+m^2)x^2-x}=\frac{x}{(1+m^2)x-1}\to0$; por $x=0$, $f=0$. Por $x=y^2$ el denominador queda $y^4+y^2-y^2=y^4$:
+$$f(y^2,y)=\frac{y^4}{y^4}=1.$$
+<b>No existe el límite.</b> (Ojo: $f$ no está definida sobre la circunferencia $x^2+y^2=x$, que pasa por el origen.) ${go('viz-paths','p6b:2','Ver')}</p>`,
+ ref:[[15,'12:54','todas las rectas'],[15,'17:59','elegir la curva']]},
+
+{n:7,t:'¿Dónde son continuas?',s:'Continuidad de funciones de dos variables',
+ enun:R`<p>Determinar el conjunto de puntos en los cuales las siguientes funciones son continuas.</p>
+<p>(a) $f(x,y)=\dfrac{xy}{1+e^{x-y}}$ &emsp; (b) $f(x,y)=\dfrac{1+x^2+y^2}{1-x^2-y^2}$</p>
+<p>(c) $f(x,y)=\dfrac{x^2y^3}{2x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=1$ &emsp; (d) $f(x,y)=\dfrac{xy}{x^2+xy+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$</p>
+<p>(e) $f(x,y)=\dfrac{xy^2-\operatorname{sen}(x^2y)}{\frac12x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$</p>`,
+ pistas:[R`<p>Fuera de los puntos problemáticos son cocientes y composiciones de continuas. Mirá dónde se anula el denominador.</p>`,
+  R`<p>En las partidas, el único punto a estudiar es el origen: calculá el límite y comparalo con el valor de la función.</p>`,
+  R`<p>En (d), $x^2+xy+y^2=(x+\frac y2)^2+\frac34y^2$ solo se anula en el origen. Probá rectas. En (e), separá en dos fracciones y usá $|\operatorname{sen}s|\le|s|$.</p>`],
+ sol:R`<ul style="margin:.3em 0;padding-left:1.2em">
+<li><b>(a)</b> $1+e^{x-y}\gt0$ siempre: cociente de continuas con denominador no nulo. <b>Continua en $\R^2$.</b></li>
+<li><b>(b)</b> El denominador se anula en la circunferencia $x^2+y^2=1$ (ahí $f$ no está definida). <b>Continua en $\R^2\setminus\{x^2+y^2=1\}$</b>, que es su dominio.</li>
+<li><b>(c)</b> $\frac{x^2}{2x^2+y^2}\le\frac12$, así que $|f|\le\frac{|y|^3}{2}\to0$. El límite es $0\neq1=f(0,0)$. <b>Continua en $\R^2\setminus\{(0,0)\}$.</b></li>
+<li><b>(d)</b> Por $y=mx$: $\frac{m}{1+m+m^2}$, que depende de $m$ ($0$ con $m=0$, $\frac13$ con $m=1$). El límite no existe. <b>Continua en $\R^2\setminus\{(0,0)\}$.</b> ${go('viz-paths','p7d:1','Ver')}</li>
+<li><b>(e)</b> $\left|\frac{xy^2}{\frac12x^2+y^2}\right|\le|x|\frac{y^2}{y^2}=|x|$ y $\left|\frac{\operatorname{sen}(x^2y)}{\frac12x^2+y^2}\right|\le\frac{x^2|y|}{\frac12x^2}=2|y|$. Las dos tienden a $0$: el límite es $0=f(0,0)$. <b>Continua en $\R^2$.</b></li></ul>`,
+ ref:[[15,'31:49','funciones continuas'],[15,'35:56','funciones partidas']]},
+
+{n:8,t:'Elegir el valor para que sea continua',s:'Extensión continua',
+ enun:R`<p>Sea $f:\R^2\to\R$ definida por $f(x,y)=\dfrac{(x-1)^3\cos y}{(x-1)^2+y^2}$ si $(x,y)\neq(1,0)$ y $f(1,0)=a$. Hallar, si es posible, $a\in\R$ de manera que $f$ resulte continua en $(1,0)$.</p>`,
+ pistas:[R`<p>Hay que calcular $\lim_{(x,y)\to(1,0)}f$ y, si existe, elegir $a$ igual al límite.</p>`,
+  R`<p>Con $u=x-1$: $\frac{|u|^3}{u^2+y^2}\le|u|$ y $|\cos y|\le1$.</p>`],
+ sol:R`<p>Con $u=x-1$: $|f(x,y)|=\frac{|u|^3|\cos y|}{u^2+y^2}\le\frac{u^2}{u^2+y^2}|u|\le|u|\to0$. El límite es $0$, así que <b>$a=0$</b> hace a $f$ continua en $(1,0)$ (y es el único valor posible).</p>`,
+ chk:{p:'a',vals:[0]},
+ ref:[[15,'39:58','definir f en el punto']]},
+
+{n:9,t:'Una función que explota',s:'No hay extensión continua',
+ enun:R`<p>Sea $f(x,y)=\dfrac{20}{1-x^2-y^2}$. (a) Calcular el dominio de $f$. (b) Graficar $f$ utilizando GeoGebra. (c) ¿Es posible extender $f$ a la circunferencia $\mathcal C=\{x^2+y^2=1\}$ de manera continua? ¿Por qué?</p>`,
+ pistas:[R`<p>Las curvas de nivel de $f$ son circunferencias centradas en el origen: $f$ solo depende de $x^2+y^2$.</p>`,
+  R`<p>Acercate a un punto de $\mathcal C$ desde adentro y desde afuera: ¿qué hace el denominador? ¿y el signo?</p>`],
+ sol:R`<p><b>(a)</b> $\operatorname{Dom}f=\{(x,y): x^2+y^2\neq1\}$.</p>
+<p><b>(b)</b> Con $\rho^2=x^2+y^2$, $f=\frac{20}{1-\rho^2}$: vale $20$ en el origen, crece hacia $+\infty$ cuando $\rho\to1^-$ (por dentro) y viene desde $-\infty$ cuando $\rho\to1^+$ (por fuera), y tiende a $0^-$ cuando $\rho\to\infty$. Es una superficie de revolución con una "pared" infinita sobre $\mathcal C$.</p>
+<p><b>(c)</b> No. En cualquier punto de $\mathcal C$ el límite no existe (ni siquiera es finito): acercándose desde adentro $f\to+\infty$. Una extensión continua necesitaría que el límite exista y sea un número.</p>`,
+ ref:[[15,'39:58','extender una función']]},
+
+{n:10,t:'Continua en cada variable, pero no en las dos',s:'Un ejemplo clásico',
+ enun:R`<p>Probar que la función $f(x,y)=\dfrac{2xy}{x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$, es continua respecto de cada una de las variables por separado pero no lo es como función de ambas.</p>`,
+ pistas:[R`<p>"Continua respecto de $x$" quiere decir: fijado $y=y_0$, la función de una variable $x\mapsto f(x,y_0)$ es continua. Separá los casos $y_0=0$ e $y_0\neq0$.</p>`,
+  R`<p>Para la segunda parte, acercate al origen por $y=x$.</p>`],
+ sol:R`<p><b>En cada variable.</b> Si $y_0\neq0$, $x\mapsto\frac{2xy_0}{x^2+y_0^2}$ es un cociente de polinomios con denominador $\ge y_0^2\gt0$: continua en todo $\R$. Si $y_0=0$, $f(x,0)=0$ para todo $x$ (también en $x=0$): constante, continua. Por simetría pasa lo mismo fijando $x$.</p>
+<p><b>En las dos variables.</b> Por $y=x$: $f(x,x)=\frac{2x^2}{2x^2}=1\to1\neq0=f(0,0)$. El límite en el origen no es $0$ (de hecho no existe), así que $f$ no es continua en $(0,0)$. ${go('viz-paths','p10:1','Ver')}</p>`,
+ ref:[[15,'3:36','acercarse por una recta']]},
+
+{n:11,t:'Funciones que dependen de una sola variable',s:'Continuidad heredada',
+ enun:R`<p>Demostrar que si $g:\R\to\R$ es continua en $x=a$ y la función $f:\R^2\to\R$ está dada por $f(x,y)=g(x)$, entonces $f$ es continua en todo punto de la recta $(a,y)$. Usar esto para probar que las siguientes funciones son continuas en todo $\R^2$: (a) $f(x,y)=\operatorname{sen}x$, (b) $f(x,y)=\operatorname{sen}(x^2)+e^y$.</p>`,
+ pistas:[R`<p>Escribí la definición de continuidad de $g$ en $a$ con $\varepsilon$ y $\delta$, y usá que $|x-a|\le\operatorname{dist}\big((x,y),(a,y_0)\big)$.</p>`],
+ sol:R`<p>Sea $(a,y_0)$ y $\varepsilon\gt0$. Como $g$ es continua en $a$, existe $\delta\gt0$ con $|g(x)-g(a)|\lt\varepsilon$ si $|x-a|\lt\delta$. Si $\operatorname{dist}\big((x,y),(a,y_0)\big)\lt\delta$, entonces $|x-a|\le\operatorname{dist}\lt\delta$ y
+$$|f(x,y)-f(a,y_0)|=|g(x)-g(a)|\lt\varepsilon.$$
+Así que $f$ es continua en $(a,y_0)$.</p>
+<p><b>(a)</b> $\operatorname{sen}$ es continua en todo $a\in\R$, así que $f(x,y)=\operatorname{sen}x$ es continua en todo $\R^2$. <b>(b)</b> $\operatorname{sen}(x^2)$ es continua en $\R^2$ por lo mismo, y $e^y$ también (el mismo argumento con los roles de $x$ e $y$ cambiados). La suma de continuas es continua.</p>`,
+ ref:[[15,'29:47','continuidad']]},
+
+{n:12,t:'Continuidad de funciones a valores vectoriales',s:'Componente a componente',
+ enun:R`<p>Estudiar la continuidad de las siguientes funciones.</p>
+<p class="items">(a) $f(x,y)=(x^2,e^x)$ &emsp; (b) $f(x,y)=\left(\dfrac{\operatorname{sen}(x^2+y^2)}{x^2+y^2},\ \dfrac{e^{x^2+y^2}-1}{x^2+y^2}\right)$</p>`,
+ pistas:[R`<p>Igual que con las funciones vectoriales: es continua donde lo son todas sus componentes.</p>`,
+  R`<p>En (b), las componentes no están definidas en el origen, pero sus límites existen: calculalos con $s=x^2+y^2$.</p>`],
+ sol:R`<p><b>(a)</b> $x^2$ y $e^x$ son continuas en $\R^2$ (dependen de una sola variable, ejercicio 11). <b>Continua en $\R^2$.</b></p>
+<p><b>(b)</b> Las dos componentes son composiciones de continuas fuera del origen: <b>continua en $\R^2\setminus\{(0,0)\}$</b>, que es su dominio. En el origen no está definida, pero con $s=x^2+y^2\to0$ los límites son $\frac{\operatorname{sen}s}{s}\to1$ y $\frac{e^s-1}{s}\to1$; definiendo $f(0,0)=(1,1)$ queda continua en todo $\R^2$.</p>`,
+ ref:[[14,'19:04','componente a componente']]}
+];
+window.G1EJ=EJ;
+})();
+(function(){'use strict';
+const {$,$$,h,f}=window.G1;
+const IM=window.G1IMG||{};
+const EJ=window.G1EJ||[];
+const KEY=(window.A1&&window.A1.key)||'a1';
+const T=(v,t,txt)=>`<a class="t" data-v="${v}" data-t="${t}">${txt||t}</a>`;
+
+/* ---------- render ---------- */
+function parse(s){return s.split(/[;\s]+/).filter(Boolean).map(x=>parseFloat(x.replace(',','.')));}
+let done={};try{done=JSON.parse(localStorage.getItem(KEY+'-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem(KEY+'-done',JSON.stringify(done));}catch(e){}}
+function prog(){const n=Object.keys(done).filter(k=>done[k]).length;$('#ejprog').textContent='Hechos: '+n+' de '+EJ.length+' (se guarda en este navegador)';}
+
+function build(){const list=$('#ejlist');
+  EJ.forEach(e=>{
+    const d=h('details',{class:'ejc'+(done[e.n]?' done':''),id:'ej'+e.n});
+    const sum=h('summary',{},h('span',{class:'num'},e.n),h('span',{class:'tt'},h('b',{},e.t),h('span',{},e.s)));
+    const inn=h('div',{class:'in'});
+    inn.append(h('div',{class:'enun',html:e.enun}));
+    if(e.img&&IM[e.img])inn.append(h('img',{class:'fig',src:IM[e.img],alt:'Figura del ejercicio '+e.n}));
+    if(e.rev)inn.append(h('div',{class:'revnote',html:'<b>Revisar</b>'+e.rev}));
+    if(e.extra)inn.append(h('div',{html:e.extra}));
+    const pistas=h('div',{class:'pistas'});let k=0;
+    const bP=h('button',{type:'button'},'Dame una pista');
+    const bS=h('button',{type:'button'},'Ver resolución');
+    const sol=h('div',{class:'sol',hidden:'',html:'<b>Resolución</b>'+e.sol});
+    bP.addEventListener('click',()=>{if(k<e.pistas.length){pistas.append(h('div',{class:'pista',html:'<b>Pista '+(k+1)+' de '+e.pistas.length+'</b>'+e.pistas[k]}));k++;typeset(pistas);}
+      if(k>=e.pistas.length){bP.disabled=true;bP.textContent='No hay más pistas';}else bP.textContent='Otra pista ('+k+'/'+e.pistas.length+')';});
+    bS.addEventListener('click',()=>{sol.hidden=!sol.hidden;bS.textContent=sol.hidden?'Ver resolución':'Ocultar resolución';if(!sol.hidden)typeset(sol);});
+    const bD=h('button',{type:'button','aria-pressed':!!done[e.n]},done[e.n]?'Hecho ✓':'Marcar como hecho');
+    bD.addEventListener('click',()=>{done[e.n]=!done[e.n];save();d.classList.toggle('done',!!done[e.n]);bD.setAttribute('aria-pressed',!!done[e.n]);bD.textContent=done[e.n]?'Hecho ✓':'Marcar como hecho';prog();});
+    const refs=(e.ref||[]).map(r=>h('span',{html:T(r[0],r[1],(((window.A1||{}).vlab||{})[r[0]]||('Clase '+r[0]))+' · '+r[1])+' <span class="c-mut" style="font-size:14px">'+r[2]+'</span>'}));
+    inn.append(h('div',{class:'act'},bP,bS,bD),pistas);
+    if(e.chk){const inp=h('input',{type:'text',inputmode:'text','aria-label':e.chk.p,placeholder:'ej.: 1,5 2'});const res=h('span',{class:'res'});
+      const go=()=>{const v=parse(inp.value);if(!v.length||v.some(isNaN)){res.className='res bad';res.textContent='Escribí números separados por espacio o ";".';return;}
+        if(v.length!==e.chk.vals.length){res.className='res bad';res.textContent='Faltan o sobran valores: se esperan '+e.chk.vals.length+'.';return;}
+        const bad=[];e.chk.vals.forEach((t,i)=>{if(Math.abs(v[i]-t)>Math.max(.006*Math.abs(t),.015))bad.push(i+1);});
+        if(!bad.length){res.className='res ok';res.textContent='Correcto.';}else{res.className='res bad';res.textContent='No coinciden los valores n.º '+bad.join(', ')+'. Revisá esas cuentas.';}};
+      inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+      inn.append(h('div',{class:'chk'},h('span',{},'Comprobar: '+e.chk.p),inp,h('button',{type:'button',onclick:go},'Comprobar'),res));}
+    inn.append(sol);
+    if(refs.length){const r=h('div',{class:'meta',style:'margin-top:8px'},h('span',{},'Teoría relacionada:'),...refs);inn.append(r);}
+    d.append(sum,inn);list.append(d);});
+  prog();}
+function fixWide(root){(root||document).querySelectorAll('mjx-container:not([display="true"])').forEach(m=>{m.classList.remove('wide');const p=m.parentElement;if(p&&m.getBoundingClientRect().width>p.getBoundingClientRect().width+1)m.classList.add('wide');});}
+function typeset(el){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>fixWide(el)).catch(()=>{});}
+window.G1ej={build,typeset,fixWide};
+})();
+(function(){'use strict';
+const {$,$$,h}=window.G1;const V=window.G1V;const CFG=window.A1||{};const VID=CFG.vid||{};const QZ=CFG.quiz||{};const KEY=CFG.key||'a1';
+
+function buildQuiz(id,data){const host=$('#'+id);if(!host)return;let score=0,ans=0;const sc=h('span',{class:'c-mut',style:'font:600 13.5px var(--f-mono)'},'');
+  const head=h('div',{class:'qh'},h('b',{},data.t),sc,h('button',{type:'button',onclick:()=>{host.textContent='';buildQuiz(id,data);window.G1ej.typeset(host);}},'Reiniciar'));
+  host.append(head);const upd=()=>{sc.textContent=ans?(score+' de '+data.qs.length+' correctas'):'';};
+  data.qs.forEach((q,qi)=>{const o=h('div',{class:'o'});const box=h('div',{class:'q'},h('div',{class:'p',html:(qi+1)+'. '+q.p}),o);let why=null;
+    const ord=q.o.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+    ord.forEach(i=>{const t=q.o[i];const b=h('button',{type:'button',html:t});b.dataset.k=i;b.addEventListener('click',()=>{if(why)return;ans++;const ok=i===q.c;if(ok)score++;b.classList.add(ok?'right':'wrong');if(!ok)o.querySelector('[data-k="'+q.c+'"]').classList.add('right');
+      why=h('div',{class:'why',html:'<b class="'+(ok?'ok':'bad')+'">'+(ok?'Correcto. ':'No. ')+'</b>'+q.w});box.append(why);window.G1ej.typeset(box);upd();});o.append(b);});host.append(box);});
+}
+
+/* ---------- vínculos a YouTube ---------- */
+function linkify(){$$('a.t[data-v]').forEach(a=>{const [m,s]=a.dataset.t.split(':').map(Number),sec=m*60+s;a.href='https://youtu.be/'+VID[a.dataset.v]+'?t='+sec;a.target='_blank';const f=a.firstChild;if(f&&f.nodeType===3&&/^\d+:\d\d/.test(f.nodeValue))f.nodeValue=f.nodeValue.replace(/^(\d+:\d\d)/,((CFG.vlab&&CFG.vlab[a.dataset.v])||('Cl. '+a.dataset.v))+' · $1');a.rel='noopener';a.title='Abrir el video en '+a.dataset.t;});}
+
+/* ---------- barra de herramientas, tema, navegación ---------- */
+function ui(){
+  document.addEventListener('click',e=>{const b=e.target.closest('button.go');if(!b)return;const api=(window.A1API||{})[b.dataset.viz];const el=document.getElementById(b.dataset.viz);
+    if(api&&api.set)api.set(b.dataset.p);if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('toggle',e=>{if(e.target.open)window.G1ej.fixWide(e.target);},true);
+  $('#b-open').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=true);window.G1ej.fixWide(document);});
+  $('#b-close').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=false);});
+  const br=$('#b-rev');br.addEventListener('click',()=>{const on=br.getAttribute('aria-pressed')!=='true';br.setAttribute('aria-pressed',on);document.body.classList.toggle('no-rev',!on);try{localStorage.setItem(KEY+'-rev',on?'1':'0');}catch(e){}});
+  try{if(localStorage.getItem(KEY+'-rev')==='0'){br.setAttribute('aria-pressed','false');document.body.classList.add('no-rev');}}catch(e){}
+  const bt=$('#b-theme');let mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+  const apply=()=>{const r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];};
+  bt.addEventListener('click',()=>{mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();
+  const links=$$('#nav a'),secs=links.map(a=>$(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));}
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{const id=a.getAttribute('href');if(id==='#ejercicios'){}}));
+}
+
+function init(){
+  window.G1ej.build();
+  const map=CFG.viz||{};
+  Object.keys(map).forEach(id=>{const el=$('#'+id);if(!el)return;try{V[map[id]](el);}catch(err){console.error('viz',id,err);el.append(h('p',{class:'hint'},'No se pudo cargar esta figura.'));}});
+  Object.keys(QZ).forEach(id=>buildQuiz(id,QZ[id]));
+  linkify();ui();
+  const go=()=>{if(window.MathJax&&MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(()=>MathJax.typesetPromise()).then(()=>{window.G1ej.fixWide(document);let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>window.G1ej.fixWide(document),200);});}).catch(e=>console.error(e));};
+  if(document.readyState==='complete')go();else window.addEventListener('load',go);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+</body>
+</html>

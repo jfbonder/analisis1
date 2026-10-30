@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Anexo de Integración</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<style>@media (max-width:480px){main mjx-container[display="true"]{font-size:86%}}</style>
+<div class="shell">
+<aside class="side" aria-label="Índice">
+  <a class="volver" href="index.html" style="display:block;margin:0 0 .6rem;font-size:.85rem;color:var(--accent,#2b59c3);text-decoration:none">&larr; Portada</a><div class="brand">Análisis 1 · FCEN-UBA</div>
+  <h2>Anexo de Integración</h2>
+  <nav id="nav">
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#t1">Teorema fundamental<small>F(x) = ∫ f es derivable</small></a>
+    <a href="#t2">Regla de Barrow<small>y cambio de variable en R</small></a>
+    <a href="#t3">Cambio de variables<small>En integrales dobles</small></a>
+    <div class="sep"></div>
+    <a href="#ejercicios">Ejercicios<small>Para practicar</small></a>
+  </nav>
+</aside>
+<main>
+<div class="tools" role="toolbar" aria-label="Opciones">
+  <button id="b-open">Abrir todo</button>
+  <button id="b-close">Cerrar todo</button>
+  <span class="sp"></span>
+  <button id="b-rev" aria-pressed="true" title="Mostrar u ocultar las marcas de revisión (para el docente)">Marcas de revisión</button>
+  <button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="kick">Anexo teórico · acompaña a las Guías 8 y 9</div>
+  <h1>Anexo de Integración: teoremas sobre integración</h1>
+  <p class="lead">Las demostraciones de los resultados que se usan para calcular integrales: el teorema fundamental del cálculo, la regla de Barrow, el cambio de variable en la integral simple y la idea de la fórmula de cambio de variables en integrales múltiples, con el jacobiano.</p>
+  <div class="map">
+    <a href="#t1"><em>Parte 1</em><b>Teorema fundamental del cálculo</b><span>$F(x)=\int_a^xf(t)\,dt$ es continua, derivable, y $F'(x)=f(x)$.</span></a>
+    <a href="#t2"><em>Parte 1</em><b>Barrow y cambio de variable en $\R$</b><span>$\int_a^bf=G(b)-G(a)$ y $\int_{g(a)}^{g(b)}f(t)\,dt=\int_a^bf(g(u))g'(u)\,du$.</span></a>
+    <a href="#t3"><em>Partes 1 y 2</em><b>Cambio de variables en $\R^2$</b><span>Transformaciones afines, paralelogramos, $|\det|$ y la linealización con el jacobiano.</span></a>
+  </div>
+  <div class="legend">
+    <span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+    <span><span class="tag vid">Video</span> se dijo en el video pero no está en la hoja</span>
+    <span><span class="tag add">Agregado</span> no se dijo en clase</span>
+    <span><span class="tag rev">Revisar</span> dudoso, a confirmar por el docente</span>
+    <span><a class="t" data-v="a" data-t="0:00">m:ss</a> abre el video en ese minuto</span>
+  </div>
+  <p class="hint">Las integrales en $\R$, $\R^2$ y $\R^3$ están en la <a href="guia8.html">Guía 8</a>; el teorema de cambio de variables se usa en la Guía 9.</p>
+</section>
+
+<!-- ======================= TFC ======================= -->
+<section class="clase" id="t1">
+<header>
+  <div class="kick">ANEXO DE INTEGRACIÓN, PARTE 1</div>
+  <h2>El teorema fundamental del cálculo</h2>
+  <div class="meta"><a class="t" data-v="a" data-t="0:00">Anexo de Integración, parte 1</a><span>Hoja: "Anexo: Teoremas sobre integración", págs. 1 a 4.</span></div>
+</header>
+<div class="box thm"><span class="lab">Teorema 1 (fundamental del cálculo) <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="0:36">0:36</a></span>
+<p>Sea $f:[a,b]\to\R$ continua y, para $x\in[a,b]$, $F(x)=\displaystyle\int_a^xf(t)\,dt$. Entonces $F:[a,b]\to\R$ es continua, es derivable en $(a,b)$ y
+$$F'(x)=f(x).$$</p>
+<p class="hint"><span class="tag vid">Video</span> Si $f\gt0$, $F(x)$ es el área bajo el gráfico hasta $x$. <a class="t" data-v="a" data-t="2:38">2:38</a></p></div>
+<div class="box obs"><span class="lab c-blue">Propiedades que se usan <span class="tag vid">Video</span> <a class="t" data-v="a" data-t="3:38">3:38</a></span>
+<p>Para $f$, $g$ continuas, salen de la definición de integral de Riemann:</p>
+<p>(i) $\int_a^af=0$. (ii) Si $a\lt x\lt b$: $\int_a^xf+\int_x^bf=\int_a^bf$. (iii) Si $f\le g$: $\int_a^bf\le\int_a^bg$. (iv) $\Big|\int_a^bf\Big|\le\int_a^b|f|$.</p>
+<p class="hint"><span class="tag piz">Pizarrón</span> (iv) sale de (iii): $g\le|g|$ y $-g\le|g|$, e integrando, $\pm\int_a^bg\le\int_a^b|g|$. <a class="t" data-v="a" data-t="5:40">5:40</a></p></div>
+<details class="dem" open><summary>Demostración: continuidad <a class="t" data-v="a" data-t="6:41">6:41</a></summary><div class="in">
+<p>Observación: si $x=a$, $F(a)=\int_a^af=0$. Sean $x,x'\in[a,b]$, $x\lt x'$. Por (ii),
+$$F(x')-F(x)=\int_a^{x'}f(t)\,dt-\int_a^xf(t)\,dt=\int_x^{x'}f(t)\,dt.$$
+Como $f$ es continua en $[a,b]$, $|f|$ alcanza un máximo: hay $M$ con $|f(t)|\le M$ para todo $t\in[a,b]$. Entonces, por (iv) y (iii),
+$$\begin{aligned}|F(x')-F(x)|&=\Big|\int_x^{x'}f(t)\,dt\Big|\le\int_x^{x'}|f(t)|\,dt\\&\le\int_x^{x'}M\,dt=M\,(x'-x).\end{aligned}$$
+Es decir, $|F(x')-F(x)|\le M|x'-x|$, y $F$ es continua en $[a,b]$. $\blacksquare$</p>
+<p class="hint"><span class="tag vid">Video</span> En la clase se hace con límites laterales: $x\to x_0^+$ (que sirve también para $x_0=a$) y, cambiando los roles, $x\to x_0^-$ (que sirve para $x_0=b$). <a class="t" data-v="a" data-t="11:44">11:44</a> <a class="t" data-v="a" data-t="13:45">13:45</a></p></div></details>
+<details class="dem" open><summary>Demostración: $F'(x)=f(x)$ <a class="t" data-v="a" data-t="14:47">14:47</a></summary><div class="in">
+<p>$F(x+h)-F(x)=\displaystyle\int_x^{x+h}f(t)\,dt$.</p>
+<p><b>Si $h\gt0$:</b> $f$ es continua en $[x,x+h]$ y alcanza máximo y mínimo (absolutos) ahí: hay $y_h,z_h\in[x,x+h]$ con $f(y_h)\le f(t)\le f(z_h)$ para todo $t\in[x,x+h]$. Integrando,
+$$\begin{aligned}f(y_h)\cdot h=\int_x^{x+h}f(y_h)\,dt&\le\int_x^{x+h}f(t)\,dt\\&\le\int_x^{x+h}f(z_h)\,dt=f(z_h)\cdot h,\end{aligned}$$
+o sea $f(y_h)\,h\le F(x+h)-F(x)\le f(z_h)\,h$. Dividimos todo por $h\gt0$:
+$$f(y_h)\le\frac{F(x+h)-F(x)}{h}\le f(z_h).$$
+Como $y_h,z_h\in[x,x+h]$, cuando $h\to0^+$ tienden a $x$, y por la continuidad de $f$, $f(y_h)\to f(x)$ y $f(z_h)\to f(x)$. Tomando límite: $\displaystyle\lim_{h\to0^+}\frac{F(x+h)-F(x)}{h}=f(x)$.</p>
+<p><b>Si $h\lt0$:</b> $F(x+h)-F(x)=-\big(F(x)-F(x+h)\big)=-\displaystyle\int_{x+h}^xf(t)\,dt$. En $[x+h,x]$, $f$ alcanza un mínimo $f(y_h)$ y un máximo $f(z_h)$, y
+$$-h\,f(y_h)\le\int_{x+h}^xf(t)\,dt\le-h\,f(z_h),$$ es decir $$-h\,f(y_h)\le-\big[F(x+h)-F(x)\big]\le-h\,f(z_h).$$
+Dividimos todo por $-h\gt0$: $f(y_h)\le\frac{F(x+h)-F(x)}{h}\le f(z_h)$, y el límite cuando $h\to0^-$ también es $f(x)$.</p>
+<p>Entonces $\displaystyle\lim_{h\to0}\frac{F(x+h)-F(x)}{h}=f(x)$: $F'(x)=f(x)$. $\blacksquare$</p>
+<p class="hint"><span class="tag vid">Video</span> En la clase los puntos se llaman $c_x$ y $d_x$, "para entender que hay una dependencia de quién es $x$", y el argumento final es por sándwich. <a class="t" data-v="a" data-t="15:47">15:47</a> <a class="t" data-v="a" data-t="19:51">19:51</a></p></div></details>
+<div class="viz" id="viz-tfc"></div>
+<div class="quiz" id="quiz-1"></div>
+</section>
+
+<!-- ======================= BARROW Y CAMBIO EN R ======================= -->
+<section class="clase" id="t2">
+<header>
+  <div class="kick">ANEXO DE INTEGRACIÓN, PARTE 1</div>
+  <h2>La regla de Barrow y el cambio de variable en $\R$</h2>
+  <div class="meta"><a class="t" data-v="a" data-t="23:59">Anexo de Integración, parte 1, desde 23:59</a><span>Hoja: págs. 4 a 6.</span></div>
+</header>
+<div class="box thm"><span class="lab">Teorema 2 (regla de Barrow) <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="23:59">23:59</a></span>
+<p>Sea $f:[a,b]\to\R$ continua, y sea $G:[a,b]\to\R$ continua en $[a,b]$, derivable en $(a,b)$, con $G'(x)=f(x)$ ($G$ es una primitiva de $f$). Entonces
+$$\int_a^bf(t)\,dt=G(b)-G(a).$$</p></div>
+<details class="dem" open><summary>Demostración <a class="t" data-v="a" data-t="25:01">25:01</a></summary><div class="in">
+<p>Por el teorema fundamental, $F(x)=\int_a^xf(t)\,dt$ es <b>otra</b> primitiva de $f$, con la característica $F(a)=0$. $F$ y $G$ son dos primitivas de $f$:
+$$(F-G)'=f-f=0\ \text{ en }(a,b)\quad\Longrightarrow\quad F-G=\text{cte}.$$
+(Ejercicio: $h'=0$ en $(a,b)$ y $h$ continua en $[a,b]$ $\Rightarrow$ $h$ constante; sale del teorema del valor medio de Lagrange.) En particular, en $x=a$: $F(a)-G(a)=\text{cte}$, y como $F(a)=0$, la constante es $-G(a)$. Entonces $F(x)-G(x)=-G(a)$ para todo $x\in[a,b]$. Poniendo $x=b$: $F(b)-G(b)=-G(a)$, o sea
+$$\int_a^bf(t)\,dt=F(b)=G(b)-G(a).\qquad\blacksquare$$
+<a class="t" data-v="a" data-t="27:03">27:03</a> <a class="t" data-v="a" data-t="29:05">29:05</a></p></div></details>
+<div class="box thm"><span class="lab">Teorema 3 (fórmula de cambio de variable en la integral simple) <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="31:05">31:05</a></span>
+<p>Si $f$ es continua y $g$ es derivable con $g'$ continua ($g$ es $C^1$),
+$$\int_{g(a)}^{g(b)}f(t)\,dt=\int_a^bf\big(g(u)\big)\,g'(u)\,du.$$
+Es la sustitución $t=g(u)$, $dt=g'(u)\,du$: si $u=a$, $t=g(a)$; si $u=b$, $t=g(b)$.</p>
+<p class="hint"><span class="tag vid">Video</span> "No vamos a poner exactamente dónde la pensamos definida" a $f$. <span class="tag add">Agregado</span> Hace falta que $f$ sea continua en un intervalo que contenga a $g([a,b])$, para que $f(g(u))$ tenga sentido. <a class="t" data-v="a" data-t="31:05">31:05</a></p></div>
+<details class="dem" open><summary>Demostración <a class="t" data-v="a" data-t="32:10">32:10</a></summary><div class="in">
+<p>Sean $H(x)=\displaystyle\int_{g(a)}^{g(x)}f(t)\,dt$ y $K(x)=\displaystyle\int_a^xf\big(g(u)\big)\,g'(u)\,du$. Hay que ver que $H(b)=K(b)$. Calculamos $H'$ y $K'$.</p>
+<p>Por el teorema fundamental (el integrando $f(g(u))g'(u)$ es continuo): $K'(x)=f\big(g(x)\big)\,g'(x)$.</p>
+<p>$H$ es una composición: con $L(y)=\int_{g(a)}^yf(t)\,dt$ es $H(x)=L\big(g(x)\big)$. Por la regla de la cadena y el teorema fundamental ($L'(y)=f(y)$):
+$$H'(x)=L'\big(g(x)\big)\,g'(x)=f\big(g(x)\big)\,g'(x).$$
+Entonces $K'=H'$ y $K-H$ es constante. En $x=a$: $H(a)=\int_{g(a)}^{g(a)}f=0$ y $K(a)=\int_a^a=0$, así que $K(x)=H(x)$ para todo $x$; en particular en $x=b$: $K(b)=H(b)$. $\blacksquare$</p>
+<p class="hint"><span class="tag vid">Video</span> "Hay que tener mucho cuidado": el teorema fundamental sabe derivar cuando en el límite de arriba está la variable; con $g(x)$ arriba, es una composición. En la clase las funciones se llaman $G$ y $H$. <a class="t" data-v="a" data-t="35:16">35:16</a> <a class="t" data-v="a" data-t="36:17">36:17</a> <a class="t" data-v="a" data-t="38:21">38:21</a></p></div></details>
+<div class="quiz" id="quiz-2"></div>
+</section>
+
+<!-- ======================= CAMBIO EN R2 ======================= -->
+<section class="clase" id="t3">
+<header>
+  <div class="kick">ANEXO DE INTEGRACIÓN, PARTES 1 Y 2</div>
+  <h2>Cambio de variables en integrales múltiples</h2>
+  <div class="meta"><a class="t" data-v="a" data-t="40:22">Parte 1, desde 40:22</a> <a class="t" data-v="b" data-t="0:00">Parte 2</a><span>Hoja: págs. 7 a 10.</span></div>
+</header>
+<div class="box thm"><span class="lab">Teorema 4 (fórmula de cambio de variables en $\R^2$) <a class="t" data-v="a" data-t="41:22">41:22</a></span>
+<p>Sea $T:D^*\to D$, $T(u,v)=\big(x(u,v),y(u,v)\big)$, biyectiva, $C^1$, con $T^{-1}$ también $C^1$, y $f:D\to\R$ integrable. Entonces
+$$\iint_Df(x,y)\,dA(x,y)=\iint_{D^*}f\big(T(u,v)\big)\,\big|JT(u,v)\big|\,dA(u,v),$$
+donde $JT=\det DT$ es el jacobiano de $T$.</p>
+<p class="hint"><span class="tag vid">Video</span> $f(T(u,v))$ también se escribe $f\big(x(u,v),y(u,v)\big)$. La idea es reescribir una región molesta para integrar ($D$) como la imagen de una más fácil ($D^*$, muchas veces un rectángulo); el módulo del jacobiano "arregla el cambio del área". <a class="t" data-v="a" data-t="43:24">43:24</a> <a class="t" data-v="a" data-t="44:26">44:26</a></p></div>
+<p><span class="tag vid">Video</span> La idea de la demostración es <b>linealizar</b>: primero el caso en que $T$ es afín, y después aproximar una $T$ de clase $C^1$ por su linealización ("el plano tangente de $x$ por un lado y el de $y$ por otro"). <a class="t" data-v="a" data-t="45:26">45:26</a></p>
+
+<h3 class="b">El caso afín <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="a" data-t="46:30">46:30</a></h3>
+<p>$T$ es lineal en cada coordenada: $x=a_1u+b_1v+c_1$, $y=a_2u+b_2v+c_2$. Es decir, $T(v)=Mv+C$ con $M=\begin{pmatrix}a_1&b_1\\a_2&b_2\end{pmatrix}$ y $C=(c_1,c_2)$: una <b>transformación afín</b> ("matriz por vector, corrida").</p>
+<div class="box thm"><span class="lab">Propiedad <a class="t" data-v="a" data-t="48:31">48:31</a></span>
+<p>Si $T(v)=Mv+C$ y $D^*$ es un paralelogramo, $T(D^*)$ es un paralelogramo y
+$$\text{área}\big(T(D^*)\big)=|\det M|\cdot\text{área}(D^*).$$
+Si $|\det M|\lt1$, $T$ comprime el área; si $|\det M|=1$, la conserva; si $|\det M|\gt1$, la estira.</p></div>
+<details class="dem" open><summary>Demostración <a class="t" data-v="a" data-t="51:32">51:32</a></summary><div class="in">
+<p>Un paralelogramo es $D^*=\{P+s\,b+t\,w:\ s,t\in[0,1]\}$, con $b$ y $w$ linealmente independientes. Por la linealidad de $M$,
+$$\begin{aligned}T(P+sb+tw)&=M(P+sb+tw)+C\\&=(MP+C)+s\,Mb+t\,Mw:\end{aligned}$$
+otro paralelogramo, con vértice $MP+C$ y lados $Mb$ y $Mw$.</p>
+<p>Para las áreas: el área de un paralelogramo es "base por altura", $|b|\,|w|\operatorname{sen}\theta=\|b\times w\|$, y esto es $\Big|\det\begin{pmatrix}b\\w\end{pmatrix}\Big|$ (en filas o en columnas; ejercicio). Entonces
+$$\begin{aligned}\text{área}\big(T(D^*)\big)&=\Big|\det\begin{pmatrix}Mb\\Mw\end{pmatrix}\Big|=\Big|\det\big(M\,(b\ \ w)\big)\Big|\\&=|\det M|\,\Big|\det\begin{pmatrix}b\\w\end{pmatrix}\Big|=|\det M|\,\text{área}(D^*),\end{aligned}$$
+usando $\det(AB)=\det A\det B$ y $\det A^t=\det A$. $\blacksquare$ <a class="t" data-v="a" data-t="56:36">56:36</a> <a class="t" data-v="a" data-t="60:42">60:42</a> <a class="t" data-v="b" data-t="0:35">0:35 (p. 2)</a></p>
+<p class="hint"><span class="tag vid">Video</span> Si $C=0$, $T$ es lineal y manda vértices en vértices: para conocer la imagen de un paralelogramo alcanza con calcular las imágenes de sus vértices, "muy útil en los ejercicios". <a class="t" data-v="b" data-t="1:35">1:35 (p. 2)</a></p>
+<div class="revnote"><b>Revisar</b>Al final de la parte 1 (60:42) se dice "terminamos la demostración del teorema de cambio de variables en dimensión 1"; por el contexto es la propiedad de los paralelogramos (la parte 2 retoma esa cuenta).</div></div></details>
+<div class="viz" id="viz-afin"></div>
+
+<h3 class="b">El caso general <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="b" data-t="2:35">2:35 (p. 2)</a></h3>
+<p>Se cuadricula $D^*$ en rectángulos $R^*_{ij}$ (lados $\Delta u$, $\Delta v$, vértice $(u_i,v_j)$). $T$ los lleva a regiones curvadas $D_{ij}=T(R^*_{ij})$, que forman una partición de $D$. Se usa que
+$\iint_Df(x,y)\,dA(x,y)$ es el límite de las sumas de Riemann "curvadas" $$\sum_{j=1}^m\sum_{i=1}^nf\big(T(u_i,v_j)\big)\cdot\text{área}(D_{ij}).$$</p>
+<p class="hint"><span class="tag vid">Video</span> Que se puede particionar con estos "rectángulos curvados" en lugar de rectángulos "se puede demostrar, y nos lo vamos a creer". Es importante que cada región se pegue con la otra solo en un lado. <a class="t" data-v="b" data-t="6:39">6:39</a> <a class="t" data-v="b" data-t="7:40">7:40</a></p>
+<div class="box obs"><span class="lab c-blue">Cómo aproximar $\text{área}(D_{ij})$ <span class="tag piz">Pizarrón</span></span>
+<p>$D_{ij}$ se parece al paralelogramo tangente $P_{ij}$: el lado de $T(u_i,v_j)$ a $T(u_{i+1},v_j)$ es aproximadamente "vector velocidad por tiempo transcurrido", $T_u(u_i,v_j)\,\Delta u$, y el otro $T_v(u_i,v_j)\,\Delta v$. Entonces $\text{área}(D_{ij})\approx\text{área}(P_{ij})$, y
+$$\text{área}(P_{ij})=\Big|\det\begin{pmatrix}T_u(u_i,v_j)\,\Delta u\\T_v(u_i,v_j)\,\Delta v\end{pmatrix}\Big|=\Delta u\,\Delta v\,\big|JT(u_i,v_j)\big|.$$</p>
+<p class="hint"><span class="tag vid">Video</span> Es la linealización: $T(v)\approx T(P_{ij})+DT(P_{ij})\,(v-P_{ij})$ más "cosas chiquitas", más chicas en orden que $|v-P_{ij}|$ (Taylor en cada coordenada). La parte principal es una transformación afín con matriz $DT(P_{ij})$, que multiplica el área por $|\det DT(P_{ij})|=|JT(P_{ij})|$. <a class="t" data-v="b" data-t="11:42">11:42</a> <a class="t" data-v="b" data-t="12:44">12:44</a> <a class="t" data-v="b" data-t="17:50">17:50</a></p></div>
+<div class="box thm"><span class="lab">Conclusión <span class="tag piz">Pizarrón</span> <a class="t" data-v="b" data-t="18:53">18:53</a></span>
+<p>$$\begin{aligned}\iint_Df(x,y)\,dA&=\lim\sum_{j=1}^m\sum_{i=1}^nf\big(T(u_i,v_j)\big)\,\text{área}(D_{ij})\\&=\lim\sum_{j=1}^m\sum_{i=1}^nf\big(T(u_i,v_j)\big)\,\big|JT(u_i,v_j)\big|\,\Delta u\,\Delta v.\end{aligned}$$
+La última es una suma de Riemann de la función $f(T(u,v))\,|JT(u,v)|$ en la partición de $D^*$, así que el límite es
+$$\iint_{D^*}f\big(T(u,v)\big)\,\big|JT(u,v)\big|\,dA(u,v).$$</p>
+<p class="hint"><span class="tag vid">Video</span> No es una prueba completa: se "desprecian" los términos chicos de la linealización y se acepta lo de las particiones curvadas. <a class="t" data-v="b" data-t="16:48">16:48</a></p></div>
+<div class="viz" id="viz-jac"></div>
+<div class="box obs"><span class="lab c-blue">En $\R^3$ <span class="tag piz">Pizarrón</span> <a class="t" data-v="b" data-t="21:55">21:55 (p. 2)</a></span>
+<p>Misma idea, con paralelepípedos: el volumen del paralelepípedo generado por $A$, $B$, $C$ es
+$$\text{vol}(P_{ijk})=|\langle A,B\times C\rangle|=|A\cdot(B\times C)|,$$ $$|A\cdot(B\times C)|=\Big|\det\begin{pmatrix}A\\B\\C\end{pmatrix}\Big|\quad\text{(ejercicio)}.$$
+<span class="tag vid">Video</span> "La demostración para el espacio es exactamente la misma."</p></div>
+<div class="quiz" id="quiz-3"></div>
+</section>
+
+<!-- ======================= EJERCICIOS ======================= -->
+<section class="clase" id="ejercicios">
+<header>
+  <div class="kick">EJERCICIOS · <span class="tag add">Agregado</span></div>
+  <h2>Ejercicios para practicar</h2>
+  <div class="meta"><span>No son de la práctica: están pensados para repasar las demostraciones del anexo. Los dos de determinantes son los "ejercicios" que deja la hoja.</span></div>
+</header>
+<div class="ctl" style="margin-bottom:14px"><span class="c-mut" id="ejprog" style="font:600 13.5px var(--f-mono)"></span></div>
+<div class="ejlist" id="ejlist"></div>
+</section>
+
+<div class="foot">Material basado en el Anexo de Integración (partes 1 y 2) del canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a> y en la hoja "Anexo: Teoremas sobre integración". Las secciones marcadas como <span class="tag add">Agregado</span> son material nuevo. Versión preliminar, para revisar antes de compartir.</div>
+</main>
+</div>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],macros:{"R": "\\mathbb{R}", "v": ["\\mathbf{#1}", 1], "ang": ["\\langle #1\\rangle", 1], "jh": "\\hat{\\jmath}"}},svg:{fontCache:'none'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']},startup:{typeset:false}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>
+window.G1IMG={};
+(function(){'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>Array.from(r.querySelectorAll(q));
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in (attrs||{})){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});return e;}
+function sv(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const f=(x,d=2)=>{let v=Number(Number(x).toFixed(d));if(Object.is(v,-0)||Math.abs(v)<1e-12)v=0;return String(v).replace('.',',').replace('-','−');};
+const fv=(v,d=2)=>'⟨'+v.map(x=>f(x,d)).join('; ')+'⟩';
+const fp=(v,d=2)=>'('+v.map(x=>f(x,d)).join('; ')+')';
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const add=(a,b)=>a.map((x,i)=>x+b[i]), sub=(a,b)=>a.map((x,i)=>x-b[i]), mul=(a,t)=>a.map(x=>x*t);
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), nrm=a=>Math.sqrt(dot(a,a));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=nrm(a);return n?mul(a,1/n):a;};
+const CL={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',violet:'var(--violet)',ink:'var(--ink)',mut:'var(--ink-2)',amber:'var(--amber)'};
+const TT={blue:'var(--blue-t)',red:'var(--red-t)',green:'var(--green-t)',violet:'var(--violet-t)'};
+
+function arrow(g,x1,y1,x2,y2,col,w,head){w=w||2.6;head=head||11;const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);if(L<1.5)return;
+  const ux=dx/L,uy=dy/L,hl=Math.min(head,L*.7),bx=x2-ux*hl,by=y2-uy*hl;
+  sv('line',{x1,y1,x2:bx,y2:by,style:`stroke:${col};stroke-width:${w};stroke-linecap:round`},g);
+  sv('polygon',{points:`${x2},${y2} ${bx-uy*hl*.42},${by+ux*hl*.42} ${bx+uy*hl*.42},${by-ux*hl*.42}`,style:`fill:${col}`},g);}
+function line(g,x1,y1,x2,y2,col,w,dash){return sv('line',{x1,y1,x2,y2,style:`stroke:${col};stroke-width:${w||1.5};${dash?'stroke-dasharray:'+dash+';':''}stroke-linecap:round`},g);}
+function text(g,x,y,t,col,anchor,cls){const e=sv('text',{x,y,'text-anchor':anchor||'middle',style:`fill:${col||CL.ink}`,class:cls||''},g);e.textContent=t;return e;}
+
+/* ---------- control helpers ---------- */
+function slider(label,o,cb){const inp=h('input',{type:'range',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':label});
+  const val=h('span',{},'');const upd=()=>{val.textContent=f(+inp.value,o.dec==null?1:o.dec)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();cb(+inp.value);});upd();
+  const l=h('label',{},label,inp,val);l.input=inp;l.set=v=>{inp.value=v;upd();};return l;}
+function numbox(o,cb){const i=h('input',{type:'number',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':o.label});
+  i.addEventListener('input',()=>{let v=parseFloat(i.value);if(isNaN(v))return;v=Math.max(o.min,Math.min(o.max,v));cb(v);});return i;}
+function tabs(names,cb,start){const bs=names.map((n,i)=>h('button',{type:'button','aria-pressed':i===(start||0)},n));
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===i));cb(i);}));return h('div',{class:'tabs'},bs);}
+function vhead(title,sub,tb){return h('div',{class:'vh'},h('b',{},title),sub?h('span',{},sub):null,tb||null);}
+
+/* ---------- plano 2D con puntos arrastrables ---------- */
+function Plane2D(host,o){
+  const xr=o.xr||[-6,6],yr=o.yr||[-4,4],W=o.W||640,sx=W/(xr[1]-xr[0]),H=sx*(yr[1]-yr[0]);
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Plano cartesiano interactivo'},host);
+  const X=x=>(x-xr[0])*sx,Y=y=>H-(y-yr[0])*sx;
+  const gb=sv('g',{},svg),gd=sv('g',{},svg),gh=sv('g',{},svg);
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){line(gb,X(x),0,X(x),H,'var(--grid)',1);if(x&&x%(o.tick||1)===0)text(gb,X(x),Y(0)+15,x,CL.mut,'middle','sm');}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){line(gb,0,Y(y),W,Y(y),'var(--grid)',1);if(y&&y%(o.ytick||o.tick||1)===0)text(gb,X(0)-7,Y(y)+4,y,CL.mut,'end','sm');}
+  arrow(gb,0,Y(0),W-2,Y(0),CL.mut,1.6,8);arrow(gb,X(0),H,X(0),2,CL.mut,1.6,8);
+  text(gb,W-10,Y(0)-8,o.xl||'x',CL.mut);text(gb,X(0)+12,12,o.yl||'y',CL.mut);
+  const api={svg,X,Y,sx,W,H,xr,yr,g:gd,handles:[]};
+  function toW(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x/sx+xr[0],(H-p.y)/sx+yr[0]];}
+  api.handle=function(obj,col,opt){opt=opt||{};const snap=opt.snap||.5,c=sv('circle',{r:11,class:'grab',tabindex:0,role:'slider','aria-label':opt.label||'Punto arrastrable',style:`fill:${col};stroke:var(--surface);stroke-width:3`},gh);
+    let drag=false;const clampSet=(x,y)=>{x=Math.round(x/snap)*snap;y=Math.round(y/snap)*snap;obj.x=Math.max(xr[0]+.3,Math.min(xr[1]-.3,x));obj.y=Math.max(yr[0]+.3,Math.min(yr[1]-.3,y));api.update();};
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);e.preventDefault();});
+    c.addEventListener('pointermove',e=>{if(!drag)return;const p=toW(e);clampSet(p[0],p[1]);});
+    const end=()=>{drag=false;};c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+    c.addEventListener('keydown',e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(d){e.preventDefault();clampSet(obj.x+d[0]*snap,obj.y+d[1]*snap);}});
+    api.handles.push({obj,c});return c;};
+  api.update=function(){gd.textContent='';o.draw(gd,api);api.handles.forEach(hd=>{hd.c.setAttribute('cx',X(hd.obj.x));hd.c.setAttribute('cy',Y(hd.obj.y));});if(o.onUpdate)o.onUpdate(api);};
+  return api;
+}
+
+/* ---------- vista 3D ortográfica, eje z hacia arriba, terna derecha ---------- */
+function View3D(host,o){
+  o=o||{};const W=o.W||640,H=o.H||430,scale=o.scale||40,ctr=o.ctr||[0,0,0];
+  const st={az:o.az==null?215:o.az,el:o.el==null?22:o.el};
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Vista tridimensional. Se puede girar arrastrando.'},host);
+  const g=sv('g',{},svg);
+  function P(p){const a=rad(st.az),e=rad(st.el),x=p[0]-ctr[0],y=p[1]-ctr[1],z=p[2]-ctr[2];
+    const x1=Math.cos(a)*x-Math.sin(a)*y,y1=Math.sin(a)*x+Math.cos(a)*y;
+    return [W/2+x1*scale,H/2-(z*Math.cos(e)+y1*Math.sin(e))*scale,y1*Math.cos(e)-z*Math.sin(e)];}
+  const api={svg,st,P,draw:null};
+  api.render=function(){g.textContent='';const polys=[],ops=[],txt=[];
+    const sc={
+      poly(pts,col,op,stroke){polys.push({pts:pts.map(P),col,op,stroke});},
+      line(a,b,col,w,dash){ops.push(()=>{const p=P(a),q=P(b);line(g,p[0],p[1],q[0],q[1],col,w,dash);});},
+      path(pts,col,w,dash,closed){ops.push(()=>{const q=pts.map(P);sv('polyline',{points:q.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' ')+(closed?' '+q[0][0].toFixed(1)+','+q[0][1].toFixed(1):''),style:`fill:none;stroke:${col};stroke-width:${w||1.4};${dash?'stroke-dasharray:'+dash+';':''}stroke-linejoin:round`},g);});},
+      arrow(a,b,col,w){ops.push(()=>{const p=P(a),q=P(b);arrow(g,p[0],p[1],q[0],q[1],col,w||2.8,11);});},
+      dot(a,col,r){ops.push(()=>{const p=P(a);sv('circle',{cx:p[0],cy:p[1],r:r||5,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);});},
+      disc(c,rpx,col){ops.push(()=>{const p=P(c);sv('circle',{cx:p[0],cy:p[1],r:rpx*scale,style:`fill:${col};stroke:none`},g);});},
+      text(a,t,col,dx,dy,anc){txt.push(()=>{const p=P(a);text(g,p[0]+(dx||0),p[1]+(dy||0),t,col,anc);});},
+      axes(L,neg){const ex=[[1,0,0,'x'],[0,1,0,'y'],[0,0,1,'z']];ex.forEach(e=>{const v=[e[0],e[1],e[2]];
+        if(neg!==false)sc.line(mul(v,-L),[0,0,0],'var(--line)',1.2,'4 4');
+        ops.push(()=>{const p=P([0,0,0]),q=P(mul(v,L));arrow(g,p[0],p[1],q[0],q[1],CL.mut,1.6,9);});
+        sc.text(mul(v,L*1.1),e[3],CL.mut,0,4);});},
+      box(lo,hi,col,op){const[x0,y0,z0]=lo,[x1,y1,z1]=hi;const C=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        [[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach(q=>sc.poly(q.map(i=>C[i]),col,op,col));},
+      patch(n,d,S,col,op,dashed){n=unit(n);const e=Math.abs(n[2])<.9?[0,0,1]:[1,0,0];const u=unit(cross(n,e)),v=cross(n,u),c=mul(n,d);
+        const q=[add(add(c,mul(u,S)),mul(v,S)),add(sub(c,mul(u,S)),mul(v,S)),sub(sub(c,mul(u,S)),mul(v,S)),sub(add(c,mul(u,S)),mul(v,S))];
+        sc.poly(q,col,op,col);if(dashed)sc.path(q,col,1.6,'6 5',true);return {q,c,n,u,v};},
+      circle(c,r,plane,col,w,dash){const pts=[];for(let i=0;i<=48;i++){const t=i/48*2*Math.PI,a=Math.cos(t)*r,b=Math.sin(t)*r;
+        pts.push(plane==='xy'?[c[0]+a,c[1]+b,c[2]]:plane==='xz'?[c[0]+a,c[1],c[2]+b]:[c[0],c[1]+a,c[2]+b]);}sc.path(pts,col,w||1.3,dash);},
+      surf(fn,ur,vr,nu,nv,col,op,stroke){for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const u0=ur[0]+(ur[1]-ur[0])*i/nu,u1=ur[0]+(ur[1]-ur[0])*(i+1)/nu,v0=vr[0]+(vr[1]-vr[0])*j/nv,v1=vr[0]+(vr[1]-vr[0])*(j+1)/nv;
+        const q=[fn(u0,v0),fn(u1,v0),fn(u1,v1),fn(u0,v1)];if(q.some(p=>!p||p.some(x=>!isFinite(x))))continue;polys.push({pts:q.map(P),col,op:op==null?.35:op,stroke:stroke||col,sw:.6});}},
+      sphere(c,r,col,dash){sc.disc(c,r,'var(--blue-t)');['xy','xz','yz'].forEach(p=>sc.circle(c,r,p,col||CL.blue,1.4,dash));
+        for(const k of[.5,-.5]){const rr=r*Math.sqrt(1-k*k);sc.circle([c[0],c[1],c[2]+r*k],rr,'xy',col||CL.blue,.9,dash);}}
+    };
+    if(api.draw)api.draw(sc);
+    polys.sort((a,b)=>mean(b.pts)-mean(a.pts));
+    polys.forEach(p=>{sv('polygon',{points:p.pts.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' '),style:`fill:${p.col};fill-opacity:${p.op==null?.25:p.op};stroke:${p.stroke||'none'};stroke-opacity:.55;stroke-width:${p.sw||1.2}`},g);});
+    ops.forEach(fn=>fn());txt.forEach(fn=>fn());};
+  function mean(pts){return pts.reduce((s,p)=>s+p[2],0)/pts.length;}
+  // arrastre para girar
+  let drag=null;svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,az:st.az,el:st.el};svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect(),k=W/r.width;st.az=drag.az-(e.clientX-drag.x)*k*.5;
+    if(e.pointerType==='mouse'){st.el=Math.max(-80,Math.min(85,drag.el+(e.clientY-drag.y)*k*.4));}
+    api.sync&&api.sync();api.render();});
+  const end=()=>{drag=null;};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  api.controls=function(){const a=slider('giro',{min:0,max:360,step:1,value:Math.round(((st.az%360)+360)%360),unit:'°',dec:0},v=>{st.az=v;api.render();});
+    const b=slider('inclinación',{min:-80,max:85,step:1,value:st.el,unit:'°',dec:0},v=>{st.el=v;api.render();});
+    api.sync=()=>{a.set(Math.round(((st.az%360)+360)%360));b.set(Math.round(st.el));};
+    const reset=h('button',{type:'button',onclick:()=>{st.az=o.az==null?215:o.az;st.el=o.el==null?22:o.el;api.sync();api.render();}},'Vista inicial');
+    return h('div',{class:'ctl'},a,b,reset);};
+  return api;
+}
+
+
+/* ---------- expresiones escritas por el usuario: expr('t^2-2t',['t']) -> función ---------- */
+function expr(src,vars){vars=vars||['x'];const s=String(src).replace(/\s+/g,'').replace(/\*\*/g,'^').replace(/π/g,'pi').replace(/θ/g,'th').replace(/·/g,'*').replace(/−/g,'-').replace(/,/g,'.');
+  const FN={sin:Math.sin,sen:Math.sin,cos:Math.cos,tan:Math.tan,tg:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,arcsen:Math.asin,arccos:Math.acos,arctan:Math.atan,sqrt:Math.sqrt,raiz:Math.sqrt,exp:Math.exp,ln:Math.log,log:Math.log,abs:Math.abs,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),sgn:Math.sign};
+  const C={pi:Math.PI,e:Math.E};let i=0;const err=m=>{throw new Error(m);};
+  const peek=()=>s[i];
+  function num(){const m=/^\d*\.?\d+(e[+-]?\d+)?/i.exec(s.slice(i));if(!m)err('número');i+=m[0].length;const v=parseFloat(m[0]);return ()=>v;}
+  function ident(){const m=/^[a-zA-Z_]+/.exec(s.slice(i));i+=m[0].length;let w=m[0];
+    // separar nombres pegados: "tsint" -> t, sin, t ; prioridad: funciones, constantes, variables
+    const names=[...Object.keys(FN),...Object.keys(C),...vars].sort((a,b)=>b.length-a.length);
+    const parts=[];while(w.length){const n=names.find(nm=>w.startsWith(nm));if(!n)err('nombre desconocido: '+w);parts.push(n);w=w.slice(n.length);}
+    return parts;}
+  function primary(){const c=peek();
+    if(c==='('){i++;const e=add_();if(peek()!==')')err('falta )');i++;return e;}
+    if(c==='|'){i++;const e=add_();if(peek()!=='|')err('falta |');i++;return v=>Math.abs(e(v));}
+    if(/[\d.]/.test(c))return num();
+    if(/[a-zA-Z_]/.test(c)){const parts=ident();
+      const build=k=>{const n=parts[k];
+        if(FN[n]){let arg;if(k+1<parts.length){arg=build(k+1);}else{arg=power();}const f=FN[n];return v=>f(arg(v));}
+        let a;if(n in C){const cv=C[n];a=()=>cv;}else{const j=vars.indexOf(n);a=v=>v[j];}
+        if(k+1<parts.length){const r=build(k+1);return v=>a(v)*r(v);}return a;};
+      return build(0);}
+    err('símbolo inesperado: '+(c||'fin'));}
+  function power(){const b=primary();if(peek()==='^'){i++;const e=unary();return v=>Math.pow(b(v),e(v));}return b;}
+  function unary(){if(peek()==='-'){i++;const u=unary();return v=>-u(v);}if(peek()==='+'){i++;return unary();}return power();}
+  function mul_(){let a=unary();for(;;){const c=peek();
+      if(c==='*'||c==='/'){i++;const b=unary(),l=a;a=c==='*'?(v=>l(v)*b(v)):(v=>l(v)/b(v));}
+      else if(c&&/[\d.a-zA-Z_(|]/.test(c)&&c!=='|'){const b=unary(),l=a;a=v=>l(v)*b(v);}
+      else return a;}}
+  function add_(){let a=mul_();for(;;){const c=peek();if(c==='+'||c==='-'){i++;const b=mul_(),l=a;a=c==='+'?(v=>l(v)+b(v)):(v=>l(v)-b(v));}else return a;}}
+  if(!s.length)err('vacía');const f=add_();if(i<s.length)err('sobra: '+s.slice(i));
+  return (...a)=>f(a);}
+
+/* ---------- curvas de nivel (marching squares): devuelve lista de segmentos [[x1,y1],[x2,y2]] ---------- */
+function contour(F,xr,yr,c,n){n=n||80;const dx=(xr[1]-xr[0])/n,dy=(yr[1]-yr[0])/n,segs=[];const G=[];
+  for(let i=0;i<=n;i++){G[i]=[];for(let j=0;j<=n;j++){const v=F(xr[0]+i*dx,yr[0]+j*dy);G[i][j]=isFinite(v)?((v-c)===0?1e-12:v-c):NaN;}}
+  const lerp=(a,b,pa,pb)=>{const t=a/(a-b);return [pa[0]+(pb[0]-pa[0])*t,pa[1]+(pb[1]-pa[1])*t];};
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=xr[0]+i*dx,y=yr[0]+j*dy;
+    const P=[[x,y],[x+dx,y],[x+dx,y+dy],[x,y+dy]],V=[G[i][j],G[i+1][j],G[i+1][j+1],G[i][j+1]];
+    if(V.some(isNaN))continue;const pts=[];
+    for(let k=0;k<4;k++){const a=V[k],b=V[(k+1)%4];if((a<0)!==(b<0))pts.push(lerp(a,b,P[k],P[(k+1)%4]));else if(a===0&&b!==0)pts.push(P[k]);}
+    if(pts.length===2)segs.push(pts);else if(pts.length===4){segs.push([pts[0],pts[1]]);segs.push([pts[2],pts[3]]);}}
+  return segs;}
+
+/* ---------- dibujar una curva en un Plane2D: pts = [[x,y],...] (cortes en NaN o saltos) ---------- */
+function poly2(g,api,pts,col,w,dash){let d='',pen=false,prev=null;const {X,Y}=api,lim=Math.max(api.W,api.H)*3;
+  pts.forEach(p=>{const ok=p&&isFinite(p[0])&&isFinite(p[1]);if(!ok){pen=false;prev=null;return;}const px=X(p[0]),py=Y(p[1]);
+    if(Math.abs(px)>lim||Math.abs(py)>lim){pen=false;prev=null;return;}
+    if(prev&&Math.hypot(px-prev[0],py-prev[1])>api.W*.35)pen=false;
+    d+=(pen?'L':'M')+px.toFixed(1)+' '+py.toFixed(1);pen=true;prev=[px,py];});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.5};stroke-linejoin:round;stroke-linecap:round;${dash?'stroke-dasharray:'+dash:''}`},g);}
+function segs2(g,api,segs,col,w){const {X,Y}=api;let d='';segs.forEach(s=>{d+='M'+X(s[0][0]).toFixed(1)+' '+Y(s[0][1]).toFixed(1)+'L'+X(s[1][0]).toFixed(1)+' '+Y(s[1][1]).toFixed(1);});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.2};stroke-linecap:round`},g);}
+window.G1={$,$$,h,sv,f,fv,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2};
+})();
+(function(){'use strict';
+const {h,sv,f,CL,arrow,line,text,slider,vhead,Plane2D,poly2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+const sel=o=>h('select',{'aria-label':'Elegir ejemplo'},...Object.keys(o).map(k=>h('option',{value:k},o[k].n)));
+function simp(F,a,b,n){n=n||200;if(n%2)n++;const hh=(b-a)/n;let s=F(a)+F(b);for(let i=1;i<n;i++)s+=(i%2?4:2)*F(a+i*hh);return s*hh/3;}
+const poly=(g,a,P,fill,stroke,op,w,dash)=>sv('polygon',{points:P.map(q=>a.X(q[0]).toFixed(1)+','+a.Y(q[1]).toFixed(1)).join(' '),style:`fill:${fill};fill-opacity:${op==null?.25:op};stroke:${stroke};stroke-width:${w||1.6};${dash?'stroke-dasharray:'+dash:''}`},g);
+const area=P=>{let s=0;for(let i=0;i<P.length;i++){const p=P[i],q=P[(i+1)%P.length];s+=p[0]*q[1]-q[0]*p[1];}return Math.abs(s)/2;};
+
+/* ======================================================================
+   Teorema fundamental del cálculo: el cociente F(x+h) − F(x) sobre h
+   ====================================================================== */
+const TF={
+  a:{n:'f(t) = 1 + t − t²/4 en [0, 4]',F:t=>1+t-t*t/4,a:0,b:4,xr:[-.4,4.6],yr:[-.6,2.8]},
+  b:{n:'f(t) = 1,5 + sen(2t) en [0, 4]',F:t=>1.5+Math.sin(2*t),a:0,b:4,xr:[-.4,4.6],yr:[-.6,2.9]},
+  c:{n:'f(t) = cos t en [0, 4] (cambia de signo)',F:t=>Math.cos(t),a:0,b:4,xr:[-.4,4.6],yr:[-1.4,1.6]}
+};
+V.tfc=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='a',hh=.8;const P={x:1.5,y:0};
+  const s=sel(TF);
+  host.append(vhead('El teorema fundamental del cálculo','F(x) es el área acumulada desde a. La franja entre x y x + h está entre dos rectángulos: el de altura mínima f(yₕ) y el de altura máxima f(zₕ)'),h('div',{class:'ctl'},s),body);
+  const hostP=h('div',{});body.append(hostP);const ctl=h('div',{class:'ctl'});body.append(ctl);body.after(out);let pl=null,mm=null;
+  ctl.append(slider('h',{min:-1.2,max:1.2,step:.01,value:hh,dec:2},v=>{hh=Math.abs(v)<.01?(v<0?-.01:.01):v;pl.update();}));
+  function build(){const D=TF[cur];hostP.textContent='';
+    pl=Plane2D(hostP,{W:640,xr:D.xr,yr:D.yr,tick:1,label:'Gráfico de f, el área F(x) y la franja entre x y x + h',draw(g,a){
+      const x=Math.max(D.a,Math.min(D.b,P.x)),x2=Math.max(D.a,Math.min(D.b,x+hh)),lo=Math.min(x,x2),hi=Math.max(x,x2);
+      const A=[[D.a,0]];for(let i=0;i<=80;i++){const t=D.a+(x-D.a)*i/80;A.push([t,D.F(t)]);}A.push([x,0]);poly(g,a,A,'var(--blue)','none',.15);
+      let mn=Infinity,mx=-Infinity,ym=lo,zm=lo;for(let i=0;i<=200;i++){const t=lo+(hi-lo)*i/200,v=D.F(t);if(v<mn){mn=v;ym=t;}if(v>mx){mx=v;zm=t;}}
+      poly(g,a,[[lo,0],[hi,0],[hi,mx],[lo,mx]],'var(--red)','var(--red)',.12,1.4,'5 4');
+      poly(g,a,[[lo,0],[hi,0],[hi,mn],[lo,mn]],'var(--green)','var(--green)',.25,1.4);
+      const S=[[lo,0]];for(let i=0;i<=60;i++){const t=lo+(hi-lo)*i/60;S.push([t,D.F(t)]);}S.push([hi,0]);poly(g,a,S,'var(--violet)','var(--violet)',.3,1.6);
+      const G=[];for(let i=0;i<=300;i++){const t=D.a+(D.b-D.a)*i/300;G.push([t,D.F(t)]);}poly2(g,a,G,'var(--ink)',2.4);
+      sv('circle',{cx:a.X(ym),cy:a.Y(mn),r:5,style:'fill:var(--green)'},g);sv('circle',{cx:a.X(zm),cy:a.Y(mx),r:5,style:'fill:var(--red)'},g);
+      line(g,a.X(x),a.Y(D.yr[0]),a.X(x),a.Y(D.yr[1]),'var(--ink-2)',1,'3 4');text(g,a.X(x),a.Y(D.yr[0])+0-4,'x','var(--ink-2)');
+      mm={x,x2,mn,mx,ym,zm};}});
+    pl.handle(P,CL.ink,{label:'Punto x',snap:.05});const o=pl.update;pl.update=function(){P.y=0;o();upd();};pl.update();}
+  function upd(){const D=TF[cur],{x,x2,mn,mx,ym,zm}=mm,dF=simp(D.F,x,x2,200),hq=x2-x;
+    const q=Math.abs(hq)>1e-9?dF/hq:D.F(x);
+    out.innerHTML=`x = ${f(x,2)}, h = ${f(hq,2)}: F(x) = ∫<sub>a</sub><sup>x</sup> f = <span class="c-blue">${f(simp(D.F,D.a,x,300),4)}</span>; F(x + h) − F(x) = ∫<sub>x</sub><sup>x+h</sup> f = <span class="c-violet">${f(dF,4)}</span>.<br>`+
+      `<span class="c-green">f(yₕ) = ${f(mn,4)}</span> ≤ (F(x + h) − F(x))/h = <b>${f(q,4)}</b> ≤ <span class="c-red">f(zₕ) = ${f(mx,4)}</span>; f(x) = ${f(D.F(x),4)}.<br>`+
+      `<span class="c-mut">Achicá h: yₕ y zₕ quedan apretados contra x, y por la continuidad de f el cociente tiende a f(x).</span>`;}
+  s.addEventListener('change',()=>{cur=s.value;build();});
+  API['viz-tfc']={set(k){if(TF[k]){cur=k;s.value=k;build();}}};
+  build();
+};
+
+/* ======================================================================
+   Una transformación afín: paralelogramos en paralelogramos, área por |det M|
+   ====================================================================== */
+const AF={
+  e1:{n:'M = [2 1; 1 3] (ejercicio 4)',M:[2,1,1,3],C:[0,0]},
+  rot:{n:'Una rotación de 30°: |det| = 1',M:[Math.cos(Math.PI/6),-Math.sin(Math.PI/6),Math.sin(Math.PI/6),Math.cos(Math.PI/6)],C:[0,0]},
+  cz:{n:'Corte: M = [1 1,5; 0 1], |det| = 1',M:[1,1.5,0,1],C:[0,0]},
+  ch:{n:'Achica: M = [0,5 0; 0,4 1]',M:[.5,0,.4,1],C:[0,0]},
+  sg:{n:'Invierte la orientación: M = [0 1; 1 0]',M:[0,1,1,0],C:[0,0]}
+};
+V.afin=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let M=AF.e1.M.slice(),C=[0,0];const Pp={x:0,y:0},Bv={x:1,y:0},Wv={x:0,y:1};
+  const s=sel(AF);
+  host.append(vhead('Una transformación afín T(v) = Mv + C','A la izquierda el paralelogramo D* (arrastrá P y los extremos de los vectores b y w); a la derecha su imagen T(D*). La razón de las áreas es |det M|'),h('div',{class:'ctl'},s),body);
+  const L=h('div',{class:'half'}),R=h('div',{class:'half'});body.append(L,R);body.after(out);
+  const ctl=h('div',{class:'ctl'});body.after(ctl);
+  const mk=(i,lab)=>slider(lab,{min:-3,max:3,step:.1,value:M[i],dec:1},v=>{M[i]=v;go();});
+  const sl=[mk(0,'a₁'),mk(1,'b₁'),mk(2,'a₂'),mk(3,'b₂')];ctl.append(...sl);
+  const T=p=>[M[0]*p[0]+M[1]*p[1]+C[0],M[2]*p[0]+M[3]*p[1]+C[1]];
+  const quad=()=>{const p=[Pp.x,Pp.y],b=[Bv.x-Pp.x,Bv.y-Pp.y],w=[Wv.x-Pp.x,Wv.y-Pp.y];return {p,b,w,Q:[p,[p[0]+b[0],p[1]+b[1]],[p[0]+b[0]+w[0],p[1]+b[1]+w[1]],[p[0]+w[0],p[1]+w[1]]]};};
+  const pa=Plane2D(L,{W:420,xr:[-1,3],yr:[-1,3],tick:1,label:'Paralelogramo D*',xl:'u',yl:'v',draw(g,a){const {p,Q}=quad();poly(g,a,Q,'var(--blue)','var(--blue)',.25,2);
+    arrow(g,a.X(p[0]),a.Y(p[1]),a.X(Q[1][0]),a.Y(Q[1][1]),CL.red,2.6);arrow(g,a.X(p[0]),a.Y(p[1]),a.X(Q[3][0]),a.Y(Q[3][1]),CL.green,2.6);}});
+  const pb=Plane2D(R,{W:420,xr:[-6,8],yr:[-6,8],tick:2,label:'Imagen T(D*)',draw(g,a){const {Q}=quad(),I=Q.map(T);poly(g,a,I,'var(--violet)','var(--violet)',.25,2);
+    arrow(g,a.X(I[0][0]),a.Y(I[0][1]),a.X(I[1][0]),a.Y(I[1][1]),CL.red,2.6);arrow(g,a.X(I[0][0]),a.Y(I[0][1]),a.X(I[3][0]),a.Y(I[3][1]),CL.green,2.6);
+    I.forEach(q=>sv('circle',{cx:a.X(q[0]),cy:a.Y(q[1]),r:4,style:'fill:var(--ink)'},g));}});
+  pa.handle(Pp,CL.ink,{label:'Vértice P',snap:.1});pa.handle(Bv,CL.red,{label:'Extremo de b',snap:.1});pa.handle(Wv,CL.green,{label:'Extremo de w',snap:.1});
+  const o=pa.update;pa.update=function(){o();pb.update();upd();};
+  function go(){pa.update();}
+  function upd(){const {b,w,Q}=quad(),dB=b[0]*w[1]-b[1]*w[0],dM=M[0]*M[3]-M[1]*M[2],I=Q.map(T);
+    out.innerHTML=`M = [ ${f(M[0],2)} &nbsp; ${f(M[1],2)} ; ${f(M[2],2)} &nbsp; ${f(M[3],2)} ], det M = <b>${f(dM,3)}</b>.<br>`+
+      `área(D*) = |det(b; w)| = |${f(b[0],2)}·${f(w[1],2)} − ${f(b[1],2)}·${f(w[0],2)}| = <span class="c-blue">${f(Math.abs(dB),3)}</span>; área(T(D*)) = <span class="c-violet">${f(area(I),3)}</span> = |det M| · área(D*) = ${f(Math.abs(dM),3)} · ${f(Math.abs(dB),3)}.<br>`+
+      `Vértices de la imagen: ${I.map(q=>'('+f(q[0],2)+', '+f(q[1],2)+')').join(', ')}.`+
+      (Math.abs(dM)<1e-9?'<br><b class="c-red">det M = 0: la imagen es un segmento (o un punto); T no es biyectiva.</b>':Math.abs(Math.abs(dM)-1)<1e-6?'<br><span class="c-mut">|det M| = 1: T conserva las áreas.</span>':Math.abs(dM)<1?'<br><span class="c-mut">|det M| < 1: T comprime las áreas.</span>':'<br><span class="c-mut">|det M| > 1: T estira las áreas.</span>');}
+  s.addEventListener('change',()=>{M=AF[s.value].M.slice();sl.forEach((x,i)=>x.set(+M[i].toFixed(1)));M=AF[s.value].M.slice();go();});
+  API['viz-afin']={set(k){if(AF[k]){s.value=k;M=AF[k].M.slice();sl.forEach((x,i)=>x.set(+M[i].toFixed(1)));go();}}};
+  go();
+};
+
+/* ======================================================================
+   El caso general: T(R*ᵢⱼ) se parece al paralelogramo tangente Pᵢⱼ
+   ====================================================================== */
+const JT={
+  pol:{n:'Polares: T(r, θ) = (r cos θ, r sen θ)',T:(u,v)=>[u*Math.cos(v),u*Math.sin(v)],J:(u,v)=>[[Math.cos(v),-u*Math.sin(v)],[Math.sin(v),u*Math.cos(v)]],ur:[.3,2],vr:[0,Math.PI/2],
+    xr:[-.5,2.5],yr:[-.5,2.5],Lu:'r',Lv:'θ',js:'|JT| = r'},
+  cuad:{n:'T(u, v) = (u² − v², 2uv)',T:(u,v)=>[u*u-v*v,2*u*v],J:(u,v)=>[[2*u,-2*v],[2*v,2*u]],ur:[.5,1.5],vr:[0,1.2],xr:[-1.6,2.6],yr:[-.4,3.8],Lu:'u',Lv:'v',js:'|JT| = 4(u² + v²)'},
+  cor:{n:'T(u, v) = (u, v + u²)',T:(u,v)=>[u,v+u*u],J:(u,v)=>[[1,0],[2*u,1]],ur:[0,1.5],vr:[0,1],xr:[-.4,2],yr:[-.4,3.6],Lu:'u',Lv:'v',js:'|JT| = 1'}
+};
+V.jac=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let cur='pol',n=6,ci=.5,cj=.5;
+  const s=sel(JT);
+  host.append(vhead('Rectángulos curvados y el jacobiano','T lleva la grilla de D* (izquierda) a una grilla curvada de D (derecha). La celda elegida va a parar a una región curvada Dᵢⱼ, que se parece al paralelogramo tangente Pᵢⱼ de lados T_u Δu y T_v Δv'),h('div',{class:'ctl'},s),body);
+  const L=h('div',{class:'half'}),R=h('div',{class:'half'});body.append(L,R);body.after(out);
+  const ctl=h('div',{class:'ctl'});body.after(ctl);
+  ctl.append(slider('n',{min:2,max:30,step:1,value:n,dec:0},v=>{n=v;go();}),slider('celda: i',{min:0,max:1,step:.01,value:ci,dec:2},v=>{ci=v;go();}),slider('j',{min:0,max:1,step:.01,value:cj,dec:2},v=>{cj=v;go();}));
+  let pa=null,pb=null,info=null;
+  function cell(){const D=JT[cur],du=(D.ur[1]-D.ur[0])/n,dv=(D.vr[1]-D.vr[0])/n,i=Math.min(n-1,Math.floor(ci*n)),j=Math.min(n-1,Math.floor(cj*n));return {D,du,dv,u0:D.ur[0]+i*du,v0:D.vr[0]+j*dv};}
+  function build(){const D=JT[cur];L.textContent='';R.textContent='';
+    const ex=[D.ur[0]-.3*(D.ur[1]-D.ur[0]),D.ur[1]+.3*(D.ur[1]-D.ur[0])],ey=[D.vr[0]-.3*(D.vr[1]-D.vr[0]),D.vr[1]+.3*(D.vr[1]-D.vr[0])];
+    pa=Plane2D(L,{W:420,xr:[Math.min(-.3,ex[0]),ex[1]],yr:[Math.min(-.3,ey[0]),ey[1]],tick:1,xl:D.Lu,yl:D.Lv,label:'D* con su grilla',draw(g,a){const {du,dv,u0,v0}=cell();
+      for(let i=0;i<=n;i++){const u=D.ur[0]+i*du;line(g,a.X(u),a.Y(D.vr[0]),a.X(u),a.Y(D.vr[1]),'var(--blue)',1);}
+      for(let j=0;j<=n;j++){const v=D.vr[0]+j*dv;line(g,a.X(D.ur[0]),a.Y(v),a.X(D.ur[1]),a.Y(v),'var(--blue)',1);}
+      poly(g,a,[[u0,v0],[u0+du,v0],[u0+du,v0+dv],[u0,v0+dv]],'var(--red)','var(--red)',.45,2);
+      sv('circle',{cx:a.X(u0),cy:a.Y(v0),r:4.5,style:'fill:var(--ink)'},g);}});
+    pb=Plane2D(R,{W:420,xr:D.xr,yr:D.yr,tick:1,label:'D = T(D*) con la grilla curvada',draw(g,a){const {du,dv,u0,v0}=cell();
+      for(let i=0;i<=n;i++){const u=D.ur[0]+i*du,P=[];for(let k=0;k<=40;k++)P.push(D.T(u,D.vr[0]+(D.vr[1]-D.vr[0])*k/40));poly2(g,a,P,'var(--blue)',1);}
+      for(let j=0;j<=n;j++){const v=D.vr[0]+j*dv,P=[];for(let k=0;k<=40;k++)P.push(D.T(D.ur[0]+(D.ur[1]-D.ur[0])*k/40,v));poly2(g,a,P,'var(--blue)',1);}
+      const C=[];for(let k=0;k<=20;k++)C.push(D.T(u0+du*k/20,v0));for(let k=0;k<=20;k++)C.push(D.T(u0+du,v0+dv*k/20));for(let k=20;k>=0;k--)C.push(D.T(u0+du*k/20,v0+dv));for(let k=20;k>=0;k--)C.push(D.T(u0,v0+dv*k/20));
+      poly(g,a,C,'var(--red)','var(--red)',.45,2);
+      const p=D.T(u0,v0),J=D.J(u0,v0),Tu=[J[0][0]*du,J[1][0]*du],Tv=[J[0][1]*dv,J[1][1]*dv];
+      poly(g,a,[p,[p[0]+Tu[0],p[1]+Tu[1]],[p[0]+Tu[0]+Tv[0],p[1]+Tu[1]+Tv[1]],[p[0]+Tv[0],p[1]+Tv[1]]],'none','var(--violet)',0,2.2,'6 4');
+      sv('circle',{cx:a.X(p[0]),cy:a.Y(p[1]),r:4.5,style:'fill:var(--ink)'},g);
+      info={Ad:area(C),Ap:Math.abs(Tu[0]*Tv[1]-Tu[1]*Tv[0]),jac:Math.abs(J[0][0]*J[1][1]-J[0][1]*J[1][0]),du,dv,u0,v0};}});
+    go();}
+  function go(){pa.update();pb.update();const D=JT[cur],{Ad,Ap,jac,du,dv,u0,v0}=info;
+    out.innerHTML=`Celda de D*: ${D.Lu} ∈ [${f(u0,3)}, ${f(u0+du,3)}], ${D.Lv} ∈ [${f(v0,3)}, ${f(v0+dv,3)}]; Δ${D.Lu}·Δ${D.Lv} = ${f(du*dv,5)}. ${D.js}; en el vértice vale ${f(jac,4)}.<br>`+
+      `<span class="c-red">área(Dᵢⱼ) = ${f(Ad,6)}</span> &nbsp; <span class="c-violet">área(Pᵢⱼ) = |JT|·Δ${D.Lu}Δ${D.Lv} = ${f(Ap,6)}</span> &nbsp; cociente: <b>${f(Ad/Ap,4)}</b>.<br>`+
+      `<span class="c-mut">Al aumentar n el cociente tiende a 1: por eso en el límite de las sumas de Riemann se puede reemplazar área(Dᵢⱼ) por |JT|·Δ${D.Lu}Δ${D.Lv}.</span>`;}
+  s.addEventListener('change',()=>{cur=s.value;build();});
+  API['viz-jac']={set(k){if(JT[k]){cur=k;s.value=k;build();}}};
+  build();
+};
+})();
+(function(){const R=String.raw;
+window.A1={key:'axint',vid:{a:'cfwiVKJAYx0',b:'CJdYMnoXy-0'},vlab:{a:'Anexo Int. p1',b:'Anexo Int. p2'},
+ viz:{'viz-tfc':'tfc','viz-afin':'afin','viz-jac':'jac'}};
+window.A1.quiz={
+'quiz-1':{t:'Autoevaluación: el teorema fundamental',qs:[
+ {p:R`Si $f$ es continua en $[a,b]$ y $F(x)=\int_a^xf(t)\,dt$, entonces:`,o:[R`$F'(x)=f(x)$ en $(a,b)$`,R`$F'(x)=f'(x)$`,R`$F(x)=f(x)-f(a)$`,R`$F$ es constante`],c:0,w:R`Es el teorema fundamental del cálculo.`},
+ {p:R`En la prueba de la continuidad de $F$ se usa que $|F(x')-F(x)|\le M|x'-x|$. ¿De dónde sale $M$?`,o:[R`$|f|$ es continua en $[a,b]$ y alcanza un máximo`,R`$F$ es derivable`,R`$f$ es positiva`,R`$M=f(b)$`],c:0,w:R`Weierstrass para $|f|$ en el intervalo cerrado.`},
+ {p:R`En la prueba de $F'=f$, para $h\gt0$ se acota $\frac{F(x+h)-F(x)}{h}$ entre:`,o:[R`el mínimo y el máximo de $f$ en $[x,x+h]$`,R`$f(x)$ y $f(x+h)$ siempre`,R`$0$ y $M$`,R`$F(x)$ y $F(x+h)$`],c:0,w:R`$f(y_h)\le\frac{F(x+h)-F(x)}h\le f(z_h)$, y los dos extremos tienden a $f(x)$.`},
+ {p:R`¿Qué hipótesis sobre $f$ se usa para que $f(y_h)\to f(x)$?`,o:['la continuidad de f','que f sea derivable','que f sea positiva','ninguna'],c:0,w:R`$y_h\to x$ porque está en $[x,x+h]$; la continuidad pasa el límite adentro.`}]},
+'quiz-2':{t:'Autoevaluación: Barrow y cambio de variable',qs:[
+ {p:R`En la prueba de Barrow, $F$ y $G$ son dos primitivas de $f$. Entonces:`,o:[R`$F-G$ es constante`,R`$F=G$`,R`$F-G=f$`,R`$F+G=0$`],c:0,w:R`$(F-G)'=0$, y por el teorema del valor medio es constante.`},
+ {p:R`La constante de $F-G$ es $-G(a)$ porque:`,o:[R`$F(a)=\int_a^af=0$`,R`$G(a)=0$`,R`$F(b)=0$`,'por convención'],c:0,w:R`Evaluando en $x=a$.`},
+ {p:R`En el cambio de variable, $H(x)=\int_{g(a)}^{g(x)}f(t)\,dt$ se deriva:`,o:[R`con la regla de la cadena: $H'(x)=f(g(x))\,g'(x)$`,R`$H'(x)=f(x)$`,R`$H'(x)=f(g(x))$`,R`$H'(x)=g'(x)$`],c:0,w:R`Es $L(g(x))$ con $L(y)=\int_{g(a)}^yf$ y $L'=f$.`}]},
+'quiz-3':{t:'Autoevaluación: cambio de variables en R²',qs:[
+ {p:R`Si $T(v)=Mv+C$, el área de $T(D^*)$ para un paralelogramo $D^*$ es:`,o:[R`$|\det M|\cdot\text{área}(D^*)$`,R`$\det M\cdot\text{área}(D^*)$, con signo`,R`$\text{área}(D^*)+|C|$`,R`$\text{área}(D^*)$`],c:0,w:R`El corrimiento $C$ no cambia áreas; el módulo, porque un área no es negativa.`},
+ {p:R`El área del paralelogramo de lados $b$ y $w$ en $\R^2$ es:`,o:[R`$\big|\det\begin{pmatrix}b\\w\end{pmatrix}\big|$`,R`$|b|+|w|$`,R`$b\cdot w$`,R`$|b|\,|w|$ siempre`],c:0,w:R`Es $|b|\,|w|\operatorname{sen}\theta=\|b\times w\|$.`},
+ {p:R`En el caso general, la región curvada $T(R^*_{ij})$ se aproxima por:`,o:[R`el paralelogramo de lados $T_u\Delta u$ y $T_v\Delta v$`,R`el rectángulo $R^*_{ij}$`,'un círculo',R`un triángulo`],c:0,w:R`Es la linealización de $T$ en el vértice.`},
+ {p:R`Para polares, $T(r,\theta)=(r\cos\theta,r\operatorname{sen}\theta)$, $|JT|$ vale:`,o:[R`$r$`,R`$1$`,R`$r^2$`,R`$\cos\theta$`],c:0,w:R`$\det\begin{pmatrix}\cos\theta&-r\operatorname{sen}\theta\\\operatorname{sen}\theta&r\cos\theta\end{pmatrix}=r$.`}]}
+};
+})();
+(function(){'use strict';
+const R=String.raw;
+const go=(viz,p,txt)=>`<button type="button" class="go" data-viz="${viz}" data-p="${p}">${txt||'Ver en la figura'}</button>`;
+const EJ=[
+{n:1,t:'Derivar una integral',s:'Teorema fundamental y regla de la cadena',
+ enun:R`<p>Sea $H(x)=\displaystyle\int_0^{x^2}\operatorname{sen}(t^2)\,dt$. Calcular $H'(x)$.</p>`,
+ pistas:[R`<p>Como en la prueba del Teorema 3: $H(x)=L(x^2)$ con $L(y)=\int_0^y\operatorname{sen}(t^2)\,dt$.</p>`],
+ sol:R`<p>Por el teorema fundamental, $L'(y)=\operatorname{sen}(y^2)$. Por la regla de la cadena, $H'(x)=L'(x^2)\cdot2x=2x\operatorname{sen}(x^4)$.</p>`,
+ chk:{p:'H′(1)',vals:[2*Math.sin(1)]},
+ ref:[['a','35:16','derivar una composición']]},
+{n:2,t:'Una función con integral cero',s:'',
+ enun:R`<p>Sea $f:[a,b]\to\R$ continua tal que $\int_a^xf(t)\,dt=0$ para todo $x\in[a,b]$. Probar que $f(x)=0$ para todo $x\in(a,b)$ (y, por continuidad, en $[a,b]$).</p>`,
+ pistas:[R`<p>$F(x)=\int_a^xf$ es la función constante $0$. ¿Cuánto vale $F'$?</p>`],
+ sol:R`<p>$F\equiv0$, así que $F'(x)=0$ en $(a,b)$. Por el teorema fundamental, $F'(x)=f(x)$: $f(x)=0$ en $(a,b)$. En $a$ y en $b$, $f(a)=\lim_{x\to a^+}f(x)=0$ y lo mismo en $b$.</p>`,
+ ref:[['a','14:47','F′ = f']]},
+{n:3,t:'Una sustitución',s:'El ejemplo de la Teórica 24',
+ enun:R`<p>Calcular $\displaystyle\int_0^1\cos\Big(\frac\pi2x^2\Big)\,x\,dx$ usando el Teorema 3, con $g(u)=\frac\pi2u^2$.</p>`,
+ pistas:[R`<p>$g'(u)=\pi u$, así que $\cos\big(\frac\pi2u^2\big)u=\frac1\pi\cos\big(g(u)\big)g'(u)$.</p>`],
+ sol:R`<p>$$\begin{aligned}\int_0^1\cos\Big(\frac\pi2u^2\Big)u\,du&=\frac1\pi\int_0^1\cos\big(g(u)\big)g'(u)\,du=\frac1\pi\int_{g(0)}^{g(1)}\cos t\,dt\\&=\frac1\pi\int_0^{\pi/2}\cos t\,dt=\frac1\pi.\end{aligned}$$ Coincide con la cuenta de la hoja, que usa la primitiva $\frac1\pi\operatorname{sen}\big(\frac\pi2x^2\big)$.</p>`,
+ chk:{p:'el valor',vals:[1/Math.PI]},
+ ref:[['a','31:05','Teorema 3']]},
+{n:4,t:'La imagen de un cuadrado',s:'Una transformación lineal',
+ enun:R`<p>Sea $T(u,v)=(2u+v,\ u+3v)$ y $D^*=[0,1]\times[0,1]$. Hallar $D=T(D^*)$ y su área.</p>`,
+ pistas:[R`<p>$T$ es lineal ($C=0$): manda vértices en vértices. Calculá $T$ en $(0,0)$, $(1,0)$, $(1,1)$, $(0,1)$.</p>`],
+ sol:R`<p>$T(0,0)=(0,0)$, $T(1,0)=(2,1)$, $T(1,1)=(3,4)$, $T(0,1)=(1,3)$: $D$ es el paralelogramo de esos vértices. $\det\begin{pmatrix}2&1\\1&3\end{pmatrix}=5$, así que $\text{área}(D)=5\cdot1=5$. ${go('viz-afin','e1','Ver en la figura')}</p>
+<p class="hint">Con la fórmula de cambio de variables: $\iint_D1\,dA=\iint_{D^*}|JT|\,dA=5$.</p>`,
+ chk:{p:'el área',vals:[5]},
+ ref:[['b','1:35','vértices en vértices']]},
+{n:5,t:'Producto vectorial y determinante',s:'El ejercicio de la hoja',
+ enun:R`<p>Probar que si $b=(b_1,b_2)$ y $w=(w_1,w_2)$, el área del paralelogramo de lados $b$ y $w$ es $\Big|\det\begin{pmatrix}b_1&b_2\\w_1&w_2\end{pmatrix}\Big|$.</p>`,
+ pistas:[R`<p>Pensalos en $\R^3$: $\tilde b=(b_1,b_2,0)$, $\tilde w=(w_1,w_2,0)$, y usá que el área es $\|\tilde b\times\tilde w\|$.</p>`],
+ sol:R`<p>$\tilde b\times\tilde w=\det\begin{pmatrix}\v i&\v j&\v k\\b_1&b_2&0\\w_1&w_2&0\end{pmatrix}=(0,\,0,\,b_1w_2-b_2w_1)$, cuya norma es $|b_1w_2-b_2w_1|=\Big|\det\begin{pmatrix}b_1&b_2\\w_1&w_2\end{pmatrix}\Big|$. $\blacksquare$</p>`,
+ ref:[['a','56:36','área de un paralelogramo']]},
+{n:6,t:'El volumen de un paralelepípedo',s:'',
+ enun:R`<p>Calcular el volumen del paralelepípedo generado por $A=(1,1,0)$, $B=(0,1,1)$ y $C=(1,0,1)$, y comprobar que $|A\cdot(B\times C)|=\Big|\det\begin{pmatrix}A\\B\\C\end{pmatrix}\Big|$.</p>`,
+ pistas:[R`<p>$B\times C=(1\cdot1-1\cdot0,\ 1\cdot1-0\cdot1,\ 0\cdot0-1\cdot1)$.</p>`],
+ sol:R`<p>$B\times C=(1,1,-1)$ y $A\cdot(B\times C)=1+1+0=2$. Desarrollando el determinante por la primera fila: $1\cdot(1-0)-1\cdot(0-1)+0=2$. El volumen es $2$.</p>`,
+ chk:{p:'el volumen',vals:[2]},
+ ref:[['b','21:55','paralelepípedos']]},
+{n:7,t:'¿Qué tan buena es la aproximación?',s:'Polares',
+ enun:R`<p>Para $T(r,\theta)=(r\cos\theta,r\operatorname{sen}\theta)$ y $R^*=[r_0,r_0+\Delta r]\times[\theta_0,\theta_0+\Delta\theta]$ (con $r_0\gt0$), calcular exactamente el área de $T(R^*)$ y compararla con $|JT(r_0,\theta_0)|\,\Delta r\,\Delta\theta$.</p>`,
+ pistas:[R`<p>$T(R^*)$ es un pedazo de corona circular: un sector de radio $r_0+\Delta r$ menos uno de radio $r_0$, los dos de ángulo $\Delta\theta$. El área de un sector de radio $\rho$ y ángulo $\alpha$ es $\frac{\rho^2\alpha}{2}$.</p>`],
+ sol:R`<p>$\text{área}\big(T(R^*)\big)=\frac{(r_0+\Delta r)^2-r_0^2}{2}\Delta\theta=r_0\,\Delta r\,\Delta\theta+\frac{(\Delta r)^2}{2}\Delta\theta$. Como $|JT(r_0,\theta_0)|=r_0$, la aproximación es $r_0\,\Delta r\,\Delta\theta$, y el error $\frac{(\Delta r)^2\Delta\theta}2$ es mucho más chico que $\Delta r\,\Delta\theta$ cuando $\Delta r\to0$: el cociente tiende a $1$. ${go('viz-jac','pol','Ver en la figura')}</p>`,
+ ref:[['b','17:50','el jacobiano']]}
+];
+window.G1EJ=EJ;
+})();
+(function(){'use strict';
+const {$,$$,h,f}=window.G1;
+const IM=window.G1IMG||{};
+const EJ=window.G1EJ||[];
+const KEY=(window.A1&&window.A1.key)||'a1';
+const T=(v,t,txt)=>`<a class="t" data-v="${v}" data-t="${t}">${txt||t}</a>`;
+
+/* ---------- render ---------- */
+function parse(s){return s.split(/[;\s]+/).filter(Boolean).map(x=>parseFloat(x.replace(',','.')));}
+let done={};try{done=JSON.parse(localStorage.getItem(KEY+'-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem(KEY+'-done',JSON.stringify(done));}catch(e){}}
+function prog(){const n=Object.keys(done).filter(k=>done[k]).length;$('#ejprog').textContent='Hechos: '+n+' de '+EJ.length+' (se guarda en este navegador)';}
+
+function build(){const list=$('#ejlist');
+  EJ.forEach(e=>{
+    const d=h('details',{class:'ejc'+(done[e.n]?' done':''),id:'ej'+e.n});
+    const sum=h('summary',{},h('span',{class:'num'},e.n),h('span',{class:'tt'},h('b',{},e.t),h('span',{},e.s)));
+    const inn=h('div',{class:'in'});
+    inn.append(h('div',{class:'enun',html:e.enun}));
+    if(e.img&&IM[e.img])inn.append(h('img',{class:'fig',src:IM[e.img],alt:'Figura del ejercicio '+e.n}));
+    if(e.rev)inn.append(h('div',{class:'revnote',html:'<b>Revisar</b>'+e.rev}));
+    if(e.extra)inn.append(h('div',{html:e.extra}));
+    const pistas=h('div',{class:'pistas'});let k=0;
+    const bP=h('button',{type:'button'},'Dame una pista');
+    const bS=h('button',{type:'button'},'Ver resolución');
+    const sol=h('div',{class:'sol',hidden:'',html:'<b>Resolución</b>'+e.sol});
+    bP.addEventListener('click',()=>{if(k<e.pistas.length){pistas.append(h('div',{class:'pista',html:'<b>Pista '+(k+1)+' de '+e.pistas.length+'</b>'+e.pistas[k]}));k++;typeset(pistas);}
+      if(k>=e.pistas.length){bP.disabled=true;bP.textContent='No hay más pistas';}else bP.textContent='Otra pista ('+k+'/'+e.pistas.length+')';});
+    bS.addEventListener('click',()=>{sol.hidden=!sol.hidden;bS.textContent=sol.hidden?'Ver resolución':'Ocultar resolución';if(!sol.hidden)typeset(sol);});
+    const bD=h('button',{type:'button','aria-pressed':!!done[e.n]},done[e.n]?'Hecho ✓':'Marcar como hecho');
+    bD.addEventListener('click',()=>{done[e.n]=!done[e.n];save();d.classList.toggle('done',!!done[e.n]);bD.setAttribute('aria-pressed',!!done[e.n]);bD.textContent=done[e.n]?'Hecho ✓':'Marcar como hecho';prog();});
+    const refs=(e.ref||[]).map(r=>h('span',{html:T(r[0],r[1],(((window.A1||{}).vlab||{})[r[0]]||('Clase '+r[0]))+' · '+r[1])+' <span class="c-mut" style="font-size:14px">'+r[2]+'</span>'}));
+    inn.append(h('div',{class:'act'},bP,bS,bD),pistas);
+    if(e.chk){const inp=h('input',{type:'text',inputmode:'text','aria-label':e.chk.p,placeholder:'ej.: 1,5 2'});const res=h('span',{class:'res'});
+      const go=()=>{const v=parse(inp.value);if(!v.length||v.some(isNaN)){res.className='res bad';res.textContent='Escribí números separados por espacio o ";".';return;}
+        if(v.length!==e.chk.vals.length){res.className='res bad';res.textContent='Faltan o sobran valores: se esperan '+e.chk.vals.length+'.';return;}
+        const bad=[];e.chk.vals.forEach((t,i)=>{if(Math.abs(v[i]-t)>Math.max(.006*Math.abs(t),.015))bad.push(i+1);});
+        if(!bad.length){res.className='res ok';res.textContent='Correcto.';}else{res.className='res bad';res.textContent='No coinciden los valores n.º '+bad.join(', ')+'. Revisá esas cuentas.';}};
+      inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+      inn.append(h('div',{class:'chk'},h('span',{},'Comprobar: '+e.chk.p),inp,h('button',{type:'button',onclick:go},'Comprobar'),res));}
+    inn.append(sol);
+    if(refs.length){const r=h('div',{class:'meta',style:'margin-top:8px'},h('span',{},'Teoría relacionada:'),...refs);inn.append(r);}
+    d.append(sum,inn);list.append(d);});
+  prog();}
+function fixWide(root){(root||document).querySelectorAll('mjx-container:not([display="true"])').forEach(m=>{m.classList.remove('wide');const p=m.parentElement;if(p&&m.getBoundingClientRect().width>p.getBoundingClientRect().width+1)m.classList.add('wide');});}
+function typeset(el){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>fixWide(el)).catch(()=>{});}
+window.G1ej={build,typeset,fixWide};
+})();
+(function(){'use strict';
+const {$,$$,h}=window.G1;const V=window.G1V;const CFG=window.A1||{};const VID=CFG.vid||{};const QZ=CFG.quiz||{};const KEY=CFG.key||'a1';
+
+function buildQuiz(id,data){const host=$('#'+id);if(!host)return;let score=0,ans=0;const sc=h('span',{class:'c-mut',style:'font:600 13.5px var(--f-mono)'},'');
+  const head=h('div',{class:'qh'},h('b',{},data.t),sc,h('button',{type:'button',onclick:()=>{host.textContent='';buildQuiz(id,data);window.G1ej.typeset(host);}},'Reiniciar'));
+  host.append(head);const upd=()=>{sc.textContent=ans?(score+' de '+data.qs.length+' correctas'):'';};
+  data.qs.forEach((q,qi)=>{const o=h('div',{class:'o'});const box=h('div',{class:'q'},h('div',{class:'p',html:(qi+1)+'. '+q.p}),o);let why=null;
+    const ord=q.o.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+    ord.forEach(i=>{const t=q.o[i];const b=h('button',{type:'button',html:t});b.dataset.k=i;b.addEventListener('click',()=>{if(why)return;ans++;const ok=i===q.c;if(ok)score++;b.classList.add(ok?'right':'wrong');if(!ok)o.querySelector('[data-k="'+q.c+'"]').classList.add('right');
+      why=h('div',{class:'why',html:'<b class="'+(ok?'ok':'bad')+'">'+(ok?'Correcto. ':'No. ')+'</b>'+q.w});box.append(why);window.G1ej.typeset(box);upd();});o.append(b);});host.append(box);});
+}
+
+/* ---------- vínculos a YouTube ---------- */
+function linkify(){$$('a.t[data-v]').forEach(a=>{const [m,s]=a.dataset.t.split(':').map(Number),sec=m*60+s;a.href='https://youtu.be/'+VID[a.dataset.v]+'?t='+sec;a.target='_blank';const f=a.firstChild;if(f&&f.nodeType===3&&/^\d+:\d\d/.test(f.nodeValue))f.nodeValue=f.nodeValue.replace(/^(\d+:\d\d)/,((CFG.vlab&&CFG.vlab[a.dataset.v])||('Cl. '+a.dataset.v))+' · $1');a.rel='noopener';a.title='Abrir el video en '+a.dataset.t;});}
+
+/* ---------- barra de herramientas, tema, navegación ---------- */
+function ui(){
+  document.addEventListener('click',e=>{const b=e.target.closest('button.go');if(!b)return;const api=(window.A1API||{})[b.dataset.viz];const el=document.getElementById(b.dataset.viz);
+    if(api&&api.set)api.set(b.dataset.p);if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('toggle',e=>{if(e.target.open)window.G1ej.fixWide(e.target);},true);
+  $('#b-open').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=true);window.G1ej.fixWide(document);});
+  $('#b-close').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=false);});
+  const br=$('#b-rev');br.addEventListener('click',()=>{const on=br.getAttribute('aria-pressed')!=='true';br.setAttribute('aria-pressed',on);document.body.classList.toggle('no-rev',!on);try{localStorage.setItem(KEY+'-rev',on?'1':'0');}catch(e){}});
+  try{if(localStorage.getItem(KEY+'-rev')==='0'){br.setAttribute('aria-pressed','false');document.body.classList.add('no-rev');}}catch(e){}
+  const bt=$('#b-theme');let mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+  const apply=()=>{const r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];};
+  bt.addEventListener('click',()=>{mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();
+  const links=$$('#nav a'),secs=links.map(a=>$(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));}
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{const id=a.getAttribute('href');if(id==='#ejercicios'){}}));
+}
+
+function init(){
+  window.G1ej.build();
+  const map=CFG.viz||{};
+  Object.keys(map).forEach(id=>{const el=$('#'+id);if(!el)return;try{V[map[id]](el);}catch(err){console.error('viz',id,err);el.append(h('p',{class:'hint'},'No se pudo cargar esta figura.'));}});
+  Object.keys(QZ).forEach(id=>buildQuiz(id,QZ[id]));
+  linkify();ui();
+  const go=()=>{if(window.MathJax&&MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(()=>MathJax.typesetPromise()).then(()=>{window.G1ej.fixWide(document);let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>window.G1ej.fixWide(document),200);});}).catch(e=>console.error(e));};
+  if(document.readyState==='complete')go();else window.addEventListener('load',go);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1329 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Guía 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<div class="shell">
+<aside class="side" aria-label="Índice">
+  <a class="volver" href="index.html" style="display:block;margin:0 0 .6rem;font-size:.85rem;color:var(--accent,#2b59c3);text-decoration:none">&larr; Portada</a><div class="brand">Análisis 1 · FCEN-UBA</div>
+  <h2>Guía 2</h2>
+  <nav id="nav">
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#t1">Clases 7 y 8<small>Curvas paramétricas</small></a>
+    <a href="#t2">Clases 9 y 10<small>Coordenadas y curvas polares</small></a>
+    <a href="#t3">Clase 11<small>Cónicas</small></a>
+    <a href="#t4">Clases 12 y 13<small>Cilindros y cuádricas</small></a>
+    <a href="#rp">Curvas en el espacio y funciones<small>Repaso para los ej. 9 a 14</small></a>
+    <div class="sep"></div>
+    <a href="#ejercicios">Ejercicios guiados<small>Los 14 de la guía, con pistas</small></a>
+  </nav>
+</aside>
+<main>
+<div class="tools" role="toolbar" aria-label="Opciones">
+  <button id="b-open">Abrir todo</button>
+  <button id="b-close">Cerrar todo</button>
+  <span class="sp"></span>
+  <button id="b-rev" aria-pressed="true" title="Mostrar u ocultar las marcas de revisión (para el docente)">Marcas de revisión</button>
+  <button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="kick">Matemática 1 · Análisis I · Análisis II (C) · Análisis Matemático I (Q)</div>
+  <h1>Guía 2: Curvas y superficies</h1>
+  <p class="lead">Curvas dadas por una parametrización, curvas en coordenadas polares, cónicas y superficies en el espacio. Cada tema reúne lo que se explicó en la clase grabada, con el enlace al minuto exacto del video, una figura que se puede mover y los ejercicios de la guía resueltos paso a paso.</p>
+  <div class="map">
+    <a href="#t1"><em>Ejercicios 1, 2 y 11</em><b>Clases 7 y 8</b><span>Curvas paramétricas, problema inverso y la cicloide.</span></a>
+    <a href="#t2"><em>Ejercicios 3 y 4</em><b>Clases 9 y 10</b><span>Coordenadas polares, $r$ negativo, cardioide y rosa de cuatro pétalos.</span></a>
+    <a href="#t3"><em>Ejercicio 5</em><b>Clase 11</b><span>Parábola, elipse e hipérbola como cortes del cono y como lugares geométricos.</span></a>
+    <a href="#t4"><em>Ejercicios 6, 7 y 8</em><b>Clases 12 y 13</b><span>Cilindros, superficies cuádricas y el método de las trazas.</span></a>
+    <a href="#rp"><em>Ejercicios 9, 10, 12, 13 y 14</em><b>Repaso</b><span>Curvas en el espacio, dominio y curvas de nivel. No se dio en las Clases 7 a 13.</span></a>
+  </div>
+  <div class="legend">
+    <span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+    <span><span class="tag vid">Video</span> se dijo en el video pero no está en la hoja</span>
+    <span><span class="tag add">Agregado</span> no se dijo en clase</span>
+    <span><span class="tag rev">Revisar</span> dudoso, a confirmar por el docente</span>
+    <span><a class="t" data-v="7" data-t="0:00">m:ss</a> abre el video en ese minuto</span>
+  </div>
+</section>
+
+<!-- ======================= CLASES 7 Y 8 ======================= -->
+<section class="clase" id="t1">
+<header>
+  <div class="kick">CLASES 7 Y 8 · Stewart 10.1 · ejercicios 1, 2 y 11</div>
+  <h2>Curvas paramétricas</h2>
+  <div class="meta"><a class="t" data-v="7" data-t="0:00">Clase 7 (32 min)</a> <a class="t" data-v="8" data-t="0:00">Clase 8 (34 min)</a><span>Hoja de la clase: "Curvas", páginas 1 a 4.</span></div>
+</header>
+
+<h3 class="b">La idea: la trayectoria de una partícula <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="7" data-t="0:37">0:37</a></h3>
+<p>Una partícula se mueve en $\R^2$ (o en $\R^3$). Para cada instante de tiempo $t$ conocemos su posición: tiene coordenadas $x$ e $y$ que varían con el tiempo, $x=x(t)$ e $y=y(t)$, conocidas. Imaginemos que la partícula está manchada de tinta: lo que buscamos describir es la marca que deja, la trayectoria. <a class="t" data-v="7" data-t="2:40">2:40</a></p>
+<div class="box def"><span class="lab">Curva paramétrica</span>
+<p>Se llama <b>curva</b> (o curva paramétrica) al conjunto
+$$\mathcal{C}=\{(x(t),y(t)) : t\in I\},$$
+donde $I$ es un intervalo. Las funciones $x(t)$, $y(t)$ forman <b>una parametrización</b> de la curva. En $\R^3$ se agrega una tercera coordenada $z(t)$. <a class="t" data-v="7" data-t="4:44">4:44</a></p></div>
+<div class="box obs"><span class="lab c-blue">Tres observaciones de la clase</span>
+<ol style="margin:0;padding-left:1.2em">
+<li>La parametrización da un <b>sentido de recorrido</b>: a medida que $t$ avanza, el punto se mueve en una dirección. <a class="t" data-v="7" data-t="5:46">5:46</a></li>
+<li><b>No hay una única parametrización.</b> La misma curva se puede recorrer al revés o más rápido. La curva es el conjunto de puntos; cada parametrización le agrega un sentido y una velocidad. <a class="t" data-v="7" data-t="13:51">13:51</a></li>
+<li>Una curva <b>no siempre es el gráfico de una función</b> $y=f(x)$: puede haber dos puntos con la misma $x$. <a class="t" data-v="7" data-t="6:46">6:46</a></li></ol></div>
+
+<h3 class="b">De la parametrización al conjunto de puntos <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="7" data-t="7:46">7:46</a></h3>
+<p>El método: despejar $t$ de una de las ecuaciones y reemplazarlo en la otra, para obtener una relación entre $x$ e $y$. Después, evaluar en algunos valores de $t$ para ver el sentido de recorrido y qué parte de la curva se recorre.</p>
+<div class="box ej"><span class="lab">Ejemplo 1 · una recta</span>
+<p>$x=3t+2$, $y=-t+1$, $t\in\R$. De la primera, $t=\frac{x-2}{3}$; de la segunda, $t=1-y$. Igualando, $\frac{x-2}{3}=1-y$, o sea
+$$y=-\tfrac13x+\tfrac53.$$
+También se puede ver con vectores, como en el CBC: $(x,y)=(3t+2,-t+1)=t\,(3,-1)+(2,1)$. Es la recta con <b>dirección</b> $(3,-1)$ que pasa por el <b>punto</b> $(2,1)$. Con $t=0$ se está en $(2,1)$ y con $t=1$ en $(5,0)$: se recorre hacia la derecha y hacia abajo.</p>
+<p class="hint"><span class="tag vid">Video</span> En la Clase 7 el ejemplo es $x=2t+4$, $y=-t+2$: queda $x=8-2y$, la recta por $(4,2)$ con dirección $(2,-1)$. <a class="t" data-v="7" data-t="8:46">8:46</a> <a class="t" data-v="7" data-t="14:53">14:53</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo 2 · una parábola "acostada" <a class="t" data-v="7" data-t="16:59">16:59</a></span>
+<p>$x=t^2-2t$, $y=t+1$. Ahora conviene despejar de la segunda: $t=y-1$. Reemplazando,
+$$x=(y-1)^2-2(y-1)=y^2-4y+3=(y-1)(y-3).$$
+Es una parábola con los ejes intercambiados: $x$ es función de $y$. Corta al eje $y$ en $y=1$ e $y=3$, y su vértice está en $y=2$, $x=-1$. En la clase se toma $t\in[-2,1]$: se arranca en $(8,-1)$ con $t=-2$, se pasa por $(0,1)$ con $t=0$ y se termina en $(-1,2)$ con $t=1$. Solo se recorre ese arco, no la parábola entera. <a class="t" data-v="7" data-t="21:04">21:04</a> <a class="t" data-v="7" data-t="24:05">24:05</a></p></div>
+<div class="box ej"><span class="lab">Ejemplos 3 y 4 · la circunferencia <a class="t" data-v="7" data-t="25:05">25:05</a></span>
+<p>(3) $x=\cos t$, $y=\operatorname{sen} t$, $t\in[0,2\pi)$. Como $\cos^2t+\operatorname{sen}^2t=1$, todos los puntos cumplen $x^2+y^2=1$. Y recorre <b>toda</b> la circunferencia: es la definición de seno y coseno en la circunferencia trigonométrica. Con $t=0$ se está en $(1,0)$ y con $t=\pi/2$ en $(0,1)$: sentido antihorario. <a class="t" data-v="7" data-t="27:09">27:09</a> <a class="t" data-v="7" data-t="29:11">29:11</a></p>
+<p>(4) $x=\operatorname{sen}2t$, $y=\cos 2t$, $t\in[0,2\pi)$. También $x^2+y^2=1$, pero arranca en $(0,1)$, gira en sentido <b>horario</b> y da <b>dos vueltas</b>. Misma curva, otra parametrización. <span class="tag piz">Pizarrón</span></p></div>
+<div class="viz" id="viz-param"></div>
+
+<h3 class="b">El problema inverso: del conjunto a una parametrización <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="8" data-t="0:35">0:35</a></h3>
+<p>Ahora nos dan un conjunto de puntos del plano y buscamos una parametrización cuya trayectoria sea exactamente ese conjunto.</p>
+<div class="box thm"><span class="lab">Recetas</span>
+<ol style="margin:0;padding-left:1.2em">
+<li><b>Gráfico de una función.</b> Si el conjunto es $\{(x,f(x)) : x\in I\}$, se toma $x=t$, $y=f(t)$, $t\in I$. Por ejemplo, $y=x^2+1$ se parametriza con $(t,\,t^2+1)$, $t\in\R$. <a class="t" data-v="8" data-t="1:38">1:38</a> <a class="t" data-v="8" data-t="5:42">5:42</a></li>
+<li><b>$x$ como función de $y$.</b> Si el conjunto es $\{(g(y),y) : y\in J\}$, se toma $x=g(t)$, $y=t$, $t\in J$. <a class="t" data-v="8" data-t="7:43">7:43</a></li>
+<li><b>Hay infinitas parametrizaciones.</b> Reescalando el parámetro, $(2t,\,4t^2+1)$ recorre la misma parábola, pero en una unidad de tiempo llega a $(2,5)$ en vez de $(1,2)$: va más rápido. <a class="t" data-v="8" data-t="3:41">3:41</a></li>
+<li><b>Circunferencias corridas.</b> $(x-1)^2+(y+2)^2=1$: llamando $z=x-1$ y $w=y+2$ queda $z^2+w^2=1$, que ya sabemos parametrizar. Entonces $x=1+\cos t$, $y=-2+\operatorname{sen}t$, $t\in[0,2\pi)$. <a class="t" data-v="8" data-t="9:48">9:48</a> <a class="t" data-v="8" data-t="11:53">11:53</a></li></ol></div>
+
+<h3 class="b">La cicloide <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="8" data-t="12:54">12:54</a></h3>
+<p>Ahora la curva viene dada por un movimiento. Una bicicleta avanza y tiene un "ojo de gato" pegado en el borde de la rueda. ¿Qué curva describe? <a class="t" data-v="8" data-t="13:54">13:54</a></p>
+<p>La rueda tiene radio $1$ y avanza hacia la derecha a velocidad constante $1$, así que su centro es $C=(\theta,1)$. El punto $P$ empieza abajo, en el origen. Como la rueda no patina, el arco que rodó mide lo mismo que lo que avanzó: $|OT|=\theta$. En un círculo de radio 1, un arco de longitud $\theta$ abre un ángulo de $\theta$ radianes. <a class="t" data-v="8" data-t="16:57">16:57</a> <a class="t" data-v="8" data-t="23:02">23:02</a></p>
+<div class="box thm"><span class="lab">Ecuaciones de la cicloide <a class="t" data-v="8" data-t="25:05">25:05</a></span>
+$$x=|OT|-|PQ|=\theta-\operatorname{sen}\theta,\qquad y=|TC|-|QC|=1-\cos\theta.$$
+<p>$|PQ|$ es el cateto opuesto y $|QC|$ el adyacente, en el triángulo rectángulo de hipotenusa $1$ (el radio).</p></div>
+<div class="viz" id="viz-cyc"></div>
+<p class="hint">En la segunda parte de la Clase 8 se grafica la cicloide en GeoGebra con un deslizador. <a class="t" data-v="8" data-t="26:05">26:05</a></p>
+<div class="quiz" id="quiz-1"></div>
+</section>
+
+<!-- ======================= CLASES 9 Y 10 ======================= -->
+<section class="clase" id="t2">
+<header>
+  <div class="kick">CLASES 9 Y 10 · Stewart 10.3 · ejercicios 3 y 4</div>
+  <h2>Coordenadas y curvas polares</h2>
+  <div class="meta"><a class="t" data-v="9" data-t="0:00">Clase 9 (42 min)</a> <a class="t" data-v="10" data-t="0:00">Clase 10 (38 min)</a><span>Hoja de la clase: "Coordenadas polares", páginas 1 a 4.</span></div>
+</header>
+
+<h3 class="b">Coordenadas polares <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="9" data-t="0:35">0:35</a></h3>
+<p>Es lo mismo que pasar un número complejo a su forma trigonométrica, pero con puntos del plano. Un punto $P=(x,y)$ también queda determinado por dos números: la <b>longitud</b> $r$ del vector $\overrightarrow{OP}$ y el <b>ángulo</b> $\theta$ que forma con el semieje positivo de las $x$. <a class="t" data-v="9" data-t="2:36">2:36</a> Para distinguir, las coordenadas polares se separan con punto y coma: $P=(x,y)=(r;\theta)$. <a class="t" data-v="9" data-t="4:36">4:36</a></p>
+<div class="box thm"><span class="lab">Cambio de coordenadas</span>
+$$x=r\cos\theta,\qquad y=r\operatorname{sen}\theta\qquad\qquad r^2=x^2+y^2,\qquad \tan\theta=\frac{y}{x}\ (x\neq0).$$
+<p>La primera fila sale del triángulo rectángulo: $x$ es el cateto adyacente y $y$ el opuesto. La vuelta no es tan directa porque el ángulo no es único. <a class="t" data-v="9" data-t="5:37">5:37</a> <a class="t" data-v="9" data-t="9:43">9:43</a></p></div>
+<div class="box obs"><span class="lab c-blue">No es única</span>
+<p>Dar una vuelta entera no cambia el punto: $(r;\theta)=(r;\theta+2\pi)$. Si se pide $r\ge0$ y $0\le\theta\lt2\pi$, cada punto salvo el origen tiene una única representación. El origen es $(0;\theta)=(0,0)$ para cualquier $\theta$. <a class="t" data-v="9" data-t="8:42">8:42</a></p></div>
+<div class="box def"><span class="lab">Radio negativo <a class="t" data-v="9" data-t="12:47">12:47</a></span>
+<p>Se admite $r\lt0$: fijado $\theta$, queda fijada toda una recta, y sobre ella se mide $r$ como en la recta real. Si $r\gt0$ se va en la dirección de $\theta$; si $r\lt0$, en la opuesta. Por eso
+$$(-r;\theta)=(r;\theta+\pi),\qquad (r;\theta)=(r;\theta+2k\pi)=(-r;\theta+(2k+1)\pi).$$
+Es consistente con las fórmulas: $r\cos(\theta+\pi)=-r\cos\theta$ y $r\operatorname{sen}(\theta+\pi)=-r\operatorname{sen}\theta$. <a class="t" data-v="9" data-t="16:55">16:55</a> <a class="t" data-v="9" data-t="18:00">18:00</a></p></div>
+
+<h3 class="b">Curvas polares <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="9" data-t="19:00">19:00</a></h3>
+<div class="box def"><span class="lab">Curva polar</span>
+<p>Una curva polar es la que se describe con una relación funcional entre $r$ y $\theta$: $r=f(\theta)$ o $\theta=g(r)$, con $f,g:\R\to\R$ (o, más en general, $F(r,\theta)=0$). Ahí se ve por qué conviene el $r$ negativo: $f$ puede tomar valores negativos. <a class="t" data-v="9" data-t="21:00">21:00</a></p></div>
+<div class="box ej"><span class="lab">Ejemplos simples <a class="t" data-v="9" data-t="23:01">23:01</a></span>
+<p><b>$r=3$.</b> Para cualquier ángulo, el punto está a distancia 3 del origen: es la circunferencia de radio 3. No hay sentido de recorrido: no es una parametrización. <a class="t" data-v="9" data-t="24:01">24:01</a></p>
+<p><b>$\theta=\pi/4$.</b> Todos los puntos con ese ángulo, con $r$ positivo o negativo: es la recta $y=x$ entera, no solo una semirrecta. <a class="t" data-v="9" data-t="25:03">25:03</a></p></div>
+<div class="box ej"><span class="lab">$r=2\cos\theta$, $\ 0\le\theta\le\pi$ <a class="t" data-v="9" data-t="27:05">27:05</a></span>
+<p><b>Método de la clase:</b> primero se grafica $r$ en función de $\theta$ en un plano "ficticio" de ejes $\theta$, $r$ (no es el plano físico). Después se recorre por tramos. <a class="t" data-v="9" data-t="29:05">29:05</a></p>
+<p>Tramo 1, $0\le\theta\le\pi/2$: arranca con $r=2$ sobre el semieje positivo de las $x$ y el radio baja a $0$. Tramo 2, $\pi/2\le\theta\le\pi$: ahora $r\lt0$, así que los puntos se reflejan al cuarto cuadrante, y el radio crece de $0$ a $2$ en valor absoluto. Termina en el mismo punto donde empezó: es una curva cerrada. <a class="t" data-v="9" data-t="32:06">32:06</a> <a class="t" data-v="9" data-t="34:08">34:08</a></p>
+<p><b>Cuenta en cartesianas:</b> $\cos\theta=\frac{x}{r}$, así que $r=2\frac{x}{r}$, $r^2=2x$, $x^2+y^2=2x$. Completando cuadrados, $(x^2-2x+1)+y^2-1=0$:
+$$(x-1)^2+y^2=1.$$
+Es la circunferencia de centro $(1,0)$ y radio $1$. Muchas veces esta cuenta no se puede hacer o no aporta nada; acá sí. <a class="t" data-v="9" data-t="37:12">37:12</a> <a class="t" data-v="9" data-t="39:15">39:15</a></p></div>
+
+<h3 class="b">La cardioide y la rosa de cuatro pétalos <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="10" data-t="0:35">0:35</a></h3>
+<div class="box ej"><span class="lab">Cardioide</span>
+<p><span class="tag vid">Video</span> En la Clase 10 se estudia $r=1+\cos\theta$, $0\le\theta\le2\pi$. Su ecuación en cartesianas es espantosa y no ayuda; con la forma polar alcanza. Como $r$ va entre $0$ y $2$, nunca es negativo. Por tramos de $\pi/2$: arranca en $(2,0)$; el radio baja a $1$ al llegar al semieje positivo de las $y$; baja a $0$ en $\theta=\pi$ (pasa por el origen); y vuelve a crecer simétricamente. Tiene forma de corazón. <a class="t" data-v="10" data-t="1:37">1:37</a> <a class="t" data-v="10" data-t="7:43">7:43</a> <a class="t" data-v="10" data-t="11:46">11:46</a></p>
+<p><span class="tag piz">Pizarrón</span> En la hoja el ejemplo es $r=1+\operatorname{sen}\theta$: es la misma curva girada $90^\circ$, con la punta en el origen hacia abajo y el máximo $r=2$ en $(0,2)$.</p></div>
+<div class="box ej"><span class="lab">Rosa de cuatro pétalos: $r=\cos2\theta$, $\ 0\le\theta\le2\pi$ <a class="t" data-v="10" data-t="21:57">21:57</a></span>
+<p>Con una fórmula casi igual a la de $r=2\cos\theta$ sale algo muy distinto. El factor $2$ dentro del coseno duplica la frecuencia: en $[0,2\pi]$ hay dos ciclos. Hay que analizar ocho tramos de $\pi/4$. <a class="t" data-v="10" data-t="23:59">23:59</a></p>
+<p>Tramo 1, $0\le\theta\le\pi/4$: $r$ baja de $1$ a $0$, medio pétalo sobre el eje $x$. Tramo 2, $\pi/4\le\theta\le\pi/2$: $r\lt0$ y va de $0$ a $-1$; los puntos se reflejan al sector opuesto y se forma medio pétalo sobre el semieje negativo de las $y$. Así siguiendo salen cuatro pétalos. <a class="t" data-v="10" data-t="28:04">28:04</a> <a class="t" data-v="10" data-t="30:05">30:05</a></p>
+<p class="hint">Pregunta de la clase: ¿cómo se hace una rosa de 3 pétalos? ¿Y una de 8? Probalo en la figura con "Escribir la mía…". <a class="t" data-v="10" data-t="33:06">33:06</a></p></div>
+<div class="viz" id="viz-polar"></div>
+<div class="viz" id="viz-polreg"></div>
+<div class="quiz" id="quiz-2"></div>
+</section>
+
+<!-- ======================= CLASE 11 ======================= -->
+<section class="clase" id="t3">
+<header>
+  <div class="kick">CLASE 11 · ejercicio 5</div>
+  <h2>Cónicas</h2>
+  <div class="meta"><a class="t" data-v="11" data-t="0:00">Clase 11 (54 min)</a><span>Hoja de la clase: "Parábola", "Elipse" e "Hipérbola".</span></div>
+</header>
+
+<h3 class="b">Cortes de un cono <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="11" data-t="0:36">0:36</a></h3>
+<p>Las cónicas son curvas del plano que salen de cortar el cono $z^2=x^2+y^2$ (dos "conitos" unidos por el vértice) con un plano. Si el plano es horizontal, el corte es una <b>circunferencia</b>; si se inclina un poco, una <b>elipse</b>; si queda paralelo a una generatriz y corta una sola hoja, una <b>parábola</b>; y si corta las dos hojas, una <b>hipérbola</b>. <a class="t" data-v="11" data-t="5:41">5:41</a> <a class="t" data-v="11" data-t="7:43">7:43</a></p>
+<div class="viz" id="viz-cone"></div>
+
+<h3 class="b">Parábola <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="11" data-t="8:44">8:44</a></h3>
+<div class="box def"><span class="lab">Parábola</span>
+<p>La parábola de foco $F=(0,p)$ y directriz $\{y=-p\}$ consiste en todos los puntos $P=(x,y)$ que están a la misma distancia del foco que de la directriz:
+$$\sqrt{x^2+(y-p)^2}=y+p.$$</p></div>
+<details class="dem"><summary>Cuenta <a class="t" data-v="11" data-t="12:48">12:48</a></summary><div class="in">
+<p>Elevando al cuadrado: $x^2+y^2-2py+p^2=y^2+2py+p^2$. Se cancelan $y^2$ y $p^2$: $x^2=4py$, o sea
+$$y=\frac{1}{4p}\,x^2=a\,x^2,\qquad a=\frac1{4p}.$$
+Una parametrización: $x=t$, $y=a\,t^2$. Una parábola general es una traslación (en $x$ o en $y$) de esta. <a class="t" data-v="11" data-t="14:50">14:50</a></p></div></details>
+
+<h3 class="b">Elipse <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="11" data-t="20:58">20:58</a></h3>
+<div class="box def"><span class="lab">Elipse</span>
+<p>Dados dos focos $F_1=(-c,0)$ y $F_2=(c,0)$ y una longitud $\ell=2a\gt|F_1F_2|=2c$, la elipse son los puntos $P$ con
+$$|PF_1|+|PF_2|=2a.$$
+Es lo que dibuja un lápiz que tensa un piolín de longitud $2a$ atado a dos alfileres. <a class="t" data-v="11" data-t="22:01">22:01</a> <a class="t" data-v="11" data-t="24:04">24:04</a></p></div>
+<details class="dem"><summary>Cuenta <a class="t" data-v="11" data-t="25:05">25:05</a></summary><div class="in">
+<p>$\sqrt{(x+c)^2+y^2}+\sqrt{(x-c)^2+y^2}=2a$. Conviene pasar una raíz al otro lado antes de elevar al cuadrado:
+$$(x-c)^2+y^2=4a^2-4a\sqrt{(x+c)^2+y^2}+(x+c)^2+y^2.$$
+Se cancelan $x^2$, $c^2$ e $y^2$ y queda $-4cx-4a^2=-4a\sqrt{(x+c)^2+y^2}$, es decir $a\sqrt{(x+c)^2+y^2}=a^2+cx$. Elevando de nuevo y cancelando $2a^2cx$:
+$$(a^2-c^2)x^2+a^2y^2=a^2(a^2-c^2).$$
+Como $a\gt c\gt0$, $a^2-c^2\gt0$; se lo llama $b^2$. Dividiendo por $a^2b^2$:
+$$\boxed{\ \frac{x^2}{a^2}+\frac{y^2}{b^2}=1\ },\qquad c^2=a^2-b^2.$$
+<a class="t" data-v="11" data-t="31:20">31:20</a> <a class="t" data-v="11" data-t="33:23">33:23</a></p></div></details>
+<div class="box obs"><span class="lab c-blue">¿Cómo se parametriza una elipse?</span>
+<p>$\left(\frac{x}{a}\right)^2+\left(\frac{y}{b}\right)^2=1$ se parece a la circunferencia: se toma $\frac{x}{a}=\cos\theta$, $\frac{y}{b}=\operatorname{sen}\theta$. Entonces $x=a\cos\theta$, $y=b\operatorname{sen}\theta$, $\theta\in[0,2\pi)$. <a class="t" data-v="11" data-t="36:26">36:26</a></p></div>
+
+<h3 class="b">Hipérbola <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="11" data-t="39:28">39:28</a></h3>
+<div class="box def"><span class="lab">Hipérbola</span>
+<p>Con los mismos focos $F_{1,2}=(\mp c,0)$ y ahora $2a\lt|F_1F_2|=2c$, la hipérbola son los puntos con
+$$|PF_1|-|PF_2|=\pm2a.$$
+Con una cuenta igual a la de la elipse se llega a
+$$\boxed{\ \frac{x^2}{a^2}-\frac{y^2}{b^2}=1\ },\qquad c^2=a^2+b^2.$$
+Tiene dos ramas. <a class="t" data-v="11" data-t="41:30">41:30</a> <a class="t" data-v="11" data-t="43:34">43:34</a></p></div>
+<div class="box thm"><span class="lab">Asíntotas <a class="t" data-v="11" data-t="45:35">45:35</a></span>
+<p>Dividiendo la ecuación por $x^2$: $\frac{1}{a^2}-\frac1{b^2}\left(\frac yx\right)^2=\frac{1}{x^2}\to0$ cuando $x\to\infty$. Entonces $\left(\frac yx\right)^2\to\frac{b^2}{a^2}$ y $\frac yx\to\pm\frac ba$: la hipérbola se pega a las rectas
+$$y=\pm\frac ba\,x.$$
+Despejando, cada rama es un gráfico de $x$ en función de $y$: $x=\pm a\sqrt{1+\frac{y^2}{b^2}}$. <a class="t" data-v="11" data-t="44:35">44:35</a></p></div>
+<div class="viz" id="viz-focal"></div>
+<p class="hint">En la clase, cada cónica se construye además en GeoGebra y se verifica la propiedad de las distancias moviendo un punto: <a class="t" data-v="11" data-t="14:50">parábola</a> <a class="t" data-v="11" data-t="33:23">elipse</a> <a class="t" data-v="11" data-t="47:39">hipérbola</a>.</p>
+<div class="quiz" id="quiz-3"></div>
+</section>
+
+<!-- ======================= CLASES 12 Y 13 ======================= -->
+<section class="clase" id="t4">
+<header>
+  <div class="kick">CLASES 12 Y 13 · Stewart 12.6 · ejercicios 6, 7 y 8</div>
+  <h2>Superficies: cilindros y cuádricas</h2>
+  <div class="meta"><a class="t" data-v="12" data-t="0:00">Clase 12 (50 min)</a> <a class="t" data-v="13" data-t="0:00">Clase 13 (50 min)</a><span>Esta parte está armada solo con los videos: no tengo la hoja de la clase.</span></div>
+</header>
+<div class="revnote"><b>Revisar</b>No encontré el "Resumen Teórica 7" (superficies) en la carpeta de teóricas. Si existe, pasámelo y ajusto esta sección a la hoja. Por ahora todo está marcado como <span class="tag vid">Video</span>, salvo los hiperboloides, que no se dieron en las clases y están marcados como Agregado (salen de la tabla de cuádricas del Stewart que está en la carpeta).</div>
+
+<h3 class="b">Cilindros <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="12" data-t="1:36">1:36</a></h3>
+<div class="box def"><span class="lab">Cilindro</span>
+<p>Un cilindro es una curva en un plano junto con un <b>eje directriz</b> transversal, a lo largo del cual la curva se prolonga. La curva puede tener cualquier forma (no solo un círculo) y el eje no tiene por qué ser perpendicular. <a class="t" data-v="12" data-t="2:38">2:38</a></p></div>
+<div class="box ej"><span class="lab">Ejemplos <a class="t" data-v="12" data-t="4:41">4:41</a></span>
+<p>(1) La circunferencia $x^2+y^2=1$ del plano $xy$ prolongada a lo largo del eje $z$: el cilindro de siempre, como una lata de gaseosa infinita. Su ecuación en $\R^3$ es la misma, $x^2+y^2=1$, con $z$ libre.</p>
+<p>(2) La parábola $z=x^2$ del plano $xz$ prolongada a lo largo del eje $y$: una canaleta. <a class="t" data-v="12" data-t="7:46">7:46</a> En GeoGebra 3D, al escribir una ecuación donde falta una variable se dibuja directamente el cilindro. <a class="t" data-v="12" data-t="11:48">11:48</a></p></div>
+
+<h3 class="b">Superficies cuádricas <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="12" data-t="15:59">15:59</a></h3>
+<div class="box def"><span class="lab">Superficie cuádrica</span>
+<p>Es el conjunto de puntos $(x,y,z)$ que cumplen una ecuación cuadrática en tres variables:
+$$Ax^2+By^2+Cz^2+Dxy+Exz+Fyz+Gx+Hy+Iz+J=0,$$
+con diez números $A,\dots,J$ dados. <a class="t" data-v="12" data-t="17:00">17:00</a></p></div>
+<div class="box thm"><span class="lab">Dos formas reducidas <a class="t" data-v="12" data-t="20:06">20:06</a></span>
+<p>Con una traslación y una rotación de los ejes (un movimiento rígido), toda cuádrica se lleva a una de estas dos formas:
+$$\text{tipo 1: } Ax^2+By^2+Cz^2+J=0,\qquad\qquad \text{tipo 2: } Ax^2+By^2+Iz=0.$$
+La cuenta no se hace en la materia. <a class="t" data-v="12" data-t="21:07">21:07</a></p></div>
+<div class="box def"><span class="lab">Trazas <a class="t" data-v="12" data-t="26:10">26:10</a></span>
+<p>La herramienta para graficar: cortar la superficie con planos paralelos a los coordenados, $x=k$, $y=k$ o $z=k$. Cada corte es una curva plana, que ya sabemos dibujar. Juntando los cortes se reconstruye la superficie. <a class="t" data-v="12" data-t="27:10">27:10</a></p></div>
+<div class="box ej"><span class="lab">Elipsoide: $x^2+2y^2+z^2=4$ (tipo 1) <a class="t" data-v="12" data-t="24:09">24:09</a></span>
+<p>Si en vez del $2$ hubiera un $1$, sería la esfera de radio $2$: es una esfera deformada. Traza $z=0$: $x^2+2y^2=4$, o sea $\left(\frac x2\right)^2+\left(\frac{y}{\sqrt2}\right)^2=1$, una elipse. <a class="t" data-v="12" data-t="31:14">31:14</a> Traza $z=k$: $x^2+2y^2=4-k^2$, que solo tiene puntos si $-2\le k\le2$; son elipses que se achican cuando $|k|$ crece, hasta ser un punto en $k=\pm2$. Es como una pelota de rugby. <a class="t" data-v="12" data-t="34:20">34:20</a> <a class="t" data-v="12" data-t="38:25">38:25</a></p></div>
+<div class="box ej"><span class="lab">Cono de dos hojas: $x^2+y^2-z^2=0$ (tipo 1, $J=0$) <a class="t" data-v="13" data-t="1:40">1:40</a></span>
+<p>Traza $z=k$: $x^2+y^2=k^2$, circunferencias de radio $|k|$ (un punto si $k=0$), iguales para $k$ y $-k$. Traza $x=0$: $y^2=z^2$, o sea $|y|=|z|$, una cruz. Los círculos crecen linealmente: son dos conos unidos por el vértice. <a class="t" data-v="13" data-t="3:42">3:42</a> <a class="t" data-v="13" data-t="7:46">7:46</a></p></div>
+<div class="box ej"><span class="lab">Paraboloide: $z=x^2+y^2$ (tipo 2) <a class="t" data-v="13" data-t="15:53">15:53</a></span>
+<p>Traza $z=k$: $x^2+y^2=k$, que exige $k\ge0$; circunferencias de radio $\sqrt k$, que crecen cada vez más lento. Traza $x=0$: $z=y^2$, una parábola; igual con $y=0$. Es una parábola que gira alrededor del eje $z$, como una antena parabólica. Con $z=ax^2+by^2$ ($a,b\gt0$ distintos) los cortes son elipses: paraboloide elíptico. <a class="t" data-v="13" data-t="17:53">17:53</a> <a class="t" data-v="13" data-t="22:01">22:01</a> <a class="t" data-v="13" data-t="27:08">27:08</a></p></div>
+<div class="box ej"><span class="lab">Silla de montar: $z=x^2-y^2$ (tipo 2) <a class="t" data-v="13" data-t="28:09">28:09</a></span>
+<p>Lo importante es que los coeficientes de $x^2$ e $y^2$ tienen signos distintos. Traza $z=0$: $|x|=|y|$, una cruz. Traza $z=k\gt0$: $x^2-y^2=k$, hipérbolas que se abren a lo largo del eje $x$; con $k\lt0$, a lo largo del eje $y$. Traza $x=0$: $z=-y^2$, parábola hacia abajo; traza $y=0$: $z=x^2$, parábola hacia arriba. Las hipérbolas cuelgan de esas parábolas. Es una silla de montar (o una papa frita). <a class="t" data-v="13" data-t="30:16">30:16</a> <a class="t" data-v="13" data-t="34:17">34:17</a> <a class="t" data-v="13" data-t="38:21">38:21</a></p></div>
+<div class="box obs"><span class="lab c-blue">Hiperboloides <span class="tag add">Agregado</span></span>
+<p>Para el ejercicio 7 faltan dos cuádricas que no se vieron en las clases. <b>Hiperboloide de una hoja</b>, $x^2+y^2-z^2=1$: trazas $z=k$, circunferencias de radio $\sqrt{1+k^2}$ (nunca vacías); trazas $x=0$, hipérbolas $y^2-z^2=1$. <b>Hiperboloide de dos hojas</b>, $-x^2-y^2+z^2=1$: trazas $z=k$ vacías si $|k|\lt1$ y circunferencias de radio $\sqrt{k^2-1}$ si $|k|\ge1$; trazas $x=0$, hipérbolas $z^2-y^2=1$. Regla práctica: con un signo menos, una hoja; con dos, dos hojas.</p></div>
+<div class="viz" id="viz-quad"></div>
+<div class="quiz" id="quiz-4"></div>
+</section>
+
+<!-- ======================= REPASO ======================= -->
+<section class="clase" id="rp">
+<header>
+  <div class="kick">REPASO · ejercicios 9, 10, 12, 13 y 14</div>
+  <h2>Curvas en el espacio y funciones de dos variables <span class="tag add" style="vertical-align:middle">Agregado</span></h2>
+  <div class="meta"><span>Estos ejercicios usan ideas que aparecen en la Clase 14 (funciones vectoriales) y en las prácticas, pero no se explican en las Clases 7 a 13. Esta sección es un recordatorio breve.</span></div>
+</header>
+<div class="box def"><span class="lab">Funciones vectoriales</span>
+<p>Una función $\mathbf r:I\subset\R\to\R^3$, $\mathbf r(t)=(x(t),y(t),z(t))$, es lo mismo que una parametrización de una curva en el espacio. Su <b>dominio</b> es el conjunto de $t$ donde las tres coordenadas están definidas: la intersección de los tres dominios. La <b>curva imagen</b> es el conjunto de puntos $\mathbf r(t)$. <a class="t" data-v="14" data-t="11:17">Clase 14 · 11:17</a></p></div>
+<div class="box ej"><span class="lab">Cómo se grafica una curva en el espacio</span>
+<p>Buscar relaciones entre las coordenadas que digan sobre qué superficies está la curva. Por ejemplo, $(\cos t,\operatorname{sen}t,t)$ cumple $x^2+y^2=1$: vive en el cilindro y sube a medida que gira, es una <b>hélice</b>. Al revés, la intersección de dos superficies se parametriza despejando: si una es un cilindro $x^2+y^2=r^2$, se toma $x=r\cos t$, $y=r\operatorname{sen}t$ y se despeja $z$ de la otra.</p></div>
+<div class="viz" id="viz-space"></div>
+<div class="box def"><span class="lab">Funciones de dos variables</span>
+<p>Una función $f:D\subset\R^2\to\R$ asigna a cada $(x,y)$ de su dominio un número. Su <b>dominio natural</b> son los puntos donde la fórmula tiene sentido (raíces de cosas $\ge0$, logaritmos de cosas $\gt0$, denominadores $\neq0$). Su <b>gráfico</b> es la superficie $\{(x,y,f(x,y)) : (x,y)\in D\}\subset\R^3$. La <b>curva de nivel</b> $c$ es el conjunto $\{(x,y)\in D : f(x,y)=c\}$: es la traza del gráfico con el plano $z=c$, vista desde arriba. Es lo mismo que las curvas de nivel de un mapa topográfico.</p></div>
+<div class="viz" id="viz-level"></div>
+</section>
+
+<!-- ======================= EJERCICIOS ======================= -->
+<section class="clase" id="ejercicios">
+<header>
+  <div class="kick">PRÁCTICA 2 · 14 ejercicios</div>
+  <h2>Ejercicios guiados</h2>
+  <div class="meta"><span>Cada ejercicio tiene pistas que se abren de a una, la resolución y botones para verlo en las figuras. La práctica sugiere complementar con GeoGebra: las figuras de esta página cumplen ese papel. Probá primero sin mirar.</span></div>
+</header>
+<div class="ctl" style="margin-bottom:14px"><span class="c-mut" id="ejprog" style="font:600 13.5px var(--f-mono)"></span></div>
+<div class="ejlist" id="ejlist"></div>
+</section>
+
+<div class="foot">Material basado en las clases grabadas del canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a> y en las hojas escritas durante las clases. Las secciones marcadas como <span class="tag add">Agregado</span> son material nuevo que no se dijo en clase. Versión preliminar de la Guía 2, para revisar antes de compartir.</div>
+</main>
+</div>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],macros:{"R": "\\mathbb{R}", "v": ["\\mathbf{#1}", 1], "ang": ["\\langle #1\\rangle", 1], "jh": "\\hat{\\jmath}"}},svg:{fontCache:'none'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']},startup:{typeset:false}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>
+window.G1IMG={};
+(function(){'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>Array.from(r.querySelectorAll(q));
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in (attrs||{})){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});return e;}
+function sv(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const f=(x,d=2)=>{let v=Number(Number(x).toFixed(d));if(Object.is(v,-0)||Math.abs(v)<1e-12)v=0;return String(v).replace('.',',').replace('-','−');};
+const fv=(v,d=2)=>'⟨'+v.map(x=>f(x,d)).join('; ')+'⟩';
+const fp=(v,d=2)=>'('+v.map(x=>f(x,d)).join('; ')+')';
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const add=(a,b)=>a.map((x,i)=>x+b[i]), sub=(a,b)=>a.map((x,i)=>x-b[i]), mul=(a,t)=>a.map(x=>x*t);
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), nrm=a=>Math.sqrt(dot(a,a));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=nrm(a);return n?mul(a,1/n):a;};
+const CL={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',violet:'var(--violet)',ink:'var(--ink)',mut:'var(--ink-2)',amber:'var(--amber)'};
+const TT={blue:'var(--blue-t)',red:'var(--red-t)',green:'var(--green-t)',violet:'var(--violet-t)'};
+
+function arrow(g,x1,y1,x2,y2,col,w,head){w=w||2.6;head=head||11;const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);if(L<1.5)return;
+  const ux=dx/L,uy=dy/L,hl=Math.min(head,L*.7),bx=x2-ux*hl,by=y2-uy*hl;
+  sv('line',{x1,y1,x2:bx,y2:by,style:`stroke:${col};stroke-width:${w};stroke-linecap:round`},g);
+  sv('polygon',{points:`${x2},${y2} ${bx-uy*hl*.42},${by+ux*hl*.42} ${bx+uy*hl*.42},${by-ux*hl*.42}`,style:`fill:${col}`},g);}
+function line(g,x1,y1,x2,y2,col,w,dash){return sv('line',{x1,y1,x2,y2,style:`stroke:${col};stroke-width:${w||1.5};${dash?'stroke-dasharray:'+dash+';':''}stroke-linecap:round`},g);}
+function text(g,x,y,t,col,anchor,cls){const e=sv('text',{x,y,'text-anchor':anchor||'middle',style:`fill:${col||CL.ink}`,class:cls||''},g);e.textContent=t;return e;}
+
+/* ---------- control helpers ---------- */
+function slider(label,o,cb){const inp=h('input',{type:'range',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':label});
+  const val=h('span',{},'');const upd=()=>{val.textContent=f(+inp.value,o.dec==null?1:o.dec)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();cb(+inp.value);});upd();
+  const l=h('label',{},label,inp,val);l.input=inp;l.set=v=>{inp.value=v;upd();};return l;}
+function numbox(o,cb){const i=h('input',{type:'number',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':o.label});
+  i.addEventListener('input',()=>{let v=parseFloat(i.value);if(isNaN(v))return;v=Math.max(o.min,Math.min(o.max,v));cb(v);});return i;}
+function tabs(names,cb,start){const bs=names.map((n,i)=>h('button',{type:'button','aria-pressed':i===(start||0)},n));
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===i));cb(i);}));return h('div',{class:'tabs'},bs);}
+function vhead(title,sub,tb){return h('div',{class:'vh'},h('b',{},title),sub?h('span',{},sub):null,tb||null);}
+
+/* ---------- plano 2D con puntos arrastrables ---------- */
+function Plane2D(host,o){
+  const xr=o.xr||[-6,6],yr=o.yr||[-4,4],W=o.W||640,sx=W/(xr[1]-xr[0]),H=sx*(yr[1]-yr[0]);
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Plano cartesiano interactivo'},host);
+  const X=x=>(x-xr[0])*sx,Y=y=>H-(y-yr[0])*sx;
+  const gb=sv('g',{},svg),gd=sv('g',{},svg),gh=sv('g',{},svg);
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){line(gb,X(x),0,X(x),H,'var(--grid)',1);if(x&&x%(o.tick||1)===0)text(gb,X(x),Y(0)+15,x,CL.mut,'middle','sm');}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){line(gb,0,Y(y),W,Y(y),'var(--grid)',1);if(y&&y%(o.ytick||o.tick||1)===0)text(gb,X(0)-7,Y(y)+4,y,CL.mut,'end','sm');}
+  arrow(gb,0,Y(0),W-2,Y(0),CL.mut,1.6,8);arrow(gb,X(0),H,X(0),2,CL.mut,1.6,8);
+  text(gb,W-10,Y(0)-8,o.xl||'x',CL.mut);text(gb,X(0)+12,12,o.yl||'y',CL.mut);
+  const api={svg,X,Y,sx,W,H,xr,yr,g:gd,handles:[]};
+  function toW(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x/sx+xr[0],(H-p.y)/sx+yr[0]];}
+  api.handle=function(obj,col,opt){opt=opt||{};const snap=opt.snap||.5,c=sv('circle',{r:11,class:'grab',tabindex:0,role:'slider','aria-label':opt.label||'Punto arrastrable',style:`fill:${col};stroke:var(--surface);stroke-width:3`},gh);
+    let drag=false;const clampSet=(x,y)=>{x=Math.round(x/snap)*snap;y=Math.round(y/snap)*snap;obj.x=Math.max(xr[0]+.3,Math.min(xr[1]-.3,x));obj.y=Math.max(yr[0]+.3,Math.min(yr[1]-.3,y));api.update();};
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);e.preventDefault();});
+    c.addEventListener('pointermove',e=>{if(!drag)return;const p=toW(e);clampSet(p[0],p[1]);});
+    const end=()=>{drag=false;};c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+    c.addEventListener('keydown',e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(d){e.preventDefault();clampSet(obj.x+d[0]*snap,obj.y+d[1]*snap);}});
+    api.handles.push({obj,c});return c;};
+  api.update=function(){gd.textContent='';o.draw(gd,api);api.handles.forEach(hd=>{hd.c.setAttribute('cx',X(hd.obj.x));hd.c.setAttribute('cy',Y(hd.obj.y));});if(o.onUpdate)o.onUpdate(api);};
+  return api;
+}
+
+/* ---------- vista 3D ortográfica, eje z hacia arriba, terna derecha ---------- */
+function View3D(host,o){
+  o=o||{};const W=o.W||640,H=o.H||430,scale=o.scale||40,ctr=o.ctr||[0,0,0];
+  const st={az:o.az==null?215:o.az,el:o.el==null?22:o.el};
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Vista tridimensional. Se puede girar arrastrando.'},host);
+  const g=sv('g',{},svg);
+  function P(p){const a=rad(st.az),e=rad(st.el),x=p[0]-ctr[0],y=p[1]-ctr[1],z=p[2]-ctr[2];
+    const x1=Math.cos(a)*x-Math.sin(a)*y,y1=Math.sin(a)*x+Math.cos(a)*y;
+    return [W/2+x1*scale,H/2-(z*Math.cos(e)+y1*Math.sin(e))*scale,y1*Math.cos(e)-z*Math.sin(e)];}
+  const api={svg,st,P,draw:null};
+  api.render=function(){g.textContent='';const polys=[],ops=[],txt=[];
+    const sc={
+      poly(pts,col,op,stroke){polys.push({pts:pts.map(P),col,op,stroke});},
+      line(a,b,col,w,dash){ops.push(()=>{const p=P(a),q=P(b);line(g,p[0],p[1],q[0],q[1],col,w,dash);});},
+      path(pts,col,w,dash,closed){ops.push(()=>{const q=pts.map(P);sv('polyline',{points:q.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' ')+(closed?' '+q[0][0].toFixed(1)+','+q[0][1].toFixed(1):''),style:`fill:none;stroke:${col};stroke-width:${w||1.4};${dash?'stroke-dasharray:'+dash+';':''}stroke-linejoin:round`},g);});},
+      arrow(a,b,col,w){ops.push(()=>{const p=P(a),q=P(b);arrow(g,p[0],p[1],q[0],q[1],col,w||2.8,11);});},
+      dot(a,col,r){ops.push(()=>{const p=P(a);sv('circle',{cx:p[0],cy:p[1],r:r||5,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);});},
+      disc(c,rpx,col){ops.push(()=>{const p=P(c);sv('circle',{cx:p[0],cy:p[1],r:rpx*scale,style:`fill:${col};stroke:none`},g);});},
+      text(a,t,col,dx,dy,anc){txt.push(()=>{const p=P(a);text(g,p[0]+(dx||0),p[1]+(dy||0),t,col,anc);});},
+      axes(L,neg){const ex=[[1,0,0,'x'],[0,1,0,'y'],[0,0,1,'z']];ex.forEach(e=>{const v=[e[0],e[1],e[2]];
+        if(neg!==false)sc.line(mul(v,-L),[0,0,0],'var(--line)',1.2,'4 4');
+        ops.push(()=>{const p=P([0,0,0]),q=P(mul(v,L));arrow(g,p[0],p[1],q[0],q[1],CL.mut,1.6,9);});
+        sc.text(mul(v,L*1.1),e[3],CL.mut,0,4);});},
+      box(lo,hi,col,op){const[x0,y0,z0]=lo,[x1,y1,z1]=hi;const C=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        [[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach(q=>sc.poly(q.map(i=>C[i]),col,op,col));},
+      patch(n,d,S,col,op,dashed){n=unit(n);const e=Math.abs(n[2])<.9?[0,0,1]:[1,0,0];const u=unit(cross(n,e)),v=cross(n,u),c=mul(n,d);
+        const q=[add(add(c,mul(u,S)),mul(v,S)),add(sub(c,mul(u,S)),mul(v,S)),sub(sub(c,mul(u,S)),mul(v,S)),sub(add(c,mul(u,S)),mul(v,S))];
+        sc.poly(q,col,op,col);if(dashed)sc.path(q,col,1.6,'6 5',true);return {q,c,n,u,v};},
+      circle(c,r,plane,col,w,dash){const pts=[];for(let i=0;i<=48;i++){const t=i/48*2*Math.PI,a=Math.cos(t)*r,b=Math.sin(t)*r;
+        pts.push(plane==='xy'?[c[0]+a,c[1]+b,c[2]]:plane==='xz'?[c[0]+a,c[1],c[2]+b]:[c[0],c[1]+a,c[2]+b]);}sc.path(pts,col,w||1.3,dash);},
+      surf(fn,ur,vr,nu,nv,col,op,stroke){for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const u0=ur[0]+(ur[1]-ur[0])*i/nu,u1=ur[0]+(ur[1]-ur[0])*(i+1)/nu,v0=vr[0]+(vr[1]-vr[0])*j/nv,v1=vr[0]+(vr[1]-vr[0])*(j+1)/nv;
+        const q=[fn(u0,v0),fn(u1,v0),fn(u1,v1),fn(u0,v1)];if(q.some(p=>!p||p.some(x=>!isFinite(x))))continue;polys.push({pts:q.map(P),col,op:op==null?.35:op,stroke:stroke||col,sw:.6});}},
+      sphere(c,r,col,dash){sc.disc(c,r,'var(--blue-t)');['xy','xz','yz'].forEach(p=>sc.circle(c,r,p,col||CL.blue,1.4,dash));
+        for(const k of[.5,-.5]){const rr=r*Math.sqrt(1-k*k);sc.circle([c[0],c[1],c[2]+r*k],rr,'xy',col||CL.blue,.9,dash);}}
+    };
+    if(api.draw)api.draw(sc);
+    polys.sort((a,b)=>mean(b.pts)-mean(a.pts));
+    polys.forEach(p=>{sv('polygon',{points:p.pts.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' '),style:`fill:${p.col};fill-opacity:${p.op==null?.25:p.op};stroke:${p.stroke||'none'};stroke-opacity:.55;stroke-width:${p.sw||1.2}`},g);});
+    ops.forEach(fn=>fn());txt.forEach(fn=>fn());};
+  function mean(pts){return pts.reduce((s,p)=>s+p[2],0)/pts.length;}
+  // arrastre para girar
+  let drag=null;svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,az:st.az,el:st.el};svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect(),k=W/r.width;st.az=drag.az-(e.clientX-drag.x)*k*.5;
+    if(e.pointerType==='mouse'){st.el=Math.max(-80,Math.min(85,drag.el+(e.clientY-drag.y)*k*.4));}
+    api.sync&&api.sync();api.render();});
+  const end=()=>{drag=null;};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  api.controls=function(){const a=slider('giro',{min:0,max:360,step:1,value:Math.round(((st.az%360)+360)%360),unit:'°',dec:0},v=>{st.az=v;api.render();});
+    const b=slider('inclinación',{min:-80,max:85,step:1,value:st.el,unit:'°',dec:0},v=>{st.el=v;api.render();});
+    api.sync=()=>{a.set(Math.round(((st.az%360)+360)%360));b.set(Math.round(st.el));};
+    const reset=h('button',{type:'button',onclick:()=>{st.az=o.az==null?215:o.az;st.el=o.el==null?22:o.el;api.sync();api.render();}},'Vista inicial');
+    return h('div',{class:'ctl'},a,b,reset);};
+  return api;
+}
+
+
+/* ---------- expresiones escritas por el usuario: expr('t^2-2t',['t']) -> función ---------- */
+function expr(src,vars){vars=vars||['x'];const s=String(src).replace(/\s+/g,'').replace(/\*\*/g,'^').replace(/π/g,'pi').replace(/θ/g,'th').replace(/·/g,'*').replace(/−/g,'-').replace(/,/g,'.');
+  const FN={sin:Math.sin,sen:Math.sin,cos:Math.cos,tan:Math.tan,tg:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,arcsen:Math.asin,arccos:Math.acos,arctan:Math.atan,sqrt:Math.sqrt,raiz:Math.sqrt,exp:Math.exp,ln:Math.log,log:Math.log,abs:Math.abs,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),sgn:Math.sign};
+  const C={pi:Math.PI,e:Math.E};let i=0;const err=m=>{throw new Error(m);};
+  const peek=()=>s[i];
+  function num(){const m=/^\d*\.?\d+(e[+-]?\d+)?/i.exec(s.slice(i));if(!m)err('número');i+=m[0].length;const v=parseFloat(m[0]);return ()=>v;}
+  function ident(){const m=/^[a-zA-Z_]+/.exec(s.slice(i));i+=m[0].length;let w=m[0];
+    // separar nombres pegados: "tsint" -> t, sin, t ; prioridad: funciones, constantes, variables
+    const names=[...Object.keys(FN),...Object.keys(C),...vars].sort((a,b)=>b.length-a.length);
+    const parts=[];while(w.length){const n=names.find(nm=>w.startsWith(nm));if(!n)err('nombre desconocido: '+w);parts.push(n);w=w.slice(n.length);}
+    return parts;}
+  function primary(){const c=peek();
+    if(c==='('){i++;const e=add_();if(peek()!==')')err('falta )');i++;return e;}
+    if(c==='|'){i++;const e=add_();if(peek()!=='|')err('falta |');i++;return v=>Math.abs(e(v));}
+    if(/[\d.]/.test(c))return num();
+    if(/[a-zA-Z_]/.test(c)){const parts=ident();
+      const build=k=>{const n=parts[k];
+        if(FN[n]){let arg;if(k+1<parts.length){arg=build(k+1);}else{arg=power();}const f=FN[n];return v=>f(arg(v));}
+        let a;if(n in C){const cv=C[n];a=()=>cv;}else{const j=vars.indexOf(n);a=v=>v[j];}
+        if(k+1<parts.length){const r=build(k+1);return v=>a(v)*r(v);}return a;};
+      return build(0);}
+    err('símbolo inesperado: '+(c||'fin'));}
+  function power(){const b=primary();if(peek()==='^'){i++;const e=unary();return v=>Math.pow(b(v),e(v));}return b;}
+  function unary(){if(peek()==='-'){i++;const u=unary();return v=>-u(v);}if(peek()==='+'){i++;return unary();}return power();}
+  function mul_(){let a=unary();for(;;){const c=peek();
+      if(c==='*'||c==='/'){i++;const b=unary(),l=a;a=c==='*'?(v=>l(v)*b(v)):(v=>l(v)/b(v));}
+      else if(c&&/[\d.a-zA-Z_(|]/.test(c)&&c!=='|'){const b=unary(),l=a;a=v=>l(v)*b(v);}
+      else return a;}}
+  function add_(){let a=mul_();for(;;){const c=peek();if(c==='+'||c==='-'){i++;const b=mul_(),l=a;a=c==='+'?(v=>l(v)+b(v)):(v=>l(v)-b(v));}else return a;}}
+  if(!s.length)err('vacía');const f=add_();if(i<s.length)err('sobra: '+s.slice(i));
+  return (...a)=>f(a);}
+
+/* ---------- curvas de nivel (marching squares): devuelve lista de segmentos [[x1,y1],[x2,y2]] ---------- */
+function contour(F,xr,yr,c,n){n=n||80;const dx=(xr[1]-xr[0])/n,dy=(yr[1]-yr[0])/n,segs=[];const G=[];
+  for(let i=0;i<=n;i++){G[i]=[];for(let j=0;j<=n;j++){const v=F(xr[0]+i*dx,yr[0]+j*dy);G[i][j]=isFinite(v)?((v-c)===0?1e-12:v-c):NaN;}}
+  const lerp=(a,b,pa,pb)=>{const t=a/(a-b);return [pa[0]+(pb[0]-pa[0])*t,pa[1]+(pb[1]-pa[1])*t];};
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=xr[0]+i*dx,y=yr[0]+j*dy;
+    const P=[[x,y],[x+dx,y],[x+dx,y+dy],[x,y+dy]],V=[G[i][j],G[i+1][j],G[i+1][j+1],G[i][j+1]];
+    if(V.some(isNaN))continue;const pts=[];
+    for(let k=0;k<4;k++){const a=V[k],b=V[(k+1)%4];if((a<0)!==(b<0))pts.push(lerp(a,b,P[k],P[(k+1)%4]));else if(a===0&&b!==0)pts.push(P[k]);}
+    if(pts.length===2)segs.push(pts);else if(pts.length===4){segs.push([pts[0],pts[1]]);segs.push([pts[2],pts[3]]);}}
+  return segs;}
+
+/* ---------- dibujar una curva en un Plane2D: pts = [[x,y],...] (cortes en NaN o saltos) ---------- */
+function poly2(g,api,pts,col,w,dash){let d='',pen=false,prev=null;const {X,Y}=api,lim=Math.max(api.W,api.H)*3;
+  pts.forEach(p=>{const ok=p&&isFinite(p[0])&&isFinite(p[1]);if(!ok){pen=false;prev=null;return;}const px=X(p[0]),py=Y(p[1]);
+    if(Math.abs(px)>lim||Math.abs(py)>lim){pen=false;prev=null;return;}
+    if(prev&&Math.hypot(px-prev[0],py-prev[1])>api.W*.35)pen=false;
+    d+=(pen?'L':'M')+px.toFixed(1)+' '+py.toFixed(1);pen=true;prev=[px,py];});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.5};stroke-linejoin:round;stroke-linecap:round;${dash?'stroke-dasharray:'+dash:''}`},g);}
+function segs2(g,api,segs,col,w){const {X,Y}=api;let d='';segs.forEach(s=>{d+='M'+X(s[0][0]).toFixed(1)+' '+Y(s[0][1]).toFixed(1)+'L'+X(s[1][0]).toFixed(1)+' '+Y(s[1][1]).toFixed(1);});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.2};stroke-linecap:round`},g);}
+window.G1={$,$$,h,sv,f,fv,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2};
+})();
+(function(){'use strict';
+const {$,h,sv,f,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+const PI=Math.PI;
+const fmtT=t=>{const k=t/PI;if(Math.abs(k-Math.round(k))<1e-9&&Math.abs(t)>1e-9){const n=Math.round(k);return (n===1?'':n===-1?'−':n)+'π';}return f(t,2);};
+
+/* ======================================================================
+   Curvas paramétricas: una partícula recorre la curva al mover t
+   ====================================================================== */
+const PARAM={
+  h1:{n:'Hoja: (3t+2, −t+1)',x:'3t+2',y:'-t+1',a:-3,b:2,xr:[-7,8],yr:[-3,5],note:'Despejando t de las dos ecuaciones: y = −x/3 + 5/3. Es la recta que pasa por (2,1) con dirección ⟨3,−1⟩.'},
+  v1:{n:'Clase 7: (2t+4, −t+2)',x:'2t+4',y:'-t+2',a:-2,b:4,xr:[-2,13],yr:[-3,5],note:'x = 8 − 2y, o sea y = 4 − x/2. Recta por (4,2) con dirección ⟨2,−1⟩. Con t = 0 se está en (4,2) y con t = 1 en (6,1).'},
+  e2:{n:'(t²−2t, t+1), t∈[−2,1]',x:'t^2-2t',y:'t+1',a:-2,b:1,xr:[-2,9],yr:[-2,4],note:'x = y² − 4y + 3 = (y−1)(y−3): parábola "acostada". Con t∈[−2,1] solo se recorre el arco de (8,−1) a (−1,2), pasando por (0,1).',full:'x(y)'},
+  e3:{n:'(cos t, sen t), t∈[0,2π]',x:'cos t',y:'sin t',a:0,b:2*PI,xr:[-2,2],yr:[-1.5,1.5],note:'cos²t + sen²t = 1: circunferencia de centro (0,0) y radio 1, recorrida una vez en sentido antihorario.'},
+  e4:{n:'Hoja: (sen 2t, cos 2t)',x:'sin(2t)',y:'cos(2t)',a:0,b:2*PI,xr:[-2,2],yr:[-1.5,1.5],note:'También cumple x² + y² = 1, pero arranca en (0,1), va en sentido horario y da dos vueltas.'},
+  i1:{n:'(t, t²+1)',x:'t',y:'t^2+1',a:-2,b:2,xr:[-4,4],yr:[-1,6],note:'El gráfico de y = f(x) siempre se parametriza con x = t, y = f(t).'},
+  i2:{n:'(2t, 4t²+1)',x:'2t',y:'4t^2+1',a:-1,b:1,xr:[-4,4],yr:[-1,6],note:'Mismo conjunto que (t, t²+1), recorrido el doble de rápido: con t = 1 ya está en (2,5).'},
+  i3:{n:'(1+cos t, −2+sen t)',x:'1+cos t',y:'-2+sin t',a:0,b:2*PI,xr:[-2,4],yr:[-4,0.5],note:'Circunferencia (x−1)² + (y+2)² = 1: la del origen corrida al centro (1,−2).'},
+  /* práctica */
+  p1a:{n:'Ej. 1(a)',x:'3-4t',y:'2-3t',a:-2,b:3,xr:[-10,12],yr:[-8,9]},
+  p1b:{n:'Ej. 1(b)',x:'1-t^2',y:'t-2',a:-2,b:2,xr:[-4,3],yr:[-5,1]},
+  p1c:{n:'Ej. 1(c)',x:'t^2+t',y:'t^2-t',a:-2,b:2,xr:[-1,7],yr:[-1,7]},
+  p1d:{n:'Ej. 1(d)',x:'t^2',y:'t^3-4t',a:-3,b:3,xr:[-1,10],yr:[-16,16]},
+  p2a:{n:'Ej. 2(a)',x:'2cos t',y:'2sin t',a:0,b:2*PI,xr:[-3.5,3.5],yr:[-3,3]},
+  p2b:{n:'Ej. 2(b)',x:'1+cos t',y:'3+sin t',a:0,b:2*PI,xr:[-2,4],yr:[1,5]},
+  p2c:{n:'Ej. 2(c)',x:'3cos t',y:'2+3sin t',a:0,b:2*PI,xr:[-5,5],yr:[-2,6]},
+  p11a:{n:'Ej. 11(a) rectángulo',x:'(t<1)*t + (t>=1)*(t<2)*1 + (t>=2)*(t<3)*(3-t)',y:'(t<1)*2 + (t>=1)*(t<2)*(2-4(t-1)) + (t>=2)*(t<3)*(-2) + (t>=3)*(-2+4(t-3))',a:0,b:4,xr:[-1.5,2.5],yr:[-3,3],pw:true,note:'Una parametrización a trozos: un tramo por lado, cada uno con t en un intervalo de longitud 1.'},
+  p11b:{n:'Ej. 11(b) triángulo',x:'',y:'',a:0,b:3,xr:[-2,2],yr:[-0.6,1.5],pw:true,note:'Tres segmentos: de (1,0) a (0,1), de (0,1) a (−1,0) y de (−1,0) a (1,0).'}
+};
+/* las expresiones con comparaciones no las entiende expr(): para los trozos uso funciones */
+const PW={
+  p11a:t=>{t=Math.max(0,Math.min(4,t));if(t<=1)return [t,2];if(t<=2)return [1,2-4*(t-1)];if(t<=3)return [1-(t-2),-2];return [0,-2+4*(t-3)];},
+  p11b:t=>{t=Math.max(0,Math.min(3,t));if(t<=1)return [1-t,t];if(t<=2)return [-(t-1),1-(t-1)];return [-1+2*(t-2),0];}
+};
+V.param=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});
+  const keys=['h1','v1','e2','e3','e4','i1','i2','i3'];
+  let cur='h1',t=0,trail=true,custom={x:'t',y:'t^2',a:-2,b:2};
+  const sel=h('select',{'aria-label':'Elegir curva'},...keys.map(k=>h('option',{value:k},PARAM[k].n)),h('option',{value:'cus'},'Escribir la mía…'));
+  const ex=h('select',{'aria-label':'Curvas de la práctica'},h('option',{value:''},'De la práctica…'),...Object.keys(PARAM).filter(k=>k[0]==='p').map(k=>h('option',{value:k},PARAM[k].n)));
+  host.append(vhead('Curvas paramétricas','Mové t y mirá cómo la partícula va dejando la curva'),h('div',{class:'ctl'},sel,ex),body);
+  const cusBox=h('div',{class:'ctl',hidden:''});
+  const ix=h('input',{type:'text',value:custom.x,'aria-label':'x(t)',size:12}),iy=h('input',{type:'text',value:custom.y,'aria-label':'y(t)',size:12}),
+        ia=h('input',{type:'text',value:'-2','aria-label':'t desde',size:5}),ib=h('input',{type:'text',value:'2','aria-label':'t hasta',size:5});
+  const msg=h('span',{class:'res'});
+  cusBox.append(h('label',{},'x(t) =',ix),h('label',{},'y(t) =',iy),h('label',{},'t desde',ia),h('label',{},'hasta',ib),h('button',{type:'button',onclick:()=>{build('cus');}},'Graficar'),msg);
+  host.append(cusBox);
+  let st=null,pl=null,ts=null;
+  function getP(k){
+    if(k==='cus'){let fx,fy,a,b;try{fx=expr(ix.value,['t']);fy=expr(iy.value,['t']);a=expr(ia.value,['t'])(0);b=expr(ib.value,['t'])(0);msg.textContent='';msg.className='res';}
+      catch(e){msg.className='res bad';msg.textContent='No entiendo la fórmula ('+e.message+').';return null;}
+      if(!(b>a)){msg.className='res bad';msg.textContent='Tiene que ser "desde" < "hasta".';return null;}
+      const P={n:'tuya',a,b,fn:t=>[fx(t),fy(t)]};const pts=sample(P);const xs=pts.map(p=>p[0]).filter(isFinite),ys=pts.map(p=>p[1]).filter(isFinite);
+      const pad=(lo,hi)=>{const d=Math.max(hi-lo,1)*.15;return [Math.floor(lo-d),Math.ceil(hi+d)];};
+      let xr=pad(Math.min(...xs),Math.max(...xs)),yr=pad(Math.min(...ys),Math.max(...ys));
+      const wx=xr[1]-xr[0],wy=yr[1]-yr[0],want=wx*.62;if(wy<want){const c=(yr[0]+yr[1])/2;yr=[c-want/2,c+want/2];}
+      P.xr=xr;P.yr=yr;P.lab=['x(t) = '+ix.value,'y(t) = '+iy.value];return P;}
+    const P=Object.assign({},PARAM[k]);
+    if(PW[k])P.fn=PW[k];else{const fx=expr(P.x,['t']),fy=expr(P.y,['t']);P.fn=t=>[fx(t),fy(t)];}
+    P.lab=P.pw?null:['x(t) = '+P.x.replace(/\*/g,''),'y(t) = '+P.y];return P;}
+  function sample(P,to){const N=400,pts=[],end=to==null?P.b:to;for(let i=0;i<=N;i++){const t=P.a+(end-P.a)*i/N;pts.push(P.fn(t));}return pts;}
+  function build(k){cur=k;cusBox.hidden=k!=='cus';const P=getP(k);if(!P)return;st=P;t=P.a+(P.b-P.a)*.6;body.textContent='';
+    const tick=Math.max(1,Math.round((P.xr[1]-P.xr[0])/12));
+    pl=Plane2D(body,{xr:P.xr,yr:P.yr,tick,label:'Curva paramétrica',draw(g,a){
+        poly2(g,a,sample(P),'var(--blue-t)',7);poly2(g,a,sample(P),CL.blue,2,'6 5');
+        if(trail)poly2(g,a,sample(P,t),CL.red,3.4);
+        const p=P.fn(t),q=P.fn(Math.min(P.b,t+(P.b-P.a)/120));const dx=q[0]-p[0],dy=q[1]-p[1],L=Math.hypot(a.X(q[0])-a.X(p[0]),a.Y(q[1])-a.Y(p[1]));
+        if(L>0.01){const ux=(a.X(q[0])-a.X(p[0]))/L,uy=(a.Y(q[1])-a.Y(p[1]))/L;arrow(g,a.X(p[0]),a.Y(p[1]),a.X(p[0])+ux*34,a.Y(p[1])+uy*34,CL.green,2.6,10);}
+        sv('circle',{cx:a.X(p[0]),cy:a.Y(p[1]),r:7,style:'fill:var(--red);stroke:var(--surface);stroke-width:2.5'},g);
+        const s0=P.fn(P.a),s1=P.fn(P.b);sv('circle',{cx:a.X(s0[0]),cy:a.Y(s0[1]),r:4.5,style:'fill:var(--ink-2)'},g);
+        text(g,a.X(s0[0])+8,a.Y(s0[1])-8,'t = '+fmtT(P.a),CL.mut,'start','sm');
+        if(Math.hypot(s1[0]-s0[0],s1[1]-s0[1])>1e-6){sv('circle',{cx:a.X(s1[0]),cy:a.Y(s1[1]),r:4.5,style:'fill:var(--ink-2)'},g);text(g,a.X(s1[0])+8,a.Y(s1[1])+16,'t = '+fmtT(P.b),CL.mut,'start','sm');}
+      }});
+    ts=slider('t',{min:P.a,max:P.b,step:(P.b-P.a)/400,value:t,dec:2},v=>{t=v;upd();});
+    const play=h('button',{type:'button'},'▶ Recorrer');let anim=null;
+    play.addEventListener('click',()=>{if(anim){cancelAnimationFrame(anim);anim=null;play.textContent='▶ Recorrer';return;}
+      if(t>=P.b-1e-9)t=P.a;play.textContent='❚❚ Pausa';let last=performance.now();
+      const step=now=>{const dt=(now-last)/1000;last=now;t=Math.min(P.b,t+(P.b-P.a)*dt/5);ts.set(t);upd();if(t<P.b)anim=requestAnimationFrame(step);else{anim=null;play.textContent='▶ Recorrer';}};anim=requestAnimationFrame(step);});
+    const tr=h('label',{},h('input',{type:'checkbox',checked:'',onchange:e=>{trail=e.target.checked;upd();}}),' rastro');
+    body.append(h('div',{class:'ctl'},ts,play,tr),out);upd();}
+  function upd(){if(!pl)return;pl.update();const p=st.fn(t);
+    out.innerHTML=(st.lab?st.lab.join(' &nbsp; · &nbsp; ')+'<br>':'')+'t = <b>'+f(t,3)+'</b> &nbsp;→&nbsp; (x(t), y(t)) = <b class="c-red">'+fp(p,3)+'</b>'+(st.note?'<br><span class="c-mut">'+st.note+'</span>':'');}
+  sel.addEventListener('change',()=>{ex.value='';build(sel.value);});
+  ex.addEventListener('change',()=>{if(!ex.value)return;build(ex.value);});
+  API['viz-param']={set(k){if(PARAM[k]){if(keys.includes(k)){sel.value=k;ex.value='';}else{ex.value=k;}build(k);}}};
+  build('h1');
+};
+
+/* ======================================================================
+   Cicloide: el "ojo de gato" en la rueda de la bicicleta
+   ====================================================================== */
+V.cycloid=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let th=2.2,R=1;
+  host.append(vhead('La cicloide','Hacé rodar la rueda: el punto P va dejando la curva'),body);
+  const pl=Plane2D(body,{xr:[-.6,13.2],yr:[-.8,3.2],tick:1,label:'Rueda que rueda sobre el eje x',draw(g,a){const X=a.X,Y=a.Y;
+    const cyc=[];for(let i=0;i<=400;i++){const s=i/400*4*PI;cyc.push([R*(s-Math.sin(s)),R*(1-Math.cos(s))]);}
+    poly2(g,a,cyc,CL.blue,1.6,'5 5');
+    const tr=[];for(let i=0;i<=300;i++){const s=i/300*th;tr.push([R*(s-Math.sin(s)),R*(1-Math.cos(s))]);}poly2(g,a,tr,CL.red,3.4);
+    const C=[R*th,R],P=[R*(th-Math.sin(th)),R*(1-Math.cos(th))],T=[R*th,0],Q=[R*th,R*(1-Math.cos(th))];
+    sv('circle',{cx:X(C[0]),cy:Y(C[1]),r:R*a.sx,style:'fill:var(--blue-t);stroke:var(--ink-2);stroke-width:1.6'},g);
+    // arco rodado (longitud θ) en verde
+    const arc=[];for(let i=0;i<=40;i++){const s=i/40*th;arc.push([C[0]-R*Math.sin(s),C[1]-R*Math.cos(s)]);}poly2(g,a,arc,CL.green,4);
+    line(g,X(0),Y(0),X(T[0]),Y(0),CL.green,4);
+    line(g,X(C[0]),Y(C[1]),X(P[0]),Y(P[1]),CL.ink,1.6);line(g,X(C[0]),Y(C[1]),X(T[0]),Y(T[1]),CL.ink,1.2,'4 4');
+    line(g,X(P[0]),Y(P[1]),X(Q[0]),Y(Q[1]),CL.violet,2.4);line(g,X(Q[0]),Y(Q[1]),X(C[0]),Y(C[1]),CL.violet,2.4,'5 4');
+    sv('circle',{cx:X(C[0]),cy:Y(C[1]),r:4.5,style:'fill:var(--ink)'},g);text(g,X(C[0])+8,Y(C[1])-8,'C',CL.ink,'start');
+    sv('circle',{cx:X(P[0]),cy:Y(P[1]),r:7,style:'fill:var(--red);stroke:var(--surface);stroke-width:2.5'},g);text(g,X(P[0])-10,Y(P[1])-10,'P',CL.red,'end');
+    text(g,X(T[0]),Y(0)+18,'T',CL.ink);text(g,X(T[0]/2),Y(0)+18,'|OT| = θ',CL.green);
+    if(th>.15){const k=Math.min(.45,R*.45);const pa=[];for(let i=0;i<=20;i++){const s=i/20*th;pa.push([C[0]-k*Math.sin(s),C[1]-k*Math.cos(s)]);}poly2(g,a,pa,CL.amber,2);}
+  }});
+  const s=slider('θ',{min:0,max:4*PI,step:.01,value:th,dec:2},v=>{th=v;upd();});
+  const play=h('button',{type:'button'},'▶ Rodar');let anim=null;
+  play.addEventListener('click',()=>{if(anim){cancelAnimationFrame(anim);anim=null;play.textContent='▶ Rodar';return;}if(th>=4*PI-1e-6)th=0;play.textContent='❚❚ Pausa';let last=performance.now();
+    const step=now=>{th=Math.min(4*PI,th+(now-last)/1000*1.6);last=now;s.set(th);upd();if(th<4*PI)anim=requestAnimationFrame(step);else{anim=null;play.textContent='▶ Rodar';}};anim=requestAnimationFrame(step);});
+  body.append(h('div',{class:'ctl'},s,play),out);
+  function upd(){pl.update();out.innerHTML=`El centro está en C = (θ, 1). Lo que rodó la rueda (arco verde) mide lo mismo que lo que avanzó: |OT| = θ, así que el ángulo mide θ radianes.<br>x = |OT| − |PQ| = θ − sen θ = <b>${f(th-Math.sin(th),3)}</b> &nbsp;·&nbsp; y = |TC| − |QC| = 1 − cos θ = <b>${f(1-Math.cos(th),3)}</b>`;}
+  upd();
+};
+
+/* ======================================================================
+   Curvas polares: gráfico en el plano (θ, r) y en el plano xy
+   ====================================================================== */
+const POL={
+  r3:{n:'r = 3',r:'3',a:0,b:2*PI,R:3.5},
+  l45:{n:'θ = π/4',line:PI/4,a:-3,b:3,R:3.5},
+  c2:{n:'r = 2 cos θ, θ∈[0,π]',r:'2cos(th)',a:0,b:PI,R:2.4},
+  card:{n:'Clase 10: r = 1 + cos θ',r:'1+cos(th)',a:0,b:2*PI,R:2.4},
+  cards:{n:'Hoja: r = 1 + sen θ',r:'1+sin(th)',a:0,b:2*PI,R:2.4},
+  rosa:{n:'Rosa: r = cos 2θ',r:'cos(2th)',a:0,b:2*PI,R:1.3},
+  rosa3:{n:'r = cos 3θ',r:'cos(3th)',a:0,b:PI,R:1.3},
+  rosa8:{n:'r = cos 4θ',r:'cos(4th)',a:0,b:2*PI,R:1.3},
+  p4a:{n:'Ej. 4(a): r = −2 sen θ',r:'-2sin(th)',a:0,b:PI,R:2.4},
+  p4b:{n:'Ej. 4(b): r = 1 − cos θ',r:'1-cos(th)',a:0,b:2*PI,R:2.4}
+};
+V.polar=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});
+  let cur='c2',th=0,P=null;
+  const sel=h('select',{'aria-label':'Elegir curva polar'},...Object.keys(POL).map(k=>h('option',{value:k},POL[k].n)),h('option',{value:'cus'},'Escribir la mía…'));
+  const ir=h('input',{type:'text',value:'1+2cos(th)',size:14,'aria-label':'r(θ)'}),ia=h('input',{type:'text',value:'0',size:5,'aria-label':'θ desde'}),ib=h('input',{type:'text',value:'2pi',size:5,'aria-label':'θ hasta'}),msg=h('span',{class:'res'});
+  const cus=h('div',{class:'ctl',hidden:''},h('label',{},'r(θ) =',ir),h('label',{},'θ desde',ia),h('label',{},'hasta',ib),h('button',{type:'button',onclick:()=>build('cus')},'Graficar'),msg,h('span',{class:'c-mut',style:'font-size:13px'},'Escribí θ como th.'));
+  host.append(vhead('Curvas polares','A la izquierda r en función de θ; a la derecha, el punto (r; θ) en el plano'),h('div',{class:'ctl'},sel),cus,body);
+  const L=h('div',{class:'half'}),Rr=h('div',{class:'half'});body.append(L,Rr);
+  let pa=null,pb=null,ts=null;
+  function build(k){cur=k;cus.hidden=k!=='cus';
+    if(k==='cus'){try{const fr=expr(ir.value,['th']);const a=expr(ia.value,['th'])(0),b=expr(ib.value,['th'])(0);if(!(b>a))throw new Error('el intervalo');
+        let M=0;for(let i=0;i<=400;i++){const v=Math.abs(fr(a+(b-a)*i/400));if(isFinite(v))M=Math.max(M,v);}P={n:'r = '+ir.value,fr,a,b,R:Math.max(1,M*1.15)};msg.textContent='';}
+      catch(e){msg.className='res bad';msg.textContent='No entiendo la fórmula ('+e.message+').';return;}}
+    else{P=Object.assign({},POL[k]);if(!P.line){const fr=expr(P.r,['th']);P.fr=fr;}}
+    th=P.line?1.5:P.a+(P.b-P.a)*.3;L.textContent='';Rr.textContent='';
+    const R=P.R,ry=Math.max(1,Math.ceil(R));
+    if(P.line){pa=Plane2D(L,{W:440,xr:[-.4,7],yr:[-ry,ry],tick:1,label:'Plano (θ, r)',draw(g,a){line(g,a.X(P.line),a.Y(-ry),a.X(P.line),a.Y(ry),CL.blue,3);
+          text(g,a.X(P.line)+6,a.Y(ry)+14,'θ = π/4, r cualquiera',CL.blue,'start','sm');sv('circle',{cx:a.X(P.line),cy:a.Y(th),r:6.5,style:'fill:var(--red);stroke:var(--surface);stroke-width:2'},g);
+          text(g,a.W-12,a.Y(0)-8,'θ',CL.mut,'end');}});}
+    else{const tr=[Math.min(0,P.a)-.3,Math.max(P.b,2*PI)+.3];
+      pa=Plane2D(L,{W:440,xr:tr,yr:[-ry,ry],tick:1,label:'Gráfico de r en función de θ',draw(g,a){
+        [PI/2,PI,3*PI/2,2*PI].forEach((v,i)=>{if(v<=tr[1]){line(g,a.X(v),a.Y(-ry),a.X(v),a.Y(ry),'var(--line)',1,'3 4');text(g,a.X(v)+3,a.Y(-ry)-6,['π/2','π','3π/2','2π'][i],CL.mut,'start','sm');}});
+        const pts=[],pn=[];for(let i=0;i<=500;i++){const t=P.a+(P.b-P.a)*i/500;const r=P.fr(t);pts.push([t,r]);}
+        poly2(g,a,pts,CL.blue,2.6);
+        const done=pts.filter(p=>p[0]<=th);poly2(g,a,done.map(p=>p[1]>=0?p:[NaN,NaN]),CL.red,3.6);poly2(g,a,done.map(p=>p[1]<0?p:[NaN,NaN]),CL.violet,3.6);
+        const r=P.fr(th);sv('circle',{cx:a.X(th),cy:a.Y(r),r:6.5,style:`fill:${r<0?'var(--violet)':'var(--red)'};stroke:var(--surface);stroke-width:2`},g);
+        text(g,a.W-12,a.Y(0)-8,'θ',CL.mut,'end');text(g,a.X(0)+10,14,'r',CL.mut,'start');}});}
+    pb=Plane2D(Rr,{W:440,xr:[-R*1.25,R*1.25],yr:[-R*1.1,R*1.1],tick:R>3?1:1,label:'La curva en el plano xy',draw(g,a){const X=a.X,Y=a.Y;
+      for(let k=1;k<=Math.floor(R*1.2);k++)sv('circle',{cx:X(0),cy:Y(0),r:k*a.sx,style:'fill:none;stroke:var(--grid);stroke-width:1'},g);
+      if(P.line){const rr=th,p=[rr*Math.cos(P.line),rr*Math.sin(P.line)];line(g,X(-R*1.1*Math.cos(P.line)),Y(-R*1.1*Math.sin(P.line)),X(R*1.1*Math.cos(P.line)),Y(R*1.1*Math.sin(P.line)),CL.blue,2,'6 5');
+        line(g,X(0),Y(0),X(p[0]),Y(p[1]),rr<0?CL.violet:CL.red,4);sv('circle',{cx:X(p[0]),cy:Y(p[1]),r:7,style:`fill:${rr<0?'var(--violet)':'var(--red)'};stroke:var(--surface);stroke-width:2.5`},g);return;}
+      const all=[],pos=[],neg=[];for(let i=0;i<=600;i++){const t=P.a+(P.b-P.a)*i/600,r=P.fr(t),p=[r*Math.cos(t),r*Math.sin(t)];all.push(p);
+        if(t<=th){pos.push(r>=0?p:[NaN,NaN]);neg.push(r<0?p:[NaN,NaN]);}}
+      poly2(g,a,all,CL.blue,1.8,'6 5');poly2(g,a,pos,CL.red,3.6);poly2(g,a,neg,CL.violet,3.6);
+      const r=P.fr(th),dirx=Math.cos(th),diry=Math.sin(th);
+      line(g,X(0),Y(0),X(R*1.2*dirx),Y(R*1.2*diry),'var(--line)',1.4,'3 4');
+      const p=[r*dirx,r*diry];line(g,X(0),Y(0),X(p[0]),Y(p[1]),r<0?CL.violet:CL.red,4);
+      sv('circle',{cx:X(p[0]),cy:Y(p[1]),r:7,style:`fill:${r<0?'var(--violet)':'var(--red)'};stroke:var(--surface);stroke-width:2.5`},g);
+      const k=Math.min(.35*R,.6);const arc=[];for(let i=0;i<=30;i++){const s=i/30*th;arc.push([k*Math.cos(s),k*Math.sin(s)]);}if(th>0)poly2(g,a,arc,CL.amber,2);}});
+    const a0=P.line?-3:P.a,b0=P.line?3:P.b;
+    ts=slider(P.line?'r':'θ',{min:a0,max:b0,step:(b0-a0)/400,value:th,dec:2},v=>{th=v;upd();});
+    const play=h('button',{type:'button'},'▶ Barrer');let anim=null;
+    play.addEventListener('click',()=>{if(anim){cancelAnimationFrame(anim);anim=null;play.textContent='▶ Barrer';return;}if(th>=b0-1e-9)th=a0;play.textContent='❚❚ Pausa';let last=performance.now();
+      const step=now=>{th=Math.min(b0,th+(b0-a0)*(now-last)/1000/6);last=now;ts.set(th);upd();if(th<b0)anim=requestAnimationFrame(step);else{anim=null;play.textContent='▶ Barrer';}};anim=requestAnimationFrame(step);});
+    Rr.after||0;out.remove();body.after(out);
+    if(body._ctl)body._ctl.remove();body._ctl=h('div',{class:'ctl'},ts,play);out.before(body._ctl);upd();}
+  function upd(){pa.update();pb.update();
+    if(P.line){out.innerHTML=`θ = π/4 fijo y r = <b>${f(th,2)}</b>. ${th<0?'<span class="c-violet">Con r negativo el punto se marca del lado opuesto de la recta.</span>':''} Todos estos puntos forman la recta y = x.`;return;}
+    const r=P.fr(th);out.innerHTML=`${P.n} &nbsp;·&nbsp; θ = <b>${f(th,3)}</b> (${f(deg(th),1)}°), r = <b class="${r<0?'c-violet':'c-red'}">${f(r,3)}</b> &nbsp;→&nbsp; (x, y) = (r cos θ, r sen θ) = <b>${fp([r*Math.cos(th),r*Math.sin(th)],3)}</b>`+(r<0?'<br><span class="c-violet">r &lt; 0: el punto se dibuja sobre la semirrecta opuesta, en la dirección θ + π.</span>':'');}
+  sel.addEventListener('change',()=>build(sel.value));
+  API['viz-polar']={set(k){if(POL[k]){sel.value=k;build(k);}}};
+  sel.value='c2';build('c2');
+};
+
+/* ======================================================================
+   Regiones en coordenadas polares (ejercicio 3)
+   ====================================================================== */
+V.polreg=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});
+  const REG={a:{n:'(a) r ≥ 1',ok:(r,t)=>r>=1,txt:'Todo lo que está afuera del disco de radio 1, incluida la circunferencia.'},
+    b:{n:'(b) 0 ≤ r < 2, π ≤ θ ≤ 3π/2',ok:(r,t)=>r<2&&t>=PI-1e-9&&t<=1.5*PI+1e-9,txt:'Un cuarto de disco de radio 2 en el tercer cuadrante, sin el arco de radio 2.'},
+    c:{n:'(c) π/6 ≤ θ ≤ 5π/6',ok:(r,t)=>t>=PI/6-1e-9&&t<=5*PI/6+1e-9,txt:'Un sector infinito: todos los puntos cuyo ángulo está entre 30° y 150° (con r ≥ 0). Es la región entre las semirrectas y = x/√3 e y = −x/√3 del semiplano superior.'}};
+  let cur='a';
+  host.append(vhead('Regiones en polares','Ejercicio 3: qué puntos cumplen cada condición',tabs(Object.keys(REG).map(k=>REG[k].n),i=>{cur=Object.keys(REG)[i];pl.update();upd();},0)),body);
+  const pl=Plane2D(body,{xr:[-3.2,3.2],yr:[-2.6,2.6],tick:1,label:'Región del plano en coordenadas polares',draw(g,a){const n=70;
+    for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=-3.2+6.4*(i+.5)/n,y=-2.6+5.2*(j+.5)/n,r=Math.hypot(x,y);let t=Math.atan2(y,x);if(t<0)t+=2*PI;
+      if(REG[cur].ok(r,t))sv('rect',{x:a.X(x-3.2/n),y:a.Y(y+2.6/n),width:6.4/n*a.sx+.6,height:5.2/n*a.sx+.6,style:'fill:var(--blue);fill-opacity:.22'},g);}
+    for(let k=1;k<=3;k++)sv('circle',{cx:a.X(0),cy:a.Y(0),r:k*a.sx,style:'fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:3 4'},g);
+    if(cur==='a')sv('circle',{cx:a.X(0),cy:a.Y(0),r:a.sx,style:'fill:none;stroke:var(--blue);stroke-width:3'},g);
+    if(cur==='b'){const arc=[];for(let i=0;i<=40;i++){const s=PI+i/40*PI/2;arc.push([2*Math.cos(s),2*Math.sin(s)]);}poly2(g,a,arc,CL.blue,2.6,'6 5');line(g,a.X(0),a.Y(0),a.X(-2),a.Y(0),CL.blue,3);line(g,a.X(0),a.Y(0),a.X(0),a.Y(-2),CL.blue,3);}
+    if(cur==='c'){[PI/6,5*PI/6].forEach(s=>line(g,a.X(0),a.Y(0),a.X(4*Math.cos(s)),a.Y(4*Math.sin(s)),CL.blue,3));}
+  }});
+  body.append(out);function upd(){out.innerHTML=REG[cur].txt+' <span class="c-mut">Línea llena: el borde está incluido. Punteada: no.</span>';}
+  pl.update();upd();
+};
+})();
+(function(){'use strict';
+const {$,h,sv,f,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+const PI=Math.PI;
+
+/* ======================================================================
+   Cónicas: el cono z² = x² + y² cortado por el plano z = k·x + 2
+   ====================================================================== */
+V.cone=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let k=0;
+  host.append(vhead('Cónicas como cortes de un cono','Inclinar el plano z = k·x + 2 cambia la curva que se forma'),body);
+  const v=View3D(body,{scale:30,H:430,ctr:[0,0,.6],az:230,el:16});
+  function curve(){// puntos del cono (ρcosφ, ρsenφ, ±ρ) que están en el plano
+    const up=[],dn=[];for(let i=0;i<=360;i++){const p=i/360*2*PI,c=Math.cos(p);
+      const d1=1-k*c;let r1=d1>1e-6?2/d1:NaN;if(r1>9)r1=NaN;up.push(isNaN(r1)?null:[r1*c,r1*Math.sin(p),r1]);
+      const d2=1+k*c;let r2=d2<-1e-6?-2/d2:NaN;if(r2>9)r2=NaN;dn.push(isNaN(r2)?null:[r2*c,r2*Math.sin(p),-r2]);}
+    return [up,dn];}
+  const split=arr=>{const out=[];let cur=[];arr.forEach(p=>{if(p)cur.push(p);else{if(cur.length>1)out.push(cur);cur=[];}});if(cur.length>1)out.push(cur);return out;};
+  v.draw=sc=>{sc.axes(4.2);const H=4;
+    sc.surf((s,t)=>[s*Math.cos(t),s*Math.sin(t),s],[0,H],[0,2*PI],8,28,'var(--blue)',.13,'var(--blue)');
+    sc.surf((s,t)=>[s*Math.cos(t),s*Math.sin(t),-s],[0,H],[0,2*PI],8,28,'var(--blue)',.13,'var(--blue)');
+    const S=4.4;const q=[[-S,-S,k*-S+2],[S,-S,k*S+2],[S,S,k*S+2],[-S,S,k*-S+2]].map(p=>[p[0],p[1],Math.max(-6,Math.min(6,p[2]))]);
+    sc.poly(q,'var(--amber)',.16,'var(--amber)');
+    const [up,dn]=curve();split(up).forEach(c=>sc.path(c,CL.red,3.4));split(dn).forEach(c=>sc.path(c,CL.red,3.4));};
+  const s=slider('inclinación k',{min:0,max:2.5,step:.05,value:k,dec:2},x=>{k=x;upd();});
+  const pre=h('div',{class:'tabs'},...[['circunferencia',0],['elipse',.6],['parábola',1],['hipérbola',1.8]].map(([n,val])=>h('button',{type:'button',onclick:()=>{k=val;s.set(k);upd();}},n)));
+  body.append(h('div',{class:'ctl'},s,pre),v.controls(),out);
+  function upd(){v.render();const tipo=k<1e-9?'una <b>circunferencia</b>: el plano es horizontal':k<1-1e-9?'una <b>elipse</b>: el plano corta todas las generatrices de una sola hoja':Math.abs(k-1)<1e-9?'una <b>parábola</b>: el plano es paralelo a una generatriz del cono y corta una sola hoja':'una <b>hipérbola</b>: el plano corta las dos hojas del cono';
+    out.innerHTML='Plano z = '+f(k,2)+'·x + 2. La intersección es '+tipo+'.';}
+  upd();
+};
+
+/* ======================================================================
+   Cónicas como lugares geométricos (foco y directriz, dos focos)
+   ====================================================================== */
+V.focal=function(host){
+  const body=h('div',{class:'vb'}),ctl=h('div',{class:'ctl'}),out=h('div',{class:'out'});
+  let mode=0,p=1,a=3,b=2,c=2.5,ah=2,bh=1.5,t=.9;
+  host.append(vhead('Foco, directriz y focos','Mové el punto P sobre la curva y mirá las distancias',tabs(['Parábola','Elipse','Hipérbola'],i=>{mode=i;t=i===0?1.2:.9;build();},0)),body);
+  let pl=null;
+  function build(){body.textContent='';ctl.textContent='';
+    const xr=mode===0?[-6,6]:[-6.5,6.5],yr=mode===0?[-2.5,6]:[-4.2,4.2];
+    pl=Plane2D(body,{xr,yr,tick:1,label:'Cónica con sus focos',draw(g,A){const X=A.X,Y=A.Y;
+      if(mode===0){const pts=[];for(let i=0;i<=200;i++){const x=-6+12*i/200;pts.push([x,x*x/(4*p)]);}poly2(g,A,pts,CL.blue,3);
+        line(g,X(-6),Y(-p),X(6),Y(-p),CL.violet,2.4,'7 5');text(g,X(5.8),Y(-p)-8,'y = −p',CL.violet,'end');
+        const P=[t,t*t/(4*p)],F=[0,p];line(g,X(P[0]),Y(P[1]),X(F[0]),Y(F[1]),CL.red,3);line(g,X(P[0]),Y(P[1]),X(P[0]),Y(-p),CL.green,3);
+        dotP(g,A,F,'F',CL.red);dotP(g,A,P,'P',CL.ink);
+        out.innerHTML=`F = (0, ${f(p)}) y directriz y = −${f(p)}. &nbsp;|PF| = <b class="c-red">${f(Math.hypot(P[0],P[1]-p),3)}</b> &nbsp; distancia a la directriz = <b class="c-green">${f(P[1]+p,3)}</b><br>Siempre iguales. La ecuación que sale es x² = 4py, o sea y = x²/(4p) = <b>${f(1/(4*p),3)}</b>·x².`;}
+      else if(mode===1){const cc=Math.sqrt(Math.max(a*a-b*b,0));const pts=[];for(let i=0;i<=200;i++){const s=i/200*2*PI;pts.push([a*Math.cos(s),b*Math.sin(s)]);}poly2(g,A,pts,CL.blue,3);
+        const P=[a*Math.cos(t),b*Math.sin(t)],F1=[-cc,0],F2=[cc,0];line(g,X(P[0]),Y(P[1]),X(F1[0]),Y(0),CL.red,3);line(g,X(P[0]),Y(P[1]),X(F2[0]),Y(0),CL.green,3);
+        dotP(g,A,F1,'F₁',CL.red);dotP(g,A,F2,'F₂',CL.green);dotP(g,A,P,'P',CL.ink);
+        const d1=Math.hypot(P[0]+cc,P[1]),d2=Math.hypot(P[0]-cc,P[1]);
+        out.innerHTML=`a = ${f(a)}, b = ${f(b)}, c = √(a² − b²) = ${f(cc,3)}. Focos (±c, 0).<br>|PF₁| + |PF₂| = <b class="c-red">${f(d1,3)}</b> + <b class="c-green">${f(d2,3)}</b> = <b>${f(d1+d2,3)}</b> = 2a, siempre. &nbsp;P = (a cos θ, b sen θ).`;}
+      else{const cc=Math.sqrt(ah*ah+bh*bh);[1,-1].forEach(sg=>{const pts=[];for(let i=0;i<=200;i++){const y=-4.2+8.4*i/200;pts.push([sg*ah*Math.sqrt(1+y*y/(bh*bh)),y]);}poly2(g,A,pts,CL.blue,3);});
+        [1,-1].forEach(sg=>line(g,X(-6.5),Y(-6.5*sg*bh/ah),X(6.5),Y(6.5*sg*bh/ah),CL.violet,1.8,'7 5'));
+        const y=Math.tan(t-PI/2)*.8;const P=[ah*Math.sqrt(1+y*y/(bh*bh)),y],F1=[-cc,0],F2=[cc,0];
+        line(g,X(P[0]),Y(P[1]),X(F1[0]),Y(0),CL.red,3);line(g,X(P[0]),Y(P[1]),X(F2[0]),Y(0),CL.green,3);dotP(g,A,F1,'F₁',CL.red);dotP(g,A,F2,'F₂',CL.green);dotP(g,A,P,'P',CL.ink);
+        const d1=Math.hypot(P[0]+cc,P[1]),d2=Math.hypot(P[0]-cc,P[1]);
+        out.innerHTML=`a = ${f(ah)}, b = ${f(bh)}, c = √(a² + b²) = ${f(cc,3)}. Asíntotas y = ±(b/a)x (violeta).<br>|PF₁| − |PF₂| = <b class="c-red">${f(d1,3)}</b> − <b class="c-green">${f(d2,3)}</b> = <b>${f(d1-d2,3)}</b> = 2a, siempre.`;}
+    }});
+    const sP=slider('P',{min:mode===0?-4.5:mode===1?0:.2,max:mode===0?4.5:mode===1?2*PI:2.94,step:.01,value:t,dec:2},v=>{t=v;pl.update();});
+    if(mode===0)ctl.append(slider('p',{min:.3,max:2.5,step:.1,value:p,dec:1},v=>{p=v;pl.update();}),sP);
+    if(mode===1)ctl.append(slider('a',{min:1,max:5.5,step:.1,value:a,dec:1},v=>{a=v;if(b>a){b=a;}pl.update();}),slider('b',{min:.5,max:4,step:.1,value:b,dec:1},v=>{b=Math.min(v,a);pl.update();}),sP);
+    if(mode===2)ctl.append(slider('a',{min:.5,max:3,step:.1,value:ah,dec:1},v=>{ah=v;pl.update();}),slider('b',{min:.5,max:3,step:.1,value:bh,dec:1},v=>{bh=v;pl.update();}),sP);
+    body.append(ctl,out);pl.update();}
+  function dotP(g,A,P,lab,col){sv('circle',{cx:A.X(P[0]),cy:A.Y(P[1]),r:6,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);text(g,A.X(P[0])+9,A.Y(P[1])-9,lab,col,'start');}
+  build();
+};
+
+/* ======================================================================
+   Superficies: cilindros y cuádricas, con trazas
+   ====================================================================== */
+const SQ=Math.sqrt;
+const QUAD={
+  cil:{n:'Cilindro x² + y² = 1',F:(x,y,z)=>x*x+y*y-1,mesh:[(u,v)=>[Math.cos(v),Math.sin(v),u],[-2,2],[0,2*PI],8,28],eq:'x^2+y^2=1',tag:'Clase 12'},
+  cilp:{n:'Cilindro z = x²',F:(x,y,z)=>z-x*x,mesh:[(u,v)=>[u,v,u*u],[-1.6,1.6],[-2,2],14,8],eq:'z=x^2',tag:'Clase 12'},
+  eli:{n:'Elipsoide x² + 2y² + z² = 4',F:(x,y,z)=>x*x+2*y*y+z*z-4,mesh:[(u,v)=>[2*Math.sin(u)*Math.cos(v),SQ(2)*Math.sin(u)*Math.sin(v),2*Math.cos(u)],[0,PI],[0,2*PI],12,28],eq:'x^2+2y^2+z^2=4',tag:'Clase 12'},
+  cono:{n:'Cono x² + y² − z² = 0',F:(x,y,z)=>x*x+y*y-z*z,mesh:[(u,v)=>[u*Math.cos(v),u*Math.sin(v),u],[-2,2],[0,2*PI],12,28],eq:'x^2+y^2-z^2=0',tag:'Clase 13'},
+  par:{n:'Paraboloide z = x² + y²',F:(x,y,z)=>x*x+y*y-z,mesh:[(u,v)=>[u*Math.cos(v),u*Math.sin(v),u*u],[0,1.7],[0,2*PI],9,28],eq:'z=x^2+y^2',tag:'Clase 13'},
+  silla:{n:'Silla de montar z = x² − y²',F:(x,y,z)=>x*x-y*y-z,mesh:[(u,v)=>[u,v,u*u-v*v],[-1.5,1.5],[-1.5,1.5],14,14],eq:'z=x^2-y^2',tag:'Clase 13'},
+  h1:{n:'Hiperboloide de una hoja x² + y² − z² = 1',F:(x,y,z)=>x*x+y*y-z*z-1,mesh:[(u,v)=>[Math.cosh(u)*Math.cos(v),Math.cosh(u)*Math.sin(v),Math.sinh(u)],[-1.45,1.45],[0,2*PI],10,28],eq:'x^2+y^2-z^2=1',tag:'Agregado'},
+  h2:{n:'Hiperboloide de dos hojas −x² − y² + z² = 1',F:(x,y,z)=>-x*x-y*y+z*z-1,mesh:null,eq:'-x^2-y^2+z^2=1',tag:'Agregado'},
+  p7i:{n:'Ej. 7 i: x² + y²/4 + z²/9 = 1',F:(x,y,z)=>x*x+y*y/4+z*z/9-1,mesh:[(u,v)=>[Math.sin(u)*Math.cos(v),2*Math.sin(u)*Math.sin(v),3*Math.cos(u)],[0,PI],[0,2*PI],12,28],tag:'Práctica'},
+  p7iii:{n:'Ej. 7 iii: x = y² + 4z²',F:(x,y,z)=>y*y+4*z*z-x,mesh:[(u,v)=>[u*u,u*Math.cos(v),u/2*Math.sin(v)],[0,1.7],[0,2*PI],9,28],tag:'Práctica'},
+  p7v:{n:'Ej. 7 v: x² = y² + 4z²',F:(x,y,z)=>y*y+4*z*z-x*x,mesh:[(u,v)=>[u,u*Math.cos(v),u/2*Math.sin(v)],[-2.4,2.4],[0,2*PI],12,28],tag:'Práctica'},
+  p7ix:{n:'Ej. 7 ix: 4x² + 9y² + z = 0',F:(x,y,z)=>4*x*x+9*y*y+z,mesh:[(u,v)=>[u/2*Math.cos(v),u/3*Math.sin(v),-u*u],[0,1.7],[0,2*PI],9,28],tag:'Práctica'}
+};
+V.quad=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let cur='eli',dir=2,k=0;
+  const sel=h('select',{'aria-label':'Elegir superficie'},...Object.keys(QUAD).map(q=>h('option',{value:q},QUAD[q].n)));
+  const tb=tabs(['corte z = k','corte x = k','corte y = k'],i=>{dir=[2,0,1][i];upd();},0);
+  host.append(vhead('Superficies y trazas','Elegí una superficie y cortala con planos paralelos a los coordenados'),h('div',{class:'ctl'},sel,tb),body);
+  const L=h('div',{class:'half'}),Rr=h('div',{class:'half'});body.append(L,Rr);
+  const v=View3D(L,{W:440,scale:52,H:440,ctr:[0,0,0],az:225,el:20});
+  let pl=null;
+  function traceSegs(Q){const F=(a,b)=>{const p=dir===2?[a,b,k]:dir===0?[k,a,b]:[a,k,b];return Q.F(p[0],p[1],p[2]);};return contour(F,[-3.2,3.2],[-3.2,3.2],0,100);}
+  function lift(s){return s.map(p=>dir===2?[p[0],p[1],k]:dir===0?[k,p[0],p[1]]:[p[0],k,p[1]]);}
+  v.draw=sc=>{const Q=QUAD[cur];sc.axes(2.9);
+    if(Q.mesh){const [fn,ur,vr,nu,nv]=Q.mesh;sc.surf(fn,ur,vr,nu,nv,'var(--blue)',.16,'var(--blue)');}
+    else{[1,-1].forEach(sg=>sc.surf((u,w)=>[Math.sinh(u)*Math.cos(w),Math.sinh(u)*Math.sin(w),sg*Math.cosh(u)],[0,1.3],[0,2*PI],8,28,'var(--blue)',.16,'var(--blue)'));}
+    const S=2.4;const pq=dir===2?[[-S,-S,k],[S,-S,k],[S,S,k],[-S,S,k]]:dir===0?[[k,-S,-S],[k,S,-S],[k,S,S],[k,-S,S]]:[[-S,k,-S],[S,k,-S],[S,k,S],[-S,k,S]];
+    sc.poly(pq,'var(--amber)',.14,'var(--amber)');
+    traceSegs(Q).forEach(s=>sc.line(...lift(s),CL.red,3));};
+  function build2(){Rr.textContent='';const ax=dir===2?['x','y']:dir===0?['y','z']:['x','z'];
+    pl=Plane2D(Rr,{W:440,xr:[-3.2,3.2],yr:[-3.2,3.2],tick:1,label:'La traza en su plano',draw(g,A){segs2(g,A,traceSegs(QUAD[cur]),CL.red,3);
+      text(g,A.W-10,A.Y(0)-8,ax[0],CL.mut,'end');text(g,A.X(0)+10,14,ax[1],CL.mut,'start');}});}
+  const sk=slider('k',{min:-3,max:3,step:.05,value:k,dec:2},x=>{k=x;upd();});
+  body.after(h('div',{class:'ctl'},sk),out);L.append(v.controls());
+  function upd(){v.render();build2();pl.update();const Q=QUAD[cur];const n=traceSegs(Q).length;
+    const plane=['x','y','z'][dir]+' = '+f(k,2);
+    out.innerHTML=`${Q.n} ${Q.tag==='Práctica'?'':'<span class="tag '+(Q.tag==='Agregado'?'add':'vid')+'">'+Q.tag+'</span>'}<br>Traza con el plano ${plane}: ${n?'la curva roja (a la derecha, vista de frente en su plano).':'<b>vacía</b>: el plano no toca la superficie.'}`;}
+  sel.addEventListener('change',()=>{cur=sel.value;upd();});
+  API['viz-quad']={set(key){const [q,d,kk]=key.split(':');if(QUAD[q]){cur=q;sel.value=q;}if(d){dir=+d;const idx={2:0,0:1,1:2}[dir];[...tb.children].forEach((b,j)=>b.setAttribute('aria-pressed',j===idx));}if(kk!=null){k=+kk;sk.set(k);}upd();}};
+  sel.value=cur;upd();
+};
+
+/* ======================================================================
+   Ejercicio 8: entre el cilindro de radio 1 y el cono, para 1 ≤ z ≤ 2
+   ====================================================================== */
+V.reg8=function(host){const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let k=1.6;
+  host.append(vhead('La región del ejercicio 8','Entre el cilindro ρ = 1 (azul) y el cono z = ρ (naranja)'),body);
+  const v=View3D(body,{scale:58,H:400,ctr:[0,0,1.2],az:220,el:24});
+  v.draw=sc=>{sc.axes(2.4);
+    sc.surf((u,w)=>[Math.cos(w),Math.sin(w),u],[1,2],[0,2*PI],3,28,'var(--blue)',.18,'var(--blue)');
+    sc.surf((u,w)=>[u*Math.cos(w),u*Math.sin(w),u],[1,2],[0,2*PI],4,28,'var(--amber)',.18,'var(--amber)');
+    sc.surf((u,w)=>[u*Math.cos(w),u*Math.sin(w),2],[1,2],[0,2*PI],2,28,'var(--green)',.14,'var(--green)');
+    sc.circle([0,0,k],1,'xy',CL.red,2.6);sc.circle([0,0,k],k,'xy',CL.red,2.6);};
+  const s=slider('corte z',{min:1,max:2,step:.02,value:k,dec:2},x=>{k=x;upd();});
+  body.append(h('div',{class:'ctl'},s),v.controls(),out);
+  function upd(){v.render();out.innerHTML=`En la altura z = ${f(k,2)} la región es la corona 1 ≤ ρ ≤ ${f(k,2)} (entre las dos circunferencias rojas). Arriba la tapa es la corona 1 ≤ ρ ≤ 2 del plano z = 2 (verde).`;}
+  upd();};
+
+/* ======================================================================
+   Curvas en el espacio r(t) = (x(t), y(t), z(t))
+   ====================================================================== */
+const SPACE={
+  hel:{n:'Hélice (cos t, sen t, t/4)',fn:t=>[Math.cos(t),Math.sin(t),t/4],a:0,b:4*PI},
+  p10a:{n:'Ej. 10(a) (cos t, sen t, 1)',fn:t=>[Math.cos(t),Math.sin(t),1],a:0,b:2*PI},
+  p10b:{n:'Ej. 10(b) (t, t², t − t²)',fn:t=>[t,t*t,t-t*t],a:-1.3,b:1.6},
+  p10c:{n:'Ej. 10(c) (t²+t, t²−t, (t²−t)²)',fn:t=>[t*t+t,t*t-t,(t*t-t)**2],a:-1.25,b:1.25},
+  p12a:{n:'Ej. 12(i) x²+y²=4 y z=xy',fn:t=>[2*Math.cos(t),2*Math.sin(t),4*Math.cos(t)*Math.sin(t)],a:0,b:2*PI,surf:[[(u,v)=>[2*Math.cos(v),2*Math.sin(v),u],[-2,2],[0,2*PI],6,24],[(u,v)=>[u,v,u*v],[-2.2,2.2],[-2.2,2.2],10,10]]},
+  p12b:{n:'Ej. 12(ii) x²+y²=1 y y+z=2',fn:t=>[Math.cos(t),Math.sin(t),2-Math.sin(t)],a:0,b:2*PI,surf:[[(u,v)=>[Math.cos(v),Math.sin(v),u],[0,3.2],[0,2*PI],6,24],[(u,v)=>[u,v,2-v],[-1.6,1.6],[-1.6,1.6],6,6]]},
+  p12c:{n:'Ej. 12(iii) z=√(x²+y²) y z=1+y',fn:t=>[t,(t*t-1)/2,(t*t+1)/2],a:-2.2,b:2.2,surf:[[(u,v)=>[u*Math.cos(v),u*Math.sin(v),u],[0,2.6],[0,2*PI],6,24],[(u,v)=>[u,v,1+v],[-2.4,2.4],[-1.2,1.8],6,6]]}
+};
+V.space=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='hel',t=0;
+  const sel=h('select',{'aria-label':'Elegir curva en el espacio'},...Object.keys(SPACE).map(k=>h('option',{value:k},SPACE[k].n)));
+  host.append(vhead('Curvas en el espacio','Una función r: I → ℝ³ dibuja una curva en el espacio'),h('div',{class:'ctl'},sel),body);
+  const v=View3D(body,{scale:52,H:420,ctr:[0,0,.8],az:220,el:22});
+  v.draw=sc=>{const S=SPACE[cur];sc.axes(2.6);if(S.surf)S.surf.forEach((m,i)=>sc.surf(m[0],m[1],m[2],m[3],m[4],i?'var(--amber)':'var(--blue)',.1,i?'var(--amber)':'var(--blue)'));
+    const pts=[],done=[];for(let i=0;i<=300;i++){const tt=S.a+(S.b-S.a)*i/300;pts.push(S.fn(tt));if(tt<=t)done.push(S.fn(tt));}
+    sc.path(pts,CL.blue,1.6,'5 4');if(done.length>1)sc.path(done,CL.red,3.4);sc.dot(S.fn(t),CL.red,6);};
+  let ts=null;
+  function build(){const S=SPACE[cur];t=S.b;if(ts)ts.remove();ts=slider('t',{min:S.a,max:S.b,step:(S.b-S.a)/300,value:t,dec:2},x=>{t=x;upd();});ctlRow.prepend(ts);upd();}
+  const ctlRow=h('div',{class:'ctl'});body.append(ctlRow,v.controls(),out);
+  function upd(){v.render();const p=SPACE[cur].fn(t);out.innerHTML=`t = <b>${f(t,2)}</b> → r(t) = <b class="c-red">${fp(p,3)}</b>`+(SPACE[cur].surf?'<br><span class="c-mut">En azul y naranja, las dos superficies: la curva es su intersección.</span>':'');}
+  sel.addEventListener('change',()=>{cur=sel.value;build();});
+  API['viz-space']={set(k){if(SPACE[k]){cur=k;sel.value=k;build();}}};
+  build();
+};
+
+/* ======================================================================
+   Funciones de dos variables: dominio, curvas de nivel y gráfico
+   ====================================================================== */
+const FUN={
+  q:{n:'f(x,y) = x² + y²',e:'x^2+y^2',lv:[.5,1,2,3,4,5],R:2.5},
+  p14a:{n:'Ej. 14(a) f = 3y',e:'3y',lv:[-6,-3,0,3,6],R:2.5},
+  p14b:{n:'Ej. 14(b) f = 1/x',e:'1/x',lv:[-4,-2,-1,-.5,.5,1,2,4],R:2.5,clip:4},
+  p14c:{n:'Ej. 14(c) f = x² + y²',e:'x^2+y^2',lv:[.5,1,2,3,4,5],R:2.5},
+  p14d:{n:'Ej. 14(d) f = −x² − y²',e:'-x^2-y^2',lv:[-5,-4,-3,-2,-1,-.5],R:2.5},
+  p14e:{n:'Ej. 14(e) f = √(x² + y²)',e:'sqrt(x^2+y^2)',lv:[.5,1,1.5,2,2.5,3],R:2.5},
+  p14f:{n:'Ej. 14(f) f = √(4 − x² − y²)',e:'sqrt(4-x^2-y^2)',lv:[0,.5,1,1.5,1.9],R:2.3},
+  p13a:{n:'Ej. 13(a) f = √(2x − y)',e:'sqrt(2x-y)',lv:[0,1,2,3],R:2.5,dom:true},
+  p13b:{n:'Ej. 13(b) f = √(x² − y²)',e:'sqrt(x^2-y^2)',lv:[0,.5,1,1.5,2],R:2.5,dom:true}
+};
+V.level=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let cur='q',c=1,F=null;
+  const sel=h('select',{'aria-label':'Elegir función'},...Object.keys(FUN).map(k=>h('option',{value:k},FUN[k].n)),h('option',{value:'cus'},'Escribir la mía…'));
+  const inp=h('input',{type:'text',value:'x^2-y^2',size:14,'aria-label':'f(x,y)'}),msg=h('span',{class:'res'});
+  const cus=h('div',{class:'ctl',hidden:''},h('label',{},'f(x,y) =',inp),h('button',{type:'button',onclick:()=>{cur='cus';prep();}},'Graficar'),msg);
+  host.append(vhead('Dominio, curvas de nivel y gráfico','A la izquierda el plano xy con el dominio y las curvas de nivel; a la derecha, el gráfico z = f(x,y)'),h('div',{class:'ctl'},sel),cus,body);
+  const L=h('div',{class:'half'}),Rr=h('div',{class:'half'});body.append(L,Rr);
+  const v=View3D(Rr,{W:440,scale:52,H:440,ctr:[0,0,.6],az:225,el:24});let pl=null,P=null;
+  const sc_=slider('c',{min:-5,max:5,step:.1,value:c,dec:1},x=>{c=x;upd();});
+  function prep(){cus.hidden=cur!=='cus';
+    if(cur==='cus'){try{F=expr(inp.value,['x','y']);msg.textContent='';P={n:'f(x,y) = '+inp.value,lv:null,R:2.5};}catch(e){msg.className='res bad';msg.textContent='No entiendo la fórmula ('+e.message+').';return;}}
+    else{P=FUN[cur];F=expr(P.e,['x','y']);}
+    const R=P.R;let lo=Infinity,hi=-Infinity;for(let i=0;i<=30;i++)for(let j=0;j<=30;j++){const z=F(-R+2*R*i/30,-R+2*R*j/30);if(isFinite(z)){lo=Math.min(lo,z);hi=Math.max(hi,z);}}
+    if(P.clip){lo=Math.max(lo,-P.clip);hi=Math.min(hi,P.clip);}
+    if(!P.lv){P.lv=[];for(let i=1;i<=6;i++)P.lv.push(Math.round((lo+(hi-lo)*i/7)*10)/10);}
+    P.lo=lo;P.hi=hi;sc_.input.min=Math.floor(lo);sc_.input.max=Math.ceil(hi);c=P.lv[Math.floor(P.lv.length/2)];sc_.set(c);
+    L.textContent='';
+    pl=Plane2D(L,{W:440,xr:[-R,R],yr:[-R,R],tick:1,label:'Plano xy',draw(g,A){const n=56;
+      for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=-R+2*R*(i+.5)/n,y=-R+2*R*(j+.5)/n;if(!isFinite(F(x,y)))sv('rect',{x:A.X(x-R/n),y:A.Y(y+R/n),width:2*R/n*A.sx+.6,height:2*R/n*A.sx+.6,style:'fill:var(--ink-2);fill-opacity:.18'},g);}
+      P.lv.forEach(l=>segs2(g,A,contour(F,[-R,R],[-R,R],l,90),'var(--blue)',1.5));
+      segs2(g,A,contour(F,[-R,R],[-R,R],c,120),CL.red,3.2);}});
+    upd();}
+  v.draw=sc=>{if(!P)return;const R=P.R,sz=P.clip||Math.max(Math.abs(P.lo),Math.abs(P.hi),1);const k=2.4/Math.max(sz,2.4);
+    sc.axes(2.8);
+    sc.surf((x,y)=>{let z=F(x,y);if(!isFinite(z))return null;if(P.clip&&Math.abs(z)>P.clip)return null;return [x,y,z*k];},[-R,R],[-R,R],18,18,'var(--blue)',.22,'var(--blue)');
+    contour(F,[-R,R],[-R,R],c,60).forEach(s=>sc.line([s[0][0],s[0][1],c*k],[s[1][0],s[1][1],c*k],CL.red,2.6));
+    contour(F,[-R,R],[-R,R],c,60).forEach(s=>sc.line([s[0][0],s[0][1],0],[s[1][0],s[1][1],0],CL.red,1.2,'3 3'));};
+  L.after||0;body.after(h('div',{class:'ctl'},sc_),out);Rr.append(v.controls());
+  function upd(){if(!pl)return;pl.update();v.render();const k=2.4/Math.max(P.clip||Math.max(Math.abs(P.lo),Math.abs(P.hi),1),2.4);
+    const empty=!contour(F,[-P.R,P.R],[-P.R,P.R],c,60).length;
+    out.innerHTML=`${P.n}. Curva de nivel <b class="c-red">f(x,y) = ${f(c,1)}</b>${empty?' : <b>vacía</b> en esta ventana (f no toma ese valor).':'.'} En azul, otras curvas de nivel. <span class="c-mut">Gris: puntos fuera del dominio.${k<1?' El gráfico está achatado en z para que entre.':''}</span>`;}
+  sel.addEventListener('change',()=>{cur=sel.value;if(cur!=='cus')prep();else cus.hidden=false;});
+  API['viz-level']={set(k){if(FUN[k]){cur=k;sel.value=k;prep();}}};
+  prep();
+};
+})();
+(function(){const R=String.raw;
+window.A1={key:'g2',
+ vid:{7:'N8uFzjQM04c',8:'8YexVFQtHlI',9:'B6ssrFCc4H8',10:'UXJsz9OeEoA',11:'umPtJKJNiRQ',12:'9lFKrZaBcyw',13:'3nOwtllgwaA',14:'t4xgdexI2_U'},
+ viz:{'viz-param':'param','viz-cyc':'cycloid','viz-polar':'polar','viz-polreg':'polreg','viz-cone':'cone','viz-focal':'focal','viz-quad':'quad','viz-space':'space','viz-level':'level','viz-reg8':'reg8'}};
+window.A1.quiz={
+'quiz-1':{t:'Autoevaluación de las Clases 7 y 8',qs:[
+ {p:R`¿Qué conjunto describe $x=2t-1$, $y=4t+3$, $t\in\R$?`,o:[R`la recta $y=2x+5$`,R`la recta $y=2x+3$`,R`la parábola $y=x^2+5$`,R`el segmento de $(-1,3)$ a $(1,7)$`],c:0,w:R`$t=\frac{x+1}{2}$ y entonces $y=4\cdot\frac{x+1}{2}+3=2x+5$. No es un segmento porque $t$ recorre todos los reales.`},
+ {p:R`Las parametrizaciones $(\cos t,\operatorname{sen}t)$ y $(\cos 3t,\operatorname{sen}3t)$, ambas con $t\in[0,2\pi]$:`,o:['describen el mismo conjunto, pero la segunda da tres vueltas','describen circunferencias de radios 1 y 3','describen el mismo conjunto recorrido en sentidos opuestos','no describen el mismo conjunto'],c:0,w:R`Las dos cumplen $x^2+y^2=1$. Multiplicar el parámetro por 3 recorre la misma curva tres veces más rápido: con $t\in[0,2\pi]$ da tres vueltas, en el mismo sentido.`},
+ {p:R`Una parametrización de $(x+2)^2+(y-1)^2=9$ es:`,o:[R`$(-2+3\cos t,\ 1+3\operatorname{sen}t)$`,R`$(2+3\cos t,\ -1+3\operatorname{sen}t)$`,R`$(-2+9\cos t,\ 1+9\operatorname{sen}t)$`,R`$(3\cos t-2,\ 3\cos t+1)$`],c:0,w:R`El centro es $(-2,1)$ y el radio $\sqrt9=3$. Con $x+2=3\cos t$ e $y-1=3\operatorname{sen}t$ sale la primera. La última usa coseno en las dos coordenadas: eso es un segmento.`},
+ {p:R`La curva $x=t^2$, $y=t$, $t\in\R$:`,o:[R`es el gráfico de $x=y^2$, pero no de ninguna $y=f(x)$`,R`es el gráfico de $y=\sqrt x$`,R`es el gráfico de $y=x^2$`,R`es una recta`],c:0,w:R`Despejando, $x=y^2$: una parábola acostada. Para cada $x\gt0$ hay dos valores de $y$ ($\pm\sqrt x$), así que no es el gráfico de una función de $x$. $y=\sqrt x$ sería solo la mitad de arriba.`},
+ {p:R`En la cicloide $x=\theta-\operatorname{sen}\theta$, $y=1-\cos\theta$, ¿a qué altura está el punto cuando la rueda dio media vuelta ($\theta=\pi$)?`,o:['2','1','0','π'],c:0,w:R`$y=1-\cos\pi=1-(-1)=2$: el punto está arriba de todo de la rueda, a una altura igual al diámetro. En $\theta=2\pi$ vuelve a tocar el piso.`}]},
+'quiz-2':{t:'Autoevaluación de las Clases 9 y 10',qs:[
+ {p:R`El punto de coordenadas polares $(2;\frac{\pi}{3})$ en cartesianas es:`,o:[R`$(1,\sqrt3)$`,R`$(\sqrt3,1)$`,R`$(2,\frac\pi3)$`,R`$(1,\frac{\sqrt3}{2})$`],c:0,w:R`$x=2\cos\frac\pi3=1$, $y=2\operatorname{sen}\frac\pi3=\sqrt3$.`},
+ {p:R`¿Qué punto es $(-1;\frac{\pi}{2})$?`,o:[R`$(0,-1)$`,R`$(0,1)$`,R`$(-1,0)$`,R`$(1,0)$`],c:0,w:R`El ángulo $\frac\pi2$ apunta hacia arriba, pero con $r=-1$ se va al lado opuesto: $(-1;\frac\pi2)=(1;\frac{3\pi}2)=(0,-1)$.`},
+ {p:R`La curva polar $r=4\operatorname{sen}\theta$ en cartesianas es:`,o:[R`$x^2+(y-2)^2=4$`,R`$x^2+y^2=4y^2$`,R`$(x-2)^2+y^2=4$`,R`$y=4x$`],c:0,w:R`Multiplicando por $r$: $r^2=4r\operatorname{sen}\theta$, o sea $x^2+y^2=4y$. Completando cuadrados, $x^2+(y-2)^2=4$: circunferencia de centro $(0,2)$ y radio 2. Es la "versión vertical" de $r=2\cos\theta$.`},
+ {p:R`¿Cuántos pétalos tiene la rosa $r=\cos2\theta$ con $\theta\in[0,2\pi]$?`,o:['4','2','8','1'],c:0,w:R`Es la rosa de cuatro pétalos de la Clase 10. Los tramos con $r\lt0$ no se superponen con los de $r\gt0$ sino que forman los otros dos pétalos.`},
+ {p:R`En la cardioide $r=1+\cos\theta$, ¿cuál de estos puntos está en la curva?`,o:[R`el origen`,R`$(-2,0)$`,R`$(0,2)$`,R`$(1,1)$`],c:0,w:R`Con $\theta=\pi$, $r=1+\cos\pi=0$: pasa por el origen. El punto más lejano es $(2,0)$, con $\theta=0$; los puntos sobre el eje $y$ son $(0,\pm1)$.`}]},
+'quiz-3':{t:'Autoevaluación de la Clase 11',qs:[
+ {p:R`La parábola de foco $(0,2)$ y directriz $y=-2$ es:`,o:[R`$y=\frac18x^2$`,R`$y=8x^2$`,R`$y=\frac12x^2$`,R`$x^2+y^2=4$`],c:0,w:R`Con $p=2$: $x^2=4py=8y$, o sea $y=\frac{x^2}{8}$. Cuanto más lejos está el foco, más abierta es la parábola.`},
+ {p:R`Para la elipse $\frac{x^2}{25}+\frac{y^2}{9}=1$, la suma de las distancias de cualquier punto a los dos focos es:`,o:['10','5','8','6'],c:0,w:R`La suma es $2a=2\cdot5=10$. Los focos están en $(\pm c,0)$ con $c=\sqrt{25-9}=4$.`},
+ {p:R`Las asíntotas de la hipérbola $\frac{x^2}{9}-\frac{y^2}{16}=1$ son:`,o:[R`$y=\pm\frac43x$`,R`$y=\pm\frac34x$`,R`$y=\pm\frac{16}{9}x$`,R`$x=\pm3$`],c:0,w:R`$y=\pm\frac ba x$ con $a=3$, $b=4$.`},
+ {p:R`Cortando el cono $z^2=x^2+y^2$ con el plano $z=y+1$ se obtiene:`,o:['una parábola','una elipse','una hipérbola','una circunferencia'],c:0,w:R`El plano tiene la misma inclinación que una generatriz del cono (la recta $z=y$ del plano $yz$) y corta una sola hoja: parábola. Es el ejercicio 12(iii).`},
+ {p:R`Una parametrización de la elipse $\frac{x^2}{4}+y^2=1$ es:`,o:[R`$(2\cos t,\ \operatorname{sen}t)$`,R`$(4\cos t,\ \operatorname{sen}t)$`,R`$(\cos t,\ 2\operatorname{sen}t)$`,R`$(2\cos t,\ 2\operatorname{sen}t)$`],c:0,w:R`$\frac{x}{2}=\cos t$ e $y=\operatorname{sen}t$. Con $4\cos t$ se usaría $a^2$ en vez de $a$.`}]},
+'quiz-4':{t:'Autoevaluación de las Clases 12 y 13',qs:[
+ {p:R`En $\R^3$, la ecuación $x^2+z^2=4$ describe:`,o:['un cilindro circular con eje y','una circunferencia en el plano xz','una esfera de radio 2','un cilindro circular con eje z'],c:0,w:R`Falta la variable $y$: es la circunferencia de radio 2 del plano $xz$ prolongada a lo largo del eje $y$. En $\R^2$ sería una circunferencia, pero en $\R^3$ es un cilindro.`},
+ {p:R`Las trazas $z=k$ de $z=x^2+4y^2$ son:`,o:['elipses (o un punto, o vacías)','circunferencias','hipérbolas','parábolas'],c:0,w:R`$x^2+4y^2=k$: para $k\gt0$ es una elipse de semiejes $\sqrt k$ y $\frac{\sqrt k}{2}$; para $k=0$ el origen; para $k\lt0$ vacía. Es un paraboloide elíptico.`},
+ {p:R`¿Qué superficie es $x^2-y^2+z^2=0$?`,o:['un cono con eje y','un hiperboloide de una hoja','una silla de montar','un paraboloide'],c:0,w:R`Es $y^2=x^2+z^2$: las trazas $y=k$ son circunferencias de radio $|k|$, y el término independiente es $0$. Es el cono de la Clase 13 con el eje $y$ como eje.`},
+ {p:R`En la silla de montar $z=x^2-y^2$, la traza con el plano $y=0$ es:`,o:['una parábola hacia arriba','una parábola hacia abajo','una hipérbola','una cruz'],c:0,w:R`Con $y=0$ queda $z=x^2$. Con $x=0$ queda $z=-y^2$, la parábola hacia abajo; con $z=0$, la cruz.`},
+ {p:R`El elipsoide $\frac{x^2}{4}+y^2+\frac{z^2}{9}=1$ corta al eje $z$ en:`,o:[R`$z=\pm3$`,R`$z=\pm9$`,R`$z=\pm2$`,R`$z=\pm1$`],c:0,w:R`Con $x=y=0$: $\frac{z^2}{9}=1$, $z=\pm3$. Los semiejes son $2$, $1$ y $3$.`}]}
+};
+})();
+(function(){'use strict';
+const R=String.raw;
+const go=(viz,p,txt)=>`<button type="button" class="go" data-viz="${viz}" data-p="${p}">${txt||'Ver en la figura'}</button>`;
+const EJ=[
+{n:1,t:'Curvas paramétricas en el plano',s:'¿Son gráficos de funciones?',
+ enun:R`<p>Graficar las siguientes curvas de $\R^2$ dadas de forma paramétrica y decidir si son el gráfico de una función de la forma $y=f(x)$.</p>
+<p class="items">(a) $x=3-4t,\ y=2-3t$ &emsp; (b) $x=1-t^2,\ y=t-2,\ -2\le t\le2$ &emsp; (c) $x=t^2+t,\ y=t^2-t,\ -2\le t\le2$ &emsp; (d) $x=t^2,\ y=t^3-4t,\ -3\le t\le3$</p>`,
+ pistas:[R`<p>En cada caso tratá de despejar $t$ de una de las dos ecuaciones y reemplazarlo en la otra, como en los ejemplos de la clase.</p>`,
+  R`<p>En (b) es más fácil despejar $t$ de la segunda: $t=y+2$. En (c) sumá y restá las dos ecuaciones: $x+y=2t^2$ y $x-y=2t$.</p>`,
+  R`<p>Para decidir si es un gráfico $y=f(x)$, buscá dos valores de $t$ distintos que den la misma $x$ y distinta $y$. En (d), mirá qué pasa con $t$ y $-t$.</p>`],
+ sol:R`<p><b>(a)</b> $t=\frac{3-x}{4}$, así que $y=2-\frac{3(3-x)}{4}=\frac{3x-1}{4}$. Es la recta de pendiente $\frac34$ por $(3,2)$ (con $t=0$), recorrida hacia abajo a la izquierda cuando $t$ crece. Sí es el gráfico de $f(x)=\frac{3x-1}{4}$, $x\in\R$. ${go('viz-param','p1a','Ver (a)')}</p>
+<p><b>(b)</b> $t=y+2$ y $x=1-(y+2)^2$. Es un arco de la parábola "acostada" de vértice $(1,-2)$ que se abre hacia la izquierda; con $t\in[-2,2]$ va de $(-3,-4)$ a $(-3,0)$ pasando por el vértice. <b>No</b> es un gráfico $y=f(x)$: por ejemplo, $x=0$ corresponde a $y=-1$ y a $y=-3$. ${go('viz-param','p1b','Ver (b)')}</p>
+<p><b>(c)</b> Como $x+y=2t^2$ y $x-y=2t$, queda $x+y=\frac{(x-y)^2}{2}$: una parábola con el eje sobre la recta $y=x$ (girada $45^\circ$). Con $t\in[-2,2]$ va de $(2,6)$ a $(6,2)$ pasando por $(0,2)$, $(-\frac14,\frac34)$ (el punto más a la izquierda), $(0,0)$ y $(2,0)$. <b>No</b> es un gráfico: $x=0$ aparece con $y=2$ ($t=-1$) y con $y=0$ ($t=0$). ${go('viz-param','p1c','Ver (c)')}</p>
+<p><b>(d)</b> $x=t^2\ge0$, y $t$ y $-t$ dan la misma $x$ con $y$ opuestas: la curva es simétrica respecto del eje $x$, $y=\pm\sqrt{x}\,(x-4)$. Va de $(9,-15)$ a $(9,15)$ y se corta a sí misma en $(4,0)$ (con $t=-2$ y $t=2$). <b>No</b> es un gráfico $y=f(x)$. ${go('viz-param','p1d','Ver (d)')}</p>`,
+ ref:[[7,'7:46','despejar t'],[7,'16:59','la parábola acostada']]},
+
+{n:2,t:'Circunferencias',s:'Parametrizar centro y radio',
+ enun:R`<p>En cada caso, describir de forma paramétrica la circunferencia de radio $r$ y centro $p$.</p>$$\text{(a)}\ r=2,\ p=(0,0)\qquad\text{(b)}\ r=1,\ p=(1,3)\qquad\text{(c)}\ r=3,\ p=(0,2).$$`,
+ pistas:[R`<p>La circunferencia de centro $(0,0)$ y radio $1$ se parametriza con $(\cos t,\operatorname{sen}t)$, $t\in[0,2\pi)$.</p>`,
+  R`<p>Si el radio es $r$, alcanza con multiplicar por $r$. Si el centro es $(a,b)$, se corre: es el truco de la Clase 8 con $z=x-a$, $w=y-b$.</p>`],
+ sol:R`<p>La circunferencia de centro $(a,b)$ y radio $r$ es $(x-a)^2+(y-b)^2=r^2$. Con $\frac{x-a}{r}=\cos t$ y $\frac{y-b}{r}=\operatorname{sen}t$:
+$$x=a+r\cos t,\qquad y=b+r\operatorname{sen}t,\qquad t\in[0,2\pi).$$
+<b>(a)</b> $(2\cos t,\ 2\operatorname{sen}t)$. <b>(b)</b> $(1+\cos t,\ 3+\operatorname{sen}t)$. <b>(c)</b> $(3\cos t,\ 2+3\operatorname{sen}t)$. Hay infinitas otras: por ejemplo, $(2\cos 2t,2\operatorname{sen}2t)$ con $t\in[0,\pi)$ o $(2\operatorname{sen}t,2\cos t)$, que gira al revés.</p>
+<p>${go('viz-param','p2a','Ver (a)')}${go('viz-param','p2b','Ver (b)')}${go('viz-param','p2c','Ver (c)')}</p>`,
+ ref:[[8,'9:48','circunferencias corridas']]},
+
+{n:3,t:'Regiones en coordenadas polares',s:'Qué puntos cumplen la condición',
+ enun:R`<p>Graficar la región del plano que consiste en todos los puntos cuyas coordenadas polares verifican las siguientes condiciones.</p>$$\text{(a)}\ r\ge1\qquad\text{(b)}\ 0\le r\lt2,\ \pi\le\theta\le\tfrac{3\pi}{2}\qquad\text{(c)}\ \tfrac{\pi}{6}\le\theta\le\tfrac{5\pi}{6}.$$`,
+ pistas:[R`<p>$r$ es la distancia al origen y $\theta$ el ángulo con el semieje positivo de las $x$. Pensá cada condición por separado y después intersecá.</p>`,
+  R`<p>Si no hay condición sobre $\theta$, vale cualquier ángulo; si no hay condición sobre $r$, se toma cualquier $r\ge0$.</p>`],
+ sol:R`<p><b>(a)</b> Los puntos a distancia mayor o igual que 1 del origen: el exterior del disco unitario, con la circunferencia $x^2+y^2=1$ incluida.</p>
+<p><b>(b)</b> Distancia menor que 2 y ángulo entre $\pi$ y $3\pi/2$: el cuarto de disco de radio 2 en el tercer cuadrante ($x\le0$, $y\le0$). Incluye los dos segmentos sobre los ejes y no incluye el arco de radio 2.</p>
+<p><b>(c)</b> Todos los puntos con ángulo entre $30^\circ$ y $150^\circ$: un sector infinito en el semiplano superior, entre las semirrectas $y=\frac{x}{\sqrt3}$ ($x\gt0$) e $y=-\frac{x}{\sqrt3}$ ($x\lt0$), con los bordes. En cartesianas: $y\ge\frac{|x|}{\sqrt3}$.</p>
+<p>Las tres están en la figura <a href="#viz-polreg">Regiones en polares</a>.</p>`,
+ ref:[[9,'2:36','coordenadas polares']]},
+
+{n:4,t:'Curvas en coordenadas polares',s:'Graficar r = f(θ)',
+ enun:R`<p>Graficar las curvas dadas por las siguientes ecuaciones en coordenadas polares.</p>$$\text{(a)}\ r=-2\operatorname{sen}\theta\qquad\text{(b)}\ r=1-\cos\theta.$$`,
+ pistas:[R`<p>Hacé primero el gráfico de $r$ en función de $\theta$ en el plano $(\theta,r)$, y después recorré por tramos, como con $r=2\cos\theta$ en la clase.</p>`,
+  R`<p>En (a), para $\theta\in(0,\pi)$ el radio es negativo: los puntos van del lado opuesto. Probá pasar a cartesianas multiplicando por $r$: $r^2=-2r\operatorname{sen}\theta$.</p>`,
+  R`<p>(b) se parece a la cardioide $r=1+\cos\theta$ de la Clase 10. ¿Qué cambia con el signo menos?</p>`],
+ sol:R`<p><b>(a)</b> $r^2=-2r\operatorname{sen}\theta$, o sea $x^2+y^2=-2y$, y completando cuadrados $x^2+(y+1)^2=1$: la <b>circunferencia de centro $(0,-1)$ y radio 1</b>. Se recorre entera con $\theta\in[0,\pi]$: aunque los ángulos están en el semiplano de arriba, $r\le0$ y los puntos caen abajo. ${go('viz-polar','p4a','Ver (a)')}</p>
+<p><b>(b)</b> $r=1-\cos\theta$ va entre $0$ y $2$. Vale $0$ en $\theta=0$ (pasa por el origen), $1$ en $\theta=\pi/2$ y $3\pi/2$ (puntos $(0,1)$ y $(0,-1)$) y $2$ en $\theta=\pi$ (punto $(-2,0)$). Es una <b>cardioide</b> como la de la Clase 10, pero reflejada: la punta en el origen y el corazón hacia la izquierda. ${go('viz-polar','p4b','Ver (b)')}</p>`,
+ chk:{p:'(a) centro y radio: x₀ y₀ r',vals:[0,-1,1]},
+ ref:[[9,'27:05','r = 2cos θ'],[10,'1:37','la cardioide']]},
+
+{n:5,t:'Cónicas',s:'Graficar y usar parámetros',
+ enun:R`<p>(a) Graficar las siguientes curvas de $\R^2$.</p><p class="items">i. $x^2+y^2=4$ &emsp; ii. $\frac{x^2}{4}+\frac{y^2}{9}=1$ &emsp; iii. $\frac{x^2}{4}-\frac{y^2}{9}=1$ &emsp; iv. $x=y^2$</p>
+<p>(b) Para $a,b\in\R$, dar una descripción geométrica de las siguientes ecuaciones utilizando deslizadores en GeoGebra.</p><p class="items">i. $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ &emsp; ii. $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ &emsp; iii. $x=ay^2$</p>`,
+ pistas:[R`<p>Compará con las formas de la Clase 11: elipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$, hipérbola $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$, parábola $y=ax^2$.</p>`,
+  R`<p>Para graficar una elipse alcanza con sus cuatro "vértices" $(\pm a,0)$ y $(0,\pm b)$. Para una hipérbola, los vértices y las asíntotas $y=\pm\frac ba x$.</p>`,
+  R`<p>En iv, $x$ es función de $y$: es una parábola acostada.</p>`],
+ sol:R`<p><b>(a) i.</b> Circunferencia de centro $(0,0)$ y radio $2$.</p>
+<p><b>ii.</b> Elipse con vértices $(\pm2,0)$ y $(0,\pm3)$. Acá el semieje mayor es el vertical: los focos están en $(0,\pm\sqrt{9-4})=(0,\pm\sqrt5)$.</p>
+<p><b>iii.</b> Hipérbola con vértices $(\pm2,0)$, dos ramas hacia los costados, asíntotas $y=\pm\frac32x$ y focos $(\pm\sqrt{4+9},0)=(\pm\sqrt{13},0)$.</p>
+<p><b>iv.</b> Parábola con vértice en el origen que se abre hacia la derecha (el eje $x$ es su eje de simetría). Con la fórmula de la clase, con $x$ e $y$ intercambiados: $x=\frac1{4p}y^2$ con $p=\frac14$, foco $(\frac14,0)$, directriz $x=-\frac14$.</p>
+<p><b>(b) i.</b> Si $a,b\neq0$: elipse centrada en el origen con semiejes $|a|$ (horizontal) y $|b|$ (vertical); si $|a|=|b|$ es una circunferencia. Al agrandar $a$ se estira en $x$. <b>ii.</b> Hipérbola con vértices $(\pm|a|,0)$ y asíntotas $y=\pm\frac{|b|}{|a|}x$: al agrandar $b$ respecto de $a$, las ramas se abren más. <b>iii.</b> Si $a\gt0$, parábola acostada que se abre hacia la derecha; si $a\lt0$, hacia la izquierda; cuanto más grande $|a|$, más cerrada. Si $a=0$ queda $x=0$: el eje $y$.</p>
+<p>${go('viz-focal','0','Ver las cónicas con sus focos')} ${go('viz-cone','0','Ver los cortes del cono')}</p>`,
+ ref:[[11,'8:44','parábola'],[11,'20:58','elipse'],[11,'39:28','hipérbola']]},
+
+{n:6,t:'Cilindros',s:'Superficies donde falta una variable',
+ enun:R`<p>Graficar las siguientes superficies de $\R^3$.</p><p class="items">(a) $y=2x+1$ &emsp; (b) $y=x^2$ &emsp; (c) $x^2+y^2=1$ &emsp; (d) $4x^2+y^2=4$</p>`,
+ pistas:[R`<p>En las cuatro ecuaciones no aparece $z$. ¿Qué quiere decir eso? Pensá en los cilindros de la Clase 12.</p>`,
+  R`<p>Dibujá primero la curva en el plano $xy$ y después prolongala a lo largo del eje $z$.</p>`],
+ sol:R`<p>Como no aparece $z$, si $(x,y,0)$ cumple la ecuación también la cumple $(x,y,z)$ para cualquier $z$: son <b>cilindros</b> con eje directriz el eje $z$, sobre la curva del plano $xy$ dada por la misma ecuación.</p>
+<p><b>(a)</b> La recta $y=2x+1$ prolongada en $z$: un <b>plano vertical</b> (un "cilindro" sobre una recta). <b>(b)</b> La parábola $y=x^2$ prolongada en $z$: un cilindro parabólico, una canaleta acostada. <b>(c)</b> La circunferencia de radio 1: el cilindro circular de la clase. <b>(d)</b> $x^2+\frac{y^2}{4}=1$ es una elipse de semiejes $1$ y $2$: un cilindro elíptico.</p>
+<p>${go('viz-quad','cil:2:0','Ver (c)')} ${go('viz-quad','cilp:2:0.5','Ver un cilindro parabólico')}</p>`,
+ ref:[[12,'1:36','cilindros']]},
+
+{n:7,t:'Superficies cuádricas',s:'El método de las trazas',
+ enun:R`<p>(a) Utilizando trazas, graficar las siguientes superficies de $\R^3$.</p>
+<p class="items">i. $x^2+\frac{y^2}{4}+\frac{z^2}{9}=1$ &emsp; ii. $z=x^2+y^2$ &emsp; iii. $x=y^2+4z^2$ &emsp; iv. $z^2=x^2+y^2$ &emsp; v. $x^2=y^2+4z^2$ &emsp; vi. $z=x^2-y^2$ &emsp; vii. $x^2+y^2-z^2=1$ &emsp; viii. $-x^2-y^2+z^2=1$ &emsp; ix. $4x^2+9y^2+z=0$</p>
+<p>(b) Para $a,b,c\in\R$, dar una descripción geométrica de las siguientes ecuaciones utilizando deslizadores en GeoGebra.</p>
+<p class="items">i. $\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1$ &emsp; ii. $z=\frac{x^2}{a^2}+\frac{y^2}{b^2}$ &emsp; iii. $z^2=\frac{x^2}{a^2}+\frac{y^2}{b^2}$ &emsp; iv. $z=\frac{x^2}{a^2}-\frac{y^2}{b^2}$ &emsp; v. $\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=1$ &emsp; vi. $-\frac{x^2}{a^2}-\frac{y^2}{b^2}+\frac{z^2}{c^2}=1$</p>`,
+ pistas:[R`<p>Para cada una, reemplazá una variable por una constante $k$ (por ejemplo $z=k$) y reconocé la curva plana que queda: elipse, circunferencia, parábola, hipérbola, cruz o vacío.</p>`,
+  R`<p>Identificá primero si es de tipo 1 (los tres cuadrados) o de tipo 2 (dos cuadrados y una variable lineal). En iii, v y ix, el eje "especial" no es el $z$.</p>`,
+  R`<p>Contá los signos menos en las de tipo 1: ninguno, elipsoide; uno, hiperboloide de una hoja; dos, de dos hojas; si el término independiente es $0$, cono.</p>`],
+ sol:R`<p><b>(a)</b></p><ul style="margin:.3em 0;padding-left:1.2em">
+<li><b>i.</b> Elipsoide de semiejes $1$, $2$, $3$ en las direcciones $x$, $y$, $z$. Trazas $z=k$ con $|k|\le3$: elipses $x^2+\frac{y^2}{4}=1-\frac{k^2}{9}$.</li>
+<li><b>ii.</b> Paraboloide circular que se abre hacia arriba (el de la Clase 13).</li>
+<li><b>iii.</b> Paraboloide elíptico con eje $x$, que se abre hacia los $x$ positivos. Trazas $x=k\ge0$: elipses $y^2+4z^2=k$; trazas $z=0$: parábola $x=y^2$.</li>
+<li><b>iv.</b> Cono de dos hojas con eje $z$ (el de la Clase 13).</li>
+<li><b>v.</b> Cono elíptico con eje $x$. Trazas $x=k$: elipses $y^2+4z^2=k^2$; trazas $z=0$: la cruz $|x|=|y|$.</li>
+<li><b>vi.</b> Silla de montar (Clase 13).</li>
+<li><b>vii.</b> Hiperboloide de una hoja con eje $z$: trazas $z=k$, circunferencias de radio $\sqrt{1+k^2}$; trazas $x=0$, hipérbolas $y^2-z^2=1$.</li>
+<li><b>viii.</b> Hiperboloide de dos hojas con eje $z$: no hay puntos con $|z|\lt1$; para $|k|\ge1$, circunferencias de radio $\sqrt{k^2-1}$.</li>
+<li><b>ix.</b> $z=-4x^2-9y^2$: paraboloide elíptico que se abre hacia abajo, con vértice en el origen. Trazas $z=k\le0$: elipses $4x^2+9y^2=-k$.</li></ul>
+<p>${go('viz-quad','p7i:2:0','i')} ${go('viz-quad','par:2:1','ii')} ${go('viz-quad','p7iii:0:1','iii')} ${go('viz-quad','cono:2:1','iv')} ${go('viz-quad','p7v:0:1','v')} ${go('viz-quad','silla:2:0.5','vi')} ${go('viz-quad','h1:2:1','vii')} ${go('viz-quad','h2:2:1.5','viii')} ${go('viz-quad','p7ix:2:-1','ix')}</p>
+<p><b>(b)</b> Con $a,b,c\neq0$, son las mismas familias con los semiejes estirados: i. elipsoide de semiejes $|a|,|b|,|c|$ (esfera si son iguales); ii. paraboloide elíptico (circular si $|a|=|b|$); iii. cono elíptico; iv. silla de montar; v. hiperboloide de una hoja; vi. hiperboloide de dos hojas. Agrandar $a$ estira la superficie en la dirección $x$, y lo mismo con $b$ en $y$ y $c$ en $z$.</p>`,
+ ref:[[12,'26:10','trazas'],[12,'24:09','elipsoide'],[13,'1:40','cono'],[13,'15:53','paraboloide'],[13,'28:09','silla de montar']]},
+
+{n:8,t:'Una región del espacio',s:'Cilindro y cono',
+ enun:R`<p>Graficar la región de $\R^3$ acotada por las superficies $x^2+y^2=1$ y $z=\sqrt{x^2+y^2}$ para $1\le z\le2$.</p>`,
+ pistas:[R`<p>$x^2+y^2=1$ es el cilindro de radio 1 con eje $z$; $z=\sqrt{x^2+y^2}$ es la hoja de arriba del cono. ¿Dónde se cortan?</p>`,
+  R`<p>Cortá con planos $z=k$ para $1\le k\le2$: ¿qué distancias al eje $z$ quedan entre las dos superficies?</p>`],
+ sol:R`<p>Llamando $\rho=\sqrt{x^2+y^2}$ (la distancia al eje $z$), el cilindro es $\rho=1$ y el cono es $\rho=z$. Se cortan en la circunferencia $\rho=1$, $z=1$.</p>
+<p>Para cada altura $z\in[1,2]$, la región son los puntos entre el cilindro y el cono: $1\le\rho\le z$. En $z=1$ es solo la circunferencia; en $z=2$ es la corona $1\le\rho\le2$. Es un sólido de revolución alrededor del eje $z$: el pedazo de cono macizo entre $z=1$ y $z=2$ al que se le sacó el cilindro de radio 1, como un embudo grueso.</p>
+<p>${go('viz-reg8','0','Ver la región')}</p>`,
+ extra:R`<div class="viz" id="viz-reg8"></div>`,
+ ref:[[13,'1:40','cono'],[12,'4:41','cilindro']]},
+
+{n:9,t:'Dominio de una función vectorial',s:'Intersección de dominios',
+ enun:R`<p>Hallar el dominio de cada una de las siguientes funciones.</p><p class="items">(a) $\mathbf r(t)=\left(\sqrt{4-t^2},\,5t+1,\,\ln(t+1)\right)$ &emsp; (b) $\mathbf r(t)=\left(4t,\,\frac{3t}{t-2},\,e^t\right)$</p>`,
+ pistas:[R`<p>El dominio de $\mathbf r$ es el conjunto de los $t$ donde las tres coordenadas tienen sentido a la vez.</p>`,
+  R`<p>Raíz cuadrada: lo de adentro $\ge0$. Logaritmo: lo de adentro $\gt0$. Cociente: denominador $\neq0$.</p>`],
+ sol:R`<p><b>(a)</b> $\sqrt{4-t^2}$ pide $-2\le t\le2$; $5t+1$ está siempre definida; $\ln(t+1)$ pide $t\gt-1$. La intersección es $\operatorname{Dom}\mathbf r=(-1,2]$.</p>
+<p><b>(b)</b> Solo el cociente pone condiciones: $t\neq2$. $\operatorname{Dom}\mathbf r=\R\setminus\{2\}$.</p>`,
+ chk:{p:'(a) extremos del intervalo',vals:[-1,2]},
+ ref:[[14,'11:17','funciones vectoriales']]},
+
+{n:10,t:'Curvas imagen en el espacio',s:'Sobre qué superficie viven',
+ enun:R`<p>Graficar la curva imagen de las siguientes funciones.</p><p class="items">(a) $\mathbf r(t)=(\cos t,\operatorname{sen}t,1)$ &emsp; (b) $\mathbf r(t)=(t,t^2,t-t^2)$ &emsp; (c) $\mathbf r(t)=\left(t^2+t,\,t^2-t,\,(t^2-t)^2\right)$</p>`,
+ pistas:[R`<p>Buscá relaciones entre las coordenadas que no dependan de $t$: cada una es una superficie que contiene a la curva.</p>`,
+  R`<p>En (b), $y=x^2$ y $z=x-y$. En (c), compará con el ejercicio 1(c) y mirá la relación entre $z$ e $y$.</p>`],
+ sol:R`<p><b>(a)</b> $x^2+y^2=1$ y $z=1$: la circunferencia de radio 1 centrada en $(0,0,1)$, en el plano horizontal $z=1$. ${go('viz-space','p10a','Ver (a)')}</p>
+<p><b>(b)</b> $y=x^2$ (un cilindro parabólico) y $z=x-y$ (un plano): la curva es la intersección. Su sombra en el plano $xy$ es la parábola $y=x^2$; la altura es $z=t-t^2$, que vale $0$ en $t=0$ y $t=1$ y es máxima ($\frac14$) en $t=\frac12$. ${go('viz-space','p10b','Ver (b)')}</p>
+<p><b>(c)</b> Las dos primeras coordenadas son las del ejercicio 1(c): la sombra en el plano $xy$ es esa parábola girada. Además $z=y^2$: la curva está sobre el cilindro parabólico $z=y^2$, así que sube cuando $|y|$ crece. ${go('viz-space','p10c','Ver (c)')}</p>`,
+ ref:[]},
+
+{n:11,t:'Parametrizar un polígono',s:'Funciones definidas a trozos',
+ enun:R`<p>Hallar una función $\mathbf r:I\subset\R\to\R^2$ cuya imagen describa los siguientes conjuntos.</p><p>(a) el rectángulo de vértices $(0,2)$, $(0,-2)$, $(1,2)$ y $(1,-2)$; (b) el triángulo de vértices $(1,0)$, $(-1,0)$ y $(0,1)$.</p>`,
+ pistas:[R`<p>Se habla del borde (el conjunto de lados), no del interior. Parametrizá cada lado como un segmento.</p>`,
+  R`<p>El segmento de $A$ a $B$ es $A+s\,(B-A)$ con $s\in[0,1]$. Pegá los tramos usando intervalos consecutivos de $t$: $[0,1]$, $[1,2]$, …</p>`],
+ sol:R`<p><b>(a)</b> Recorriendo $(0,2)\to(1,2)\to(1,-2)\to(0,-2)\to(0,2)$, con $t\in[0,4]$:
+$$\mathbf r(t)=\begin{cases}(t,\,2) & 0\le t\le1\\ (1,\,2-4(t-1)) & 1\le t\le2\\ (1-(t-2),\,-2) & 2\le t\le3\\ (0,\,-2+4(t-3)) & 3\le t\le4.\end{cases}$$
+<b>(b)</b> Recorriendo $(1,0)\to(0,1)\to(-1,0)\to(1,0)$, con $t\in[0,3]$:
+$$\mathbf r(t)=\begin{cases}(1-t,\,t) & 0\le t\le1\\ (-(t-1),\,2-t) & 1\le t\le2\\ (-1+2(t-2),\,0) & 2\le t\le3.\end{cases}$$
+En los extremos de cada tramo las dos fórmulas dan el mismo punto, así que la curva no "salta". ${go('viz-param','p11a','Ver (a)')}${go('viz-param','p11b','Ver (b)')}</p>`,
+ ref:[[8,'0:35','problema inverso']]},
+
+{n:12,t:'Intersección de superficies',s:'Graficar y parametrizar',
+ enun:R`<p>(a) Graficar la curva intersección de las siguientes superficies.</p><p>i. $x^2+y^2=4$ y $z=xy$; &nbsp; ii. $x^2+y^2=1$ e $y+z=2$; &nbsp; iii. $z=\sqrt{x^2+y^2}$ y $z=1+y$.</p><p>(b) Hallar una función $\mathbf r:I\subset\R\to\R^3$ cuya imagen describa las curvas graficadas en el ítem anterior.</p>`,
+ pistas:[R`<p>Cuando una de las superficies es un cilindro $x^2+y^2=r^2$, parametrizá $x$ e $y$ con coseno y seno, y despejá $z$ de la otra ecuación.</p>`,
+  R`<p>En iii no hay cilindro. Igualá las dos expresiones de $z$ y elevá al cuadrado: ¿qué relación queda entre $x$ e $y$?</p>`],
+ sol:R`<p><b>i.</b> $x=2\cos t$, $y=2\operatorname{sen}t$, y entonces $z=xy=4\cos t\operatorname{sen}t=2\operatorname{sen}2t$. $\ \mathbf r(t)=(2\cos t,\,2\operatorname{sen}t,\,2\operatorname{sen}2t)$, $t\in[0,2\pi]$. Es una curva cerrada sobre el cilindro que sube y baja dos veces por vuelta, como el borde de una papa frita. ${go('viz-space','p12a','Ver i')}</p>
+<p><b>ii.</b> $x=\cos t$, $y=\operatorname{sen}t$, $z=2-y=2-\operatorname{sen}t$. $\ \mathbf r(t)=(\cos t,\,\operatorname{sen}t,\,2-\operatorname{sen}t)$, $t\in[0,2\pi]$. Es una elipse: el corte del cilindro con un plano inclinado. ${go('viz-space','p12b','Ver ii')}</p>
+<p><b>iii.</b> $\sqrt{x^2+y^2}=1+y$ pide $1+y\ge0$ y, elevando al cuadrado, $x^2+y^2=1+2y+y^2$, o sea $y=\frac{x^2-1}{2}$ (que ya cumple $y\ge-\frac12\gt-1$). Entonces $z=1+y=\frac{x^2+1}{2}$. Con $x=t$: $\ \mathbf r(t)=\left(t,\,\frac{t^2-1}{2},\,\frac{t^2+1}{2}\right)$, $t\in\R$. Es una <b>parábola</b>: el plano $z=1+y$ es paralelo a una generatriz del cono, como en la Clase 11. ${go('viz-space','p12c','Ver iii')}</p>`,
+ ref:[[11,'7:43','cortes del cono']]},
+
+{n:13,t:'Dominios en el plano y en el espacio',s:'Dónde tiene sentido la fórmula',
+ enun:R`<p>Graficar el dominio de las siguientes funciones.</p><p class="items">(a) $f(x,y)=\sqrt{2x-y}$ &emsp; (b) $f(x,y)=\sqrt{x^2-y^2}$ &emsp; (c) $f(x,y,z)=\ln(1-x^2-y^2-z^2)$</p>`,
+ pistas:[R`<p>Escribí la condición (desigualdad) que tiene que cumplir el punto y dibujá primero la "frontera", donde vale el igual.</p>`,
+  R`<p>En (b), $x^2-y^2\ge0$ es lo mismo que $|y|\le|x|$. En (c), el logaritmo pide algo estrictamente positivo.</p>`],
+ sol:R`<p><b>(a)</b> $2x-y\ge0$, es decir $y\le2x$: el semiplano que queda por debajo de la recta $y=2x$, con la recta incluida. ${go('viz-level','p13a','Ver (a)')}</p>
+<p><b>(b)</b> $x^2\ge y^2$, o sea $|y|\le|x|$: la región entre las rectas $y=x$ e $y=-x$ que contiene al eje $x$ (un "moño" acostado), con los bordes. ${go('viz-level','p13b','Ver (b)')}</p>
+<p><b>(c)</b> $1-x^2-y^2-z^2\gt0$, o sea $x^2+y^2+z^2\lt1$: la <b>bola abierta</b> de centro el origen y radio 1 (sin la esfera del borde).</p>`,
+ ref:[]},
+
+{n:14,t:'Curvas de nivel',s:'Dominio, curvas de nivel y gráfico',
+ enun:R`<p>Para cada una de las siguientes funciones, calcular dominio, graficar las curvas de nivel y usarlas para graficar la función.</p>
+<p class="items">(a) $f(x,y)=3y$ &emsp; (b) $f(x,y)=\frac1x$ &emsp; (c) $f(x,y)=x^2+y^2$ &emsp; (d) $f(x,y)=-x^2-y^2$ &emsp; (e) $f(x,y)=\sqrt{x^2+y^2}$ &emsp; (f) $f(x,y)=\sqrt{4-x^2-y^2}$</p>`,
+ pistas:[R`<p>La curva de nivel $c$ es $\{f(x,y)=c\}$. Para cada $c$ despejá y reconocé la curva (recta, circunferencia, vacío…).</p>`,
+  R`<p>Para el gráfico, poné cada curva de nivel $c$ a altura $z=c$. Si las circunferencias se separan cada vez más, la superficie se aplana; si están igualmente espaciadas, sube como un cono.</p>`],
+ sol:R`<ul style="margin:.3em 0;padding-left:1.2em">
+<li><b>(a)</b> Dominio $\R^2$. Nivel $c$: la recta horizontal $y=\frac c3$. Gráfico: el plano $z=3y$, que contiene al eje $x$ y sube con $y$. ${go('viz-level','p14a','Ver')}</li>
+<li><b>(b)</b> Dominio $\{x\neq0\}$. Nivel $c\neq0$: la recta vertical $x=\frac1c$; nivel $0$: vacío. Gráfico: la hipérbola $z=\frac1x$ del plano $xz$ prolongada en $y$ (un cilindro). ${go('viz-level','p14b','Ver')}</li>
+<li><b>(c)</b> Dominio $\R^2$. Nivel $c\gt0$: circunferencia de radio $\sqrt c$; $c=0$: el origen; $c\lt0$: vacío. Gráfico: el paraboloide $z=x^2+y^2$. ${go('viz-level','p14c','Ver')}</li>
+<li><b>(d)</b> Es $-$(c): niveles $c\lt0$, circunferencias de radio $\sqrt{-c}$. Gráfico: el paraboloide dado vuelta, hacia abajo. ${go('viz-level','p14d','Ver')}</li>
+<li><b>(e)</b> Dominio $\R^2$. Nivel $c\gt0$: circunferencia de radio $c$ (igualmente espaciadas). Gráfico: la hoja de arriba del cono $z^2=x^2+y^2$. ${go('viz-level','p14e','Ver')}</li>
+<li><b>(f)</b> Dominio: $x^2+y^2\le4$, el disco cerrado de radio 2. Nivel $c\in[0,2]$: circunferencia de radio $\sqrt{4-c^2}$ (el borde para $c=0$, el origen para $c=2$). Gráfico: la semiesfera superior de radio 2, porque $z=\sqrt{4-x^2-y^2}$ equivale a $x^2+y^2+z^2=4$ con $z\ge0$. ${go('viz-level','p14f','Ver')}</li></ul>`,
+ ref:[]}
+];
+window.G1EJ=EJ;
+})();
+(function(){'use strict';
+const {$,$$,h,f}=window.G1;
+const IM=window.G1IMG||{};
+const EJ=window.G1EJ||[];
+const KEY=(window.A1&&window.A1.key)||'a1';
+const T=(v,t,txt)=>`<a class="t" data-v="${v}" data-t="${t}">${txt||t}</a>`;
+
+/* ---------- render ---------- */
+function parse(s){return s.split(/[;\s]+/).filter(Boolean).map(x=>parseFloat(x.replace(',','.')));}
+let done={};try{done=JSON.parse(localStorage.getItem(KEY+'-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem(KEY+'-done',JSON.stringify(done));}catch(e){}}
+function prog(){const n=Object.keys(done).filter(k=>done[k]).length;$('#ejprog').textContent='Hechos: '+n+' de '+EJ.length+' (se guarda en este navegador)';}
+
+function build(){const list=$('#ejlist');
+  EJ.forEach(e=>{
+    const d=h('details',{class:'ejc'+(done[e.n]?' done':''),id:'ej'+e.n});
+    const sum=h('summary',{},h('span',{class:'num'},e.n),h('span',{class:'tt'},h('b',{},e.t),h('span',{},e.s)));
+    const inn=h('div',{class:'in'});
+    inn.append(h('div',{class:'enun',html:e.enun}));
+    if(e.img&&IM[e.img])inn.append(h('img',{class:'fig',src:IM[e.img],alt:'Figura del ejercicio '+e.n}));
+    if(e.rev)inn.append(h('div',{class:'revnote',html:'<b>Revisar</b>'+e.rev}));
+    if(e.extra)inn.append(h('div',{html:e.extra}));
+    const pistas=h('div',{class:'pistas'});let k=0;
+    const bP=h('button',{type:'button'},'Dame una pista');
+    const bS=h('button',{type:'button'},'Ver resolución');
+    const sol=h('div',{class:'sol',hidden:'',html:'<b>Resolución</b>'+e.sol});
+    bP.addEventListener('click',()=>{if(k<e.pistas.length){pistas.append(h('div',{class:'pista',html:'<b>Pista '+(k+1)+' de '+e.pistas.length+'</b>'+e.pistas[k]}));k++;typeset(pistas);}
+      if(k>=e.pistas.length){bP.disabled=true;bP.textContent='No hay más pistas';}else bP.textContent='Otra pista ('+k+'/'+e.pistas.length+')';});
+    bS.addEventListener('click',()=>{sol.hidden=!sol.hidden;bS.textContent=sol.hidden?'Ver resolución':'Ocultar resolución';if(!sol.hidden)typeset(sol);});
+    const bD=h('button',{type:'button','aria-pressed':!!done[e.n]},done[e.n]?'Hecho ✓':'Marcar como hecho');
+    bD.addEventListener('click',()=>{done[e.n]=!done[e.n];save();d.classList.toggle('done',!!done[e.n]);bD.setAttribute('aria-pressed',!!done[e.n]);bD.textContent=done[e.n]?'Hecho ✓':'Marcar como hecho';prog();});
+    const refs=(e.ref||[]).map(r=>h('span',{html:T(r[0],r[1],'Clase '+r[0]+' · '+r[1])+' <span class="c-mut" style="font-size:14px">'+r[2]+'</span>'}));
+    inn.append(h('div',{class:'act'},bP,bS,bD),pistas);
+    if(e.chk){const inp=h('input',{type:'text',inputmode:'text','aria-label':e.chk.p,placeholder:'ej.: 1,5 2'});const res=h('span',{class:'res'});
+      const go=()=>{const v=parse(inp.value);if(!v.length||v.some(isNaN)){res.className='res bad';res.textContent='Escribí números separados por espacio o ";".';return;}
+        if(v.length!==e.chk.vals.length){res.className='res bad';res.textContent='Faltan o sobran valores: se esperan '+e.chk.vals.length+'.';return;}
+        const bad=[];e.chk.vals.forEach((t,i)=>{if(Math.abs(v[i]-t)>Math.max(.006*Math.abs(t),.015))bad.push(i+1);});
+        if(!bad.length){res.className='res ok';res.textContent='Correcto.';}else{res.className='res bad';res.textContent='No coinciden los valores n.º '+bad.join(', ')+'. Revisá esas cuentas.';}};
+      inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+      inn.append(h('div',{class:'chk'},h('span',{},'Comprobar: '+e.chk.p),inp,h('button',{type:'button',onclick:go},'Comprobar'),res));}
+    inn.append(sol);
+    if(refs.length){const r=h('div',{class:'meta',style:'margin-top:8px'},h('span',{},'Teoría relacionada:'),...refs);inn.append(r);}
+    d.append(sum,inn);list.append(d);});
+  prog();}
+function fixWide(root){(root||document).querySelectorAll('mjx-container:not([display="true"])').forEach(m=>{m.classList.remove('wide');const p=m.parentElement;if(p&&m.getBoundingClientRect().width>p.getBoundingClientRect().width+1)m.classList.add('wide');});}
+function typeset(el){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>fixWide(el)).catch(()=>{});}
+window.G1ej={build,typeset,fixWide};
+})();
+(function(){'use strict';
+const {$,$$,h}=window.G1;const V=window.G1V;const CFG=window.A1||{};const VID=CFG.vid||{};const QZ=CFG.quiz||{};const KEY=CFG.key||'a1';
+
+function buildQuiz(id,data){const host=$('#'+id);if(!host)return;let score=0,ans=0;const sc=h('span',{class:'c-mut',style:'font:600 13.5px var(--f-mono)'},'');
+  const head=h('div',{class:'qh'},h('b',{},data.t),sc,h('button',{type:'button',onclick:()=>{host.textContent='';buildQuiz(id,data);window.G1ej.typeset(host);}},'Reiniciar'));
+  host.append(head);const upd=()=>{sc.textContent=ans?(score+' de '+data.qs.length+' correctas'):'';};
+  data.qs.forEach((q,qi)=>{const o=h('div',{class:'o'});const box=h('div',{class:'q'},h('div',{class:'p',html:(qi+1)+'. '+q.p}),o);let why=null;
+    const ord=q.o.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+    ord.forEach(i=>{const t=q.o[i];const b=h('button',{type:'button',html:t});b.dataset.k=i;b.addEventListener('click',()=>{if(why)return;ans++;const ok=i===q.c;if(ok)score++;b.classList.add(ok?'right':'wrong');if(!ok)o.querySelector('[data-k="'+q.c+'"]').classList.add('right');
+      why=h('div',{class:'why',html:'<b class="'+(ok?'ok':'bad')+'">'+(ok?'Correcto. ':'No. ')+'</b>'+q.w});box.append(why);window.G1ej.typeset(box);upd();});o.append(b);});host.append(box);});
+}
+
+/* ---------- vínculos a YouTube ---------- */
+function linkify(){$$('a.t[data-v]').forEach(a=>{const [m,s]=a.dataset.t.split(':').map(Number),sec=m*60+s;a.href='https://youtu.be/'+VID[a.dataset.v]+'?t='+sec;a.target='_blank';const f=a.firstChild;if(f&&f.nodeType===3&&/^\d+:\d\d/.test(f.nodeValue))f.nodeValue=f.nodeValue.replace(/^(\d+:\d\d)/,'Cl. '+a.dataset.v+' · $1');a.rel='noopener';a.title='Abrir el video en '+a.dataset.t;});}
+
+/* ---------- barra de herramientas, tema, navegación ---------- */
+function ui(){
+  document.addEventListener('click',e=>{const b=e.target.closest('button.go');if(!b)return;const api=(window.A1API||{})[b.dataset.viz];const el=document.getElementById(b.dataset.viz);
+    if(api&&api.set)api.set(b.dataset.p);if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('toggle',e=>{if(e.target.open)window.G1ej.fixWide(e.target);},true);
+  $('#b-open').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=true);window.G1ej.fixWide(document);});
+  $('#b-close').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=false);});
+  const br=$('#b-rev');br.addEventListener('click',()=>{const on=br.getAttribute('aria-pressed')!=='true';br.setAttribute('aria-pressed',on);document.body.classList.toggle('no-rev',!on);try{localStorage.setItem(KEY+'-rev',on?'1':'0');}catch(e){}});
+  try{if(localStorage.getItem(KEY+'-rev')==='0'){br.setAttribute('aria-pressed','false');document.body.classList.add('no-rev');}}catch(e){}
+  const bt=$('#b-theme');let mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+  const apply=()=>{const r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];};
+  bt.addEventListener('click',()=>{mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();
+  const links=$$('#nav a'),secs=links.map(a=>$(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));}
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{const id=a.getAttribute('href');if(id==='#ejercicios'){}}));
+}
+
+function init(){
+  window.G1ej.build();
+  const map=CFG.viz||{};
+  Object.keys(map).forEach(id=>{const el=$('#'+id);if(!el)return;try{V[map[id]](el);}catch(err){console.error('viz',id,err);el.append(h('p',{class:'hint'},'No se pudo cargar esta figura.'));}});
+  Object.keys(QZ).forEach(id=>buildQuiz(id,QZ[id]));
+  linkify();ui();
+  const go=()=>{if(window.MathJax&&MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(()=>MathJax.typesetPromise()).then(()=>{window.G1ej.fixWide(document);let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>window.G1ej.fixWide(document),200);});}).catch(e=>console.error(e));};
+  if(document.readyState==='complete')go();else window.addEventListener('load',go);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+</body>
+</html>

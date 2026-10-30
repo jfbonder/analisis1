@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Anexo 1</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<div class="shell">
+<aside class="side" aria-label="Índice">
+  <a class="volver" href="index.html" style="display:block;margin:0 0 .6rem;font-size:.85rem;color:var(--accent,#2b59c3);text-decoration:none">&larr; Portada</a><div class="brand">Análisis 1 · FCEN-UBA</div>
+  <h2>Anexo 1</h2>
+  <nav id="nav">
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#t1">Funciones vectoriales<small>Límite por coordenadas</small></a>
+    <a href="#t2">Varias variables<small>Test de los iterados y de las curvas</small></a>
+    <div class="sep"></div>
+    <a href="#ejercicios">Ejercicios<small>Para practicar las demostraciones</small></a>
+  </nav>
+</aside>
+<main>
+<div class="tools" role="toolbar" aria-label="Opciones">
+  <button id="b-open">Abrir todo</button>
+  <button id="b-close">Cerrar todo</button>
+  <span class="sp"></span>
+  <button id="b-rev" aria-pressed="true" title="Mostrar u ocultar las marcas de revisión (para el docente)">Marcas de revisión</button>
+  <button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="kick">Anexo teórico · acompaña a la Guía 3</div>
+  <h1>Anexo 1: Resultados teóricos sobre límites</h1>
+  <p class="lead">La parte rigurosa detrás de las cuentas de límites: qué quiere decir exactamente que una curva o una función de dos variables tenga límite, por qué alcanza con mirar las coordenadas y por qué los límites iterados y el acercamiento por curvas sirven para probar que un límite no existe. Todas las demostraciones están completas.</p>
+  <div class="map">
+    <a href="#t1"><em>Primera parte</em><b>Límite de funciones vectoriales</b><span>Definición con ε y δ, las desigualdades auxiliares y la proposición "converge si y solo si convergen las coordenadas".</span></a>
+    <a href="#t2"><em>Segunda parte</em><b>Límite en varias variables</b><span>Definición, test de los límites iterados y test de las curvas, con demostración.</span></a>
+  </div>
+  <div class="legend">
+    <span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+    <span><span class="tag vid">Video</span> se dijo en el video pero no está en la hoja</span>
+    <span><span class="tag add">Agregado</span> no se dijo en clase</span>
+    <span><span class="tag rev">Revisar</span> dudoso, a confirmar por el docente</span>
+    <span><a class="t" data-v="a" data-t="0:00">m:ss</a> abre el video en ese minuto</span>
+  </div>
+  <p class="hint">Video: <a class="t" data-v="a" data-t="0:00">Anexo 1 completo (65 min)</a>. Hoja: "Demostraciones de los lemas de la Teórica 8". La práctica correspondiente está en la <a href="guia3.html">Guía 3</a>.</p>
+</section>
+
+<!-- ======================= PARTE 1 ======================= -->
+<section class="clase" id="t1">
+<header>
+  <div class="kick">PRIMERA PARTE</div>
+  <h2>Límite de funciones vectoriales</h2>
+  <div class="meta"><span>Se trabaja en $\R^2$ para escribir menos; en $\R^3$ es igual con una coordenada más.</span></div>
+</header>
+
+<h3 class="b">Recordatorio: límite en una variable <span class="tags"><span class="tag piz">Pizarrón</span></span></h3>
+<div class="box def"><span class="lab">Definición</span>
+<p>Sea $\varphi:I\subset\R\to\R$ y $t_0\in I$. Decimos que $\lim_{t\to t_0}\varphi(t)=a$ si
+$$\forall\varepsilon\gt0,\ \exists\delta\gt0\ \text{ tal que }\ |\varphi(t)-a|\lt\varepsilon\ \text{ si }\ 0\lt|t-t_0|\lt\delta.$$</p></div>
+
+<h3 class="b">La definición para curvas <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="a" data-t="1:35">1:35</a></h3>
+<p>Sea $\mathbf r:I\subset\R\to\R^2$, $\mathbf r(t)=(\varphi(t),\psi(t))$, y $\mathbf u=(u_1,u_2)$. Pensemos la curva roja acercándose a $\mathbf u$: que el límite sea $\mathbf u$ quiere decir que si armamos una <b>bolita de radio $\varepsilon$</b> alrededor de $\mathbf u$, a partir de algún momento (para $t$ suficientemente cerca de $t_0$) toda la curva tiene que estar adentro. Qué tan cerca tiene que estar $t$ de $t_0$ depende de $\varepsilon$: esa cercanía es $\delta$. <a class="t" data-v="a" data-t="3:35">3:35</a> <a class="t" data-v="a" data-t="5:36">5:36</a> <a class="t" data-v="a" data-t="6:36">6:36</a></p>
+<div class="box def"><span class="lab">Definición <a class="t" data-v="a" data-t="7:37">7:37</a></span>
+$$\lim_{t\to t_0}\mathbf r(t)=\mathbf u\iff\forall\varepsilon\gt0,\ \exists\delta\gt0\ \text{ tal que }\ \|\mathbf r(t)-\mathbf u\|\lt\varepsilon\ \text{ si }\ 0\lt|t-t_0|\lt\delta.$$
+<p class="hint">El $0\lt|t-t_0|$ es porque no nos interesa qué pasa exactamente en $t_0$, sino cerca.</p></div>
+<div class="viz" id="viz-curve"></div>
+<div class="box obs"><span class="lab c-blue">En la hoja</span>
+<p><span class="tag piz">Pizarrón</span> En la hoja (y en la Guía 3) se usa directamente como definición "$\lim\mathbf r(t)=(a,b)$ si $\lim\varphi(t)=a$ y $\lim\psi(t)=b$". En el video se parte de la definición con la distancia y se <b>demuestra</b> que es equivalente: es la proposición que sigue.</p></div>
+
+<h3 class="b">Proposición: converge si y solo si convergen las coordenadas <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="a" data-t="8:41">8:41</a></h3>
+<div class="box thm"><span class="lab">Proposición <a class="t" data-v="a" data-t="9:43">9:43</a></span>
+$$\lim_{t\to t_0}\mathbf r(t)=\mathbf u\iff\lim_{t\to t_0}\varphi(t)=u_1\ \text{ y }\ \lim_{t\to t_0}\psi(t)=u_2.$$</div>
+<p>Para probar un "si y solo si" hay que probar dos implicaciones: la <b>ida</b> (suponiendo lo de la izquierda, deducir lo de la derecha) y la <b>vuelta</b>. <a class="t" data-v="a" data-t="10:44">10:44</a> Las dos usan unas desigualdades que relacionan la cercanía de dos puntos con la cercanía de sus coordenadas.</p>
+
+<h3 class="b">Desigualdades auxiliares <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="12:47">12:47</a></h3>
+<div class="box thm"><span class="lab">Desigualdades</span>
+<p>Sean $P=(x,y)$ y $P_0=(x_0,y_0)$. Entonces
+$$\text{(1)}\qquad |x-x_0|\le\|P-P_0\|\quad\text{y}\quad|y-y_0|\le\|P-P_0\|,$$
+$$\text{(2)}\qquad \|P-P_0\|\le\sqrt2\,\max\{|x-x_0|,\,|y-y_0|\}.$$</p></div>
+<details class="dem" open><summary>Demostración</summary><div class="in">
+<p><b>(1)</b> $|x-x_0|=\sqrt{(x-x_0)^2}\le\sqrt{(x-x_0)^2+(y-y_0)^2}=\|P-P_0\|$, porque solo se sumó algo positivo, $(y-y_0)^2$. Lo mismo con $y$. Geométricamente: en el triángulo rectángulo de hipotenusa $\overline{PP_0}$, <b>cada cateto es más corto que la hipotenusa</b>. <a class="t" data-v="a" data-t="13:54">13:54</a> <a class="t" data-v="a" data-t="14:54">14:54</a></p>
+<p><b>(2)</b> Alguna de las dos diferencias es la más grande; supongamos que es $|y-y_0|$. Reemplazando $|x-x_0|$ por ella (que es más grande):
+$$\|P-P_0\|=\sqrt{(x-x_0)^2+(y-y_0)^2}\le\sqrt{(y-y_0)^2+(y-y_0)^2}=\sqrt2\,|y-y_0|=\sqrt2\max\{|x-x_0|,|y-y_0|\}.$$
+Geométricamente: <b>si los dos catetos son chicos, la hipotenusa también</b>. El factor $\sqrt2\approx1{,}41$ es agregar un 40 %: si los catetos son del orden de $10^{-8}$, la hipotenusa también. <a class="t" data-v="a" data-t="17:58">17:58</a> <a class="t" data-v="a" data-t="21:00">21:00</a></p></div></details>
+<div class="viz" id="viz-ineq"></div>
+
+<details class="dem" open><summary>Demostración de la proposición: la ida <a class="t" data-v="a" data-t="23:01">23:01</a></summary><div class="in">
+<p>Suponemos $\lim_{t\to t_0}\mathbf r(t)=\mathbf u$ y queremos ver que $\varphi(t)\to u_1$ (para $\psi$ es igual). Sea $\varepsilon\gt0$. Como $\mathbf r(t)\to\mathbf u$, para ese $\varepsilon$ existe $\delta\gt0$ tal que $\|\mathbf r(t)-\mathbf u\|\lt\varepsilon$ si $0\lt|t-t_0|\lt\delta$. Por la desigualdad (1),
+$$|\varphi(t)-u_1|\le\|\mathbf r(t)-\mathbf u\|\lt\varepsilon\qquad\text{si }0\lt|t-t_0|\lt\delta.$$
+Es exactamente la definición de $\lim_{t\to t_0}\varphi(t)=u_1$. <a class="t" data-v="a" data-t="25:02">25:02</a></p></div></details>
+<details class="dem" open><summary>Demostración de la proposición: la vuelta <a class="t" data-v="a" data-t="27:03">27:03</a></summary><div class="in">
+<p>Suponemos $\varphi(t)\to u_1$ y $\psi(t)\to u_2$. Sea $\varepsilon\gt0$. Por el factor $\sqrt2$ de la desigualdad (2), conviene usar el número positivo $\frac{\varepsilon}{\sqrt2}$ en las definiciones de los límites de las coordenadas: <a class="t" data-v="a" data-t="28:03">28:03</a></p>
+<p>existe $\delta_1\gt0$ con $|\varphi(t)-u_1|\lt\frac{\varepsilon}{\sqrt2}$ si $0\lt|t-t_0|\lt\delta_1$, y existe $\delta_2\gt0$ con $|\psi(t)-u_2|\lt\frac{\varepsilon}{\sqrt2}$ si $0\lt|t-t_0|\lt\delta_2$.</p>
+<p>Los dos $\delta$ pueden ser distintos: cada coordenada necesita su propia cercanía. Para que valgan <b>las dos a la vez</b>, se toma $\delta=\min\{\delta_1,\delta_2\}$. <a class="t" data-v="a" data-t="31:04">31:04</a> Entonces, si $0\lt|t-t_0|\lt\delta$, las dos coordenadas están a menos de $\frac\varepsilon{\sqrt2}$ y, por (2),
+$$\|\mathbf r(t)-\mathbf u\|\le\sqrt2\,\max\{|\varphi(t)-u_1|,|\psi(t)-u_2|\}\lt\sqrt2\cdot\frac{\varepsilon}{\sqrt2}=\varepsilon.\qquad\blacksquare$$
+<a class="t" data-v="a" data-t="33:07">33:07</a></p></div></details>
+<div class="box obs"><span class="lab c-blue">Moraleja</span><p>Mirar si un vector se acerca a otro es lo mismo que mirar cada coordenada, y eso es mucho más cómodo: son límites de una variable. <a class="t" data-v="a" data-t="35:08">35:08</a></p></div>
+<div class="quiz" id="quiz-1"></div>
+</section>
+
+<!-- ======================= PARTE 2 ======================= -->
+<section class="clase" id="t2">
+<header>
+  <div class="kick">SEGUNDA PARTE</div>
+  <h2>Límite de funciones de dos variables</h2>
+  <div class="meta"><span>$f:D\subset\R^2\to\R$; en tres variables es igual.</span></div>
+</header>
+
+<h3 class="b">Definición <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="36:10">36:10</a></h3>
+<div class="box def"><span class="lab">Definición</span>
+<p>Sea $f:D\subset\R^2\to\R$ y $(a,b)$. Decimos que $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=L$ si
+$$\forall\varepsilon\gt0,\ \exists\delta\gt0\ \text{ tal que }\ |f(x,y)-L|\lt\varepsilon\ \text{ si }\ 0\lt\|(x-a,\,y-b)\|=\sqrt{(x-a)^2+(y-b)^2}\lt\delta.$$
+<a class="t" data-v="a" data-t="41:12">41:12</a></p></div>
+<div class="box obs"><span class="lab c-blue"><span class="tag vid">Video</span> Una forma de pensarlo: el error de medición <a class="t" data-v="a" data-t="38:10">38:10</a></span>
+<p>Si medimos el resultado de un experimento, nunca lo hacemos exacto: medimos con un error. $\varepsilon$ es el error del instrumento (por ejemplo, un milímetro en una regla). Que el límite sea $L$ quiere decir que, si ajustamos las variables del experimento con suficiente precisión (eso es $\delta$), ya no podemos distinguir $f(x,y)$ de $L$ con nuestro instrumento. Y esto tiene que pasar <b>para cualquier instrumento</b>, por más preciso que sea.</p></div>
+<div class="box obs"><span class="lab c-blue">Observación de la hoja</span>
+<p>Si $\mathbf r:I\to\R^2$ cumple $\mathbf r(t)\in D=\operatorname{Dom}f$ para todo $t\in I$, entonces se puede componer: $f\circ\mathbf r:I\subset\R\to\R$ es una función de <b>una</b> variable, como las del CBC.</p></div>
+
+<h3 class="b">Test de los límites iterados <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="43:13">43:13</a></h3>
+<div class="box thm"><span class="lab">Lema 1 (de los límites iterados)</span>
+<p>Si $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=L$, entonces
+$$\lim_{y\to b}\Big(\lim_{x\to a}f(x,y)\Big)=L\qquad\text{y}\qquad\lim_{x\to a}\Big(\lim_{y\to b}f(x,y)\Big)=L.$$</p></div>
+<div class="box obs"><span class="lab c-blue">Cómo se usa: por la negativa <a class="t" data-v="a" data-t="44:13">44:13</a></span>
+<p>Parece inútil, porque supone justo lo que queremos averiguar. Se usa así: se calculan los dos iterados. Si dan distinto, suena la alarma: <b>el límite no existe</b>. Si dan igual, es un "siga participando": no se puede concluir nada, pero se gana información, porque <b>de existir</b>, el límite tiene que ser ese valor. <a class="t" data-v="a" data-t="45:18">45:18</a> <a class="t" data-v="a" data-t="46:18">46:18</a></p></div>
+<p>Los iterados son dos recorridos particulares para ir de $(x,y)$ a $(a,b)$: primero mover una coordenada y después la otra. Pero en el plano hay muchísimas otras maneras de acercarse: en línea recta, por una curva cualquiera. Esa es la diferencia fundamental con una variable, donde solo hay una forma de acercarse. <a class="t" data-v="a" data-t="47:19">47:19</a> <a class="t" data-v="a" data-t="49:21">49:21</a></p>
+
+<h3 class="b">Test de las curvas <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="50:23">50:23</a></h3>
+<div class="box thm"><span class="lab">Lema 2 (aproximación por curvas)</span>
+<p>Supongamos que $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=L$ y que $\mathbf r(t)$ es una función vectorial tal que $\displaystyle\lim_{t\to t_0}\mathbf r(t)=(a,b)$. Entonces
+$$\lim_{t\to t_0}f(\mathbf r(t))=L.$$
+$f\circ\mathbf r$ es una función de una variable, para la que tenemos todas las herramientas del CBC. Se usa igual que el anterior: si por alguna curva da distinto de $L$ (o por dos curvas da distinto), el límite no existe. Si por todas las curvas que probamos da $L$, el test nunca es concluyente y hay que probarlo por definición. <a class="t" data-v="a" data-t="52:26">52:26</a> <a class="t" data-v="a" data-t="53:28">53:28</a></p></div>
+<details class="dem" open><summary>Demostración <a class="t" data-v="a" data-t="54:29">54:29</a></summary><div class="in">
+<p>Hay que ver que $\lim_{t\to t_0}(f\circ\mathbf r)(t)=L$. Sea $\varepsilon\gt0$.</p>
+<p><b>Paso 1.</b> Como $f(x,y)\to L$, existe $\rho\gt0$ tal que
+$$|f(x,y)-L|\lt\varepsilon\qquad\text{si }0\lt\|(x,y)-(a,b)\|\lt\rho.$$
+$\rho$ es el que juega el rol de $\delta$ en la definición de límite de $f$; se le cambia el nombre porque $\delta$ lo vamos a usar para otra cosa. <a class="t" data-v="a" data-t="57:38">57:38</a></p>
+<p><b>Paso 2.</b> Como $\mathbf r(t)\to(a,b)$, se usa la definición de límite de la curva con $\rho$ en el papel de $\varepsilon$: existe $\delta\gt0$ tal que
+$$\|\mathbf r(t)-(a,b)\|\lt\rho\qquad\text{si }0\lt|t-t_0|\lt\delta.$$
+<span class="tag piz">Pizarrón</span> En la hoja esto se hace por coordenadas: con $\mathbf r=(\varphi,\psi)$ se toman $\delta_1,\delta_2$ para que cada coordenada esté a menos de $\frac{\rho}{\sqrt2}$, $\delta=\min\{\delta_1,\delta_2\}$, y la desigualdad (2) da $\operatorname{dist}(\mathbf r(t),(a,b))\lt\rho$. Es lo mismo que la vuelta de la proposición. <a class="t" data-v="a" data-t="59:42">59:42</a></p>
+<p><b>Paso 3.</b> Si $0\lt|t-t_0|\lt\delta$, el punto $(x,y)=\mathbf r(t)$ está a distancia menor que $\rho$ de $(a,b)$, y por el paso 1,
+$$|f(\mathbf r(t))-L|\lt\varepsilon.\qquad\blacksquare$$
+<a class="t" data-v="a" data-t="62:45">62:45</a></p>
+<p class="hint"><span class="tag vid">Video</span> Las letras ($\varepsilon$, $\delta$, $\rho$) son solo etiquetas para números chiquitos: no importa cómo se llamen. <a class="t" data-v="a" data-t="60:43">60:43</a></p></div></details>
+<div class="revnote"><b>Revisar</b>En el paso 3 hace falta que $\mathbf r(t)\neq(a,b)$, porque la definición de límite de $f$ solo dice algo cuando $0\lt\|(x,y)-(a,b)\|$. Si la curva pasa por $(a,b)$ en tiempos $t\neq t_0$ arbitrariamente cerca de $t_0$, el lema puede fallar (por ejemplo, si $f(a,b)\neq L$). En el video y en la hoja no aparece esta hipótesis. ¿Agregamos "$\mathbf r(t)\neq(a,b)$ para $t\neq t_0$ cerca de $t_0$" al enunciado?</div>
+<div class="box obs"><span class="lab c-blue">Los iterados como caso particular <span class="tag add">Agregado</span></span>
+<p>En el video se dice que el Lema 1 es un caso particular del Lema 2 (los recorridos "primero en $x$, después en $y$"). Estrictamente, un límite iterado no es un límite por una sola curva, pero la idea de la prueba es la misma. Una prueba directa: dado $\varepsilon$, sea $\rho$ como en el paso 1. Fijado $y$ con $0\lt|y-b|\lt\frac{\rho}{\sqrt2}$, para todo $x$ con $|x-a|\lt\frac{\rho}{\sqrt2}$ el punto $(x,y)$ está a distancia menor que $\rho$ de $(a,b)$ (desigualdad 2), así que $|f(x,y)-L|\lt\varepsilon$. Tomando límite en $x\to a$, $g(y)=\lim_{x\to a}f(x,y)$ cumple $|g(y)-L|\le\varepsilon$. Como $\varepsilon$ era cualquiera, $\lim_{y\to b}g(y)=L$.</p></div>
+<div class="viz" id="viz-paths"></div>
+<div class="quiz" id="quiz-2"></div>
+</section>
+
+<!-- ======================= EJERCICIOS ======================= -->
+<section class="clase" id="ejercicios">
+<header>
+  <div class="kick">EJERCICIOS · <span class="tag add">Agregado</span></div>
+  <h2>Para practicar las demostraciones</h2>
+  <div class="meta"><span>No son de la guía: son ejercicios nuevos para repasar las ideas del anexo, con pistas y resolución.</span></div>
+</header>
+<div class="ctl" style="margin-bottom:14px"><span class="c-mut" id="ejprog" style="font:600 13.5px var(--f-mono)"></span></div>
+<div class="ejlist" id="ejlist"></div>
+</section>
+
+<div class="foot">Material basado en el Anexo 1 del canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a> y en la hoja "Demostraciones de los lemas de la Teórica 8". Las secciones marcadas como <span class="tag add">Agregado</span> son material nuevo. Versión preliminar, para revisar antes de compartir.</div>
+</main>
+</div>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],macros:{"R": "\\mathbb{R}", "v": ["\\mathbf{#1}", 1], "ang": ["\\langle #1\\rangle", 1], "jh": "\\hat{\\jmath}"}},svg:{fontCache:'none'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']},startup:{typeset:false}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>
+window.G1IMG={};
+(function(){'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>Array.from(r.querySelectorAll(q));
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in (attrs||{})){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});return e;}
+function sv(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const f=(x,d=2)=>{let v=Number(Number(x).toFixed(d));if(Object.is(v,-0)||Math.abs(v)<1e-12)v=0;return String(v).replace('.',',').replace('-','−');};
+const fv=(v,d=2)=>'⟨'+v.map(x=>f(x,d)).join('; ')+'⟩';
+const fp=(v,d=2)=>'('+v.map(x=>f(x,d)).join('; ')+')';
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const add=(a,b)=>a.map((x,i)=>x+b[i]), sub=(a,b)=>a.map((x,i)=>x-b[i]), mul=(a,t)=>a.map(x=>x*t);
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), nrm=a=>Math.sqrt(dot(a,a));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=nrm(a);return n?mul(a,1/n):a;};
+const CL={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',violet:'var(--violet)',ink:'var(--ink)',mut:'var(--ink-2)',amber:'var(--amber)'};
+const TT={blue:'var(--blue-t)',red:'var(--red-t)',green:'var(--green-t)',violet:'var(--violet-t)'};
+
+function arrow(g,x1,y1,x2,y2,col,w,head){w=w||2.6;head=head||11;const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);if(L<1.5)return;
+  const ux=dx/L,uy=dy/L,hl=Math.min(head,L*.7),bx=x2-ux*hl,by=y2-uy*hl;
+  sv('line',{x1,y1,x2:bx,y2:by,style:`stroke:${col};stroke-width:${w};stroke-linecap:round`},g);
+  sv('polygon',{points:`${x2},${y2} ${bx-uy*hl*.42},${by+ux*hl*.42} ${bx+uy*hl*.42},${by-ux*hl*.42}`,style:`fill:${col}`},g);}
+function line(g,x1,y1,x2,y2,col,w,dash){return sv('line',{x1,y1,x2,y2,style:`stroke:${col};stroke-width:${w||1.5};${dash?'stroke-dasharray:'+dash+';':''}stroke-linecap:round`},g);}
+function text(g,x,y,t,col,anchor,cls){const e=sv('text',{x,y,'text-anchor':anchor||'middle',style:`fill:${col||CL.ink}`,class:cls||''},g);e.textContent=t;return e;}
+
+/* ---------- control helpers ---------- */
+function slider(label,o,cb){const inp=h('input',{type:'range',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':label});
+  const val=h('span',{},'');const upd=()=>{val.textContent=f(+inp.value,o.dec==null?1:o.dec)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();cb(+inp.value);});upd();
+  const l=h('label',{},label,inp,val);l.input=inp;l.set=v=>{inp.value=v;upd();};return l;}
+function numbox(o,cb){const i=h('input',{type:'number',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':o.label});
+  i.addEventListener('input',()=>{let v=parseFloat(i.value);if(isNaN(v))return;v=Math.max(o.min,Math.min(o.max,v));cb(v);});return i;}
+function tabs(names,cb,start){const bs=names.map((n,i)=>h('button',{type:'button','aria-pressed':i===(start||0)},n));
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===i));cb(i);}));return h('div',{class:'tabs'},bs);}
+function vhead(title,sub,tb){return h('div',{class:'vh'},h('b',{},title),sub?h('span',{},sub):null,tb||null);}
+
+/* ---------- plano 2D con puntos arrastrables ---------- */
+function Plane2D(host,o){
+  const xr=o.xr||[-6,6],yr=o.yr||[-4,4],W=o.W||640,sx=W/(xr[1]-xr[0]),H=sx*(yr[1]-yr[0]);
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Plano cartesiano interactivo'},host);
+  const X=x=>(x-xr[0])*sx,Y=y=>H-(y-yr[0])*sx;
+  const gb=sv('g',{},svg),gd=sv('g',{},svg),gh=sv('g',{},svg);
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){line(gb,X(x),0,X(x),H,'var(--grid)',1);if(x&&x%(o.tick||1)===0)text(gb,X(x),Y(0)+15,x,CL.mut,'middle','sm');}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){line(gb,0,Y(y),W,Y(y),'var(--grid)',1);if(y&&y%(o.ytick||o.tick||1)===0)text(gb,X(0)-7,Y(y)+4,y,CL.mut,'end','sm');}
+  arrow(gb,0,Y(0),W-2,Y(0),CL.mut,1.6,8);arrow(gb,X(0),H,X(0),2,CL.mut,1.6,8);
+  text(gb,W-10,Y(0)-8,o.xl||'x',CL.mut);text(gb,X(0)+12,12,o.yl||'y',CL.mut);
+  const api={svg,X,Y,sx,W,H,xr,yr,g:gd,handles:[]};
+  function toW(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x/sx+xr[0],(H-p.y)/sx+yr[0]];}
+  api.handle=function(obj,col,opt){opt=opt||{};const snap=opt.snap||.5,c=sv('circle',{r:11,class:'grab',tabindex:0,role:'slider','aria-label':opt.label||'Punto arrastrable',style:`fill:${col};stroke:var(--surface);stroke-width:3`},gh);
+    let drag=false;const clampSet=(x,y)=>{x=Math.round(x/snap)*snap;y=Math.round(y/snap)*snap;obj.x=Math.max(xr[0]+.3,Math.min(xr[1]-.3,x));obj.y=Math.max(yr[0]+.3,Math.min(yr[1]-.3,y));api.update();};
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);e.preventDefault();});
+    c.addEventListener('pointermove',e=>{if(!drag)return;const p=toW(e);clampSet(p[0],p[1]);});
+    const end=()=>{drag=false;};c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+    c.addEventListener('keydown',e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(d){e.preventDefault();clampSet(obj.x+d[0]*snap,obj.y+d[1]*snap);}});
+    api.handles.push({obj,c});return c;};
+  api.update=function(){gd.textContent='';o.draw(gd,api);api.handles.forEach(hd=>{hd.c.setAttribute('cx',X(hd.obj.x));hd.c.setAttribute('cy',Y(hd.obj.y));});if(o.onUpdate)o.onUpdate(api);};
+  return api;
+}
+
+/* ---------- vista 3D ortográfica, eje z hacia arriba, terna derecha ---------- */
+function View3D(host,o){
+  o=o||{};const W=o.W||640,H=o.H||430,scale=o.scale||40,ctr=o.ctr||[0,0,0];
+  const st={az:o.az==null?215:o.az,el:o.el==null?22:o.el};
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Vista tridimensional. Se puede girar arrastrando.'},host);
+  const g=sv('g',{},svg);
+  function P(p){const a=rad(st.az),e=rad(st.el),x=p[0]-ctr[0],y=p[1]-ctr[1],z=p[2]-ctr[2];
+    const x1=Math.cos(a)*x-Math.sin(a)*y,y1=Math.sin(a)*x+Math.cos(a)*y;
+    return [W/2+x1*scale,H/2-(z*Math.cos(e)+y1*Math.sin(e))*scale,y1*Math.cos(e)-z*Math.sin(e)];}
+  const api={svg,st,P,draw:null};
+  api.render=function(){g.textContent='';const polys=[],ops=[],txt=[];
+    const sc={
+      poly(pts,col,op,stroke){polys.push({pts:pts.map(P),col,op,stroke});},
+      line(a,b,col,w,dash){ops.push(()=>{const p=P(a),q=P(b);line(g,p[0],p[1],q[0],q[1],col,w,dash);});},
+      path(pts,col,w,dash,closed){ops.push(()=>{const q=pts.map(P);sv('polyline',{points:q.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' ')+(closed?' '+q[0][0].toFixed(1)+','+q[0][1].toFixed(1):''),style:`fill:none;stroke:${col};stroke-width:${w||1.4};${dash?'stroke-dasharray:'+dash+';':''}stroke-linejoin:round`},g);});},
+      arrow(a,b,col,w){ops.push(()=>{const p=P(a),q=P(b);arrow(g,p[0],p[1],q[0],q[1],col,w||2.8,11);});},
+      dot(a,col,r){ops.push(()=>{const p=P(a);sv('circle',{cx:p[0],cy:p[1],r:r||5,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);});},
+      disc(c,rpx,col){ops.push(()=>{const p=P(c);sv('circle',{cx:p[0],cy:p[1],r:rpx*scale,style:`fill:${col};stroke:none`},g);});},
+      text(a,t,col,dx,dy,anc){txt.push(()=>{const p=P(a);text(g,p[0]+(dx||0),p[1]+(dy||0),t,col,anc);});},
+      axes(L,neg){const ex=[[1,0,0,'x'],[0,1,0,'y'],[0,0,1,'z']];ex.forEach(e=>{const v=[e[0],e[1],e[2]];
+        if(neg!==false)sc.line(mul(v,-L),[0,0,0],'var(--line)',1.2,'4 4');
+        ops.push(()=>{const p=P([0,0,0]),q=P(mul(v,L));arrow(g,p[0],p[1],q[0],q[1],CL.mut,1.6,9);});
+        sc.text(mul(v,L*1.1),e[3],CL.mut,0,4);});},
+      box(lo,hi,col,op){const[x0,y0,z0]=lo,[x1,y1,z1]=hi;const C=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        [[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach(q=>sc.poly(q.map(i=>C[i]),col,op,col));},
+      patch(n,d,S,col,op,dashed){n=unit(n);const e=Math.abs(n[2])<.9?[0,0,1]:[1,0,0];const u=unit(cross(n,e)),v=cross(n,u),c=mul(n,d);
+        const q=[add(add(c,mul(u,S)),mul(v,S)),add(sub(c,mul(u,S)),mul(v,S)),sub(sub(c,mul(u,S)),mul(v,S)),sub(add(c,mul(u,S)),mul(v,S))];
+        sc.poly(q,col,op,col);if(dashed)sc.path(q,col,1.6,'6 5',true);return {q,c,n,u,v};},
+      circle(c,r,plane,col,w,dash){const pts=[];for(let i=0;i<=48;i++){const t=i/48*2*Math.PI,a=Math.cos(t)*r,b=Math.sin(t)*r;
+        pts.push(plane==='xy'?[c[0]+a,c[1]+b,c[2]]:plane==='xz'?[c[0]+a,c[1],c[2]+b]:[c[0],c[1]+a,c[2]+b]);}sc.path(pts,col,w||1.3,dash);},
+      surf(fn,ur,vr,nu,nv,col,op,stroke){for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const u0=ur[0]+(ur[1]-ur[0])*i/nu,u1=ur[0]+(ur[1]-ur[0])*(i+1)/nu,v0=vr[0]+(vr[1]-vr[0])*j/nv,v1=vr[0]+(vr[1]-vr[0])*(j+1)/nv;
+        const q=[fn(u0,v0),fn(u1,v0),fn(u1,v1),fn(u0,v1)];if(q.some(p=>!p||p.some(x=>!isFinite(x))))continue;polys.push({pts:q.map(P),col,op:op==null?.35:op,stroke:stroke||col,sw:.6});}},
+      sphere(c,r,col,dash){sc.disc(c,r,'var(--blue-t)');['xy','xz','yz'].forEach(p=>sc.circle(c,r,p,col||CL.blue,1.4,dash));
+        for(const k of[.5,-.5]){const rr=r*Math.sqrt(1-k*k);sc.circle([c[0],c[1],c[2]+r*k],rr,'xy',col||CL.blue,.9,dash);}}
+    };
+    if(api.draw)api.draw(sc);
+    polys.sort((a,b)=>mean(b.pts)-mean(a.pts));
+    polys.forEach(p=>{sv('polygon',{points:p.pts.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' '),style:`fill:${p.col};fill-opacity:${p.op==null?.25:p.op};stroke:${p.stroke||'none'};stroke-opacity:.55;stroke-width:${p.sw||1.2}`},g);});
+    ops.forEach(fn=>fn());txt.forEach(fn=>fn());};
+  function mean(pts){return pts.reduce((s,p)=>s+p[2],0)/pts.length;}
+  // arrastre para girar
+  let drag=null;svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,az:st.az,el:st.el};svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect(),k=W/r.width;st.az=drag.az-(e.clientX-drag.x)*k*.5;
+    if(e.pointerType==='mouse'){st.el=Math.max(-80,Math.min(85,drag.el+(e.clientY-drag.y)*k*.4));}
+    api.sync&&api.sync();api.render();});
+  const end=()=>{drag=null;};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  api.controls=function(){const a=slider('giro',{min:0,max:360,step:1,value:Math.round(((st.az%360)+360)%360),unit:'°',dec:0},v=>{st.az=v;api.render();});
+    const b=slider('inclinación',{min:-80,max:85,step:1,value:st.el,unit:'°',dec:0},v=>{st.el=v;api.render();});
+    api.sync=()=>{a.set(Math.round(((st.az%360)+360)%360));b.set(Math.round(st.el));};
+    const reset=h('button',{type:'button',onclick:()=>{st.az=o.az==null?215:o.az;st.el=o.el==null?22:o.el;api.sync();api.render();}},'Vista inicial');
+    return h('div',{class:'ctl'},a,b,reset);};
+  return api;
+}
+
+
+/* ---------- expresiones escritas por el usuario: expr('t^2-2t',['t']) -> función ---------- */
+function expr(src,vars){vars=vars||['x'];const s=String(src).replace(/\s+/g,'').replace(/\*\*/g,'^').replace(/π/g,'pi').replace(/θ/g,'th').replace(/·/g,'*').replace(/−/g,'-').replace(/,/g,'.');
+  const FN={sin:Math.sin,sen:Math.sin,cos:Math.cos,tan:Math.tan,tg:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,arcsen:Math.asin,arccos:Math.acos,arctan:Math.atan,sqrt:Math.sqrt,raiz:Math.sqrt,exp:Math.exp,ln:Math.log,log:Math.log,abs:Math.abs,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),sgn:Math.sign};
+  const C={pi:Math.PI,e:Math.E};let i=0;const err=m=>{throw new Error(m);};
+  const peek=()=>s[i];
+  function num(){const m=/^\d*\.?\d+(e[+-]?\d+)?/i.exec(s.slice(i));if(!m)err('número');i+=m[0].length;const v=parseFloat(m[0]);return ()=>v;}
+  function ident(){const m=/^[a-zA-Z_]+/.exec(s.slice(i));i+=m[0].length;let w=m[0];
+    // separar nombres pegados: "tsint" -> t, sin, t ; prioridad: funciones, constantes, variables
+    const names=[...Object.keys(FN),...Object.keys(C),...vars].sort((a,b)=>b.length-a.length);
+    const parts=[];while(w.length){const n=names.find(nm=>w.startsWith(nm));if(!n)err('nombre desconocido: '+w);parts.push(n);w=w.slice(n.length);}
+    return parts;}
+  function primary(){const c=peek();
+    if(c==='('){i++;const e=add_();if(peek()!==')')err('falta )');i++;return e;}
+    if(c==='|'){i++;const e=add_();if(peek()!=='|')err('falta |');i++;return v=>Math.abs(e(v));}
+    if(/[\d.]/.test(c))return num();
+    if(/[a-zA-Z_]/.test(c)){const parts=ident();
+      const build=k=>{const n=parts[k];
+        if(FN[n]){let arg;if(k+1<parts.length){arg=build(k+1);}else{arg=power();}const f=FN[n];return v=>f(arg(v));}
+        let a;if(n in C){const cv=C[n];a=()=>cv;}else{const j=vars.indexOf(n);a=v=>v[j];}
+        if(k+1<parts.length){const r=build(k+1);return v=>a(v)*r(v);}return a;};
+      return build(0);}
+    err('símbolo inesperado: '+(c||'fin'));}
+  function power(){const b=primary();if(peek()==='^'){i++;const e=unary();return v=>Math.pow(b(v),e(v));}return b;}
+  function unary(){if(peek()==='-'){i++;const u=unary();return v=>-u(v);}if(peek()==='+'){i++;return unary();}return power();}
+  function mul_(){let a=unary();for(;;){const c=peek();
+      if(c==='*'||c==='/'){i++;const b=unary(),l=a;a=c==='*'?(v=>l(v)*b(v)):(v=>l(v)/b(v));}
+      else if(c&&/[\d.a-zA-Z_(|]/.test(c)&&c!=='|'){const b=unary(),l=a;a=v=>l(v)*b(v);}
+      else return a;}}
+  function add_(){let a=mul_();for(;;){const c=peek();if(c==='+'||c==='-'){i++;const b=mul_(),l=a;a=c==='+'?(v=>l(v)+b(v)):(v=>l(v)-b(v));}else return a;}}
+  if(!s.length)err('vacía');const f=add_();if(i<s.length)err('sobra: '+s.slice(i));
+  return (...a)=>f(a);}
+
+/* ---------- curvas de nivel (marching squares): devuelve lista de segmentos [[x1,y1],[x2,y2]] ---------- */
+function contour(F,xr,yr,c,n){n=n||80;const dx=(xr[1]-xr[0])/n,dy=(yr[1]-yr[0])/n,segs=[];const G=[];
+  for(let i=0;i<=n;i++){G[i]=[];for(let j=0;j<=n;j++){const v=F(xr[0]+i*dx,yr[0]+j*dy);G[i][j]=isFinite(v)?((v-c)===0?1e-12:v-c):NaN;}}
+  const lerp=(a,b,pa,pb)=>{const t=a/(a-b);return [pa[0]+(pb[0]-pa[0])*t,pa[1]+(pb[1]-pa[1])*t];};
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=xr[0]+i*dx,y=yr[0]+j*dy;
+    const P=[[x,y],[x+dx,y],[x+dx,y+dy],[x,y+dy]],V=[G[i][j],G[i+1][j],G[i+1][j+1],G[i][j+1]];
+    if(V.some(isNaN))continue;const pts=[];
+    for(let k=0;k<4;k++){const a=V[k],b=V[(k+1)%4];if((a<0)!==(b<0))pts.push(lerp(a,b,P[k],P[(k+1)%4]));else if(a===0&&b!==0)pts.push(P[k]);}
+    if(pts.length===2)segs.push(pts);else if(pts.length===4){segs.push([pts[0],pts[1]]);segs.push([pts[2],pts[3]]);}}
+  return segs;}
+
+/* ---------- dibujar una curva en un Plane2D: pts = [[x,y],...] (cortes en NaN o saltos) ---------- */
+function poly2(g,api,pts,col,w,dash){let d='',pen=false,prev=null;const {X,Y}=api,lim=Math.max(api.W,api.H)*3;
+  pts.forEach(p=>{const ok=p&&isFinite(p[0])&&isFinite(p[1]);if(!ok){pen=false;prev=null;return;}const px=X(p[0]),py=Y(p[1]);
+    if(Math.abs(px)>lim||Math.abs(py)>lim){pen=false;prev=null;return;}
+    if(prev&&Math.hypot(px-prev[0],py-prev[1])>api.W*.35)pen=false;
+    d+=(pen?'L':'M')+px.toFixed(1)+' '+py.toFixed(1);pen=true;prev=[px,py];});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.5};stroke-linejoin:round;stroke-linecap:round;${dash?'stroke-dasharray:'+dash:''}`},g);}
+function segs2(g,api,segs,col,w){const {X,Y}=api;let d='';segs.forEach(s=>{d+='M'+X(s[0][0]).toFixed(1)+' '+Y(s[0][1]).toFixed(1)+'L'+X(s[1][0]).toFixed(1)+' '+Y(s[1][1]).toFixed(1);});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.2};stroke-linecap:round`},g);}
+window.G1={$,$$,h,sv,f,fv,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2};
+})();
+(function(){'use strict';
+const {$,h,sv,f,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+const PI=Math.PI;
+
+/* Funciones de ejemplo (todas alrededor de un punto (a,b)) */
+const FN={
+  e2:{n:'2xy²/(x²+y²) en (0,0)',f:(x,y)=>2*x*y*y/(x*x+y*y),a:0,b:0,L:0,ok:true,tag:'Clase 14'},
+  h8:{n:'3xy²/(x²+y²) en (0,0)',f:(x,y)=>3*x*y*y/(x*x+y*y),a:0,b:0,L:0,ok:true,tag:'Hoja'},
+  sq:{n:'x² + y² en (1,2)',f:(x,y)=>x*x+y*y,a:1,b:2,L:5,ok:true,tag:'Clase 14'},
+  xy:{n:'xy/(x²+y²) en (0,0)',f:(x,y)=>x*y/(x*x+y*y),a:0,b:0,L:0,ok:false,tag:'Hoja'},
+  dif:{n:'(x²−y²)/(x²+y²) en (0,0)',f:(x,y)=>(x*x-y*y)/(x*x+y*y),a:0,b:0,L:0,ok:false,tag:'Hoja'},
+  xy4:{n:'xy²/(x²+y⁴) en (0,0)',f:(x,y)=>x*y*y/(x*x+y**4),a:0,b:0,L:0,ok:false,tag:'Hoja'},
+  sxy:{n:'x² sen y/(x²+y²) en (0,0)',f:(x,y)=>x*x*Math.sin(y)/(x*x+y*y),a:0,b:0,L:0,ok:true,tag:'Clase 15'},
+  p4h:{n:'Ej. 4(h) xy/√(x²+y²)',f:(x,y)=>x*y/Math.sqrt(x*x+y*y),a:0,b:0,L:0,ok:true},
+  p4j:{n:'Ej. 4(j) y² sen²x/(x⁴+2y⁴)',f:(x,y)=>y*y*Math.sin(x)**2/(x**4+2*y**4),a:0,b:0,L:0,ok:false},
+  p6a:{n:'Ej. 6(a) x⁴y⁴/(x²+y⁴)³',f:(x,y)=>x**4*y**4/(x*x+y**4)**3,a:0,b:0,L:0,ok:false},
+  p6b:{n:'Ej. 6(b) x²/(x²+y²−x)',f:(x,y)=>x*x/(x*x+y*y-x),a:0,b:0,L:0,ok:false},
+  p7d:{n:'Ej. 7(d) xy/(x²+xy+y²)',f:(x,y)=>x*y/(x*x+x*y+y*y),a:0,b:0,L:0,ok:false},
+  p10:{n:'Ej. 10 2xy/(x²+y²)',f:(x,y)=>2*x*y/(x*x+y*y),a:0,b:0,L:0,ok:false}
+};
+
+/* ======================================================================
+   ε y δ: el "sándwich" entre los planos z = L ± ε
+   ====================================================================== */
+V.eps=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});
+  const keys=['e2','h8','sq','sxy','xy','dif','p4h'];let cur='e2',eps=.4,del=.5;
+  const sel=h('select',{'aria-label':'Elegir función'},...keys.map(k=>h('option',{value:k},FN[k].n)));
+  host.append(vhead('La definición de límite','Elegí ε (la franja entre los dos planos) y buscá un δ (el disco) que funcione'),h('div',{class:'ctl'},sel),body);
+  const v=View3D(body,{scale:110,H:440,ctr:[0,0,0],az:225,el:22});
+  let worst=0,bad=[],good=[];
+  function sample(){const F=FN[cur];bad=[];good=[];worst=0;const n=22;
+    for(let i=0;i<=n;i++)for(let j=0;j<=n;j++){const u=-1+2*i/n,w=-1+2*j/n;if(u*u+w*w>1||(u===0&&w===0))continue;
+      const x=F.a+u*del,y=F.b+w*del,z=F.f(x,y);if(!isFinite(z))continue;const d=Math.abs(z-F.L);worst=Math.max(worst,d);(d<eps?good:bad).push([u*del,w*del,z-F.L]);}}
+  v.draw=sc=>{const F=FN[cur];const R=1.2,zc=1.3;const clip=z=>Math.max(-zc,Math.min(zc,z));
+    sc.axes(1.45);
+    sc.surf((u,w)=>{const x=F.a+u,y=F.b+w;let z=F.f(x,y);if(!isFinite(z))return null;return [u,w,clip(z-F.L)];},[-R,R],[-R,R],22,22,'var(--blue)',.14,'var(--blue)');
+    [eps,-eps].forEach(e=>sc.poly([[-R,-R,e],[R,-R,e],[R,R,e],[-R,R,e]],'var(--amber)',.16,'var(--amber)'));
+    sc.circle([0,0,-zc],del,'xy',CL.green,2.4);sc.circle([0,0,0],del,'xy',CL.green,1.4,'4 4');
+    good.forEach(p=>sc.dot([p[0],p[1],clip(p[2])],CL.green,2.6));bad.forEach(p=>sc.dot([p[0],p[1],clip(p[2])],CL.red,3.4));
+    sc.text([R,R,eps],'L + ε',CL.amber,6,-4,'start');sc.text([R,R,-eps],'L − ε',CL.amber,6,12,'start');};
+  const se=slider('ε',{min:.02,max:1,step:.01,value:eps,dec:2},x=>{eps=x;upd();});
+  const sd=slider('δ',{min:.02,max:1,step:.01,value:del,dec:2},x=>{del=x;upd();});
+  body.append(h('div',{class:'ctl'},se,sd),v.controls(),out);
+  function upd(){sample();v.render();const F=FN[cur];
+    const ok=bad.length===0;
+    out.innerHTML=`${F.n}, candidato L = ${f(F.L)}. Puntos del disco de radio δ alrededor de (${f(F.a)}, ${f(F.b)}): <b class="c-green">${good.length} dentro de la franja</b>, <b class="c-red">${bad.length} afuera</b>. Mayor |f − L| en el disco ≈ ${f(worst,3)}.<br>`+
+      (ok?'<b class="c-green">Este δ sirve para este ε.</b> Achicá ε y fijate si siempre podés encontrar un δ.':'<b class="c-red">Este δ no sirve: achicalo.</b>')+
+      (F.ok?'':' <span class="c-mut">Ojo: para esta función, con ε chico ningún δ sirve, porque el límite no existe.</span>');}
+  sel.addEventListener('change',()=>{cur=sel.value;upd();});
+  API['viz-eps']={set(k){if(FN[k]){if(!keys.includes(k)){sel.append(h('option',{value:k},FN[k].n));keys.push(k);}cur=k;sel.value=k;upd();}}};
+  upd();
+};
+
+/* ======================================================================
+   Acercarse por caminos: iterados, rectas, parábolas y polares
+   ====================================================================== */
+V.paths=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});
+  const keys=['xy','dif','xy4','e2','sxy','p4j','p6a','p6b','p7d','p10'];let cur='xy',mode=1,m=1,k=1,t=.6;
+  const sel=h('select',{'aria-label':'Elegir función'},...keys.map(q=>h('option',{value:q},FN[q].n)),h('option',{value:'cus'},'Escribir la mía…'));
+  const inp=h('input',{type:'text',value:'x^2y/(x^4+y^2)',size:16,'aria-label':'f(x,y)'}),msg=h('span',{class:'res'});
+  const cus=h('div',{class:'ctl',hidden:''},h('label',{},'f(x,y) =',inp),h('button',{type:'button',onclick:()=>{try{const g=expr(inp.value,['x','y']);FN.cus={n:inp.value,f:g,a:0,b:0,L:0};cur='cus';msg.textContent='';build();}catch(e){msg.className='res bad';msg.textContent='No entiendo la fórmula ('+e.message+').';}}},'Usar'),msg,h('span',{class:'c-mut',style:'font-size:13px'},'(siempre hacia el origen)'));
+  const tb=tabs(['iterados','rectas y = mx','curvas x = k·y²','polares'],i=>{mode=i;build();},1);
+  host.append(vhead('Acercarse por caminos','Si el límite existe, por cualquier camino tiene que dar lo mismo'),h('div',{class:'ctl'},sel,tb),cus,body);
+  const L=h('div',{class:'half'}),Rr=h('div',{class:'half'});body.append(L,Rr);const ctl=h('div',{class:'ctl'});body.after(ctl,out);
+  let pa=null,pb=null;
+  const F=()=>FN[cur];
+  // colores de la función en el plano
+  function heat(g,A,R){const n=48;for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=-R+2*R*(i+.5)/n,y=-R+2*R*(j+.5)/n;let z=F().f(x,y);if(!isFinite(z))continue;
+      z=Math.max(-1.5,Math.min(1.5,z));const c=z>=0?`rgba(214,64,69,${Math.min(.55,z/1.5*.55)})`:`rgba(43,94,214,${Math.min(.55,-z/1.5*.55)})`;
+      sv('rect',{x:A.X(x-R/n),y:A.Y(y+R/n),width:2*R/n*A.sx+.5,height:2*R/n*A.sx+.5,style:'fill:'+c},g);}}
+  function pathPts(s){// devuelve [x,y] para parámetro s ∈ (0,1]
+    if(mode===1)return [s,m*s];if(mode===2)return [k*s*s,s];return null;}
+  function build(){cus.hidden=cur!=='cus';L.textContent='';Rr.textContent='';ctl.textContent='';const R=1;
+    pa=Plane2D(L,{W:440,xr:[-R,R],yr:[-R,R],tick:1,label:'Valores de f cerca del origen (rojo positivo, azul negativo)',draw(g,A){heat(g,A,R);
+      if(mode===0){line(g,A.X(.8),A.Y(.6),A.X(0),A.Y(.6),CL.green,3);line(g,A.X(0),A.Y(.6),A.X(0),A.Y(0),CL.green,3,'6 4');
+        line(g,A.X(.8),A.Y(.6),A.X(.8),A.Y(0),CL.violet,3);line(g,A.X(.8),A.Y(0),A.X(0),A.Y(0),CL.violet,3,'6 4');
+        text(g,A.X(.4),A.Y(.6)-8,'x → 0, después y → 0',CL.green,'middle','sm');text(g,A.X(.4),A.Y(0)+16,'y → 0, después x → 0',CL.violet,'middle','sm');}
+      else if(mode===3){[.25,.5,.75].forEach(rr=>sv('circle',{cx:A.X(0),cy:A.Y(0),r:rr*A.sx,style:'fill:none;stroke:var(--ink-2);stroke-width:1;stroke-dasharray:3 4'},g));
+        sv('circle',{cx:A.X(0),cy:A.Y(0),r:t*A.sx,style:'fill:none;stroke:var(--green);stroke-width:2.6'},g);}
+      else{const pts=[];for(let i=-100;i<=100;i++){const s=i/100;pts.push(pathPts(s));}poly2(g,A,pts,CL.green,2.6);const p=pathPts(t);sv('circle',{cx:A.X(p[0]),cy:A.Y(p[1]),r:6,style:'fill:var(--green);stroke:var(--surface);stroke-width:2'},g);}
+      sv('circle',{cx:A.X(0),cy:A.Y(0),r:4,style:'fill:var(--ink)'},g);}});
+    pb=Plane2D(Rr,{W:440,xr:mode===3?[-.2,6.6]:[-.15,3.3],yr:[-1.6,1.6],tick:mode===3?1:10,ytick:1,xl:mode===3?'θ':' ',yl:'f',label:'f a lo largo del camino',draw(g,A){
+      if(mode===3){const pts=[];for(let i=0;i<=300;i++){const th=i/300*2*PI;pts.push([th,F().f(t*Math.cos(th),t*Math.sin(th))]);}poly2(g,A,pts,CL.green,2.6);
+        text(g,A.X(6.4),A.Y(0)-8,'θ',CL.mut,'end');text(g,A.X(.1),A.Y(1.5),'f(r cos θ, r sen θ) con r = '+f(t,2),CL.green,'start','sm');return;}
+      const curves=mode===0?[[s=>F().f(s,.0)],[]]:null;
+      if(mode===0){// iterados: g1(y)=lim_{x→0} f(x,y) ≈ f(1e-7,y); g2(x)=lim_{y→0} f(x,y)
+        const g1=[],g2=[];for(let i=1;i<=200;i++){const s=i/200;g1.push([3*s,F().f(1e-7*s,s)]);g2.push([3*s,F().f(s,1e-7*s)]);}
+        poly2(g,A,g1,CL.green,2.6);poly2(g,A,g2,CL.violet,2.6);text(g,A.X(3.25),A.Y(1.45),'verde: lím (x→0) f(x,y), en función de y',CL.green,'end','sm');text(g,A.X(3.25),A.Y(1.27),'violeta: lím (y→0) f(x,y), en función de x',CL.violet,'end','sm');}
+      else{const pts=[];for(let i=-200;i<=200;i++){const s=i/200;if(Math.abs(s)<1e-9)continue;const p=pathPts(s);pts.push([3*Math.abs(s),F().f(p[0],p[1])]);}
+        poly2(g,A,pts.filter((_,i)=>i<200),CL.green,2.4);poly2(g,A,pts.filter((_,i)=>i>=200),CL.green,2.4,'5 4');
+        const p=pathPts(t);sv('circle',{cx:A.X(3*t),cy:A.Y(F().f(p[0],p[1])),r:6,style:'fill:var(--green);stroke:var(--surface);stroke-width:2'},g);
+        text(g,A.X(3.25),A.Y(1.45),'hacia la izquierda: te acercás al origen',CL.mut,'end','sm');text(g,A.X(3.25),A.Y(1.27),'(línea llena de un lado, punteada del otro)',CL.mut,'end','sm');}}});
+    if(mode===1)ctl.append(slider('m',{min:-3,max:3,step:.1,value:m,dec:1},x=>{m=x;upd();}));
+    if(mode===2)ctl.append(slider('k',{min:-3,max:3,step:.1,value:k,dec:1},x=>{k=x;upd();}));
+    if(mode!==0)ctl.append(slider(mode===3?'r':'acercarse',{min:.01,max:mode===3?.9:1,step:.01,value:t,dec:2},x=>{t=x;upd();}));
+    upd();}
+  function lim(fn){const vals=[1e-3,1e-4,1e-5].map(fn);const a=vals[2];if(!isFinite(a))return NaN;return Math.abs(vals[1]-vals[2])<1e-3?a:NaN;}
+  function upd(){pa.update();pb.update();const G=F().f;let msg2='';
+    if(mode===0){const a=lim(s=>G(s,1e-9*s)),b=lim(s=>G(1e-9*s,s));
+      msg2=`Iterados: primero x → 0 y después y → 0 da ≈ <b class="c-green">${f(b,3)}</b>; primero y → 0 y después x → 0 da ≈ <b class="c-violet">${f(a,3)}</b>.`+(Math.abs(a-b)>1e-3?' <b class="c-red">Son distintos: el límite no existe.</b>':' Coinciden: si el límite existe, vale eso (pero todavía no sabemos si existe).');}
+    else if(mode===1){const v=lim(s=>G(s,m*s));msg2=`Por la recta y = ${f(m,1)}x el límite da ≈ <b class="c-green">${f(v,3)}</b>. Mové m: si cambia con m, el límite no existe.`;}
+    else if(mode===2){const v=lim(s=>G(k*s*s,s));msg2=`Por la curva x = ${f(k,1)}·y² el límite da ≈ <b class="c-green">${f(v,3)}</b>.`;}
+    else{let lo=Infinity,hi=-Infinity;for(let i=0;i<=360;i++){const th=i/360*2*PI;const z=G(t*Math.cos(th),t*Math.sin(th));if(isFinite(z)){lo=Math.min(lo,z);hi=Math.max(hi,z);}}
+      msg2=`En la circunferencia de radio r = ${f(t,2)}, f va de <b>${f(lo,3)}</b> a <b>${f(hi,3)}</b>. Si al achicar r toda la curva se aplasta contra un valor L (sin depender de θ), el límite existe y vale L.`;}
+    out.innerHTML=msg2;}
+  sel.addEventListener('change',()=>{if(sel.value==='cus'){cus.hidden=false;return;}cur=sel.value;build();});
+  API['viz-paths']={set(key){const [q,md]=key.split(':');if(FN[q]){if(!keys.includes(q)){sel.append(h('option',{value:q},FN[q].n));keys.push(q);}cur=q;sel.value=q;}if(md!=null){mode=+md;[...tb.children].forEach((b,j)=>b.setAttribute('aria-pressed',j===mode));}build();}};
+  build();
+};
+})();
+(function(){'use strict';
+const {$,h,sv,f,fp,CL,line,text,slider,vhead,Plane2D,poly2,arrow}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+
+/* ======================================================================
+   Desigualdades auxiliares: catetos, hipotenusa y √2·máx
+   ====================================================================== */
+V.ineq=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});
+  const P0={x:0,y:0},P={x:1.5,y:1};
+  host.append(vhead('Desigualdades auxiliares','Arrastrá P (rojo) y P₀ (azul): cada cateto es menor que la hipotenusa, y la hipotenusa es menor que √2 por el cateto más largo'),body);
+  const pl=Plane2D(body,{xr:[-4,4],yr:[-3,3],label:'Dos puntos del plano y el triángulo rectángulo que forman',draw(g,a){const X=a.X,Y=a.Y;
+    const dx=Math.abs(P.x-P0.x),dy=Math.abs(P.y-P0.y),M=Math.max(dx,dy),d=Math.hypot(dx,dy);
+    // cuadrado de lado 2·máx centrado en P0 y círculo de radio d
+    sv('rect',{x:X(P0.x-M),y:Y(P0.y+M),width:2*M*a.sx,height:2*M*a.sx,style:'fill:var(--green);fill-opacity:.08;stroke:var(--green);stroke-width:1.6;stroke-dasharray:6 5'},g);
+    sv('circle',{cx:X(P0.x),cy:Y(P0.y),r:Math.SQRT2*M*a.sx,style:'fill:none;stroke:var(--green);stroke-width:1.6;stroke-dasharray:4 4'},g);
+    line(g,X(P0.x),Y(P0.y),X(P.x),Y(P0.y),CL.violet,3.4);line(g,X(P.x),Y(P0.y),X(P.x),Y(P.y),CL.amber,3.4);line(g,X(P0.x),Y(P0.y),X(P.x),Y(P.y),CL.ink,3);
+    line(g,X(P0.x),Y(P0.y),X(P0.x+M),Y(P0.y+M),CL.green,2,'3 3');
+    text(g,(X(P0.x)+X(P.x))/2,Y(P0.y)+(P.y>=P0.y?18:-8),'|x − x₀|',CL.violet);text(g,X(P.x)+(P.x>=P0.x?8:-8),(Y(P0.y)+Y(P.y))/2,'|y − y₀|',CL.amber,P.x>=P0.x?'start':'end');
+  },onUpdate(){const dx=Math.abs(P.x-P0.x),dy=Math.abs(P.y-P0.y),M=Math.max(dx,dy),d=Math.hypot(dx,dy);
+    out.innerHTML=`<span class="c-violet">|x − x₀| = ${f(dx,3)}</span> ≤ d = <b>${f(d,3)}</b> &nbsp; y &nbsp; <span style="color:var(--amber)">|y − y₀| = ${f(dy,3)}</span> ≤ d = <b>${f(d,3)}</b> &nbsp;(desigualdad 1)<br>d = <b>${f(d,3)}</b> ≤ √2 · máx{|x − x₀|, |y − y₀|} = √2 · ${f(M,3)} = <b class="c-green">${f(Math.SQRT2*M,3)}</b> &nbsp;(desigualdad 2)<br><span class="c-mut">P siempre está en el cuadrado verde de semilado máx centrado en P₀; los puntos más lejanos del cuadrado son las esquinas, a distancia √2·máx (el círculo punteado).</span>`;}});
+  pl.handle(P0,CL.blue,{label:'Punto P₀',snap:.25});pl.handle(P,CL.red,{label:'Punto P',snap:.25});
+  body.append(out);pl.update();
+};
+
+/* ======================================================================
+   Convergencia de una curva: la bolita de radio ε y el intervalo de radio δ
+   ====================================================================== */
+V.curveLim=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let eps=.5,del=.6;
+  // r(t) = (1 + t cos(5t)·..., ...) que tiende a u = (1,1) cuando t → 0
+  const r=t=>[1+t*Math.cos(6*t)*1.4,1+t*Math.sin(4*t+1)*1.1+t*t*.3];
+  host.append(vhead('Límite de una curva','r(t) → u cuando t → 0: para cada ε hay un δ que mete la curva en la bolita'),body);
+  const L=h('div',{class:'half'}),Rr=h('div',{class:'half'});body.append(L,Rr);
+  const pa=Plane2D(L,{W:440,xr:[-1.6,1.6],yr:[-.6,.6],tick:1,yl:' ',xl:'t',label:'El parámetro t cerca de t₀ = 0',draw(g,a){
+    sv('rect',{x:a.X(-del),y:a.Y(.25),width:2*del*a.sx,height:.5*a.sx,style:'fill:var(--green);fill-opacity:.18;stroke:var(--green)'},g);
+    text(g,a.X(0),a.Y(.25)-6,'0 < |t − t₀| < δ',CL.green,'middle','sm');sv('circle',{cx:a.X(0),cy:a.Y(0),r:4,style:'fill:var(--surface);stroke:var(--ink);stroke-width:2'},g);}});
+  const pb=Plane2D(Rr,{W:440,xr:[-.8,2.8],yr:[-.8,2.8],tick:1,label:'La curva r(t) y la bolita de radio ε alrededor de u',draw(g,a){
+    const all=[],ins=[];for(let i=-300;i<=300;i++){const t=1.6*i/300;all.push(r(t));if(Math.abs(t)<del&&t!==0)ins.push(r(t));else ins.push([NaN,NaN]);}
+    poly2(g,a,all,'var(--line)',1.6);
+    sv('circle',{cx:a.X(1),cy:a.Y(1),r:eps*a.sx,style:'fill:var(--blue);fill-opacity:.12;stroke:var(--blue);stroke-width:1.8'},g);
+    let worst=0;for(let i=-300;i<=300;i++){const t=1.6*i/300;if(Math.abs(t)<del&&t!==0){const p=r(t);worst=Math.max(worst,Math.hypot(p[0]-1,p[1]-1));}}
+    poly2(g,a,ins,worst<eps?CL.green:CL.red,3.4);
+    sv('circle',{cx:a.X(1),cy:a.Y(1),r:4.5,style:'fill:var(--ink)'},g);text(g,a.X(1)+8,a.Y(1)-8,'u',CL.ink,'start');
+    pb.worst=worst;}});
+  const se=slider('ε',{min:.05,max:1.2,step:.01,value:eps,dec:2},x=>{eps=x;upd();}),sd=slider('δ',{min:.02,max:1.5,step:.01,value:del,dec:2},x=>{del=x;upd();});
+  body.after(h('div',{class:'ctl'},se,sd),out);
+  function upd(){pa.update();pb.update();const ok=pb.worst<eps;out.innerHTML=`Con δ = ${f(del,2)}, el pedazo de curva con 0 &lt; |t| &lt; δ (en ${ok?'verde':'rojo'}) se aleja de u como mucho ${f(pb.worst,3)}. `+(ok?'<b class="c-green">Entra en la bolita de radio ε: este δ sirve.</b>':'<b class="c-red">Se sale de la bolita: achicá δ.</b>');}
+  upd();
+};
+})();
+(function(){const R=String.raw;
+window.A1={key:'ax1',vid:{a:'SO7wUO2RGx4'},vlab:{a:'Anexo 1'},
+ viz:{'viz-curve':'curveLim','viz-ineq':'ineq','viz-paths':'paths'}};
+window.A1.quiz={
+'quiz-1':{t:'Autoevaluación: funciones vectoriales',qs:[
+ {p:R`Si $P=(x,y)$ y $P_0=(x_0,y_0)$ están a distancia $0{,}01$, entonces $|x-x_0|$ es:`,o:[R`$\le0{,}01$`,R`$\ge0{,}01$`,R`$=0{,}01$`,R`puede ser cualquier número`],c:0,w:R`Desigualdad (1): cada cateto es a lo sumo la hipotenusa.`},
+ {p:R`Si $|x-x_0|\lt0{,}01$ y $|y-y_0|\lt0{,}01$, la distancia entre $P$ y $P_0$ es menor que:`,o:[R`$0{,}01\sqrt2$`,R`$0{,}01$`,R`$0{,}02$`,R`$0{,}0001$`],c:0,w:R`Desigualdad (2): $\|P-P_0\|\le\sqrt2\max\{\dots\}\lt0{,}01\sqrt2$. No alcanza con $0{,}01$: en la diagonal del cuadrado la distancia es mayor.`},
+ {p:R`En la vuelta de la proposición, ¿por qué se usa $\frac{\varepsilon}{\sqrt2}$ para las coordenadas?`,o:[R`para compensar el $\sqrt2$ de la desigualdad (2)`,R`porque $\varepsilon$ tiene que ser menor que 1`,R`porque hay dos coordenadas y se reparte`,R`por costumbre, cualquier número sirve igual`],c:0,w:R`Al final queda $\sqrt2\cdot\frac{\varepsilon}{\sqrt2}=\varepsilon$, que es lo que pide la definición.`},
+ {p:R`¿Para qué se toma $\delta=\min\{\delta_1,\delta_2\}$?`,o:['para que valgan las dos condiciones a la vez','porque el mínimo siempre es 1','para que δ sea positivo','para que la curva sea continua'],c:0,w:R`Con $|t-t_0|\lt\delta$ se cumple a la vez $|t-t_0|\lt\delta_1$ y $|t-t_0|\lt\delta_2$.`},
+ {p:R`En la definición de límite aparece $0\lt|t-t_0|$. Eso significa que:`,o:[R`no importa qué pasa exactamente en $t_0$`,R`$t$ tiene que ser positivo`,R`$\mathbf r(t_0)$ tiene que estar definido`,R`el límite es positivo`],c:0,w:R`El límite habla de lo que pasa cerca de $t_0$, no en $t_0$: la función puede no estar definida ahí, o valer otra cosa.`}]},
+'quiz-2':{t:'Autoevaluación: varias variables',qs:[
+ {p:R`Si los dos límites iterados de $f$ en $(a,b)$ valen $3$:`,o:['si el límite existe, vale 3','el límite existe y vale 3','el límite no existe','f es continua'],c:0,w:R`Es un "siga participando": se gana el candidato, pero no se prueba la existencia.`},
+ {p:R`Si por la curva $\mathbf r_1$ el límite de $f\circ\mathbf r_1$ es $0$ y por $\mathbf r_2$ es $1$:`,o:['el límite de f no existe','el límite de f vale 0','el límite de f vale 1/2','hay que probar más curvas'],c:0,w:R`Por el Lema 2, si el límite existiera, por las dos curvas daría lo mismo.`},
+ {p:R`En la demostración del Lema 2, el número $\rho$:`,o:[R`juega el papel de $\delta$ para $f$ y de $\varepsilon$ para la curva`,R`es el límite de la curva`,R`es igual a $\varepsilon$`,R`es un número negativo`],c:0,w:R`Primero se elige $\rho$ con la definición de límite de $f$, y después se usa como "épsilon" en la definición de límite de $\mathbf r$.`},
+ {p:R`$f\circ\mathbf r$, con $\mathbf r:I\subset\R\to\R^2$ y $f:D\subset\R^2\to\R$, es una función:`,o:[R`de $\R$ en $\R$`,R`de $\R^2$ en $\R$`,R`de $\R$ en $\R^2$`,R`de $\R^2$ en $\R^2$`],c:0,w:R`Entra un número $t$, sale un punto $\mathbf r(t)$ y $f$ lo transforma en un número.`},
+ {p:R`¿Qué diferencia fundamental hay entre límites en una y en dos variables?`,o:['en el plano hay infinitas formas de acercarse a un punto','en el plano no vale el álgebra de límites','en el plano no se usa ε','en una variable no hay indeterminaciones'],c:0,w:R`En la recta solo nos acercamos por izquierda o por derecha; en el plano, por cualquier curva. Por eso hay más formas de que un límite no exista.`}]}
+};
+})();
+(function(){'use strict';
+const R=String.raw;
+const EJ=[
+{n:1,t:'La desigualdad con la suma',s:'Otra desigualdad auxiliar',
+ enun:R`<p>Probar que para todo $(x,y)\in\R^2$:
+$$\frac{|x|+|y|}{\sqrt2}\le\sqrt{x^2+y^2}\le|x|+|y|.$$
+Interpretar geométricamente.</p>`,
+ pistas:[R`<p>Las dos son desigualdades entre números positivos: alcanza con compararlos al cuadrado.</p>`,
+  R`<p>$(|x|+|y|)^2=x^2+y^2+2|x||y|$. Para la otra, usá $2|x||y|\le x^2+y^2$, que sale de $(|x|-|y|)^2\ge0$.</p>`],
+ sol:R`<p><b>Derecha:</b> $(|x|+|y|)^2=x^2+y^2+2|x||y|\ge x^2+y^2$; tomando raíz, $\sqrt{x^2+y^2}\le|x|+|y|$.</p>
+<p><b>Izquierda:</b> $(|x|-|y|)^2\ge0$ da $2|x||y|\le x^2+y^2$. Entonces $(|x|+|y|)^2=x^2+y^2+2|x||y|\le2(x^2+y^2)$, y tomando raíz $|x|+|y|\le\sqrt2\sqrt{x^2+y^2}$.</p>
+<p><b>Geometría:</b> la hipotenusa es menor que la suma de los catetos (desigualdad triangular), y la suma de los catetos es a lo sumo $\sqrt2$ veces la hipotenusa (con igualdad cuando el triángulo es isósceles). Es otra forma de decir que "puntos cercanos" y "coordenadas cercanas" son lo mismo.</p>`},
+
+{n:2,t:'Límite de una curva por definición',s:'Usar la proposición al revés',
+ enun:R`<p>Sea $\mathbf r(t)=(2t+1,\ t^2)$. Probar por definición (con la distancia, sin usar la proposición) que $\lim_{t\to1}\mathbf r(t)=(3,1)$, y dar un $\delta$ que sirva para $\varepsilon=0{,}1$.</p>`,
+ pistas:[R`<p>$\|\mathbf r(t)-(3,1)\|\le|2t+1-3|+|t^2-1|$ (ejercicio 1).</p>`,
+  R`<p>$|t^2-1|=|t-1||t+1|$. Si $|t-1|\le1$, entonces $|t+1|\le3$.</p>`],
+ sol:R`<p>Por el ejercicio 1, $\|\mathbf r(t)-(3,1)\|\le|2t-2|+|t^2-1|=2|t-1|+|t-1||t+1|$. Si $|t-1|\le1$, $|t+1|\le3$, y queda $\le5|t-1|$. Entonces $\delta=\min\{1,\frac{\varepsilon}{5}\}$ sirve: si $0\lt|t-1|\lt\delta$, $\|\mathbf r(t)-(3,1)\|\lt\varepsilon$.</p>
+<p>Con $\varepsilon=0{,}1$: $\delta=0{,}02$.</p>`,
+ chk:{p:'δ para ε = 0,1',vals:[0.02]}},
+
+{n:3,t:'Que no exista, formalmente',s:'Aplicar el Lema 2 con dos curvas',
+ enun:R`<p>Usando el Lema 2 con dos curvas concretas (escribiendo $\mathbf r_1(t)$ y $\mathbf r_2(t)$), probar que no existe $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^2y}{x^4+y^2}$.</p>`,
+ pistas:[R`<p>Por las rectas $y=mx$ da $0$. Buscá una curva que iguale los grados: $y=x^2$.</p>`],
+ sol:R`<p>Con $\mathbf r_1(t)=(t,0)$: $\mathbf r_1(t)\to(0,0)$ cuando $t\to0$ y $f(\mathbf r_1(t))=0\to0$.</p>
+<p>Con $\mathbf r_2(t)=(t,t^2)$: $\mathbf r_2(t)\to(0,0)$ y $f(\mathbf r_2(t))=\frac{t^4}{2t^4}=\frac12\to\frac12$.</p>
+<p>Si el límite existiera y valiera $L$, por el Lema 2 sería $L=0$ y $L=\frac12$ a la vez. Absurdo: el límite no existe.</p>`},
+
+{n:4,t:'Una función con límite en el origen',s:'Probarlo por definición',
+ enun:R`<p>Probar por definición que $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^3}{x^2+y^2}=0$ y dar el $\delta$ en función de $\varepsilon$.</p>`,
+ pistas:[R`<p>$\frac{x^2}{x^2+y^2}\le1$ y $|x|\le\sqrt{x^2+y^2}$.</p>`],
+ sol:R`<p>$\left|\frac{x^3}{x^2+y^2}\right|=\frac{x^2}{x^2+y^2}|x|\le|x|\le\sqrt{x^2+y^2}$. Entonces con $\delta=\varepsilon$: si $0\lt\sqrt{x^2+y^2}\lt\delta$, la función está a menos de $\varepsilon$ de $0$.</p>`,
+ chk:{p:'δ para ε = 0,3',vals:[0.3]}},
+
+{n:5,t:'Por qué hace falta r(t) ≠ (a,b)',s:'Un contraejemplo al Lema 2 sin la hipótesis',
+ enun:R`<p>Sea $f(x,y)=0$ si $(x,y)\neq(0,0)$ y $f(0,0)=1$. Calcular $\lim_{(x,y)\to(0,0)}f(x,y)$. Encontrar una curva $\mathbf r(t)\to(0,0)$ cuando $t\to0$ tal que $f(\mathbf r(t))$ no tienda a ese límite. ¿Qué falla en la demostración del Lema 2?</p>`,
+ pistas:[R`<p>El límite de $f$ es $0$: cerca del origen, salvo en el origen, vale $0$.</p>`,
+  R`<p>Probá una curva que pase por el origen muchas veces: $\mathbf r(t)=\left(t\operatorname{sen}\frac1t,\ 0\right)$.</p>`],
+ sol:R`<p>$\lim f=0$, porque $f(x,y)=0$ para todo $(x,y)\neq(0,0)$.</p>
+<p>Con $\mathbf r(t)=\left(t\operatorname{sen}\frac1t,0\right)$ (y $\mathbf r(0)=(0,0)$): $\mathbf r(t)\to(0,0)$, pero $\mathbf r(t)=(0,0)$ cada vez que $t=\frac1{k\pi}$, y ahí $f(\mathbf r(t))=1$. En cualquier intervalo alrededor de $0$ hay tiempos con $f(\mathbf r(t))=0$ y tiempos con $f(\mathbf r(t))=1$: $\lim_{t\to0}f(\mathbf r(t))$ no existe.</p>
+<p>En el paso 3 de la demostración se usa que $0\lt\|\mathbf r(t)-(a,b)\|$, pero esta curva vuelve a pasar por $(0,0)$. Por eso hace falta pedir $\mathbf r(t)\neq(a,b)$ para $t$ cerca de $t_0$ (o que $f$ sea continua en $(a,b)$). Con las curvas que se usan en la práctica (rectas, parábolas por el origen) esto siempre se cumple.</p>`}
+];
+window.G1EJ=EJ;
+})();
+(function(){'use strict';
+const {$,$$,h,f}=window.G1;
+const IM=window.G1IMG||{};
+const EJ=window.G1EJ||[];
+const KEY=(window.A1&&window.A1.key)||'a1';
+const T=(v,t,txt)=>`<a class="t" data-v="${v}" data-t="${t}">${txt||t}</a>`;
+
+/* ---------- render ---------- */
+function parse(s){return s.split(/[;\s]+/).filter(Boolean).map(x=>parseFloat(x.replace(',','.')));}
+let done={};try{done=JSON.parse(localStorage.getItem(KEY+'-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem(KEY+'-done',JSON.stringify(done));}catch(e){}}
+function prog(){const n=Object.keys(done).filter(k=>done[k]).length;$('#ejprog').textContent='Hechos: '+n+' de '+EJ.length+' (se guarda en este navegador)';}
+
+function build(){const list=$('#ejlist');
+  EJ.forEach(e=>{
+    const d=h('details',{class:'ejc'+(done[e.n]?' done':''),id:'ej'+e.n});
+    const sum=h('summary',{},h('span',{class:'num'},e.n),h('span',{class:'tt'},h('b',{},e.t),h('span',{},e.s)));
+    const inn=h('div',{class:'in'});
+    inn.append(h('div',{class:'enun',html:e.enun}));
+    if(e.img&&IM[e.img])inn.append(h('img',{class:'fig',src:IM[e.img],alt:'Figura del ejercicio '+e.n}));
+    if(e.rev)inn.append(h('div',{class:'revnote',html:'<b>Revisar</b>'+e.rev}));
+    if(e.extra)inn.append(h('div',{html:e.extra}));
+    const pistas=h('div',{class:'pistas'});let k=0;
+    const bP=h('button',{type:'button'},'Dame una pista');
+    const bS=h('button',{type:'button'},'Ver resolución');
+    const sol=h('div',{class:'sol',hidden:'',html:'<b>Resolución</b>'+e.sol});
+    bP.addEventListener('click',()=>{if(k<e.pistas.length){pistas.append(h('div',{class:'pista',html:'<b>Pista '+(k+1)+' de '+e.pistas.length+'</b>'+e.pistas[k]}));k++;typeset(pistas);}
+      if(k>=e.pistas.length){bP.disabled=true;bP.textContent='No hay más pistas';}else bP.textContent='Otra pista ('+k+'/'+e.pistas.length+')';});
+    bS.addEventListener('click',()=>{sol.hidden=!sol.hidden;bS.textContent=sol.hidden?'Ver resolución':'Ocultar resolución';if(!sol.hidden)typeset(sol);});
+    const bD=h('button',{type:'button','aria-pressed':!!done[e.n]},done[e.n]?'Hecho ✓':'Marcar como hecho');
+    bD.addEventListener('click',()=>{done[e.n]=!done[e.n];save();d.classList.toggle('done',!!done[e.n]);bD.setAttribute('aria-pressed',!!done[e.n]);bD.textContent=done[e.n]?'Hecho ✓':'Marcar como hecho';prog();});
+    const refs=(e.ref||[]).map(r=>h('span',{html:T(r[0],r[1],(((window.A1||{}).vlab||{})[r[0]]||('Clase '+r[0]))+' · '+r[1])+' <span class="c-mut" style="font-size:14px">'+r[2]+'</span>'}));
+    inn.append(h('div',{class:'act'},bP,bS,bD),pistas);
+    if(e.chk){const inp=h('input',{type:'text',inputmode:'text','aria-label':e.chk.p,placeholder:'ej.: 1,5 2'});const res=h('span',{class:'res'});
+      const go=()=>{const v=parse(inp.value);if(!v.length||v.some(isNaN)){res.className='res bad';res.textContent='Escribí números separados por espacio o ";".';return;}
+        if(v.length!==e.chk.vals.length){res.className='res bad';res.textContent='Faltan o sobran valores: se esperan '+e.chk.vals.length+'.';return;}
+        const bad=[];e.chk.vals.forEach((t,i)=>{if(Math.abs(v[i]-t)>Math.max(.006*Math.abs(t),.015))bad.push(i+1);});
+        if(!bad.length){res.className='res ok';res.textContent='Correcto.';}else{res.className='res bad';res.textContent='No coinciden los valores n.º '+bad.join(', ')+'. Revisá esas cuentas.';}};
+      inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+      inn.append(h('div',{class:'chk'},h('span',{},'Comprobar: '+e.chk.p),inp,h('button',{type:'button',onclick:go},'Comprobar'),res));}
+    inn.append(sol);
+    if(refs.length){const r=h('div',{class:'meta',style:'margin-top:8px'},h('span',{},'Teoría relacionada:'),...refs);inn.append(r);}
+    d.append(sum,inn);list.append(d);});
+  prog();}
+function fixWide(root){(root||document).querySelectorAll('mjx-container:not([display="true"])').forEach(m=>{m.classList.remove('wide');const p=m.parentElement;if(p&&m.getBoundingClientRect().width>p.getBoundingClientRect().width+1)m.classList.add('wide');});}
+function typeset(el){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>fixWide(el)).catch(()=>{});}
+window.G1ej={build,typeset,fixWide};
+})();
+(function(){'use strict';
+const {$,$$,h}=window.G1;const V=window.G1V;const CFG=window.A1||{};const VID=CFG.vid||{};const QZ=CFG.quiz||{};const KEY=CFG.key||'a1';
+
+function buildQuiz(id,data){const host=$('#'+id);if(!host)return;let score=0,ans=0;const sc=h('span',{class:'c-mut',style:'font:600 13.5px var(--f-mono)'},'');
+  const head=h('div',{class:'qh'},h('b',{},data.t),sc,h('button',{type:'button',onclick:()=>{host.textContent='';buildQuiz(id,data);window.G1ej.typeset(host);}},'Reiniciar'));
+  host.append(head);const upd=()=>{sc.textContent=ans?(score+' de '+data.qs.length+' correctas'):'';};
+  data.qs.forEach((q,qi)=>{const o=h('div',{class:'o'});const box=h('div',{class:'q'},h('div',{class:'p',html:(qi+1)+'. '+q.p}),o);let why=null;
+    const ord=q.o.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+    ord.forEach(i=>{const t=q.o[i];const b=h('button',{type:'button',html:t});b.dataset.k=i;b.addEventListener('click',()=>{if(why)return;ans++;const ok=i===q.c;if(ok)score++;b.classList.add(ok?'right':'wrong');if(!ok)o.querySelector('[data-k="'+q.c+'"]').classList.add('right');
+      why=h('div',{class:'why',html:'<b class="'+(ok?'ok':'bad')+'">'+(ok?'Correcto. ':'No. ')+'</b>'+q.w});box.append(why);window.G1ej.typeset(box);upd();});o.append(b);});host.append(box);});
+}
+
+/* ---------- vínculos a YouTube ---------- */
+function linkify(){$$('a.t[data-v]').forEach(a=>{const [m,s]=a.dataset.t.split(':').map(Number),sec=m*60+s;a.href='https://youtu.be/'+VID[a.dataset.v]+'?t='+sec;a.target='_blank';const f=a.firstChild;if(f&&f.nodeType===3&&/^\d+:\d\d/.test(f.nodeValue))f.nodeValue=f.nodeValue.replace(/^(\d+:\d\d)/,((CFG.vlab&&CFG.vlab[a.dataset.v])||('Cl. '+a.dataset.v))+' · $1');a.rel='noopener';a.title='Abrir el video en '+a.dataset.t;});}
+
+/* ---------- barra de herramientas, tema, navegación ---------- */
+function ui(){
+  document.addEventListener('click',e=>{const b=e.target.closest('button.go');if(!b)return;const api=(window.A1API||{})[b.dataset.viz];const el=document.getElementById(b.dataset.viz);
+    if(api&&api.set)api.set(b.dataset.p);if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('toggle',e=>{if(e.target.open)window.G1ej.fixWide(e.target);},true);
+  $('#b-open').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=true);window.G1ej.fixWide(document);});
+  $('#b-close').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=false);});
+  const br=$('#b-rev');br.addEventListener('click',()=>{const on=br.getAttribute('aria-pressed')!=='true';br.setAttribute('aria-pressed',on);document.body.classList.toggle('no-rev',!on);try{localStorage.setItem(KEY+'-rev',on?'1':'0');}catch(e){}});
+  try{if(localStorage.getItem(KEY+'-rev')==='0'){br.setAttribute('aria-pressed','false');document.body.classList.add('no-rev');}}catch(e){}
+  const bt=$('#b-theme');let mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+  const apply=()=>{const r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];};
+  bt.addEventListener('click',()=>{mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();
+  const links=$$('#nav a'),secs=links.map(a=>$(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));}
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{const id=a.getAttribute('href');if(id==='#ejercicios'){}}));
+}
+
+function init(){
+  window.G1ej.build();
+  const map=CFG.viz||{};
+  Object.keys(map).forEach(id=>{const el=$('#'+id);if(!el)return;try{V[map[id]](el);}catch(err){console.error('viz',id,err);el.append(h('p',{class:'hint'},'No se pudo cargar esta figura.'));}});
+  Object.keys(QZ).forEach(id=>buildQuiz(id,QZ[id]));
+  linkify();ui();
+  const go=()=>{if(window.MathJax&&MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(()=>MathJax.typesetPromise()).then(()=>{window.G1ej.fixWide(document);let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>window.G1ej.fixWide(document),200);});}).catch(e=>console.error(e));};
+  if(document.readyState==='complete')go();else window.addEventListener('load',go);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+</body>
+</html>

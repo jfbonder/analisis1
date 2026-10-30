@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Anexo 4</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<div class="shell">
+<aside class="side" aria-label="Índice">
+  <a class="volver" href="index.html" style="display:block;margin:0 0 .6rem;font-size:.85rem;color:var(--accent,#2b59c3);text-decoration:none">&larr; Portada</a><div class="brand">Análisis 1 · FCEN-UBA</div>
+  <h2>Anexo 4</h2>
+  <nav id="nav">
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#t1">Geometría de Rⁿ<small>Producto interno, Cauchy–Schwarz</small></a>
+    <a href="#t2">Funciones de Rⁿ en Rᵏ<small>Continuidad por coordenadas</small></a>
+    <a href="#t3">Diferenciabilidad<small>La matriz diferencial</small></a>
+    <a href="#t4">Regla de la cadena<small>Caso general (solo hoja)</small></a>
+    <div class="sep"></div>
+    <a href="#ejercicios">Ejercicios<small>Para practicar</small></a>
+  </nav>
+</aside>
+<main>
+<div class="tools" role="toolbar" aria-label="Opciones">
+  <button id="b-open">Abrir todo</button>
+  <button id="b-close">Cerrar todo</button>
+  <span class="sp"></span>
+  <button id="b-rev" aria-pressed="true" title="Mostrar u ocultar las marcas de revisión (para el docente)">Marcas de revisión</button>
+  <button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="kick">Anexo teórico · acompaña a la Guía 4</div>
+  <h1>Anexo 4: Diferenciación general</h1>
+  <p class="lead">"La teoría rigurosa detrás de las cuentas." Todo lo que vimos para curvas, para funciones de dos y tres variables y para las coordenadas polares entra en una única teoría: funciones de $\R^n$ en $\R^k$, su matriz diferencial y la regla de la cadena con matrices.</p>
+  <div class="map">
+    <a href="#t1"><em>Parte 1</em><b>Geometría de $\R^n$</b><span>Producto interno, módulo, desigualdades de Young, Cauchy–Schwarz y triangular.</span></a>
+    <a href="#t2"><em>Parte 1</em><b>Funciones de $\R^n$ en $\R^k$</b><span>Distancia, continuidad, y "es continua si y solo si cada coordenada lo es".</span></a>
+    <a href="#t3"><em>Parte 2</em><b>Diferenciabilidad</b><span>Derivadas parciales $D_jf_i$, la matriz diferencial $Df$, diferenciable por coordenadas, $C^1$.</span></a>
+    <a href="#t4"><em>Solo la hoja</em><b>Regla de la cadena</b><span>$D(g\circ f)(x_0)=Dg(f(x_0))\cdot Df(x_0)$, con demostración.</span></a>
+  </div>
+  <div class="legend">
+    <span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+    <span><span class="tag vid">Video</span> se dijo en el video pero no está en la hoja</span>
+    <span><span class="tag add">Agregado</span> no se dijo en clase</span>
+    <span><span class="tag rev">Revisar</span> dudoso, a confirmar por el docente</span>
+    <span><a class="t" data-v="a" data-t="0:00">m:ss</a> abre el video en ese minuto</span>
+  </div>
+  <p class="hint">Videos: <a class="t" data-v="a" data-t="0:00">Anexo 4, parte 1 (55 min)</a> y <a class="t" data-v="b" data-t="0:00">Anexo 4, parte 2 (41 min)</a>. Hoja: "Anexo: Diferenciación (la teoría rigurosa detrás de las cuentas)". <span class="tag vid">Video</span> "Va a ser una clase un poco más árida, con pocos ejemplos y mucha teoría; más atractiva para quienes quieran estudiar matemática." <a class="t" data-v="a" data-t="0:35">0:35</a></p>
+</section>
+
+<!-- ======================= GEOMETRÍA DE Rn ======================= -->
+<section class="clase" id="t1">
+<header>
+  <div class="kick">PARTE 1 · GEOMETRÍA DE $\R^n$</div>
+  <h2>Producto interno y desigualdades</h2>
+  <div class="meta"><a class="t" data-v="a" data-t="0:00">Anexo 4, parte 1</a><span>Lo que hicimos en $\R^2$ y $\R^3$, ahora en $\R^n$.</span></div>
+</header>
+
+<h3 class="b">Notación <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="1:35">1:35</a></h3>
+<p>Un punto de $\R^n$ lo notamos con una sola letra: $x\in\R^n$, $x=(x_1,\dots,x_n)$, con $x_j\in\R$, $j=1,\dots,n$. <span class="tag vid">Video</span> Con más de tres dimensiones "se nos acaban las letras": $x$ es ahora todo el punto, y sus coordenadas llevan índice. <a class="t" data-v="a" data-t="2:37">2:37</a></p>
+<div class="box def"><span class="lab">Producto interno <a class="t" data-v="a" data-t="3:39">3:39</a></span>
+<p>Si $x=(x_1,\dots,x_n)$, $y=(y_1,\dots,y_n)$,
+$$x\cdot y=\sum_{j=1}^nx_jy_j.$$</p>
+<p class="hint"><span class="tag vid">Video</span> La letra $\Sigma$ es una sigma mayúscula, la "s" de suma. Con $n=3$ es la definición que ya teníamos. <a class="t" data-v="a" data-t="5:44">5:44</a></p></div>
+<div class="box obs"><span class="lab c-blue">Propiedades elementales <a class="t" data-v="a" data-t="6:45">6:45</a></span>
+<p>1. $x\cdot y=y\cdot x$. &emsp; 2. $x\cdot(y+z)=x\cdot y+x\cdot z$. &emsp; 3. Si definimos $|x|=(x\cdot x)^{1/2}=\sqrt{\sum_{j=1}^nx_j^2}$, se verifica: 3.1) $|x|\ge0$ y $|x|=0\iff x=0$; 3.2) si $\lambda\in\R$, $|\lambda x|=|\lambda|\,|x|$.</p>
+<p class="hint"><span class="tag vid">Video</span> Salen de las propiedades de suma y producto de números reales; quedan de ejercicio. En 3.2, el primer $|\cdot|$ es valor absoluto de un número y el segundo, módulo de un vector. <a class="t" data-v="a" data-t="8:48">8:48</a> <a class="t" data-v="a" data-t="10:48">10:48</a></p></div>
+
+<h3 class="b">La desigualdad de Cauchy–Schwarz <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="10:48">10:48</a></h3>
+<div class="box thm"><span class="lab">Lema (Cauchy–Schwarz)</span>
+<p>Si $x,y\in\R^n$, entonces $|x\cdot y|\le|x|\,|y|$.</p>
+<p class="hint"><span class="tag vid">Video</span> En $\R^2$ y $\R^3$ salía de $x\cdot y=|x||y|\cos\theta$ y $|\cos\theta|\le1$. En $\R^n$ no tenemos trigonometría: hay que probarlo solo con la fórmula. "Es una demostración bastante astuta." <a class="t" data-v="a" data-t="12:49">12:49</a></p></div>
+<details class="dem" open><summary>Demostración <a class="t" data-v="a" data-t="13:49">13:49</a></summary><div class="in">
+<p><b>(1) Desigualdad de Young.</b> Si $a,b\in\R$, $a,b\ge0$, entonces $ab\le\frac{a^2}{2}+\frac{b^2}{2}$. En efecto, $0\le(a-b)^2=a^2-2ab+b^2$, de donde $2ab\le a^2+b^2$. <a class="t" data-v="a" data-t="14:50">14:50</a></p>
+<p><b>(2) Young para vectores.</b> $|x\cdot y|\le\frac{|x|^2}{2}+\frac{|y|^2}{2}$:
+$$|x\cdot y|=\Big|\sum_{j=1}^nx_jy_j\Big|\le\sum_{j=1}^n|x_j||y_j|\overset{\text{Young}}{\le}\sum_{j=1}^n\Big(\frac{|x_j|^2}{2}+\frac{|y_j|^2}{2}\Big)=\frac12\underbrace{\sum_{j=1}^n|x_j|^2}_{|x|^2}+\frac12\underbrace{\sum_{j=1}^n|y_j|^2}_{|y|^2}.$$
+<a class="t" data-v="a" data-t="16:53">16:53</a> <a class="t" data-v="a" data-t="18:54">18:54</a></p>
+<p><b>(3) Fin de la prueba.</b> Si $x=0$ o $y=0$, no hay nada que probar ($0\le0$). Si $|x|=1=|y|$, aplicando (2): $|x\cdot y|\le\frac12+\frac12=1=|x||y|$. Si $x\neq0$ e $y\neq0$, sean $\bar x=\frac{x}{|x|}$, $\bar y=\frac{y}{|y|}$; como $|\bar x|=1=|\bar y|$, $|\bar x\cdot\bar y|\le1$. Pero
+$$|\bar x\cdot\bar y|=\Big|\frac{x}{|x|}\cdot\frac{y}{|y|}\Big|=\frac{|x\cdot y|}{|x|\,|y|}\le1\ \Longrightarrow\ |x\cdot y|\le|x|\,|y|.\qquad\blacksquare$$
+<a class="t" data-v="a" data-t="19:56">19:56</a> <a class="t" data-v="a" data-t="21:59">21:59</a> <a class="t" data-v="a" data-t="23:03">23:03</a></p></div></details>
+<div class="box thm"><span class="lab">Corolario (desigualdad triangular) <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="25:06">25:06</a></span>
+<p>Si $x,y\in\R^n$, entonces $|x+y|\le|x|+|y|$.</p>
+<p class="hint"><span class="tag vid">Video</span> Con la regla del paralelogramo: en un triángulo, un lado es más chico que la suma de los otros dos. Pero en $\R^n$ hay que probarlo con las definiciones. <a class="t" data-v="a" data-t="26:14">26:14</a></p></div>
+<details class="dem" open><summary>Demostración <a class="t" data-v="a" data-t="28:20">28:20</a></summary><div class="in">
+$$|x+y|^2=(x+y)\cdot(x+y)=x\cdot x+x\cdot y+y\cdot x+y\cdot y=|x|^2+2\,x\cdot y+|y|^2$$
+$$\le|x|^2+2|x\cdot y|+|y|^2\overset{\text{C-S}}{\le}|x|^2+2|x||y|+|y|^2=(|x|+|y|)^2.\qquad\blacksquare$$
+<p class="hint"><span class="tag vid">Video</span> "Es exactamente la fórmula del cuadrado del binomio, pero para vectores." <a class="t" data-v="a" data-t="29:21">29:21</a> <a class="t" data-v="a" data-t="30:21">30:21</a></p></div></details>
+<div class="viz" id="viz-cs"></div>
+</section>
+
+<!-- ======================= FUNCIONES Rn → Rk ======================= -->
+<section class="clase" id="t2">
+<header>
+  <div class="kick">PARTE 1 · FUNCIONES DE $\R^n$ EN $\R^k$</div>
+  <h2>Distancia y continuidad</h2>
+  <div class="meta"><span>Curvas ($n=1$), funciones de varias variables ($k=1$) y coordenadas polares ($n=k=2$) son casos particulares.</span></div>
+</header>
+<div class="box def"><span class="lab">Notación <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="32:32">32:32</a></span>
+<p>$f:U\subset\R^n\to\R^k$; $U$ es el dominio de $f$. Si $x\in U$, $f(x)\in\R^k$, así que
+$$f(x)=(f_1(x),\dots,f_k(x)).$$
+A $f_i:U\subset\R^n\to\R$ se la llama <b>función coordenada</b>, $i=1,\dots,k$.</p></div>
+<div class="box def"><span class="lab">Distancia entre puntos <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="34:34">34:34</a></span>
+<p>Si $x,y\in\R^n$, $\operatorname{dist}(x,y)=|x-y|$.</p></div>
+<div class="box def"><span class="lab">Continuidad <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="36:34">36:34</a></span>
+<p>Sea $f:U\subset\R^n\to\R^k$ y $x_0\in U$. Decimos que $f$ es continua en $x_0$ si $\forall\varepsilon\gt0$, $\exists\delta\gt0$ tal que
+$$\operatorname{dist}(f(x),f(x_0))=|f(x)-f(x_0)|\lt\varepsilon\quad\text{si}\quad\operatorname{dist}(x,x_0)=|x-x_0|\lt\delta.$$</p>
+<p class="hint"><span class="tag vid">Video</span> El primer módulo es en $\R^k$ y el segundo en $\R^n$: "son distancias en espacios distintos", aunque se escriban igual. <a class="t" data-v="a" data-t="38:38">38:38</a></p></div>
+<div class="box thm"><span class="lab">Lema <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="39:38">39:38</a></span>
+<p>$f(x)=(f_1(x),\dots,f_k(x))$ es continua en $x_0$ si y solo si $f_i$ es continua en $x_0$ para todo $i=1,\dots,k$.</p></div>
+<details class="dem"><summary>Demostración <a class="t" data-v="a" data-t="40:38">40:38</a></summary><div class="in">
+<p><b>($\Rightarrow$)</b> Dado $\varepsilon\gt0$, como $f$ es continua existe $\delta\gt0$ tal que $|f(x)-f(x_0)|\lt\varepsilon$ si $|x-x_0|\lt\delta$. Ahora, para cada $i$,
+$$|f_i(x)-f_i(x_0)|=\sqrt{(f_i(x)-f_i(x_0))^2}\le\sqrt{\sum_{\ell=1}^k(f_\ell(x)-f_\ell(x_0))^2}=|f(x)-f(x_0)|\lt\varepsilon.$$
+"La longitud del vector es más grande que cada coordenada." <a class="t" data-v="a" data-t="43:43">43:43</a> <a class="t" data-v="a" data-t="44:47">44:47</a></p>
+<p><b>($\Leftarrow$)</b> Dado $\varepsilon\gt0$, para cada $i$ existe $\delta_i\gt0$ tal que $|f_i(x)-f_i(x_0)|\lt\frac{\varepsilon}{\sqrt k}$ si $|x-x_0|\lt\delta_i$ (cada función tiene su propio delta). Sea $\delta=\min\{\delta_1,\dots,\delta_k\}$. Si $|x-x_0|\lt\delta$:
+$$|f(x)-f(x_0)|=\sqrt{\sum_{i=1}^k(f_i(x)-f_i(x_0))^2}\le\sqrt{k\max_{1\le i\le k}(f_i(x)-f_i(x_0))^2}=\sqrt k\max_{1\le i\le k}|f_i(x)-f_i(x_0)|\lt\sqrt k\,\frac{\varepsilon}{\sqrt k}=\varepsilon.\qquad\blacksquare$$
+<span class="tag vid">Video</span> En el video se suman los $k$ términos: $\sqrt{k\cdot\frac{\varepsilon^2}{k}}=\varepsilon$. "Por eso pusimos el $\sqrt k$: para que se cancele." <a class="t" data-v="a" data-t="45:47">45:47</a> <a class="t" data-v="a" data-t="49:50">49:50</a></p></div></details>
+<div class="box ej"><span class="lab">Tres casos que ya conocíamos <a class="t" data-v="a" data-t="50:51">50:51</a></span>
+<p>(1) $f:\R^2\ \text{o}\ \R^3\to\R$ ($k=1$): es la continuidad que ya teníamos. (2) Una curva $\mathbf r:\R\to\R^3$, $\mathbf r(t)=(x(t),y(t),z(t))$ ($n=1$): es continua si y solo si sus coordenadas lo son, como ya habíamos probado. (3) Las coordenadas polares: $\Phi:\R^2\to\R^2$, $\Phi(r,\theta)=(r\cos\theta,\ r\operatorname{sen}\theta)$ ($n=k=2$); es continua porque sus coordenadas lo son. <a class="t" data-v="a" data-t="51:52">51:52</a> <a class="t" data-v="a" data-t="52:52">52:52</a></p></div>
+</section>
+
+<!-- ======================= DIFERENCIABILIDAD ======================= -->
+<section class="clase" id="t3">
+<header>
+  <div class="kick">PARTE 2 · DIFERENCIABILIDAD</div>
+  <h2>La matriz diferencial</h2>
+  <div class="meta"><a class="t" data-v="b" data-t="0:00">Anexo 4, parte 2</a><span>"El objetivo final es una demostración rigurosa y general de la regla de la cadena."</span></div>
+</header>
+<div class="box def"><span class="lab">Derivadas parciales <span class="tag piz">Pizarrón</span> <a class="t" data-v="b" data-t="5:41">5:41</a></span>
+<p>Sea $f:U\subset\R^n\to\R^k$, $f(x)=(f_1(x),\dots,f_k(x))$. Se definen las derivadas parciales como
+$$D_jf_i(x_0)=\frac{\partial f_i}{\partial x_j}(x_0)=\lim_{h\to0}\frac{f_i(x_0+he_j)-f_i(x_0)}{h},$$
+si el límite existe, donde $e_j=(0,\dots,0,1,0,\dots,0)$ (el $1$ en el lugar $j$) es el $j$-ésimo canónico de $\R^n$.</p>
+<p class="hint"><span class="tag vid">Video</span> El índice $i$ dice qué componente se deriva ($1\le i\le k$) y el $j$, respecto de qué variable ($1\le j\le n$). Dos índices sugieren una matriz. <a class="t" data-v="b" data-t="8:47">8:47</a></p></div>
+<div class="box def"><span class="lab">Matriz diferencial <span class="tag piz">Pizarrón</span> <a class="t" data-v="b" data-t="9:49">9:49</a></span>
+$$Df(x_0)=\begin{pmatrix}D_1f_1(x_0)&D_2f_1(x_0)&\cdots&D_nf_1(x_0)\\D_1f_2(x_0)&D_2f_2(x_0)&\cdots&D_nf_2(x_0)\\\vdots&&&\vdots\\D_1f_k(x_0)&D_2f_k(x_0)&\cdots&D_nf_k(x_0)\end{pmatrix}\in\R^{k\times n}.$$
+<p>Se llama la <b>matriz diferencial</b> de $f$ en $x_0$: en la fila $i$ están las derivadas de la componente $f_i$. Tiene tantas filas como componentes y tantas columnas como variables. <a class="t" data-v="b" data-t="11:49">11:49</a></p></div>
+<div class="box ej"><span class="lab">Lo que ya conocíamos <a class="t" data-v="b" data-t="12:50">12:50</a></span>
+<p>(1) Si $f:\R^3\to\R$: $Df=\big(\frac{\partial f}{\partial x}\ \ \frac{\partial f}{\partial y}\ \ \frac{\partial f}{\partial z}\big)=\nabla f$, una fila. (2) Si $\mathbf r:\R\to\R^3$, $\mathbf r(t)=(x(t),y(t),z(t))$: $D\mathbf r=\begin{pmatrix}x'\\y'\\z'\end{pmatrix}=(\mathbf r')^t$, una columna. (3) Coordenadas polares, $\Phi(r,\theta)=(r\cos\theta,r\operatorname{sen}\theta)$:
+$$D\Phi=\begin{pmatrix}\frac{\partial x}{\partial r}&\frac{\partial x}{\partial\theta}\\[2pt]\frac{\partial y}{\partial r}&\frac{\partial y}{\partial\theta}\end{pmatrix}=\begin{pmatrix}\cos\theta&-r\operatorname{sen}\theta\\\operatorname{sen}\theta&r\cos\theta\end{pmatrix}.$$
+<a class="t" data-v="b" data-t="13:53">13:53</a> <a class="t" data-v="b" data-t="15:55">15:55</a></p>
+<p class="hint"><span class="tag vid">Video</span> "Abuso de notación": los vectores van como fila o como columna según convenga para que la cuenta tenga sentido, sin escribir la traspuesta. <a class="t" data-v="b" data-t="14:54">14:54</a></p></div>
+<div class="box def"><span class="lab">Diferenciable <span class="tag piz">Pizarrón</span> <a class="t" data-v="b" data-t="17:57">17:57</a></span>
+<p>Sea $f:U\subset\R^n\to\R^k$, $x_0\in U$. Decimos que $f$ es diferenciable en $x_0$ si existen sus derivadas parciales y
+$$f(x)=f(x_0)+\underbrace{Df(x_0)}_{k\times n}\cdot\underbrace{(x-x_0)}_{n\times1}+\varepsilon_f(x,x_0),\qquad\text{donde}\quad\lim_{x\to x_0}\frac{\varepsilon_f(x,x_0)}{|x-x_0|}=0.$$</p>
+<p class="hint"><span class="tag vid">Video</span> Para $f:\R^2\to\R^2$ no hay gráfico ni plano tangente: lo que juega ese rol es la función lineal $x\mapsto Df(x_0)(x-x_0)$. "Escribir $f$ = algo + error no dice nada; lo que dice es la propiedad del error." <a class="t" data-v="b" data-t="16:57">16:57</a> <a class="t" data-v="b" data-t="19:59">19:59</a> <a class="t" data-v="b" data-t="22:59">22:59</a></p></div>
+<div class="viz" id="viz-lin"></div>
+<div class="box obs"><span class="lab c-blue">Ejercicio de la clase <span class="tag piz">Pizarrón</span> <a class="t" data-v="b" data-t="22:59">22:59</a></span>
+<p>Supongamos que existe una matriz $A\in\R^{k\times m}$ tal que $\dfrac{f(x)-f(x_0)-A(x-x_0)}{|x-x_0|}\to0$ cuando $x\to x_0$. Entonces $f$ es diferenciable y $A=Df(x_0)$.</p>
+<p class="hint"><span class="tag vid">Video</span> "Si les planteo un ejercicio es porque no es muy difícil." Sugerencia: primero con $k=n=1$ (ahí $A$ es un número y tiene que ser la derivada), después con $f$ de dos variables ($A$ tiene que ser el gradiente). Está resuelto en el <a href="#ej1">ejercicio 1</a>. <a class="t" data-v="b" data-t="25:06">25:06</a></p></div>
+<div class="revnote"><b>Revisar</b>En la hoja dice $A\in\R^{k\times m}$; para que el producto $A(x-x_0)$ tenga sentido, $A$ tiene que ser de $k\times n$. ¿Es una errata?</div>
+<div class="box thm"><span class="lab">Lema <span class="tag piz">Pizarrón</span> <a class="t" data-v="b" data-t="26:07">26:07</a></span>
+<p>Si $f$ es diferenciable en $x_0$, entonces $f$ es continua en $x_0$.</p>
+<p class="hint"><span class="tag vid">Video</span> "Es exactamente igual que para dos o tres variables": en $f(x)=f(x_0)+Df(x_0)(x-x_0)+\varepsilon_f$, los dos últimos términos tienden a $0$. Además sale del lema de la sección siguiente. <a class="t" data-v="b" data-t="27:08">27:08</a></p></div>
+<div class="box thm"><span class="lab">Lema <span class="tag piz">Pizarrón</span> <a class="t" data-v="b" data-t="29:11">29:11</a></span>
+<p>$f(x)=(f_1(x),\dots,f_k(x))$ es diferenciable en $x_0$ si y solo si $f_i$ es diferenciable en $x_0$ para todo $i=1,\dots,k$.</p></div>
+<details class="dem"><summary>Demostración <a class="t" data-v="b" data-t="30:14">30:14</a></summary><div class="in">
+<p><b>Una observación sobre matrices.</b> Si $A=(a_{ij})\in\R^{k\times n}$ y llamamos $A_i=(a_{i1},\dots,a_{in})$ a su fila $i$, entonces
+$$A\cdot x=\begin{pmatrix}A_1\cdot x\\\vdots\\A_k\cdot x\end{pmatrix}:$$
+cada coordenada es el producto escalar de una fila por $x$. En la matriz diferencial, la fila $i$ es $\nabla f_i(x_0)$. <a class="t" data-v="b" data-t="31:15">31:15</a> <a class="t" data-v="b" data-t="33:16">33:16</a> <a class="t" data-v="b" data-t="34:18">34:18</a></p>
+<p><b>La prueba.</b> La igualdad vectorial $f(x)=f(x_0)+Df(x_0)(x-x_0)+\varepsilon_f(x,x_0)$ equivale a las $k$ igualdades
+$$f_i(x)=f_i(x_0)+\nabla f_i(x_0)\cdot(x-x_0)+\varepsilon_{f_i}(x,x_0),\qquad i=1,\dots,k,$$
+con $\varepsilon_f=(\varepsilon_{f_1},\dots,\varepsilon_{f_k})$. Entonces
+$$\frac{\varepsilon_f(x,x_0)}{|x-x_0|}=\Big(\frac{\varepsilon_{f_1}(x,x_0)}{|x-x_0|},\dots,\frac{\varepsilon_{f_k}(x,x_0)}{|x-x_0|}\Big),$$
+y un vector tiende a $0$ si y solo si cada coordenada tiende a $0$. $\blacksquare$ <a class="t" data-v="b" data-t="35:19">35:19</a> <a class="t" data-v="b" data-t="37:20">37:20</a></p></div></details>
+<div class="box thm"><span class="lab">Corolario ($C^1$ implica diferenciable) <span class="tag piz">Pizarrón</span> <a class="t" data-v="b" data-t="38:20">38:20</a></span>
+<p>Si $D_jf_i$ es continua en (un entorno de) $x_0$ para todo $i=1,\dots,k$ y todo $j=1,\dots,n$, entonces $f$ resulta diferenciable en $x_0$.</p>
+<p class="hint">Cada $f_i$ es una función escalar de clase $C^1$, y para ellas ya probamos que $C^1$ implica diferenciable (<a href="anexo3.html">Anexo 3</a>, con $n$ variables en vez de 2 no cambia nada). Por el lema, $f$ es diferenciable. <span class="tag vid">Video</span> "Nos queda un último anexo para terminar con la teoría de diferenciación." <a class="t" data-v="b" data-t="39:21">39:21</a> <a class="t" data-v="b" data-t="40:22">40:22</a></p></div>
+<div class="quiz" id="quiz-1"></div>
+</section>
+
+<!-- ======================= REGLA DE LA CADENA ======================= -->
+<section class="clase" id="t4">
+<header>
+  <div class="kick">SOLO LA HOJA · <span class="tag piz">Pizarrón</span></div>
+  <h2>La regla de la cadena, en general</h2>
+  <div class="meta"><span>El "último anexo" que anuncia la parte 2 no está en el canal: esta sección sale solo de la hoja, sin videos.</span></div>
+</header>
+<div class="box def"><span class="lab">Norma de una matriz</span>
+<p>Si $A=(a_{ij})\in\R^{k\times n}$, se define $\|A\|_2=\sqrt{\sum_{i=1}^k\sum_{j=1}^na_{ij}^2}$. Llamando $A_i$ a las filas, $\|A\|_2=\sqrt{\sum_{i=1}^k|A_i|^2}$.</p></div>
+<div class="box thm"><span class="lab">Lema</span>
+<p>Si $A\in\R^{k\times n}$ y $x\in\R^n$, entonces $|Ax|\le\|A\|_2\,|x|$.</p></div>
+<details class="dem" open><summary>Demostración</summary><div class="in">
+<p>$Ax=(A_1\cdot x,\dots,A_k\cdot x)$, así que, por Cauchy–Schwarz,
+$$|Ax|^2=\sum_{i=1}^k(A_i\cdot x)^2\le\sum_{i=1}^k|A_i|^2|x|^2=\Big(\sum_{i=1}^k|A_i|^2\Big)|x|^2=\|A\|_2^2\,|x|^2.\qquad\blacksquare$$</p></div></details>
+<div class="box thm"><span class="lab">Lema</span>
+<p>Si $f$ es diferenciable en $x_0$, entonces existen $R\gt0$ y $L\gt0$ tales que
+$$|f(x)-f(x_0)|\le L\,|x-x_0|\qquad\text{si }|x-x_0|\lt R.$$</p></div>
+<details class="dem" open><summary>Demostración</summary><div class="in">
+<p>$|f(x)-f(x_0)|=|Df(x_0)(x-x_0)+\varepsilon_f(x,x_0)|\le\underbrace{|Df(x_0)(x-x_0)|}_{\text{I}}+\underbrace{|\varepsilon_f(x,x_0)|}_{\text{II}}$.</p>
+<p>$\text{I}\le\|Df(x_0)\|_2\,|x-x_0|$. Para II, tomando "$\varepsilon=1$" en el límite de la definición, existe $R\gt0$ tal que $\frac{|\varepsilon_f(x,x_0)|}{|x-x_0|}\lt1$ si $|x-x_0|\lt R$; entonces $|\varepsilon_f(x,x_0)|=\frac{|\varepsilon_f(x,x_0)|}{|x-x_0|}|x-x_0|\lt|x-x_0|$. Luego
+$$\text{I}+\text{II}\le\|Df(x_0)\|_2|x-x_0|+|x-x_0|=\underbrace{(\|Df(x_0)\|_2+1)}_{L}\,|x-x_0|.\qquad\blacksquare$$</p>
+<p class="hint"><span class="tag add">Agregado</span> En particular $f(x)\to f(x_0)$: es otra prueba de que diferenciable implica continua (el "lema más general" que anuncia el video de la parte 2, minuto <a class="t" data-v="b" data-t="26:07">26:07</a>).</p></div></details>
+<div class="box thm"><span class="lab">Teorema (regla de la cadena)</span>
+<p>Sean $f:U\subset\R^n\to\R^k$ y $g:V\subset\R^k\to\R^m$, con $f$ diferenciable en $x_0\in U$, $y_0=f(x_0)\in V$ y $g$ diferenciable en $y_0$. Entonces $g\circ f$ resulta diferenciable en $x_0$ y
+$$\underbrace{D(g\circ f)(x_0)}_{m\times n}=\underbrace{Dg(y_0)}_{m\times k}\cdot\underbrace{Df(x_0)}_{k\times n}.$$</p>
+<p class="hint">$\R^n\xrightarrow{\ f\ }\R^k\xrightarrow{\ g\ }\R^m$. Las versiones de la Clase 22 son casos particulares: con $n=1$, $m=1$, $Dg\cdot Df=\nabla g\cdot\mathbf r'$.</p></div>
+<details class="dem" open><summary>Demostración</summary><div class="in">
+<p>Por la diferenciabilidad de $f$ y de $g$:
+$$f(x)=f(x_0)+Df(x_0)(x-x_0)+\varepsilon_f(x,x_0),\qquad g(y)=g(y_0)+Dg(y_0)(y-y_0)+\varepsilon_g(y,y_0),$$
+con $\frac{\varepsilon_f(x,x_0)}{|x-x_0|}\to0$ y $\frac{\varepsilon_g(y,y_0)}{|y-y_0|}\to0$. Con $y=f(x)$:
+$$g(f(x))=g(f(x_0))+Dg(f(x_0))\big[Df(x_0)(x-x_0)+\varepsilon_f(x,x_0)\big]+\varepsilon_g(f(x),f(x_0))$$
+$$=g(f(x_0))+\underbrace{Dg(f(x_0))\,Df(x_0)}_{\text{¿}D(g\circ f)(x_0)\text{?}}(x-x_0)+\underbrace{Dg(f(x_0))\,\varepsilon_f(x,x_0)+\varepsilon_g(f(x),f(x_0))}_{\text{¿}\varepsilon_{g\circ f}(x,x_0)\text{?}}.$$
+Debo ver entonces que $\frac{Dg(f(x_0))\,\varepsilon_f(x,x_0)+\varepsilon_g(f(x),f(x_0))}{|x-x_0|}\to0$ cuando $x\to x_0$. Separamos en I y II.</p>
+<p>$|\text{I}|=\frac{|Dg(f(x_0))\,\varepsilon_f(x,x_0)|}{|x-x_0|}\le\|Dg(f(x_0))\|_2\,\frac{|\varepsilon_f(x,x_0)|}{|x-x_0|}\to0$.</p>
+<p>$|\text{II}|=\frac{|\varepsilon_g(f(x),f(x_0))|}{|x-x_0|}=\frac{|\varepsilon_g(f(x),f(x_0))|}{|f(x)-f(x_0)|}\cdot\frac{|f(x)-f(x_0)|}{|x-x_0|}$. Cuando $x\to x_0$, $f(x)\to f(x_0)$, así que el primer factor tiende a $0$; y por el lema anterior, $\frac{|f(x)-f(x_0)|}{|x-x_0|}\le L$ si $|x-x_0|\lt R$: está acotado. Luego $\text{II}\to0$. $\blacksquare$</p></div></details>
+<div class="revnote"><b>Revisar</b>En II se divide por $|f(x)-f(x_0)|$, que puede ser $0$ para $x\neq x_0$ (por ejemplo, si $f$ es constante en alguna dirección). Es el mismo detalle que en el lema de composición del Anexo 2. Una forma de salvarlo: escribir $\varepsilon_g(y,y_0)=\eta(y)\,|y-y_0|$ con $\eta(y_0)=0$ y $\eta(y)\to0$; entonces $|\text{II}|=|\eta(f(x))|\frac{|f(x)-f(x_0)|}{|x-x_0|}\le L\,|\eta(f(x))|\to0$, sin dividir. ¿Lo agregamos?</div>
+<div class="quiz" id="quiz-2"></div>
+</section>
+
+<!-- ======================= EJERCICIOS ======================= -->
+<section class="clase" id="ejercicios">
+<header>
+  <div class="kick">EJERCICIOS · <span class="tag add">Agregado</span></div>
+  <h2>Para practicar</h2>
+  <div class="meta"><span>El primero es el que deja la parte 2; los demás son nuevos, con pistas y resolución.</span></div>
+</header>
+<div class="ctl" style="margin-bottom:14px"><span class="c-mut" id="ejprog" style="font:600 13.5px var(--f-mono)"></span></div>
+<div class="ejlist" id="ejlist"></div>
+</section>
+
+<div class="foot">Material basado en el Anexo 4 (partes 1 y 2) del canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a> y en la hoja "Anexo: Diferenciación". Las secciones marcadas como <span class="tag add">Agregado</span> son material nuevo. Versión preliminar, para revisar antes de compartir.</div>
+</main>
+</div>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],macros:{"R": "\\mathbb{R}", "v": ["\\mathbf{#1}", 1], "ang": ["\\langle #1\\rangle", 1], "jh": "\\hat{\\jmath}"}},svg:{fontCache:'none'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']},startup:{typeset:false}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>
+window.G1IMG={};
+(function(){'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>Array.from(r.querySelectorAll(q));
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in (attrs||{})){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});return e;}
+function sv(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const f=(x,d=2)=>{let v=Number(Number(x).toFixed(d));if(Object.is(v,-0)||Math.abs(v)<1e-12)v=0;return String(v).replace('.',',').replace('-','−');};
+const fv=(v,d=2)=>'⟨'+v.map(x=>f(x,d)).join('; ')+'⟩';
+const fp=(v,d=2)=>'('+v.map(x=>f(x,d)).join('; ')+')';
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const add=(a,b)=>a.map((x,i)=>x+b[i]), sub=(a,b)=>a.map((x,i)=>x-b[i]), mul=(a,t)=>a.map(x=>x*t);
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), nrm=a=>Math.sqrt(dot(a,a));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=nrm(a);return n?mul(a,1/n):a;};
+const CL={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',violet:'var(--violet)',ink:'var(--ink)',mut:'var(--ink-2)',amber:'var(--amber)'};
+const TT={blue:'var(--blue-t)',red:'var(--red-t)',green:'var(--green-t)',violet:'var(--violet-t)'};
+
+function arrow(g,x1,y1,x2,y2,col,w,head){w=w||2.6;head=head||11;const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);if(L<1.5)return;
+  const ux=dx/L,uy=dy/L,hl=Math.min(head,L*.7),bx=x2-ux*hl,by=y2-uy*hl;
+  sv('line',{x1,y1,x2:bx,y2:by,style:`stroke:${col};stroke-width:${w};stroke-linecap:round`},g);
+  sv('polygon',{points:`${x2},${y2} ${bx-uy*hl*.42},${by+ux*hl*.42} ${bx+uy*hl*.42},${by-ux*hl*.42}`,style:`fill:${col}`},g);}
+function line(g,x1,y1,x2,y2,col,w,dash){return sv('line',{x1,y1,x2,y2,style:`stroke:${col};stroke-width:${w||1.5};${dash?'stroke-dasharray:'+dash+';':''}stroke-linecap:round`},g);}
+function text(g,x,y,t,col,anchor,cls){const e=sv('text',{x,y,'text-anchor':anchor||'middle',style:`fill:${col||CL.ink}`,class:cls||''},g);e.textContent=t;return e;}
+
+/* ---------- control helpers ---------- */
+function slider(label,o,cb){const inp=h('input',{type:'range',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':label});
+  const val=h('span',{},'');const upd=()=>{val.textContent=f(+inp.value,o.dec==null?1:o.dec)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();cb(+inp.value);});upd();
+  const l=h('label',{},label,inp,val);l.input=inp;l.set=v=>{inp.value=v;upd();};return l;}
+function numbox(o,cb){const i=h('input',{type:'number',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':o.label});
+  i.addEventListener('input',()=>{let v=parseFloat(i.value);if(isNaN(v))return;v=Math.max(o.min,Math.min(o.max,v));cb(v);});return i;}
+function tabs(names,cb,start){const bs=names.map((n,i)=>h('button',{type:'button','aria-pressed':i===(start||0)},n));
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===i));cb(i);}));return h('div',{class:'tabs'},bs);}
+function vhead(title,sub,tb){return h('div',{class:'vh'},h('b',{},title),sub?h('span',{},sub):null,tb||null);}
+
+/* ---------- plano 2D con puntos arrastrables ---------- */
+function Plane2D(host,o){
+  const xr=o.xr||[-6,6],yr=o.yr||[-4,4],W=o.W||640,sx=W/(xr[1]-xr[0]),H=sx*(yr[1]-yr[0]);
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Plano cartesiano interactivo'},host);
+  const X=x=>(x-xr[0])*sx,Y=y=>H-(y-yr[0])*sx;
+  const gb=sv('g',{},svg),gd=sv('g',{},svg),gh=sv('g',{},svg);
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){line(gb,X(x),0,X(x),H,'var(--grid)',1);if(x&&x%(o.tick||1)===0)text(gb,X(x),Y(0)+15,x,CL.mut,'middle','sm');}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){line(gb,0,Y(y),W,Y(y),'var(--grid)',1);if(y&&y%(o.ytick||o.tick||1)===0)text(gb,X(0)-7,Y(y)+4,y,CL.mut,'end','sm');}
+  arrow(gb,0,Y(0),W-2,Y(0),CL.mut,1.6,8);arrow(gb,X(0),H,X(0),2,CL.mut,1.6,8);
+  text(gb,W-10,Y(0)-8,o.xl||'x',CL.mut);text(gb,X(0)+12,12,o.yl||'y',CL.mut);
+  const api={svg,X,Y,sx,W,H,xr,yr,g:gd,handles:[]};
+  function toW(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x/sx+xr[0],(H-p.y)/sx+yr[0]];}
+  api.handle=function(obj,col,opt){opt=opt||{};const snap=opt.snap||.5,c=sv('circle',{r:11,class:'grab',tabindex:0,role:'slider','aria-label':opt.label||'Punto arrastrable',style:`fill:${col};stroke:var(--surface);stroke-width:3`},gh);
+    let drag=false;const clampSet=(x,y)=>{x=Math.round(x/snap)*snap;y=Math.round(y/snap)*snap;obj.x=Math.max(xr[0]+.3,Math.min(xr[1]-.3,x));obj.y=Math.max(yr[0]+.3,Math.min(yr[1]-.3,y));api.update();};
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);e.preventDefault();});
+    c.addEventListener('pointermove',e=>{if(!drag)return;const p=toW(e);clampSet(p[0],p[1]);});
+    const end=()=>{drag=false;};c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+    c.addEventListener('keydown',e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(d){e.preventDefault();clampSet(obj.x+d[0]*snap,obj.y+d[1]*snap);}});
+    api.handles.push({obj,c});return c;};
+  api.update=function(){gd.textContent='';o.draw(gd,api);api.handles.forEach(hd=>{hd.c.setAttribute('cx',X(hd.obj.x));hd.c.setAttribute('cy',Y(hd.obj.y));});if(o.onUpdate)o.onUpdate(api);};
+  return api;
+}
+
+/* ---------- vista 3D ortográfica, eje z hacia arriba, terna derecha ---------- */
+function View3D(host,o){
+  o=o||{};const W=o.W||640,H=o.H||430,scale=o.scale||40,ctr=o.ctr||[0,0,0];
+  const st={az:o.az==null?215:o.az,el:o.el==null?22:o.el};
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Vista tridimensional. Se puede girar arrastrando.'},host);
+  const g=sv('g',{},svg);
+  function P(p){const a=rad(st.az),e=rad(st.el),x=p[0]-ctr[0],y=p[1]-ctr[1],z=p[2]-ctr[2];
+    const x1=Math.cos(a)*x-Math.sin(a)*y,y1=Math.sin(a)*x+Math.cos(a)*y;
+    return [W/2+x1*scale,H/2-(z*Math.cos(e)+y1*Math.sin(e))*scale,y1*Math.cos(e)-z*Math.sin(e)];}
+  const api={svg,st,P,draw:null};
+  api.render=function(){g.textContent='';const polys=[],ops=[],txt=[];
+    const sc={
+      poly(pts,col,op,stroke){polys.push({pts:pts.map(P),col,op,stroke});},
+      line(a,b,col,w,dash){ops.push(()=>{const p=P(a),q=P(b);line(g,p[0],p[1],q[0],q[1],col,w,dash);});},
+      path(pts,col,w,dash,closed){ops.push(()=>{const q=pts.map(P);sv('polyline',{points:q.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' ')+(closed?' '+q[0][0].toFixed(1)+','+q[0][1].toFixed(1):''),style:`fill:none;stroke:${col};stroke-width:${w||1.4};${dash?'stroke-dasharray:'+dash+';':''}stroke-linejoin:round`},g);});},
+      arrow(a,b,col,w){ops.push(()=>{const p=P(a),q=P(b);arrow(g,p[0],p[1],q[0],q[1],col,w||2.8,11);});},
+      dot(a,col,r){ops.push(()=>{const p=P(a);sv('circle',{cx:p[0],cy:p[1],r:r||5,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);});},
+      disc(c,rpx,col){ops.push(()=>{const p=P(c);sv('circle',{cx:p[0],cy:p[1],r:rpx*scale,style:`fill:${col};stroke:none`},g);});},
+      text(a,t,col,dx,dy,anc){txt.push(()=>{const p=P(a);text(g,p[0]+(dx||0),p[1]+(dy||0),t,col,anc);});},
+      axes(L,neg){const ex=[[1,0,0,'x'],[0,1,0,'y'],[0,0,1,'z']];ex.forEach(e=>{const v=[e[0],e[1],e[2]];
+        if(neg!==false)sc.line(mul(v,-L),[0,0,0],'var(--line)',1.2,'4 4');
+        ops.push(()=>{const p=P([0,0,0]),q=P(mul(v,L));arrow(g,p[0],p[1],q[0],q[1],CL.mut,1.6,9);});
+        sc.text(mul(v,L*1.1),e[3],CL.mut,0,4);});},
+      box(lo,hi,col,op){const[x0,y0,z0]=lo,[x1,y1,z1]=hi;const C=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        [[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach(q=>sc.poly(q.map(i=>C[i]),col,op,col));},
+      patch(n,d,S,col,op,dashed){n=unit(n);const e=Math.abs(n[2])<.9?[0,0,1]:[1,0,0];const u=unit(cross(n,e)),v=cross(n,u),c=mul(n,d);
+        const q=[add(add(c,mul(u,S)),mul(v,S)),add(sub(c,mul(u,S)),mul(v,S)),sub(sub(c,mul(u,S)),mul(v,S)),sub(add(c,mul(u,S)),mul(v,S))];
+        sc.poly(q,col,op,col);if(dashed)sc.path(q,col,1.6,'6 5',true);return {q,c,n,u,v};},
+      circle(c,r,plane,col,w,dash){const pts=[];for(let i=0;i<=48;i++){const t=i/48*2*Math.PI,a=Math.cos(t)*r,b=Math.sin(t)*r;
+        pts.push(plane==='xy'?[c[0]+a,c[1]+b,c[2]]:plane==='xz'?[c[0]+a,c[1],c[2]+b]:[c[0],c[1]+a,c[2]+b]);}sc.path(pts,col,w||1.3,dash);},
+      surf(fn,ur,vr,nu,nv,col,op,stroke){for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const u0=ur[0]+(ur[1]-ur[0])*i/nu,u1=ur[0]+(ur[1]-ur[0])*(i+1)/nu,v0=vr[0]+(vr[1]-vr[0])*j/nv,v1=vr[0]+(vr[1]-vr[0])*(j+1)/nv;
+        const q=[fn(u0,v0),fn(u1,v0),fn(u1,v1),fn(u0,v1)];if(q.some(p=>!p||p.some(x=>!isFinite(x))))continue;polys.push({pts:q.map(P),col,op:op==null?.35:op,stroke:stroke||col,sw:.6});}},
+      sphere(c,r,col,dash){sc.disc(c,r,'var(--blue-t)');['xy','xz','yz'].forEach(p=>sc.circle(c,r,p,col||CL.blue,1.4,dash));
+        for(const k of[.5,-.5]){const rr=r*Math.sqrt(1-k*k);sc.circle([c[0],c[1],c[2]+r*k],rr,'xy',col||CL.blue,.9,dash);}}
+    };
+    if(api.draw)api.draw(sc);
+    polys.sort((a,b)=>mean(b.pts)-mean(a.pts));
+    polys.forEach(p=>{sv('polygon',{points:p.pts.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' '),style:`fill:${p.col};fill-opacity:${p.op==null?.25:p.op};stroke:${p.stroke||'none'};stroke-opacity:.55;stroke-width:${p.sw||1.2}`},g);});
+    ops.forEach(fn=>fn());txt.forEach(fn=>fn());};
+  function mean(pts){return pts.reduce((s,p)=>s+p[2],0)/pts.length;}
+  // arrastre para girar
+  let drag=null;svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,az:st.az,el:st.el};svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect(),k=W/r.width;st.az=drag.az-(e.clientX-drag.x)*k*.5;
+    if(e.pointerType==='mouse'){st.el=Math.max(-80,Math.min(85,drag.el+(e.clientY-drag.y)*k*.4));}
+    api.sync&&api.sync();api.render();});
+  const end=()=>{drag=null;};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  api.controls=function(){const a=slider('giro',{min:0,max:360,step:1,value:Math.round(((st.az%360)+360)%360),unit:'°',dec:0},v=>{st.az=v;api.render();});
+    const b=slider('inclinación',{min:-80,max:85,step:1,value:st.el,unit:'°',dec:0},v=>{st.el=v;api.render();});
+    api.sync=()=>{a.set(Math.round(((st.az%360)+360)%360));b.set(Math.round(st.el));};
+    const reset=h('button',{type:'button',onclick:()=>{st.az=o.az==null?215:o.az;st.el=o.el==null?22:o.el;api.sync();api.render();}},'Vista inicial');
+    return h('div',{class:'ctl'},a,b,reset);};
+  return api;
+}
+
+
+/* ---------- expresiones escritas por el usuario: expr('t^2-2t',['t']) -> función ---------- */
+function expr(src,vars){vars=vars||['x'];const s=String(src).replace(/\s+/g,'').replace(/\*\*/g,'^').replace(/π/g,'pi').replace(/θ/g,'th').replace(/·/g,'*').replace(/−/g,'-').replace(/,/g,'.');
+  const FN={sin:Math.sin,sen:Math.sin,cos:Math.cos,tan:Math.tan,tg:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,arcsen:Math.asin,arccos:Math.acos,arctan:Math.atan,sqrt:Math.sqrt,raiz:Math.sqrt,exp:Math.exp,ln:Math.log,log:Math.log,abs:Math.abs,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),sgn:Math.sign};
+  const C={pi:Math.PI,e:Math.E};let i=0;const err=m=>{throw new Error(m);};
+  const peek=()=>s[i];
+  function num(){const m=/^\d*\.?\d+(e[+-]?\d+)?/i.exec(s.slice(i));if(!m)err('número');i+=m[0].length;const v=parseFloat(m[0]);return ()=>v;}
+  function ident(){const m=/^[a-zA-Z_]+/.exec(s.slice(i));i+=m[0].length;let w=m[0];
+    // separar nombres pegados: "tsint" -> t, sin, t ; prioridad: funciones, constantes, variables
+    const names=[...Object.keys(FN),...Object.keys(C),...vars].sort((a,b)=>b.length-a.length);
+    const parts=[];while(w.length){const n=names.find(nm=>w.startsWith(nm));if(!n)err('nombre desconocido: '+w);parts.push(n);w=w.slice(n.length);}
+    return parts;}
+  function primary(){const c=peek();
+    if(c==='('){i++;const e=add_();if(peek()!==')')err('falta )');i++;return e;}
+    if(c==='|'){i++;const e=add_();if(peek()!=='|')err('falta |');i++;return v=>Math.abs(e(v));}
+    if(/[\d.]/.test(c))return num();
+    if(/[a-zA-Z_]/.test(c)){const parts=ident();
+      const build=k=>{const n=parts[k];
+        if(FN[n]){let arg;if(k+1<parts.length){arg=build(k+1);}else{arg=power();}const f=FN[n];return v=>f(arg(v));}
+        let a;if(n in C){const cv=C[n];a=()=>cv;}else{const j=vars.indexOf(n);a=v=>v[j];}
+        if(k+1<parts.length){const r=build(k+1);return v=>a(v)*r(v);}return a;};
+      return build(0);}
+    err('símbolo inesperado: '+(c||'fin'));}
+  function power(){const b=primary();if(peek()==='^'){i++;const e=unary();return v=>Math.pow(b(v),e(v));}return b;}
+  function unary(){if(peek()==='-'){i++;const u=unary();return v=>-u(v);}if(peek()==='+'){i++;return unary();}return power();}
+  function mul_(){let a=unary();for(;;){const c=peek();
+      if(c==='*'||c==='/'){i++;const b=unary(),l=a;a=c==='*'?(v=>l(v)*b(v)):(v=>l(v)/b(v));}
+      else if(c&&/[\d.a-zA-Z_(|]/.test(c)&&c!=='|'){const b=unary(),l=a;a=v=>l(v)*b(v);}
+      else return a;}}
+  function add_(){let a=mul_();for(;;){const c=peek();if(c==='+'||c==='-'){i++;const b=mul_(),l=a;a=c==='+'?(v=>l(v)+b(v)):(v=>l(v)-b(v));}else return a;}}
+  if(!s.length)err('vacía');const f=add_();if(i<s.length)err('sobra: '+s.slice(i));
+  return (...a)=>f(a);}
+
+/* ---------- curvas de nivel (marching squares): devuelve lista de segmentos [[x1,y1],[x2,y2]] ---------- */
+function contour(F,xr,yr,c,n){n=n||80;const dx=(xr[1]-xr[0])/n,dy=(yr[1]-yr[0])/n,segs=[];const G=[];
+  for(let i=0;i<=n;i++){G[i]=[];for(let j=0;j<=n;j++){const v=F(xr[0]+i*dx,yr[0]+j*dy);G[i][j]=isFinite(v)?((v-c)===0?1e-12:v-c):NaN;}}
+  const lerp=(a,b,pa,pb)=>{const t=a/(a-b);return [pa[0]+(pb[0]-pa[0])*t,pa[1]+(pb[1]-pa[1])*t];};
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=xr[0]+i*dx,y=yr[0]+j*dy;
+    const P=[[x,y],[x+dx,y],[x+dx,y+dy],[x,y+dy]],V=[G[i][j],G[i+1][j],G[i+1][j+1],G[i][j+1]];
+    if(V.some(isNaN))continue;const pts=[];
+    for(let k=0;k<4;k++){const a=V[k],b=V[(k+1)%4];if((a<0)!==(b<0))pts.push(lerp(a,b,P[k],P[(k+1)%4]));else if(a===0&&b!==0)pts.push(P[k]);}
+    if(pts.length===2)segs.push(pts);else if(pts.length===4){segs.push([pts[0],pts[1]]);segs.push([pts[2],pts[3]]);}}
+  return segs;}
+
+/* ---------- dibujar una curva en un Plane2D: pts = [[x,y],...] (cortes en NaN o saltos) ---------- */
+function poly2(g,api,pts,col,w,dash){let d='',pen=false,prev=null;const {X,Y}=api,lim=Math.max(api.W,api.H)*3;
+  pts.forEach(p=>{const ok=p&&isFinite(p[0])&&isFinite(p[1]);if(!ok){pen=false;prev=null;return;}const px=X(p[0]),py=Y(p[1]);
+    if(Math.abs(px)>lim||Math.abs(py)>lim){pen=false;prev=null;return;}
+    if(prev&&Math.hypot(px-prev[0],py-prev[1])>api.W*.35)pen=false;
+    d+=(pen?'L':'M')+px.toFixed(1)+' '+py.toFixed(1);pen=true;prev=[px,py];});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.5};stroke-linejoin:round;stroke-linecap:round;${dash?'stroke-dasharray:'+dash:''}`},g);}
+function segs2(g,api,segs,col,w){const {X,Y}=api;let d='';segs.forEach(s=>{d+='M'+X(s[0][0]).toFixed(1)+' '+Y(s[0][1]).toFixed(1)+'L'+X(s[1][0]).toFixed(1)+' '+Y(s[1][1]).toFixed(1);});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.2};stroke-linecap:round`},g);}
+window.G1={$,$$,h,sv,f,fv,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2};
+})();
+(function(){'use strict';
+const {$,h,sv,f,CL,arrow,line,text,slider,vhead,Plane2D,poly2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+
+/* ======================================================================
+   Cauchy–Schwarz y Young con dos vectores del plano
+   ====================================================================== */
+V.cs=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});const X={x:2,y:1},Y={x:.5,y:2};
+  host.append(vhead('Cauchy–Schwarz, Young y la desigualdad triangular','Arrastrá x (azul) e y (rojo): |x·y| ≤ |x||y| ≤ (|x|² + |y|²)/2, y |x + y| ≤ |x| + |y|'),body);
+  const pl=Plane2D(body,{xr:[-3.5,3.5],yr:[-2.6,3.4],tick:1,label:'Dos vectores del plano, su suma y sus versores',draw(g,a){
+    const nx=Math.hypot(X.x,X.y),ny=Math.hypot(Y.x,Y.y);
+    sv('circle',{cx:a.X(0),cy:a.Y(0),r:a.sx,style:'fill:none;stroke:var(--ink-2);stroke-dasharray:3 4'},g);
+    line(g,a.X(X.x),a.Y(X.y),a.X(X.x+Y.x),a.Y(X.y+Y.y),CL.red,1.4,'5 4');line(g,a.X(Y.x),a.Y(Y.y),a.X(X.x+Y.x),a.Y(X.y+Y.y),CL.blue,1.4,'5 4');
+    arrow(g,a.X(0),a.Y(0),a.X(X.x+Y.x),a.Y(X.y+Y.y),CL.green,2.6);
+    arrow(g,a.X(0),a.Y(0),a.X(X.x),a.Y(X.y),CL.blue,3);arrow(g,a.X(0),a.Y(0),a.X(Y.x),a.Y(Y.y),CL.red,3);
+    if(nx>1e-6)arrow(g,a.X(0),a.Y(0),a.X(X.x/nx),a.Y(X.y/nx),CL.blue,1.6);if(ny>1e-6)arrow(g,a.X(0),a.Y(0),a.X(Y.x/ny),a.Y(Y.y/ny),CL.red,1.6);
+    text(g,a.X(X.x+Y.x)+8,a.Y(X.y+Y.y)-6,'x + y',CL.green,'start','sm');}});
+  pl.handle(X,CL.blue,{label:'Vector x',snap:.1});pl.handle(Y,CL.red,{label:'Vector y',snap:.1});
+  const o=pl.update;pl.update=function(){o();upd();};body.append(out);
+  function upd(){const nx=Math.hypot(X.x,X.y),ny=Math.hypot(Y.x,Y.y),d=X.x*Y.x+X.y*Y.y,ns=Math.hypot(X.x+Y.x,X.y+Y.y);
+    const xh=nx>0&&ny>0?d/(nx*ny):0;
+    out.innerHTML=`<span class="c-blue">x = (${f(X.x,1)}, ${f(X.y,1)})</span>, <span class="c-red">y = (${f(Y.x,1)}, ${f(Y.y,1)})</span>. &nbsp;|x·y| = <b>${f(Math.abs(d))}</b> ≤ |x||y| = <b>${f(nx*ny)}</b> ≤ (|x|² + |y|²)/2 = ${f((nx*nx+ny*ny)/2)}.<br>`+
+      `Con los versores (las flechas finas, de módulo 1): |x̂·ŷ| = ${f(Math.abs(xh))} ≤ 1 = (1 + 1)/2: es la etapa 3 de la demostración.<br>`+
+      `<span class="c-green">|x + y| = ${f(ns)}</span> ≤ |x| + |y| = ${f(nx+ny)}. <span class="c-mut">${Math.abs(Math.abs(d)-nx*ny)<1e-6?'Igualdad: x e y son paralelos.':'Las igualdades valen solo si x e y son paralelos.'}</span>`;}
+  pl.update();
+};
+
+/* ======================================================================
+   Lo que reemplaza al plano tangente: Φ(r, θ) y su aproximación lineal
+   ====================================================================== */
+V.lin=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let r0=1.5,t0=.6,sz=.9;
+  host.append(vhead('La matriz diferencial de las coordenadas polares','Un cuadradito del plano (r, θ) y su imagen por Φ (azul) y por la aproximación lineal (verde). Achicalo: casi coinciden'),body);
+  const L=h('div',{class:'half'}),Rr=h('div',{class:'half'});body.append(L,Rr);
+  const Phi=(r,t)=>[r*Math.cos(t),r*Math.sin(t)];
+  const lin=(r,t)=>{const P=Phi(r0,t0),c=Math.cos(t0),s=Math.sin(t0),dr=r-r0,dt=t-t0;return [P[0]+c*dr-r0*s*dt,P[1]+s*dr+r0*c*dt];};
+  function sq(){const n=12,pts=[];const e=sz/2;
+    for(let i=0;i<=n;i++)pts.push([r0-e+sz*i/n,t0-e]);for(let i=0;i<=n;i++)pts.push([r0+e,t0-e+sz*i/n]);
+    for(let i=0;i<=n;i++)pts.push([r0+e-sz*i/n,t0+e]);for(let i=0;i<=n;i++)pts.push([r0-e,t0+e-sz*i/n]);return pts;}
+  const pa=Plane2D(L,{W:440,xr:[-.4,3.4],yr:[-.6,3.2],tick:1,xl:'r',yl:'θ',label:'El plano (r, θ)',draw(g,a){
+    poly2(g,a,sq(),CL.violet,2.4);sv('circle',{cx:a.X(r0),cy:a.Y(t0),r:5,style:'fill:var(--ink)'},g);}});
+  const pb=Plane2D(Rr,{W:440,xr:[-1.4,3],yr:[-1.2,3.2],tick:1,label:'El plano (x, y): imagen exacta y lineal',draw(g,a){
+    const S=sq();poly2(g,a,S.map(p=>lin(p[0],p[1])),CL.green,2.2,'6 4');poly2(g,a,S.map(p=>Phi(p[0],p[1])),CL.blue,2.6);
+    const P=Phi(r0,t0);sv('circle',{cx:a.X(P[0]),cy:a.Y(P[1]),r:5,style:'fill:var(--ink)'},g);}});
+  const s1=slider('r₀',{min:.4,max:2.6,step:.05,value:r0,dec:2},x=>{r0=x;upd();}),s2=slider('θ₀',{min:0,max:2.6,step:.05,value:t0,dec:2},x=>{t0=x;upd();}),s3=slider('tamaño',{min:.02,max:1.2,step:.01,value:sz,dec:2},x=>{sz=x;upd();});
+  body.after(h('div',{class:'ctl'},s1,s2,s3),out);
+  function upd(){pa.update();pb.update();const c=Math.cos(t0),s=Math.sin(t0);let w=0;sq().forEach(p=>{const A=Phi(p[0],p[1]),B=lin(p[0],p[1]);w=Math.max(w,Math.hypot(A[0]-B[0],A[1]-B[1]));});
+    out.innerHTML=`DΦ(r₀, θ₀) = [ cos θ₀ &nbsp; −r₀ sen θ₀ ; sen θ₀ &nbsp; r₀ cos θ₀ ] = [ ${f(c)} &nbsp; ${f(-r0*s)} ; ${f(s)} &nbsp; ${f(r0*c)} ].<br>`+
+      `Mayor distancia entre la imagen exacta y la lineal: <b>${f(w,4)}</b>; dividida por el semilado del cuadradito: <b>${f(w/(sz/2),4)}</b>. <span class="c-mut">El error es despreciable comparado con |x − x₀|: eso es ser diferenciable. La imagen lineal es siempre un paralelogramo.</span>`;}
+  upd();
+};
+})();
+(function(){const R=String.raw;
+window.A1={key:'ax4',vid:{a:'34elOr07qDY',b:'pzCvRQWTZw8'},vlab:{a:'Anexo 4 p1',b:'Anexo 4 p2'},
+ viz:{'viz-cs':'cs','viz-lin':'lin'}};
+window.A1.quiz={
+'quiz-1':{t:'Autoevaluación: Rⁿ, continuidad y matriz diferencial',qs:[
+ {p:R`Si $f:\R^3\to\R^2$, la matriz $Df(x_0)$ es de:`,o:[R`$2\times3$`,R`$3\times2$`,R`$3\times3$`,R`$1\times3$`],c:0,w:R`Tantas filas como componentes ($k=2$) y tantas columnas como variables ($n=3$).`},
+ {p:R`Para una curva $\mathbf r:\R\to\R^3$, $D\mathbf r(t)$ es:`,o:[R`el vector derivado $\mathbf r'(t)$ puesto como columna`,R`el gradiente`,R`una matriz de $3\times3$`,R`un número`],c:0,w:R`Una sola variable (una columna) y tres componentes (tres filas).`},
+ {p:R`En la prueba de Cauchy–Schwarz, el caso $|x|=|y|=1$ sale de:`,o:[R`$|x\cdot y|\le\frac{|x|^2}{2}+\frac{|y|^2}{2}=1$`,R`$\cos\theta\le1$`,R`la desigualdad triangular`,R`que $x\cdot y=1$`],c:0,w:R`Es la "Young para vectores" (etapa 2). En $\R^n$ no se puede usar el coseno.`},
+ {p:R`¿Por qué se usa $\frac{\varepsilon}{\sqrt k}$ al probar que $f$ es continua si sus coordenadas lo son?`,o:[R`para que al final quede $\sqrt k\cdot\frac{\varepsilon}{\sqrt k}=\varepsilon$`,R`porque hay $k$ variables`,R`porque $\varepsilon\lt1$`,R`no hace falta`],c:0,w:R`$|f(x)-f(x_0)|\le\sqrt k\max_i|f_i(x)-f_i(x_0)|$; el $\sqrt k$ se compensa de antemano.`},
+ {p:R`$f=(f_1,\dots,f_k)$ es diferenciable en $x_0$ si y solo si:`,o:[R`cada $f_i$ es diferenciable en $x_0$`,R`alguna $f_i$ es diferenciable`,R`$Df(x_0)$ es cuadrada`,R`$f$ es continua`],c:0,w:R`El error vectorial tiende a 0 si y solo si cada coordenada del error tiende a 0.`}]},
+'quiz-2':{t:'Autoevaluación: regla de la cadena',qs:[
+ {p:R`Si $f:\R^2\to\R^3$ y $g:\R^3\to\R$, $D(g\circ f)(x_0)$ es:`,o:[R`$Dg(f(x_0))\cdot Df(x_0)$, de $1\times2$`,R`$Df(x_0)\cdot Dg(f(x_0))$, de $3\times3$`,R`$Dg(x_0)\cdot Df(x_0)$`,R`de $3\times2$`],c:0,w:R`Primero la de afuera, evaluada en $f(x_0)$: $(1\times3)\cdot(3\times2)=1\times2$.`},
+ {p:R`$|Ax|\le\|A\|_2|x|$ se prueba con:`,o:['Cauchy–Schwarz en cada fila','el valor medio','la regla de la cadena','Young para números'],c:0,w:R`$|Ax|^2=\sum(A_i\cdot x)^2\le\sum|A_i|^2|x|^2$.`},
+ {p:R`En la prueba de la cadena, el cociente $\frac{|f(x)-f(x_0)|}{|x-x_0|}$:`,o:['está acotado cerca de x₀','tiende a 0','tiende a infinito','vale 1'],c:0,w:R`Por el lema: $|f(x)-f(x_0)|\le L|x-x_0|$ si $|x-x_0|\lt R$.`}]}
+};
+})();
+(function(){'use strict';
+const R=String.raw;
+const EJ=[
+{n:1,t:'La única matriz posible',s:'El ejercicio de la parte 2',
+ enun:R`<p>Sea $f:U\subset\R^n\to\R^k$ y supongamos que existe una matriz $A$ de $k\times n$ tal que
+$$\lim_{x\to x_0}\frac{f(x)-f(x_0)-A(x-x_0)}{|x-x_0|}=0.$$
+Probar que $f$ es diferenciable en $x_0$ y que $A=Df(x_0)$.</p>`,
+ pistas:[R`<p>Como sugiere la clase, empezá con $n=k=1$: tomá $x=x_0+h$ y pasá el término con $A$ del otro lado.</p>`,
+  R`<p>En general, acercate por la recta $x=x_0+he_j$, con $h\to0^+$ y $h\to0^-$. ¿Qué es $Ae_j$?</p>`],
+ sol:R`<p>Como el límite es $0$, también lo es por la recta $x=x_0+he_j$ ($h\to0$), donde $|x-x_0|=|h|$:
+$$\frac{f(x_0+he_j)-f(x_0)-hAe_j}{|h|}\to0\ \Longrightarrow\ \frac{f(x_0+he_j)-f(x_0)}{h}-Ae_j\to0$$
+(multiplicando por $\frac{|h|}{h}=\pm1$, que no cambia que tienda a $0$). Entonces existe $\lim_{h\to0}\frac{f(x_0+he_j)-f(x_0)}{h}=Ae_j$, y mirando la coordenada $i$: existe $D_jf_i(x_0)$ y es igual a $(Ae_j)_i=a_{ij}$. Es decir, existen todas las derivadas parciales y $A=Df(x_0)$. Con eso, la hipótesis es exactamente la definición de diferenciable.</p>
+<p class="hint">Con $n=k=1$: $\frac{f(x_0+h)-f(x_0)}{h}\to a$, así que $a=f'(x_0)$. Con $k=1$, $n=2$: $A$ es una fila y queda $A=\nabla f(x_0)$.</p>`,
+ ref:[['b','22:59','el ejercicio'],['b','17:57','definición']]},
+
+{n:2,t:'Una matriz diferencial',s:'De R² en R³',
+ enun:R`<p>Sea $f:\R^2\to\R^3$, $f(x,y)=\big(x^2y,\ e^{x+y},\ \operatorname{sen}(xy)\big)$. Calcular $Df(x,y)$ y $Df(1,0)$. ¿Es $f$ diferenciable en todo $\R^2$?</p>`,
+ pistas:[R`<p>En la fila $i$ van $\frac{\partial f_i}{\partial x}$ y $\frac{\partial f_i}{\partial y}$.</p>`],
+ sol:R`<p>$$Df(x,y)=\begin{pmatrix}2xy&x^2\\e^{x+y}&e^{x+y}\\y\cos(xy)&x\cos(xy)\end{pmatrix},\qquad Df(1,0)=\begin{pmatrix}0&1\\e&e\\0&1\end{pmatrix}.$$
+Todas las derivadas parciales son continuas en $\R^2$: por el corolario, $f$ es diferenciable en todo $\R^2$.</p>`,
+ chk:{p:'las seis entradas de Df(1, 0), por filas',vals:[0,1,Math.E,Math.E,0,1]},
+ ref:[['b','9:49','matriz diferencial'],['b','38:20','C¹ ⇒ diferenciable']]},
+
+{n:3,t:'La cadena con matrices',s:'Multiplicar en el orden correcto',
+ enun:R`<p>Sean $f(x,y)=(x+y,\ xy)$ y $g(u,v)=(u^2,\ u-v)$. Calcular $D(g\circ f)(1,2)$ usando la regla de la cadena, y verificarlo calculando $g\circ f$ explícitamente.</p>`,
+ pistas:[R`<p>$f(1,2)=(3,2)$. Hay que evaluar $Dg$ en $(3,2)$, no en $(1,2)$.</p>`],
+ sol:R`<p>$Df=\begin{pmatrix}1&1\\y&x\end{pmatrix}$, $Df(1,2)=\begin{pmatrix}1&1\\2&1\end{pmatrix}$; $f(1,2)=(3,2)$ y $Dg=\begin{pmatrix}2u&0\\1&-1\end{pmatrix}$, $Dg(3,2)=\begin{pmatrix}6&0\\1&-1\end{pmatrix}$.
+$$D(g\circ f)(1,2)=\begin{pmatrix}6&0\\1&-1\end{pmatrix}\begin{pmatrix}1&1\\2&1\end{pmatrix}=\begin{pmatrix}6&6\\-1&0\end{pmatrix}.$$
+Directamente: $(g\circ f)(x,y)=\big((x+y)^2,\ x+y-xy\big)$, cuya matriz diferencial es $\begin{pmatrix}2(x+y)&2(x+y)\\1-y&1-x\end{pmatrix}$, que en $(1,2)$ da lo mismo.</p>`,
+ chk:{p:'las cuatro entradas, por filas',vals:[6,6,-1,0]},
+ ref:[['b','0:35','objetivo: la regla de la cadena']]},
+
+{n:4,t:'La norma de una matriz',s:'Comprobar el lema',
+ enun:R`<p>Sea $A=\begin{pmatrix}1&2\\0&1\end{pmatrix}$. Calcular $\|A\|_2$ y comprobar $|Ax|\le\|A\|_2|x|$ para $x=(1,1)$. ¿Vale la igualdad para algún $x\neq0$?</p>`,
+ pistas:[R`<p>$\|A\|_2=\sqrt{1+4+0+1}$.</p>`,R`<p>Para la igualdad hace falta igualdad en Cauchy–Schwarz en cada fila: $x$ paralelo a $(1,2)$ y a $(0,1)$ a la vez.</p>`],
+ sol:R`<p>$\|A\|_2=\sqrt6\approx2{,}449$. Con $x=(1,1)$: $Ax=(3,1)$, $|Ax|=\sqrt{10}\approx3{,}162\le\sqrt6\cdot\sqrt2=\sqrt{12}\approx3{,}464$.</p>
+<p>No hay igualdad para ningún $x\neq0$: haría falta $(A_1\cdot x)^2=|A_1|^2|x|^2$ y $(A_2\cdot x)^2=|A_2|^2|x|^2$, o sea $x$ paralelo a $(1,2)$ y a $(0,1)$, que no son paralelos.</p>`,
+ chk:{p:'‖A‖₂',vals:[Math.sqrt(6)]},
+ ref:[]},
+
+{n:5,t:'Cauchy–Schwarz en R⁴',s:'Con números',
+ enun:R`<p>Sean $x=(1,-2,0,2)$ e $y=(3,1,4,-1)$ en $\R^4$. Calcular $x\cdot y$, $|x|$, $|y|$ y comprobar Cauchy–Schwarz y la desigualdad triangular.</p>`,
+ pistas:[R`<p>$x\cdot y=\sum x_jy_j$ y $|x|=\sqrt{\sum x_j^2}$.</p>`],
+ sol:R`<p>$x\cdot y=3-2+0-2=-1$; $|x|=\sqrt{1+4+0+4}=3$; $|y|=\sqrt{9+1+16+1}=\sqrt{27}=3\sqrt3$. Cauchy–Schwarz: $|-1|=1\le3\cdot3\sqrt3\approx15{,}6$.</p>
+<p>$x+y=(4,-1,4,1)$, $|x+y|=\sqrt{34}\approx5{,}83\le3+3\sqrt3\approx8{,}20$. Además $|x+y|^2=|x|^2+2x\cdot y+|y|^2=9-2+27=34$: la "fórmula del binomio" para vectores.</p>`,
+ chk:{p:'x·y y |x + y|²',vals:[-1,34]},
+ ref:[['a','10:48','Cauchy–Schwarz'],['a','25:06','desigualdad triangular']]}
+];
+window.G1EJ=EJ;
+})();
+(function(){'use strict';
+const {$,$$,h,f}=window.G1;
+const IM=window.G1IMG||{};
+const EJ=window.G1EJ||[];
+const KEY=(window.A1&&window.A1.key)||'a1';
+const T=(v,t,txt)=>`<a class="t" data-v="${v}" data-t="${t}">${txt||t}</a>`;
+
+/* ---------- render ---------- */
+function parse(s){return s.split(/[;\s]+/).filter(Boolean).map(x=>parseFloat(x.replace(',','.')));}
+let done={};try{done=JSON.parse(localStorage.getItem(KEY+'-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem(KEY+'-done',JSON.stringify(done));}catch(e){}}
+function prog(){const n=Object.keys(done).filter(k=>done[k]).length;$('#ejprog').textContent='Hechos: '+n+' de '+EJ.length+' (se guarda en este navegador)';}
+
+function build(){const list=$('#ejlist');
+  EJ.forEach(e=>{
+    const d=h('details',{class:'ejc'+(done[e.n]?' done':''),id:'ej'+e.n});
+    const sum=h('summary',{},h('span',{class:'num'},e.n),h('span',{class:'tt'},h('b',{},e.t),h('span',{},e.s)));
+    const inn=h('div',{class:'in'});
+    inn.append(h('div',{class:'enun',html:e.enun}));
+    if(e.img&&IM[e.img])inn.append(h('img',{class:'fig',src:IM[e.img],alt:'Figura del ejercicio '+e.n}));
+    if(e.rev)inn.append(h('div',{class:'revnote',html:'<b>Revisar</b>'+e.rev}));
+    if(e.extra)inn.append(h('div',{html:e.extra}));
+    const pistas=h('div',{class:'pistas'});let k=0;
+    const bP=h('button',{type:'button'},'Dame una pista');
+    const bS=h('button',{type:'button'},'Ver resolución');
+    const sol=h('div',{class:'sol',hidden:'',html:'<b>Resolución</b>'+e.sol});
+    bP.addEventListener('click',()=>{if(k<e.pistas.length){pistas.append(h('div',{class:'pista',html:'<b>Pista '+(k+1)+' de '+e.pistas.length+'</b>'+e.pistas[k]}));k++;typeset(pistas);}
+      if(k>=e.pistas.length){bP.disabled=true;bP.textContent='No hay más pistas';}else bP.textContent='Otra pista ('+k+'/'+e.pistas.length+')';});
+    bS.addEventListener('click',()=>{sol.hidden=!sol.hidden;bS.textContent=sol.hidden?'Ver resolución':'Ocultar resolución';if(!sol.hidden)typeset(sol);});
+    const bD=h('button',{type:'button','aria-pressed':!!done[e.n]},done[e.n]?'Hecho ✓':'Marcar como hecho');
+    bD.addEventListener('click',()=>{done[e.n]=!done[e.n];save();d.classList.toggle('done',!!done[e.n]);bD.setAttribute('aria-pressed',!!done[e.n]);bD.textContent=done[e.n]?'Hecho ✓':'Marcar como hecho';prog();});
+    const refs=(e.ref||[]).map(r=>h('span',{html:T(r[0],r[1],(((window.A1||{}).vlab||{})[r[0]]||('Clase '+r[0]))+' · '+r[1])+' <span class="c-mut" style="font-size:14px">'+r[2]+'</span>'}));
+    inn.append(h('div',{class:'act'},bP,bS,bD),pistas);
+    if(e.chk){const inp=h('input',{type:'text',inputmode:'text','aria-label':e.chk.p,placeholder:'ej.: 1,5 2'});const res=h('span',{class:'res'});
+      const go=()=>{const v=parse(inp.value);if(!v.length||v.some(isNaN)){res.className='res bad';res.textContent='Escribí números separados por espacio o ";".';return;}
+        if(v.length!==e.chk.vals.length){res.className='res bad';res.textContent='Faltan o sobran valores: se esperan '+e.chk.vals.length+'.';return;}
+        const bad=[];e.chk.vals.forEach((t,i)=>{if(Math.abs(v[i]-t)>Math.max(.006*Math.abs(t),.015))bad.push(i+1);});
+        if(!bad.length){res.className='res ok';res.textContent='Correcto.';}else{res.className='res bad';res.textContent='No coinciden los valores n.º '+bad.join(', ')+'. Revisá esas cuentas.';}};
+      inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+      inn.append(h('div',{class:'chk'},h('span',{},'Comprobar: '+e.chk.p),inp,h('button',{type:'button',onclick:go},'Comprobar'),res));}
+    inn.append(sol);
+    if(refs.length){const r=h('div',{class:'meta',style:'margin-top:8px'},h('span',{},'Teoría relacionada:'),...refs);inn.append(r);}
+    d.append(sum,inn);list.append(d);});
+  prog();}
+function fixWide(root){(root||document).querySelectorAll('mjx-container:not([display="true"])').forEach(m=>{m.classList.remove('wide');const p=m.parentElement;if(p&&m.getBoundingClientRect().width>p.getBoundingClientRect().width+1)m.classList.add('wide');});}
+function typeset(el){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>fixWide(el)).catch(()=>{});}
+window.G1ej={build,typeset,fixWide};
+})();
+(function(){'use strict';
+const {$,$$,h}=window.G1;const V=window.G1V;const CFG=window.A1||{};const VID=CFG.vid||{};const QZ=CFG.quiz||{};const KEY=CFG.key||'a1';
+
+function buildQuiz(id,data){const host=$('#'+id);if(!host)return;let score=0,ans=0;const sc=h('span',{class:'c-mut',style:'font:600 13.5px var(--f-mono)'},'');
+  const head=h('div',{class:'qh'},h('b',{},data.t),sc,h('button',{type:'button',onclick:()=>{host.textContent='';buildQuiz(id,data);window.G1ej.typeset(host);}},'Reiniciar'));
+  host.append(head);const upd=()=>{sc.textContent=ans?(score+' de '+data.qs.length+' correctas'):'';};
+  data.qs.forEach((q,qi)=>{const o=h('div',{class:'o'});const box=h('div',{class:'q'},h('div',{class:'p',html:(qi+1)+'. '+q.p}),o);let why=null;
+    const ord=q.o.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+    ord.forEach(i=>{const t=q.o[i];const b=h('button',{type:'button',html:t});b.dataset.k=i;b.addEventListener('click',()=>{if(why)return;ans++;const ok=i===q.c;if(ok)score++;b.classList.add(ok?'right':'wrong');if(!ok)o.querySelector('[data-k="'+q.c+'"]').classList.add('right');
+      why=h('div',{class:'why',html:'<b class="'+(ok?'ok':'bad')+'">'+(ok?'Correcto. ':'No. ')+'</b>'+q.w});box.append(why);window.G1ej.typeset(box);upd();});o.append(b);});host.append(box);});
+}
+
+/* ---------- vínculos a YouTube ---------- */
+function linkify(){$$('a.t[data-v]').forEach(a=>{const [m,s]=a.dataset.t.split(':').map(Number),sec=m*60+s;a.href='https://youtu.be/'+VID[a.dataset.v]+'?t='+sec;a.target='_blank';const f=a.firstChild;if(f&&f.nodeType===3&&/^\d+:\d\d/.test(f.nodeValue))f.nodeValue=f.nodeValue.replace(/^(\d+:\d\d)/,((CFG.vlab&&CFG.vlab[a.dataset.v])||('Cl. '+a.dataset.v))+' · $1');a.rel='noopener';a.title='Abrir el video en '+a.dataset.t;});}
+
+/* ---------- barra de herramientas, tema, navegación ---------- */
+function ui(){
+  document.addEventListener('click',e=>{const b=e.target.closest('button.go');if(!b)return;const api=(window.A1API||{})[b.dataset.viz];const el=document.getElementById(b.dataset.viz);
+    if(api&&api.set)api.set(b.dataset.p);if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('toggle',e=>{if(e.target.open)window.G1ej.fixWide(e.target);},true);
+  $('#b-open').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=true);window.G1ej.fixWide(document);});
+  $('#b-close').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=false);});
+  const br=$('#b-rev');br.addEventListener('click',()=>{const on=br.getAttribute('aria-pressed')!=='true';br.setAttribute('aria-pressed',on);document.body.classList.toggle('no-rev',!on);try{localStorage.setItem(KEY+'-rev',on?'1':'0');}catch(e){}});
+  try{if(localStorage.getItem(KEY+'-rev')==='0'){br.setAttribute('aria-pressed','false');document.body.classList.add('no-rev');}}catch(e){}
+  const bt=$('#b-theme');let mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+  const apply=()=>{const r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];};
+  bt.addEventListener('click',()=>{mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();
+  const links=$$('#nav a'),secs=links.map(a=>$(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));}
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{const id=a.getAttribute('href');if(id==='#ejercicios'){}}));
+}
+
+function init(){
+  window.G1ej.build();
+  const map=CFG.viz||{};
+  Object.keys(map).forEach(id=>{const el=$('#'+id);if(!el)return;try{V[map[id]](el);}catch(err){console.error('viz',id,err);el.append(h('p',{class:'hint'},'No se pudo cargar esta figura.'));}});
+  Object.keys(QZ).forEach(id=>buildQuiz(id,QZ[id]));
+  linkify();ui();
+  const go=()=>{if(window.MathJax&&MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(()=>MathJax.typesetPromise()).then(()=>{window.G1ej.fixWide(document);let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>window.G1ej.fixWide(document),200);});}).catch(e=>console.error(e));};
+  if(document.readyState==='complete')go();else window.addEventListener('load',go);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+</body>
+</html>

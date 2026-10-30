@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Anexo 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<div class="shell">
+<aside class="side" aria-label="Índice">
+  <a class="volver" href="index.html" style="display:block;margin:0 0 .6rem;font-size:.85rem;color:var(--accent,#2b59c3);text-decoration:none">&larr; Portada</a><div class="brand">Análisis 1 · FCEN-UBA</div>
+  <h2>Anexo 2</h2>
+  <nav id="nav">
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#t1">Álgebra de límites<small>Suma, producto, cociente; polinomios</small></a>
+    <a href="#t2">Composición<small>Funciones de una variable aplicadas a f</small></a>
+    <a href="#t3">Sándwich<small>Y "cero por acotado"</small></a>
+    <a href="#t4">Funciones continuas<small>Corolarios</small></a>
+    <div class="sep"></div>
+    <a href="#ejercicios">Ejercicios<small>Para practicar las demostraciones</small></a>
+  </nav>
+</aside>
+<main>
+<div class="tools" role="toolbar" aria-label="Opciones">
+  <button id="b-open">Abrir todo</button>
+  <button id="b-close">Cerrar todo</button>
+  <span class="sp"></span>
+  <button id="b-rev" aria-pressed="true" title="Mostrar u ocultar las marcas de revisión (para el docente)">Marcas de revisión</button>
+  <button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="kick">Anexo teórico · acompaña a la Guía 3</div>
+  <h1>Anexo 2: Álgebra de límites</h1>
+  <p class="lead">Por qué las cuentas que hacemos "sin pensar" con los límites están bien: el límite de una suma es la suma de los límites, los polinomios se evalúan, las funciones del CBC se pueden componer, y cuando algo queda atrapado entre dos cosas que van a cero, también va a cero.</p>
+  <div class="map">
+    <a href="#t1"><em>Primera parte</em><b>Álgebra de límites</b><span>Suma, resta, producto y cociente, con la demostración de la suma. Límites de polinomios y de funciones racionales.</span></a>
+    <a href="#t2"><em>Segunda parte</em><b>Composición</b><span>El lema que permite usar $e^t$, $\operatorname{sen}t$, $\sqrt t$, $\log t$… sobre funciones de dos variables.</span></a>
+    <a href="#t3"><em>Tercera parte</em><b>Sándwich y cero por acotado</b><span>El lema del sándwich y su corolario más usado.</span></a>
+    <a href="#t4"><em>Cuarta parte</em><b>Funciones continuas</b><span>Sumas, productos, cocientes y composiciones de continuas son continuas.</span></a>
+  </div>
+  <div class="legend">
+    <span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+    <span><span class="tag vid">Video</span> se dijo en el video pero no está en la hoja</span>
+    <span><span class="tag add">Agregado</span> no se dijo en clase</span>
+    <span><span class="tag rev">Revisar</span> dudoso, a confirmar por el docente</span>
+    <span><a class="t" data-v="a" data-t="0:00">m:ss</a> abre el video en ese minuto</span>
+  </div>
+  <p class="hint">Video: <a class="t" data-v="a" data-t="0:00">Anexo 2 completo (52 min)</a>. Hoja: "Anexo de la Teórica 9". La práctica correspondiente está en la <a href="guia3.html">Guía 3</a>; la definición de límite y el test de las curvas, en el <a href="anexo1.html">Anexo 1</a>.</p>
+</section>
+
+<!-- ======================= PARTE 1 ======================= -->
+<section class="clase" id="t1">
+<header>
+  <div class="kick">PRIMERA PARTE</div>
+  <h2>Álgebra de límites</h2>
+  <div class="meta"><span>Si sabemos a dónde van $f$ y $g$, sabemos a dónde van sus combinaciones.</span></div>
+</header>
+
+<p>Es un resultado conocido del CBC para funciones de una variable; ahora lo extendemos a funciones de dos variables. No hay ningún cambio conceptual al pasar de $\R^2$ a $\R^3$. <a class="t" data-v="a" data-t="1:36">1:36</a> <a class="t" data-v="a" data-t="2:36">2:36</a></p>
+
+<h3 class="b">El teorema <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="3:41">3:41</a></h3>
+<div class="box teo"><span class="lab">Teorema (álgebra de límites)</span>
+<p>Sean $f,g:D\subset\R^2\to\R$, $(a,b)\in D$, y supongamos que
+$$\lim_{(x,y)\to(a,b)}f(x,y)=L_1,\qquad\lim_{(x,y)\to(a,b)}g(x,y)=L_2.$$
+Entonces:</p>
+<p>(1) $\displaystyle\lim_{(x,y)\to(a,b)}\big[f(x,y)\pm g(x,y)\big]=L_1\pm L_2$. <a class="t" data-v="a" data-t="4:42">4:42</a></p>
+<p>(2) $\displaystyle\lim_{(x,y)\to(a,b)}\big[f(x,y)\cdot g(x,y)\big]=L_1\cdot L_2$. <a class="t" data-v="a" data-t="5:42">5:42</a></p>
+<p>(3) Si $L_2\neq0$, $\displaystyle\lim_{(x,y)\to(a,b)}\frac{f(x,y)}{g(x,y)}=\frac{L_1}{L_2}$. <a class="t" data-v="a" data-t="6:43">6:43</a></p></div>
+<p class="hint"><span class="tag vid">Video</span> "El límite de la suma es la suma de los límites, el del producto es el producto de los límites." En el cociente hay que tener cuidado de no dividir por cero. La resta es igual que la suma, porque restar es sumar el opuesto.</p>
+
+<details class="dem" open><summary>Demostración de (1) <a class="t" data-v="a" data-t="7:43">7:43</a></summary><div class="in">
+<p>En el video y en la hoja se demuestra solo (1), "el más sencillo de todos"; los otros dos quedan como ejercicio (ejercicios <a href="#ej1">1</a> y <a href="#ej2">2</a>). La resta es igual.</p>
+<p><b>Qué hay que probar.</b> Sea $\varepsilon\gt0$. Hay que ver que existe $\delta\gt0$ tal que
+$$\big|f(x,y)+g(x,y)-(L_1+L_2)\big|\lt\varepsilon\quad\text{si}\quad0\lt\|(x,y)-(a,b)\|\lt\delta.$$
+No tenemos ninguna fórmula para $f$ ni para $g$: lo único que podemos usar es que $f\to L_1$ y $g\to L_2$. <a class="t" data-v="a" data-t="9:47">9:47</a> <a class="t" data-v="a" data-t="10:50">10:50</a></p>
+<p><b>Paso 1: un δ para cada función.</b> Como $f\to L_1$, existe $\delta_1\gt0$ tal que
+$$|f(x,y)-L_1|\lt\frac{\varepsilon}{2}\quad\text{si}\quad0\lt\|(x,y)-(a,b)\|\lt\delta_1.$$
+Como $g\to L_2$, existe $\delta_2\gt0$ tal que
+$$|g(x,y)-L_2|\lt\frac{\varepsilon}{2}\quad\text{si}\quad0\lt\|(x,y)-(a,b)\|\lt\delta_2.$$
+<span class="tag vid">Video</span> "Cada función tiene su delta." Y en vez de $\varepsilon$ se usa $\frac{\varepsilon}{2}$: es un detalle técnico que "se ve raro la primera vez", y enseguida se entiende por qué. <a class="t" data-v="a" data-t="12:54">12:54</a> <a class="t" data-v="a" data-t="13:54">13:54</a></p>
+<p><b>Paso 2: las dos cosas a la vez.</b> Sea $\delta=\min\{\delta_1,\delta_2\}$. Si $0\lt\|(x,y)-(a,b)\|\lt\delta$, se cumplen las dos condiciones al mismo tiempo. <a class="t" data-v="a" data-t="14:54">14:54</a></p>
+<p><b>Paso 3: agrupar y desigualdad triangular.</b> Agrupamos $f$ con $L_1$ y $g$ con $L_2$:
+$$\big|f+g-(L_1+L_2)\big|=\big|(f-L_1)+(g-L_2)\big|\le|f-L_1|+|g-L_2|\lt\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon.\qquad\blacksquare$$
+<a class="t" data-v="a" data-t="16:57">16:57</a> <a class="t" data-v="a" data-t="17:58">17:58</a> <a class="t" data-v="a" data-t="19:01">19:01</a></p>
+<p class="hint">Ahí se ve el porqué del $\frac{\varepsilon}{2}$: al sumar los dos errores, queda exactamente $\varepsilon$.</p></div></details>
+<div class="viz" id="viz-sum"></div>
+
+<h3 class="b">Los dos límites básicos <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="20:01">20:01</a></h3>
+<p>Para aplicar el álgebra de límites hace falta conocer algunos límites de antemano. Los más elementales son los de las funciones coordenadas:</p>
+<div class="box teo"><span class="lab">Límites de las coordenadas</span>
+$$\lim_{(x,y)\to(a,b)}x=a,\qquad\lim_{(x,y)\to(a,b)}y=b.$$</div>
+<p><span class="tag vid">Video</span> La demostración queda de ejercicio (<a href="#ej3">ejercicio 3</a>): como $|x-a|\le\|(x,y)-(a,b)\|$, tomando $\delta=\varepsilon$ sale. "Esta va a ser mi piedra fundamental." <a class="t" data-v="a" data-t="21:01">21:01</a></p>
+
+<div class="box ej"><span class="lab">Ejemplo <span class="tag vid">Video</span> <a class="t" data-v="a" data-t="22:01">22:01</a></span>
+<p>$\displaystyle\lim_{(x,y)\to(1,3)}\Big(xy+\frac{x}{y}\Big)$. Por (1), es el límite del primer sumando más el del segundo. El primero es un producto: por (2) y los límites básicos, $xy\to1\cdot3=3$. El segundo es un cociente, y el denominador tiende a $3\neq0$: por (3), $\frac{x}{y}\to\frac13$. Entonces el límite es $3+\frac13=\frac{10}{3}$. <a class="t" data-v="a" data-t="23:01">23:01</a></p>
+<p class="hint">Es lo mismo que evaluar directamente. Lo que dice el teorema es que eso que hacíamos "casi natural" está bien y es riguroso.</p></div>
+
+<h3 class="b">Polinomios y funciones racionales <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="24:01">24:01</a></h3>
+<p>Un polinomio en dos variables es cualquier función que se arma multiplicando y sumando $x$, $y$ y constantes; por ejemplo, $p(x,y)=6x^3+3x^2y^2-2y^2+6xy$. Como se construye con productos y sumas de las funciones coordenadas, aplicando (1) y (2) muchas veces:</p>
+<div class="box teo"><span class="lab">Aplicación</span>
+<p>Si $p(x,y)$ es un polinomio en 2 variables,
+$$\lim_{(x,y)\to(a,b)}p(x,y)=p(a,b).$$
+Si además $q(x,y)$ es otro polinomio y $q(a,b)\neq0$, usando (3),
+$$\lim_{(x,y)\to(a,b)}\frac{p(x,y)}{q(x,y)}=\frac{p(a,b)}{q(a,b)}.$$</p></div>
+<p class="hint"><span class="tag vid">Video</span> A los cocientes de polinomios se los llama <b>funciones racionales</b>. "Es algo muy intuitivo"; lo que ganamos es que ahora queda demostrado "hasta para los más exigentes matemáticos". <a class="t" data-v="a" data-t="25:01">25:01</a> <a class="t" data-v="a" data-t="26:02">26:02</a></p>
+<div class="quiz" id="quiz-1"></div>
+</section>
+
+<!-- ======================= PARTE 2 ======================= -->
+<section class="clase" id="t2">
+<header>
+  <div class="kick">SEGUNDA PARTE</div>
+  <h2>Composición con funciones de una variable</h2>
+  <div class="meta"><span>Video: "álgebra de límites, parte 2". Hoja: el lema "que fue enunciado en la teórica 9".</span></div>
+</header>
+
+<p><span class="tag vid">Video</span> ¿Qué pasa cuando aparecen logaritmos, exponenciales, trigonométricas, raíces? Pensemos en una función $\varphi$ de una variable, de las que ya conocen del CBC ($e^t$, $\operatorname{sen}t$, $\log t$, $\sqrt t$…), y en una $f$ de dos variables. Con las dos armamos $\varphi(f(x,y))$; por ejemplo, con $\varphi(t)=\cos t$ y $f(x,y)=x^2+y$ queda $\cos(x^2+y)$. Para calcular su límite, primero vemos a dónde va lo de adentro, y después qué hace $\varphi$ ahí. <a class="t" data-v="a" data-t="27:02">27:02</a> <a class="t" data-v="a" data-t="28:05">28:05</a> <a class="t" data-v="a" data-t="30:09">30:09</a></p>
+
+<h3 class="b">El lema <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="31:09">31:09</a></h3>
+<div class="box teo"><span class="lab">Lema (composición)</span>
+<p>Sea $\varphi:I\subset\R\to\R$, $t_0\in I$, y asumimos que $\displaystyle\lim_{t\to t_0}\varphi(t)=L$. Sea ahora $f:D\subset\R^2\to\R$, con $(a,b)\in D$, tal que $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=t_0$. Entonces
+$$\lim_{(x,y)\to(a,b)}\varphi\big(f(x,y)\big)=L.$$</p></div>
+
+<div class="box obs"><span class="lab c-blue">Un detalle técnico <span class="tag vid">Video</span> <a class="t" data-v="a" data-t="34:18">34:18</a></span>
+<p>En el límite de $\varphi$ pedimos $0\lt|t-t_0|$, porque puede ser que $\varphi$ no esté definida en $t_0$. Pero al componer, $f(x,y)$ puede valer $t_0$ muchas veces, y entonces $\varphi(f(x,y))$ podría no estar definida. Como el límite de $\varphi$ existe, $\varphi$ tiene a lo sumo una discontinuidad evitable en $t_0$: <b>se redefine $\varphi(t_0)=L$</b>. A partir de ahora se asume que $\varphi$ está definida en $t_0$ y que $\varphi(t_0)=L$. <a class="t" data-v="a" data-t="35:20">35:20</a></p></div>
+<div class="revnote"><b>Revisar</b>Con esa convención, $\varphi$ queda continua en $t_0$, y eso es lo que usa la prueba (en el paso 1 no aparece el $0\lt|t-t_0|$). Pero si $\varphi$ ya estaba definida en $t_0$ con $\varphi(t_0)\neq L$, redefinirla cambia la función $\varphi\circ f$, y el lema tal como está escrito en la hoja puede fallar (ver el <a href="#ej7">ejercicio 7</a>). En la hoja la hipótesis no aparece y el paso 1 se escribe directamente con $|t-t_0|\lt\eta$. ¿Agregamos al enunciado "$\varphi$ continua en $t_0$" (o "$f(x,y)\neq t_0$ para $(x,y)$ cerca de $(a,b)$")? Esto también resuelve la nota pendiente sobre el lema en la Guía 3.</div>
+
+<details class="dem" open><summary>Demostración <a class="t" data-v="a" data-t="32:14">32:14</a></summary><div class="in">
+<p><span class="tag vid">Video</span> "Este lema no tiene una gran idea detrás: es un juego casi lógico, como armar un rompecabezas." Hay que escribir qué sabemos y qué queremos probar, y acomodar las piezas.</p>
+<p><b>Qué hay que probar.</b> Sea $\varepsilon\gt0$. Debemos ver que existe $\delta\gt0$ tal que
+$$\big|\varphi(f(x,y))-L\big|\lt\varepsilon\quad\text{si}\quad0\lt\|(x,y)-(a,b)\|\lt\delta.$$
+<a class="t" data-v="a" data-t="33:17">33:17</a></p>
+<p><b>Paso 1 (la de afuera).</b> Por hipótesis, como $\varphi(t)\to L$, existe $\eta\gt0$ tal que
+$$|\varphi(t)-L|\lt\varepsilon\quad\text{si}\quad|t-t_0|\lt\eta.$$
+Sin el $0\lt$: si $t=t_0$, vale porque $\varphi(t_0)=L$. Luego, si $|f(x,y)-t_0|\lt\eta$, se sigue que $|\varphi(f(x,y))-L|\lt\varepsilon$. <a class="t" data-v="a" data-t="36:22">36:22</a></p>
+<p class="hint">En el video a este número se lo llama $\rho$ ("no es exactamente el delta que estoy buscando, es el delta de $\varphi$"); en la hoja, $\eta$.</p>
+<p><b>Paso 2 (la de adentro).</b> $f$ juega el papel que jugaba $t$: queremos $f(x,y)$ tan cerca de $t_0$ como queríamos a $t$. Como $f(x,y)\to t_0$, usamos la definición con $\eta$ en el lugar de $\varepsilon$: existe $\delta\gt0$ tal que
+$$|f(x,y)-t_0|\lt\eta\quad\text{si}\quad0\lt\|(x,y)-(a,b)\|\lt\delta.$$
+<a class="t" data-v="a" data-t="37:23">37:23</a></p>
+<p><b>Paso 3 (juntar).</b> Si $0\lt\|(x,y)-(a,b)\|\lt\delta$, entonces $|f(x,y)-t_0|\lt\eta$, y entonces $|\varphi(f(x,y))-L|\lt\varepsilon$. $\blacksquare$ <a class="t" data-v="a" data-t="38:26">38:26</a> <a class="t" data-v="a" data-t="39:26">39:26</a></p></div></details>
+<div class="viz" id="viz-comp"></div>
+
+<h3 class="b">Cómo se usa <a class="t" data-v="a" data-t="40:28">40:28</a></h3>
+<div class="box ej"><span class="lab">Ejemplo 1 <span class="tag vid">Video</span> <a class="t" data-v="a" data-t="40:28">40:28</a></span>
+<p>$\displaystyle\lim_{(x,y)\to(1,2)}\sqrt{x^3y}$. Lo de adentro, $f(x,y)=x^3y$, es un polinomio: tiende a $1^3\cdot2=2$. La de afuera es $\varphi(t)=\sqrt t$, que es continua: $\varphi(t)\to\sqrt2$ cuando $t\to2$. Por el lema, el límite es $\sqrt2$. <a class="t" data-v="a" data-t="41:28">41:28</a></p>
+<p class="hint">"Es una manera un poco sofisticada de decir que evaluamos y terminamos." <a class="t" data-v="a" data-t="42:28">42:28</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo 2 <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="a" data-t="42:28">42:28</a></span>
+<p>$\displaystyle\lim_{(x,y)\to(0,1)}\frac{e^{xy}-1}{xy}=1$. Evaluar da $\frac00$. Pero la función es $\varphi(f(x,y))$ con
+$$f(x,y)=x\cdot y,\qquad\varphi(t)=\frac{e^t-1}{t}.$$
+$f$ es un polinomio: $\lim_{(x,y)\to(0,1)}xy=0$, así que $t_0=0$. Y $\lim_{t\to0}\frac{e^t-1}{t}=1$, un límite de una variable que se puede hacer con L'Hôpital o con cualquier herramienta del CBC (queda de ejercicio). Por el lema, el límite es $1$. <a class="t" data-v="a" data-t="43:29">43:29</a> <a class="t" data-v="a" data-t="44:29">44:29</a> <a class="t" data-v="a" data-t="45:29">45:29</a></p></div>
+<div class="box teo"><span class="lab">Caso particular <span class="tag piz">Pizarrón</span></span>
+<p>Si $\varphi:\R\to\R$ es continua y $p$ es un polinomio, entonces
+$$\lim_{(x,y)\to(a,b)}\varphi(p(x,y))=\varphi(p(a,b)).$$
+Por ejemplo, $\displaystyle\lim_{(x,y)\to(1,2)}\log(1+x\cdot y)=\log3$.</p></div>
+</section>
+
+<!-- ======================= PARTE 3 ======================= -->
+<section class="clase" id="t3">
+<header>
+  <div class="kick">TERCERA PARTE · <span class="tag piz">Pizarrón</span></div>
+  <h2>El lema del sándwich</h2>
+  <div class="meta"><span>Está en la hoja del anexo; en el video del Anexo 2 no se desarrolla.</span></div>
+</header>
+<div class="box teo"><span class="lab">Lema del sándwich</span>
+<p>Sean $f,g,h:D\subset\R^2\to\R$, y supongamos que
+$$g(x,y)\le f(x,y)\le h(x,y)\qquad\forall(x,y)\in D.$$
+Sea $(a,b)\in D$ y supongamos que $\displaystyle\lim_{(x,y)\to(a,b)}g(x,y)=L=\lim_{(x,y)\to(a,b)}h(x,y)$. Entonces $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=L$.</p></div>
+<details class="dem" open><summary>Demostración</summary><div class="in">
+<p>Sea $\varepsilon\gt0$. Debemos ver que existe $\delta\gt0$ tal que $|f(x,y)-L|\lt\varepsilon$ si $0\lt\|(x,y)-(a,b)\|\lt\delta$.</p>
+<p>Como $g\to L$, existe $\delta_1\gt0$ tal que $|g(x,y)-L|\lt\varepsilon$ si $0\lt\|(x,y)-(a,b)\|\lt\delta_1$.<br>
+Como $h\to L$, existe $\delta_2\gt0$ tal que $|h(x,y)-L|\lt\varepsilon$ si $0\lt\|(x,y)-(a,b)\|\lt\delta_2$.</p>
+<p>Sea $\delta=\min\{\delta_1,\delta_2\}$ y sea $(x,y)\in D$ tal que $0\lt\|(x,y)-(a,b)\|\lt\delta$. Restando $L$ en la desigualdad de la hipótesis:
+$$-\varepsilon\lt g(x,y)-L\le f(x,y)-L\le h(x,y)-L\lt\varepsilon,$$
+o sea, $-\varepsilon\lt f(x,y)-L\lt\varepsilon$, que es $|f(x,y)-L|\lt\varepsilon$. $\blacksquare$</p>
+<p class="hint"><span class="tag add">Agregado</span> De la desigualdad de $g$ solo se usa la mitad de abajo ($g-L\gt-\varepsilon$) y de la de $h$, la de arriba ($h-L\lt\varepsilon$).</p></div></details>
+
+<div class="box ej"><span class="lab">Ejemplo</span>
+<p>Calcular $\displaystyle\lim_{(x,y)\to(0,0)}x^2\operatorname{sen}\frac1y$. Como $-1\le\operatorname{sen}\frac1y\le1$,
+$$\underbrace{-x^2}_{g(x,y)}\ \le\ \underbrace{x^2\operatorname{sen}\tfrac1y}_{f(x,y)}\ \le\ \underbrace{x^2}_{h(x,y)},$$
+y $g,h\to0$ (son polinomios). Luego, por el lema del sándwich, $\displaystyle\lim_{(x,y)\to(0,0)}x^2\operatorname{sen}\frac1y=0$.</p>
+<p class="hint"><span class="tag add">Agregado</span> Acá $f$ no está definida sobre el eje $x$ ($y=0$), en particular en $(0,0)$. Lo que el lema necesita en realidad no es $(a,b)\in D$ sino que haya puntos de $D$ tan cerca de $(a,b)$ como se quiera, que es lo que se pide siempre en la definición de límite.</p></div>
+
+<h3 class="b">Cero por acotado</h3>
+<div class="box teo"><span class="lab">Corolario</span>
+<p>Si $\displaystyle\lim_{(x,y)\to(a,b)}f(x,y)=0$ y $|g(x,y)|\le M$ para todo $(x,y)\in D$, entonces
+$$\lim_{(x,y)\to(a,b)}f(x,y)\cdot g(x,y)=0.$$</p></div>
+<details class="dem" open><summary>Demostración</summary><div class="in">
+<p>$|f(x,y)\cdot g(x,y)|=|f(x,y)|\cdot|g(x,y)|\le M\,|f(x,y)|$, es decir,
+$$-M|f(x,y)|\ \le\ f(x,y)\cdot g(x,y)\ \le\ M|f(x,y)|.$$
+Las dos puntas tienden a $0$ cuando $(x,y)\to(a,b)$ (por el álgebra de límites, y porque $|f|\to0$ cuando $f\to0$). Luego, por el lema del sándwich, $f\cdot g\to0$. $\blacksquare$</p></div></details>
+<div class="viz" id="viz-sand"></div>
+</section>
+
+<!-- ======================= PARTE 4 ======================= -->
+<section class="clase" id="t4">
+<header>
+  <div class="kick">CUARTA PARTE</div>
+  <h2>Funciones continuas</h2>
+  <div class="meta"><span>"Esto va a ser muy breve."</span></div>
+</header>
+<p><span class="tag vid">Video</span> Una función continua es una función en la que, para calcular el límite, alcanza con evaluar en el punto: $f$ es continua en $(a,b)$ si $\lim_{(x,y)\to(a,b)}f(x,y)=f(a,b)$. Del álgebra de límites salen enseguida las reglas para las funciones continuas. <a class="t" data-v="a" data-t="46:29">46:29</a></p>
+<div class="box teo"><span class="lab">Corolario <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="47:40">47:40</a></span>
+<p>Si $f,g:D\subset\R^2\to\R$ son continuas en $(a,b)$, entonces:</p>
+<p>(1) $f\pm g$ es continua en $(a,b)$;<br>(2) $f\cdot g$ es continua en $(a,b)$;<br>(3) si $g(a,b)\neq0$, $\dfrac fg$ es continua en $(a,b)$.</p></div>
+<details class="dem"><summary>Demostración de (1) <span class="tag vid">Video</span> <a class="t" data-v="a" data-t="48:42">48:42</a></summary><div class="in">
+<p>Por el álgebra de límites,
+$$\lim_{(x,y)\to(a,b)}\big[f(x,y)+g(x,y)\big]=\lim_{(x,y)\to(a,b)}f(x,y)+\lim_{(x,y)\to(a,b)}g(x,y)=f(a,b)+g(a,b),$$
+donde la última igualdad es porque $f$ y $g$ son continuas. "El límite de la suma es evaluar la suma." (2) y (3) son exactamente iguales. $\blacksquare$ <a class="t" data-v="a" data-t="49:42">49:42</a></p></div></details>
+<div class="box teo"><span class="lab">Corolario <span class="tag piz">Pizarrón</span> <a class="t" data-v="a" data-t="50:44">50:44</a></span>
+<p>Si $\varphi:\R\to\R$ es continua y $f:\R^2\to\R$ es continua, entonces $\varphi(f(x,y))$ es continua.</p>
+<p class="hint"><span class="tag vid">Video</span> Sale del lema de composición; queda de ejercicio. <a class="t" data-v="a" data-t="51:44">51:44</a></p></div>
+<div class="box obs"><span class="lab c-blue">Observación <span class="tag piz">Pizarrón</span></span>
+<p>Si $p(x,y)$ es un polinomio, es continua. Si $q(x,y)$ es otro polinomio, $\dfrac{p(x,y)}{q(x,y)}$ es continua en todos los puntos $(a,b)$ tales que $q(a,b)\neq0$.</p></div>
+<div class="quiz" id="quiz-2"></div>
+</section>
+
+<!-- ======================= EJERCICIOS ======================= -->
+<section class="clase" id="ejercicios">
+<header>
+  <div class="kick">EJERCICIOS · <span class="tag add">Agregado</span></div>
+  <h2>Para practicar las demostraciones</h2>
+  <div class="meta"><span>No son de la guía: son ejercicios nuevos para repasar las ideas del anexo, con pistas y resolución. Los tres primeros son los que el video deja "de ejercicio".</span></div>
+</header>
+<div class="ctl" style="margin-bottom:14px"><span class="c-mut" id="ejprog" style="font:600 13.5px var(--f-mono)"></span></div>
+<div class="ejlist" id="ejlist"></div>
+</section>
+
+<div class="foot">Material basado en el Anexo 2 del canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a> y en la hoja "Anexo de la Teórica 9". Las secciones marcadas como <span class="tag add">Agregado</span> son material nuevo. Versión preliminar, para revisar antes de compartir.</div>
+</main>
+</div>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],macros:{"R": "\\mathbb{R}", "v": ["\\mathbf{#1}", 1], "ang": ["\\langle #1\\rangle", 1], "jh": "\\hat{\\jmath}"}},svg:{fontCache:'none'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']},startup:{typeset:false}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>
+window.G1IMG={};
+(function(){'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>Array.from(r.querySelectorAll(q));
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in (attrs||{})){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});return e;}
+function sv(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const f=(x,d=2)=>{let v=Number(Number(x).toFixed(d));if(Object.is(v,-0)||Math.abs(v)<1e-12)v=0;return String(v).replace('.',',').replace('-','−');};
+const fv=(v,d=2)=>'⟨'+v.map(x=>f(x,d)).join('; ')+'⟩';
+const fp=(v,d=2)=>'('+v.map(x=>f(x,d)).join('; ')+')';
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const add=(a,b)=>a.map((x,i)=>x+b[i]), sub=(a,b)=>a.map((x,i)=>x-b[i]), mul=(a,t)=>a.map(x=>x*t);
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), nrm=a=>Math.sqrt(dot(a,a));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=nrm(a);return n?mul(a,1/n):a;};
+const CL={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',violet:'var(--violet)',ink:'var(--ink)',mut:'var(--ink-2)',amber:'var(--amber)'};
+const TT={blue:'var(--blue-t)',red:'var(--red-t)',green:'var(--green-t)',violet:'var(--violet-t)'};
+
+function arrow(g,x1,y1,x2,y2,col,w,head){w=w||2.6;head=head||11;const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);if(L<1.5)return;
+  const ux=dx/L,uy=dy/L,hl=Math.min(head,L*.7),bx=x2-ux*hl,by=y2-uy*hl;
+  sv('line',{x1,y1,x2:bx,y2:by,style:`stroke:${col};stroke-width:${w};stroke-linecap:round`},g);
+  sv('polygon',{points:`${x2},${y2} ${bx-uy*hl*.42},${by+ux*hl*.42} ${bx+uy*hl*.42},${by-ux*hl*.42}`,style:`fill:${col}`},g);}
+function line(g,x1,y1,x2,y2,col,w,dash){return sv('line',{x1,y1,x2,y2,style:`stroke:${col};stroke-width:${w||1.5};${dash?'stroke-dasharray:'+dash+';':''}stroke-linecap:round`},g);}
+function text(g,x,y,t,col,anchor,cls){const e=sv('text',{x,y,'text-anchor':anchor||'middle',style:`fill:${col||CL.ink}`,class:cls||''},g);e.textContent=t;return e;}
+
+/* ---------- control helpers ---------- */
+function slider(label,o,cb){const inp=h('input',{type:'range',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':label});
+  const val=h('span',{},'');const upd=()=>{val.textContent=f(+inp.value,o.dec==null?1:o.dec)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();cb(+inp.value);});upd();
+  const l=h('label',{},label,inp,val);l.input=inp;l.set=v=>{inp.value=v;upd();};return l;}
+function numbox(o,cb){const i=h('input',{type:'number',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':o.label});
+  i.addEventListener('input',()=>{let v=parseFloat(i.value);if(isNaN(v))return;v=Math.max(o.min,Math.min(o.max,v));cb(v);});return i;}
+function tabs(names,cb,start){const bs=names.map((n,i)=>h('button',{type:'button','aria-pressed':i===(start||0)},n));
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===i));cb(i);}));return h('div',{class:'tabs'},bs);}
+function vhead(title,sub,tb){return h('div',{class:'vh'},h('b',{},title),sub?h('span',{},sub):null,tb||null);}
+
+/* ---------- plano 2D con puntos arrastrables ---------- */
+function Plane2D(host,o){
+  const xr=o.xr||[-6,6],yr=o.yr||[-4,4],W=o.W||640,sx=W/(xr[1]-xr[0]),H=sx*(yr[1]-yr[0]);
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Plano cartesiano interactivo'},host);
+  const X=x=>(x-xr[0])*sx,Y=y=>H-(y-yr[0])*sx;
+  const gb=sv('g',{},svg),gd=sv('g',{},svg),gh=sv('g',{},svg);
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){line(gb,X(x),0,X(x),H,'var(--grid)',1);if(x&&x%(o.tick||1)===0)text(gb,X(x),Y(0)+15,x,CL.mut,'middle','sm');}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){line(gb,0,Y(y),W,Y(y),'var(--grid)',1);if(y&&y%(o.ytick||o.tick||1)===0)text(gb,X(0)-7,Y(y)+4,y,CL.mut,'end','sm');}
+  arrow(gb,0,Y(0),W-2,Y(0),CL.mut,1.6,8);arrow(gb,X(0),H,X(0),2,CL.mut,1.6,8);
+  text(gb,W-10,Y(0)-8,o.xl||'x',CL.mut);text(gb,X(0)+12,12,o.yl||'y',CL.mut);
+  const api={svg,X,Y,sx,W,H,xr,yr,g:gd,handles:[]};
+  function toW(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x/sx+xr[0],(H-p.y)/sx+yr[0]];}
+  api.handle=function(obj,col,opt){opt=opt||{};const snap=opt.snap||.5,c=sv('circle',{r:11,class:'grab',tabindex:0,role:'slider','aria-label':opt.label||'Punto arrastrable',style:`fill:${col};stroke:var(--surface);stroke-width:3`},gh);
+    let drag=false;const clampSet=(x,y)=>{x=Math.round(x/snap)*snap;y=Math.round(y/snap)*snap;obj.x=Math.max(xr[0]+.3,Math.min(xr[1]-.3,x));obj.y=Math.max(yr[0]+.3,Math.min(yr[1]-.3,y));api.update();};
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);e.preventDefault();});
+    c.addEventListener('pointermove',e=>{if(!drag)return;const p=toW(e);clampSet(p[0],p[1]);});
+    const end=()=>{drag=false;};c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+    c.addEventListener('keydown',e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(d){e.preventDefault();clampSet(obj.x+d[0]*snap,obj.y+d[1]*snap);}});
+    api.handles.push({obj,c});return c;};
+  api.update=function(){gd.textContent='';o.draw(gd,api);api.handles.forEach(hd=>{hd.c.setAttribute('cx',X(hd.obj.x));hd.c.setAttribute('cy',Y(hd.obj.y));});if(o.onUpdate)o.onUpdate(api);};
+  return api;
+}
+
+/* ---------- vista 3D ortográfica, eje z hacia arriba, terna derecha ---------- */
+function View3D(host,o){
+  o=o||{};const W=o.W||640,H=o.H||430,scale=o.scale||40,ctr=o.ctr||[0,0,0];
+  const st={az:o.az==null?215:o.az,el:o.el==null?22:o.el};
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Vista tridimensional. Se puede girar arrastrando.'},host);
+  const g=sv('g',{},svg);
+  function P(p){const a=rad(st.az),e=rad(st.el),x=p[0]-ctr[0],y=p[1]-ctr[1],z=p[2]-ctr[2];
+    const x1=Math.cos(a)*x-Math.sin(a)*y,y1=Math.sin(a)*x+Math.cos(a)*y;
+    return [W/2+x1*scale,H/2-(z*Math.cos(e)+y1*Math.sin(e))*scale,y1*Math.cos(e)-z*Math.sin(e)];}
+  const api={svg,st,P,draw:null};
+  api.render=function(){g.textContent='';const polys=[],ops=[],txt=[];
+    const sc={
+      poly(pts,col,op,stroke){polys.push({pts:pts.map(P),col,op,stroke});},
+      line(a,b,col,w,dash){ops.push(()=>{const p=P(a),q=P(b);line(g,p[0],p[1],q[0],q[1],col,w,dash);});},
+      path(pts,col,w,dash,closed){ops.push(()=>{const q=pts.map(P);sv('polyline',{points:q.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' ')+(closed?' '+q[0][0].toFixed(1)+','+q[0][1].toFixed(1):''),style:`fill:none;stroke:${col};stroke-width:${w||1.4};${dash?'stroke-dasharray:'+dash+';':''}stroke-linejoin:round`},g);});},
+      arrow(a,b,col,w){ops.push(()=>{const p=P(a),q=P(b);arrow(g,p[0],p[1],q[0],q[1],col,w||2.8,11);});},
+      dot(a,col,r){ops.push(()=>{const p=P(a);sv('circle',{cx:p[0],cy:p[1],r:r||5,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);});},
+      disc(c,rpx,col){ops.push(()=>{const p=P(c);sv('circle',{cx:p[0],cy:p[1],r:rpx*scale,style:`fill:${col};stroke:none`},g);});},
+      text(a,t,col,dx,dy,anc){txt.push(()=>{const p=P(a);text(g,p[0]+(dx||0),p[1]+(dy||0),t,col,anc);});},
+      axes(L,neg){const ex=[[1,0,0,'x'],[0,1,0,'y'],[0,0,1,'z']];ex.forEach(e=>{const v=[e[0],e[1],e[2]];
+        if(neg!==false)sc.line(mul(v,-L),[0,0,0],'var(--line)',1.2,'4 4');
+        ops.push(()=>{const p=P([0,0,0]),q=P(mul(v,L));arrow(g,p[0],p[1],q[0],q[1],CL.mut,1.6,9);});
+        sc.text(mul(v,L*1.1),e[3],CL.mut,0,4);});},
+      box(lo,hi,col,op){const[x0,y0,z0]=lo,[x1,y1,z1]=hi;const C=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        [[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach(q=>sc.poly(q.map(i=>C[i]),col,op,col));},
+      patch(n,d,S,col,op,dashed){n=unit(n);const e=Math.abs(n[2])<.9?[0,0,1]:[1,0,0];const u=unit(cross(n,e)),v=cross(n,u),c=mul(n,d);
+        const q=[add(add(c,mul(u,S)),mul(v,S)),add(sub(c,mul(u,S)),mul(v,S)),sub(sub(c,mul(u,S)),mul(v,S)),sub(add(c,mul(u,S)),mul(v,S))];
+        sc.poly(q,col,op,col);if(dashed)sc.path(q,col,1.6,'6 5',true);return {q,c,n,u,v};},
+      circle(c,r,plane,col,w,dash){const pts=[];for(let i=0;i<=48;i++){const t=i/48*2*Math.PI,a=Math.cos(t)*r,b=Math.sin(t)*r;
+        pts.push(plane==='xy'?[c[0]+a,c[1]+b,c[2]]:plane==='xz'?[c[0]+a,c[1],c[2]+b]:[c[0],c[1]+a,c[2]+b]);}sc.path(pts,col,w||1.3,dash);},
+      surf(fn,ur,vr,nu,nv,col,op,stroke){for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const u0=ur[0]+(ur[1]-ur[0])*i/nu,u1=ur[0]+(ur[1]-ur[0])*(i+1)/nu,v0=vr[0]+(vr[1]-vr[0])*j/nv,v1=vr[0]+(vr[1]-vr[0])*(j+1)/nv;
+        const q=[fn(u0,v0),fn(u1,v0),fn(u1,v1),fn(u0,v1)];if(q.some(p=>!p||p.some(x=>!isFinite(x))))continue;polys.push({pts:q.map(P),col,op:op==null?.35:op,stroke:stroke||col,sw:.6});}},
+      sphere(c,r,col,dash){sc.disc(c,r,'var(--blue-t)');['xy','xz','yz'].forEach(p=>sc.circle(c,r,p,col||CL.blue,1.4,dash));
+        for(const k of[.5,-.5]){const rr=r*Math.sqrt(1-k*k);sc.circle([c[0],c[1],c[2]+r*k],rr,'xy',col||CL.blue,.9,dash);}}
+    };
+    if(api.draw)api.draw(sc);
+    polys.sort((a,b)=>mean(b.pts)-mean(a.pts));
+    polys.forEach(p=>{sv('polygon',{points:p.pts.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' '),style:`fill:${p.col};fill-opacity:${p.op==null?.25:p.op};stroke:${p.stroke||'none'};stroke-opacity:.55;stroke-width:${p.sw||1.2}`},g);});
+    ops.forEach(fn=>fn());txt.forEach(fn=>fn());};
+  function mean(pts){return pts.reduce((s,p)=>s+p[2],0)/pts.length;}
+  // arrastre para girar
+  let drag=null;svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,az:st.az,el:st.el};svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect(),k=W/r.width;st.az=drag.az-(e.clientX-drag.x)*k*.5;
+    if(e.pointerType==='mouse'){st.el=Math.max(-80,Math.min(85,drag.el+(e.clientY-drag.y)*k*.4));}
+    api.sync&&api.sync();api.render();});
+  const end=()=>{drag=null;};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  api.controls=function(){const a=slider('giro',{min:0,max:360,step:1,value:Math.round(((st.az%360)+360)%360),unit:'°',dec:0},v=>{st.az=v;api.render();});
+    const b=slider('inclinación',{min:-80,max:85,step:1,value:st.el,unit:'°',dec:0},v=>{st.el=v;api.render();});
+    api.sync=()=>{a.set(Math.round(((st.az%360)+360)%360));b.set(Math.round(st.el));};
+    const reset=h('button',{type:'button',onclick:()=>{st.az=o.az==null?215:o.az;st.el=o.el==null?22:o.el;api.sync();api.render();}},'Vista inicial');
+    return h('div',{class:'ctl'},a,b,reset);};
+  return api;
+}
+
+
+/* ---------- expresiones escritas por el usuario: expr('t^2-2t',['t']) -> función ---------- */
+function expr(src,vars){vars=vars||['x'];const s=String(src).replace(/\s+/g,'').replace(/\*\*/g,'^').replace(/π/g,'pi').replace(/θ/g,'th').replace(/·/g,'*').replace(/−/g,'-').replace(/,/g,'.');
+  const FN={sin:Math.sin,sen:Math.sin,cos:Math.cos,tan:Math.tan,tg:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,arcsen:Math.asin,arccos:Math.acos,arctan:Math.atan,sqrt:Math.sqrt,raiz:Math.sqrt,exp:Math.exp,ln:Math.log,log:Math.log,abs:Math.abs,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),sgn:Math.sign};
+  const C={pi:Math.PI,e:Math.E};let i=0;const err=m=>{throw new Error(m);};
+  const peek=()=>s[i];
+  function num(){const m=/^\d*\.?\d+(e[+-]?\d+)?/i.exec(s.slice(i));if(!m)err('número');i+=m[0].length;const v=parseFloat(m[0]);return ()=>v;}
+  function ident(){const m=/^[a-zA-Z_]+/.exec(s.slice(i));i+=m[0].length;let w=m[0];
+    // separar nombres pegados: "tsint" -> t, sin, t ; prioridad: funciones, constantes, variables
+    const names=[...Object.keys(FN),...Object.keys(C),...vars].sort((a,b)=>b.length-a.length);
+    const parts=[];while(w.length){const n=names.find(nm=>w.startsWith(nm));if(!n)err('nombre desconocido: '+w);parts.push(n);w=w.slice(n.length);}
+    return parts;}
+  function primary(){const c=peek();
+    if(c==='('){i++;const e=add_();if(peek()!==')')err('falta )');i++;return e;}
+    if(c==='|'){i++;const e=add_();if(peek()!=='|')err('falta |');i++;return v=>Math.abs(e(v));}
+    if(/[\d.]/.test(c))return num();
+    if(/[a-zA-Z_]/.test(c)){const parts=ident();
+      const build=k=>{const n=parts[k];
+        if(FN[n]){let arg;if(k+1<parts.length){arg=build(k+1);}else{arg=power();}const f=FN[n];return v=>f(arg(v));}
+        let a;if(n in C){const cv=C[n];a=()=>cv;}else{const j=vars.indexOf(n);a=v=>v[j];}
+        if(k+1<parts.length){const r=build(k+1);return v=>a(v)*r(v);}return a;};
+      return build(0);}
+    err('símbolo inesperado: '+(c||'fin'));}
+  function power(){const b=primary();if(peek()==='^'){i++;const e=unary();return v=>Math.pow(b(v),e(v));}return b;}
+  function unary(){if(peek()==='-'){i++;const u=unary();return v=>-u(v);}if(peek()==='+'){i++;return unary();}return power();}
+  function mul_(){let a=unary();for(;;){const c=peek();
+      if(c==='*'||c==='/'){i++;const b=unary(),l=a;a=c==='*'?(v=>l(v)*b(v)):(v=>l(v)/b(v));}
+      else if(c&&/[\d.a-zA-Z_(|]/.test(c)&&c!=='|'){const b=unary(),l=a;a=v=>l(v)*b(v);}
+      else return a;}}
+  function add_(){let a=mul_();for(;;){const c=peek();if(c==='+'||c==='-'){i++;const b=mul_(),l=a;a=c==='+'?(v=>l(v)+b(v)):(v=>l(v)-b(v));}else return a;}}
+  if(!s.length)err('vacía');const f=add_();if(i<s.length)err('sobra: '+s.slice(i));
+  return (...a)=>f(a);}
+
+/* ---------- curvas de nivel (marching squares): devuelve lista de segmentos [[x1,y1],[x2,y2]] ---------- */
+function contour(F,xr,yr,c,n){n=n||80;const dx=(xr[1]-xr[0])/n,dy=(yr[1]-yr[0])/n,segs=[];const G=[];
+  for(let i=0;i<=n;i++){G[i]=[];for(let j=0;j<=n;j++){const v=F(xr[0]+i*dx,yr[0]+j*dy);G[i][j]=isFinite(v)?((v-c)===0?1e-12:v-c):NaN;}}
+  const lerp=(a,b,pa,pb)=>{const t=a/(a-b);return [pa[0]+(pb[0]-pa[0])*t,pa[1]+(pb[1]-pa[1])*t];};
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=xr[0]+i*dx,y=yr[0]+j*dy;
+    const P=[[x,y],[x+dx,y],[x+dx,y+dy],[x,y+dy]],V=[G[i][j],G[i+1][j],G[i+1][j+1],G[i][j+1]];
+    if(V.some(isNaN))continue;const pts=[];
+    for(let k=0;k<4;k++){const a=V[k],b=V[(k+1)%4];if((a<0)!==(b<0))pts.push(lerp(a,b,P[k],P[(k+1)%4]));else if(a===0&&b!==0)pts.push(P[k]);}
+    if(pts.length===2)segs.push(pts);else if(pts.length===4){segs.push([pts[0],pts[1]]);segs.push([pts[2],pts[3]]);}}
+  return segs;}
+
+/* ---------- dibujar una curva en un Plane2D: pts = [[x,y],...] (cortes en NaN o saltos) ---------- */
+function poly2(g,api,pts,col,w,dash){let d='',pen=false,prev=null;const {X,Y}=api,lim=Math.max(api.W,api.H)*3;
+  pts.forEach(p=>{const ok=p&&isFinite(p[0])&&isFinite(p[1]);if(!ok){pen=false;prev=null;return;}const px=X(p[0]),py=Y(p[1]);
+    if(Math.abs(px)>lim||Math.abs(py)>lim){pen=false;prev=null;return;}
+    if(prev&&Math.hypot(px-prev[0],py-prev[1])>api.W*.35)pen=false;
+    d+=(pen?'L':'M')+px.toFixed(1)+' '+py.toFixed(1);pen=true;prev=[px,py];});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.5};stroke-linejoin:round;stroke-linecap:round;${dash?'stroke-dasharray:'+dash:''}`},g);}
+function segs2(g,api,segs,col,w){const {X,Y}=api;let d='';segs.forEach(s=>{d+='M'+X(s[0][0]).toFixed(1)+' '+Y(s[0][1]).toFixed(1)+'L'+X(s[1][0]).toFixed(1)+' '+Y(s[1][1]).toFixed(1);});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.2};stroke-linecap:round`},g);}
+window.G1={$,$$,h,sv,f,fv,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2};
+})();
+(function(){'use strict';
+const {$,h,sv,f,CL,line,text,slider,vhead,Plane2D,View3D,contour,poly2,segs2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+
+/* mayor r tal que sup_{|P-c|<r} |F(P)-L| < tol (muestreo en circunferencias) */
+function bigR(F,c,L,tol,rmax){let ok=0;for(let r=.004;r<=rmax;r+=.004){let w=0;for(let k=0;k<64;k++){const t=2*Math.PI*k/64,v=F(c[0]+r*Math.cos(t),c[1]+r*Math.sin(t));if(isFinite(v))w=Math.max(w,Math.abs(v-L));}if(w>=tol)return ok;ok=r;}return ok;}
+
+/* ======================================================================
+   Suma: ε/2 para cada una, δ = mín{δ1, δ2}
+   ====================================================================== */
+V.sum=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});
+  const c=[1,1],F=(x,y)=>x*x+y,G=(x,y)=>x*y,L1=2,L2=1;let eps=.8;const P={x:1.25,y:.75};let d1=0,d2=0;
+  host.append(vhead('El ε/2 y el mínimo de los δ','f(x,y) = x² + y → 2 y g(x,y) = xy → 1 cuando (x,y) → (1,1). Mové ε y arrastrá P'),body);
+  const pl=Plane2D(body,{xr:[-.4,2.6],yr:[-.3,2.3],tick:1,label:'Discos de radio δ₁, δ₂ y δ alrededor de (1,1)',draw(g,a){
+    const xr=[-.4,2.6],yr=[-.3,2.3];
+    [L1-eps/2,L1+eps/2].forEach(v=>segs2(g,a,contour(F,xr,yr,v,90),CL.violet,1.4));
+    [L2-eps/2,L2+eps/2].forEach(v=>segs2(g,a,contour(G,xr,yr,v,90),CL.amber,1.4));
+    const D=Math.min(d1,d2);
+    sv('circle',{cx:a.X(1),cy:a.Y(1),r:D*a.sx,style:'fill:var(--green);fill-opacity:.16;stroke:none'},g);
+    sv('circle',{cx:a.X(1),cy:a.Y(1),r:d1*a.sx,style:'fill:none;stroke:var(--violet);stroke-width:2.2;stroke-dasharray:6 4'},g);
+    sv('circle',{cx:a.X(1),cy:a.Y(1),r:d2*a.sx,style:'fill:none;stroke:var(--amber);stroke-width:2.2;stroke-dasharray:6 4'},g);
+    sv('circle',{cx:a.X(1),cy:a.Y(1),r:D*a.sx,style:'fill:none;stroke:var(--green);stroke-width:2.6'},g);
+    sv('circle',{cx:a.X(1),cy:a.Y(1),r:4,style:'fill:var(--ink)'},g);text(g,a.X(1)-8,a.Y(1)+16,'(a,b)',CL.ink,'end','sm');
+    text(g,a.X(2.55),a.Y(2.2),'curvas f = 2 ± ε/2',CL.violet,'end','sm');text(g,a.X(2.55),a.Y(2.2)+16,'curvas g = 1 ± ε/2',CL.amber,'end','sm');
+  },onUpdate(){const fP=F(P.x,P.y),gP=G(P.x,P.y),e1=Math.abs(fP-L1),e2=Math.abs(gP-L2),tot=Math.abs(fP+gP-L1-L2),dist=Math.hypot(P.x-1,P.y-1),D=Math.min(d1,d2);
+    const inD=dist<D&&dist>0;
+    out.innerHTML=`ε = ${f(eps,2)}: &nbsp;<span class="c-violet">δ₁ ≈ ${f(d1,3)}</span> (disco donde |f − 2| &lt; ε/2), &nbsp;<span style="color:var(--amber)">δ₂ ≈ ${f(d2,3)}</span> (donde |g − 1| &lt; ε/2), &nbsp;<b class="c-green">δ = mín = ${f(D,3)}</b>.<br>`+
+      `En P: <span class="c-violet">|f − 2| = ${f(e1,3)}</span>, <span style="color:var(--amber)">|g − 1| = ${f(e2,3)}</span>, |(f + g) − 3| = <b>${f(tot,3)}</b> ≤ ${f(e1,3)} + ${f(e2,3)} = ${f(e1+e2,3)}.<br>`+
+      (inD?`<b class="c-green">P está en el disco verde: cada sumando es menor que ε/2 = ${f(eps/2,3)}, así que la suma es menor que ε.</b>`:`<span class="c-mut">P está fuera del disco verde: no hay garantía. Llevalo adentro.</span>`);}});
+  pl.handle(P,CL.red,{label:'Punto P',snap:.05});
+  const se=slider('ε',{min:.1,max:1.6,step:.01,value:eps,dec:2},x=>{eps=x;calc();pl.update();});
+  function calc(){d1=bigR(F,c,L1,eps/2,1.3);d2=bigR(G,c,L2,eps/2,1.3);}
+  body.append(h('div',{class:'ctl'},se),out);calc();pl.update();
+};
+
+/* ======================================================================
+   Composición: δ → ρ → ε   (f(x,y)=xy en (0,1), φ(t)=(e^t−1)/t, t0=0, L=1)
+   ====================================================================== */
+V.comp=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});
+  const F=(x,y)=>x*y,phi=t=>t===0?1:(Math.exp(t)-1)/t;let eps=.25,rho=0,del=0;const P={x:.2,y:1.3};
+  host.append(vhead('La cadena del lema de composición','(x,y) → f(x,y) = xy = t → φ(t) = (eᵗ − 1)/t. Arrastrá P'),body);
+  const L=h('div',{class:'half'}),R=h('div',{class:'half'});body.append(L,R);
+  const pa=Plane2D(L,{W:440,xr:[-1.6,1.6],yr:[-.4,2.4],tick:1,label:'El plano: P cerca de (0,1)',draw(g,a){
+    sv('circle',{cx:a.X(0),cy:a.Y(1),r:del*a.sx,style:'fill:var(--green);fill-opacity:.16;stroke:var(--green);stroke-width:2'},g);
+    sv('circle',{cx:a.X(0),cy:a.Y(1),r:4,style:'fill:var(--ink)'},g);text(g,a.X(0)+8,a.Y(1)-8,'(0,1)',CL.ink,'start','sm');
+    text(g,a.X(0),a.Y(1)+del*a.sx+15,'radio δ',CL.green,'middle','sm');}});
+  const pt=Plane2D(R,{W:440,xr:[-1.6,1.6],yr:[-.5,.35],tick:1,xl:'t',yl:' ',label:'La recta de t: f(P) cerca de t₀ = 0',draw(g,a){
+    sv('rect',{x:a.X(-rho),y:a.Y(.12),width:2*rho*a.sx,height:.24*a.sx,style:'fill:var(--amber);fill-opacity:.2;stroke:var(--amber)'},g);
+    text(g,a.X(0),a.Y(.12)-6,'|t − t₀| < ρ',CL.amber,'middle','sm');
+    const t=F(P.x,P.y);if(Math.abs(t)<1.6){sv('circle',{cx:a.X(t),cy:a.Y(0),r:6,style:'fill:var(--red)'},g);text(g,a.X(t),a.Y(0)+30,'t = f(P)',CL.red,'middle','sm');}}});
+  const pv=Plane2D(R,{W:440,xr:[-.6,2.6],yr:[-.5,.35],tick:1,xl:'φ',yl:' ',label:'Los valores: φ(f(P)) cerca de L = 1',draw(g,a){
+    sv('rect',{x:a.X(1-eps),y:a.Y(.12),width:2*eps*a.sx,height:.24*a.sx,style:'fill:var(--blue);fill-opacity:.18;stroke:var(--blue)'},g);
+    text(g,a.X(1),a.Y(.12)-6,'|φ − L| < ε',CL.blue,'middle','sm');
+    const v=phi(F(P.x,P.y));if(v<2.6){sv('circle',{cx:a.X(v),cy:a.Y(0),r:6,style:'fill:var(--red)'},g);text(g,a.X(v),a.Y(0)+30,'φ(f(P))',CL.red,'middle','sm');}}});
+  pa.handle(P,CL.red,{label:'Punto P',snap:.05});
+  const upAll=()=>{pt.update();pv.update();upd();};
+  const _u=pa.update;pa.update=function(){_u();upAll();};
+  const se=slider('ε',{min:.05,max:.9,step:.01,value:eps,dec:2},x=>{eps=x;calc();pa.update();});
+  function calc(){rho=0;for(let r=.002;r<=1.6;r+=.002){if(Math.abs(phi(r)-1)>=eps||Math.abs(phi(-r)-1)>=eps)break;rho=r;}
+    del=bigR(F,[0,1],0,rho,1.2);}
+  function upd(){const t=F(P.x,P.y),v=phi(t),d=Math.hypot(P.x,P.y-1);const inD=d<del,inR=Math.abs(t)<rho,inE=Math.abs(v-1)<eps;
+    out.innerHTML=`Paso 1 (φ): para ε = ${f(eps,2)} sirve <b style="color:var(--amber)">ρ ≈ ${f(rho,3)}</b>. &nbsp;Paso 2 (f): para que |xy − 0| &lt; ρ alcanza <b class="c-green">δ ≈ ${f(del,3)}</b>.<br>`+
+      `P a distancia ${f(d,3)} de (0,1) ${inD?'<b class="c-green">(dentro del disco)</b>':'(fuera del disco)'} → t = f(P) = ${f(t,3)} ${inR?'<b style="color:var(--amber)">(dentro del intervalo de radio ρ)</b>':'(fuera del intervalo)'} → φ(t) = ${f(v,4)} ${inE?'<b class="c-blue">(a menos de ε de 1)</b>':'(lejos de 1)'}.`+
+      (t===0?`<br><span class="c-mut">Acá f(P) = 0 = t₀ y φ no está definida en 0: es justo el caso en que se redefine φ(t₀) = L = 1 (minuto 35:20).</span>`:'');}
+  body.after(h('div',{class:'ctl'},se),out);calc();pa.update();
+};
+
+/* ======================================================================
+   Sándwich en 3D: g ≤ f ≤ h y las dos tapas se aprietan
+   ====================================================================== */
+const SW={
+  xs:{n:'x² sen(1/y)  entre  −x² y x²',f:(x,y)=>x*x*Math.sin(1/y),lo:(x,y)=>-x*x,hi:(x,y)=>x*x},
+  xa:{n:'x · sen(1/(x² + y²))  entre  −|x| y |x|',f:(x,y)=>x*Math.sin(1/(x*x+y*y)),lo:(x,y)=>-Math.abs(x),hi:(x,y)=>Math.abs(x)}
+};
+V.sand=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='xs',Rw=1;
+  const sel=h('select',{'aria-label':'Elegir ejemplo'},...Object.keys(SW).map(k=>h('option',{value:k},SW[k].n)));
+  host.append(vhead('El lema del sándwich','La función (azul) queda atrapada entre dos tapas (verde y roja) que tienden a 0. Achicá la ventana'),h('div',{class:'ctl'},sel),body);
+  const v=View3D(body,{scale:150,H:420,ctr:[0,0,0],az:215,el:20});
+  v.draw=sc=>{const S=SW[cur],R=Rw,n=cur==='xs'?44:40;sc.axes(1.25);
+    const map=(fn,clip)=>(u,w)=>{const x=u*R,y=w*R,z=fn(x,y);if(!isFinite(z))return null;return [u,w,Math.max(-1,Math.min(1,z))];};
+    sc.surf(map(S.lo),[-1,1],[-1,1],12,12,'var(--green)',.10,'var(--green)');
+    sc.surf(map(S.hi),[-1,1],[-1,1],12,12,'var(--red)',.10,'var(--red)');
+    sc.surf(map(S.f),[-1,1],[-1,1],n,n,'var(--blue)',.32,'var(--blue)');
+    sc.dot([0,0,0],CL.ink,4);};
+  const sr=slider('ventana',{min:.05,max:1,step:.01,value:Rw,dec:2},x=>{Rw=x;upd();});
+  body.append(h('div',{class:'ctl'},sr),v.controls(),out);
+  function upd(){v.render();const S=SW[cur],gap=cur==='xs'?2*Rw*Rw:2*Rw;
+    out.innerHTML=`Se muestra el cuadrado |x|, |y| ≤ ${f(Rw,2)} con zoom en x e y (multiplicadas por ${f(1/Rw,1)}); la altura z no se agranda. En esa ventana, la distancia entre las tapas es a lo sumo <b>${f(gap,4)}</b>.<br>`+
+      `<span class="c-mut">Al achicar la ventana, las tapas se pegan contra el plano z = 0 aunque la función siga oscilando: f no tiene adónde ir y tiende a 0.</span>`;}
+  sel.addEventListener('change',()=>{cur=sel.value;upd();});
+  upd();
+};
+})();
+(function(){const R=String.raw;
+window.A1={key:'ax2',vid:{a:'bqv763RNqvQ'},vlab:{a:'Anexo 2'},
+ viz:{'viz-sum':'sum','viz-comp':'comp','viz-sand':'sand'}};
+window.A1.quiz={
+'quiz-1':{t:'Autoevaluación: álgebra de límites',qs:[
+ {p:R`En la demostración de (1), ¿por qué se pide $|f-L_1|\lt\frac{\varepsilon}{2}$ y no $\lt\varepsilon$?`,o:[R`para que al sumar los dos errores quede $\varepsilon$`,R`porque $f$ tiende a $\frac{L_1}{2}$`,R`porque hay dos variables, $x$ e $y$`,R`no hace falta: con $\varepsilon$ también sale`],c:0,w:R`Por la desigualdad triangular, el error de la suma es a lo sumo la suma de los errores: $\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon$. Con $\varepsilon$ y $\varepsilon$ quedaría $2\varepsilon$.`},
+ {p:R`¿Para qué se toma $\delta=\min\{\delta_1,\delta_2\}$?`,o:['para que valgan a la vez la condición de f y la de g','porque δ₁ = δ₂','para que δ sea mayor que ε','para que f + g sea continua'],c:0,w:R`Si $\|(x,y)-(a,b)\|\lt\delta$, entonces es menor que $\delta_1$ y menor que $\delta_2$.`},
+ {p:R`$\displaystyle\lim_{(x,y)\to(2,-1)}\big(x^2y+3y^2\big)$ vale:`,o:['−1','7','−7','no se puede calcular'],c:0,w:R`Es un polinomio: se evalúa. $4\cdot(-1)+3\cdot1=-1$.`},
+ {p:R`$\displaystyle\lim_{(x,y)\to(1,1)}\frac{x+y}{x-y}$:`,o:['no se puede calcular con (3), porque el denominador tiende a 0','vale 2','vale 0','vale 1'],c:0,w:R`La regla (3) pide que el límite del denominador sea distinto de cero. Acá el numerador va a $2$ y el denominador a $0$: no es una función racional evaluable en $(1,1)$.`},
+ {p:R`¿Cuál es la "piedra fundamental" sobre la que se construyen los límites de polinomios?`,o:[R`$\lim x=a$ y $\lim y=b$ cuando $(x,y)\to(a,b)$`,R`la regla de L'Hôpital`,R`el lema del sándwich`,R`el test de las curvas`],c:0,w:R`Los polinomios se arman con sumas y productos de las coordenadas $x$, $y$; con (1) y (2) alcanza.`}]},
+'quiz-2':{t:'Autoevaluación: composición, sándwich y continuidad',qs:[
+ {p:R`Para calcular $\displaystyle\lim_{(x,y)\to(0,1)}\frac{e^{xy}-1}{xy}$ con el lema de composición, se toma:`,o:[R`$f(x,y)=xy$ y $\varphi(t)=\frac{e^t-1}{t}$`,R`$f(x,y)=e^{xy}$ y $\varphi(t)=t-1$`,R`$f(x,y)=\frac{e^{xy}-1}{xy}$ y $\varphi(t)=t$`,R`$f(x,y)=xy$ y $\varphi(t)=e^t$`],c:0,w:R`Lo de adentro va a $t_0=0$ y $\frac{e^t-1}{t}\to1$ cuando $t\to0$.`},
+ {p:R`En la prueba del lema de composición, el número $\eta$ (o $\rho$ en el video):`,o:[R`es el "δ de $\varphi$" y después se usa como "ε" para $f$`,R`es el límite de $f$`,R`es igual a $\varepsilon$`,R`es el δ final de la composición`],c:0,w:R`Primero $\varphi$ da un $\eta$; después se le pide a $f$ que quede a menos de $\eta$ de $t_0$.`},
+ {p:R`¿Por qué en el video se asume $\varphi(t_0)=L$?`,o:[R`porque $f(x,y)$ puede valer exactamente $t_0$`,R`porque $\varphi$ es un polinomio`,R`porque $t_0=0$`,R`porque si no, el límite de $f$ no existe`],c:0,w:R`Si $f(x,y)=t_0$ para algunos puntos, hace falta que $\varphi$ esté definida ahí, y con el valor correcto.`},
+ {p:R`$\displaystyle\lim_{(x,y)\to(0,0)}y\cos\frac{1}{x^2+y^2}$:`,o:['vale 0, por cero por acotado','vale 1','no existe, porque el coseno oscila','vale 0, evaluando'],c:0,w:R`$y\to0$ y $\left|\cos\frac1{x^2+y^2}\right|\le1$. No se puede evaluar: la función no está definida en $(0,0)$.`},
+ {p:R`Si $\varphi$ es continua y $p$ es un polinomio, $\varphi\circ p$ es:`,o:['continua en todo punto','continua solo donde p ≠ 0','continua solo si φ es un polinomio','no necesariamente continua'],c:0,w:R`Composición de continuas es continua, y los polinomios son continuos.`}]}
+};
+})();
+(function(){'use strict';
+const R=String.raw;
+const EJ=[
+{n:1,t:'El límite del producto',s:'La parte (2) del teorema',
+ enun:R`<p>Demostrar la parte (2) del álgebra de límites: si $f\to L_1$ y $g\to L_2$ cuando $(x,y)\to(a,b)$, entonces $f\cdot g\to L_1L_2$.</p>`,
+ pistas:[R`<p>Sumá y restá $L_1g$: $\ fg-L_1L_2=(f-L_1)\,g+L_1\,(g-L_2)$.</p>`,
+  R`<p>Hace falta acotar $|g|$ cerca de $(a,b)$. Usá la definición de $g\to L_2$ con $\varepsilon=1$: ahí $|g|\le|L_2|+1$.</p>`],
+ sol:R`<p>Sea $\varepsilon\gt0$ y llamemos $M=|L_2|+1$.</p>
+<p><b>Acotar g.</b> Por la definición con $\varepsilon=1$, existe $\delta_0\gt0$ tal que $|g-L_2|\lt1$ si $0\lt\|(x,y)-(a,b)\|\lt\delta_0$; ahí $|g|\le|L_2|+1=M$.</p>
+<p><b>Un δ para cada término.</b> Existe $\delta_1$ con $|f-L_1|\lt\frac{\varepsilon}{2M}$, y existe $\delta_2$ con $|g-L_2|\lt\frac{\varepsilon}{2(|L_1|+1)}$ (se pone $|L_1|+1$ para no dividir por cero si $L_1=0$).</p>
+<p><b>Juntar.</b> Con $\delta=\min\{\delta_0,\delta_1,\delta_2\}$ y $0\lt\|(x,y)-(a,b)\|\lt\delta$:
+$$|fg-L_1L_2|\le|f-L_1|\,|g|+|L_1|\,|g-L_2|\lt\frac{\varepsilon}{2M}M+|L_1|\frac{\varepsilon}{2(|L_1|+1)}\lt\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon.$$</p>`},
+
+{n:2,t:'El límite del cociente',s:'La parte (3) del teorema',
+ enun:R`<p>Demostrar que si $g\to L_2\neq0$, entonces $\frac1g\to\frac1{L_2}$. Deducir la parte (3) del álgebra de límites usando la parte (2).</p>`,
+ pistas:[R`<p>$\left|\frac1g-\frac1{L_2}\right|=\frac{|g-L_2|}{|g|\,|L_2|}$. Hay que acotar $|g|$ <b>por abajo</b>.</p>`,
+  R`<p>Con $\varepsilon=\frac{|L_2|}{2}$ en la definición, cerca de $(a,b)$ queda $|g|\gt\frac{|L_2|}{2}$ (en particular, $g\neq0$).</p>`],
+ sol:R`<p>Existe $\delta_0$ tal que $|g-L_2|\lt\frac{|L_2|}2$ si $0\lt\|(x,y)-(a,b)\|\lt\delta_0$; por la desigualdad triangular, ahí $|g|\ge|L_2|-|g-L_2|\gt\frac{|L_2|}2\gt0$. Entonces
+$$\left|\frac1g-\frac1{L_2}\right|=\frac{|g-L_2|}{|g|\,|L_2|}\lt\frac{2}{L_2^2}\,|g-L_2|.$$
+Dado $\varepsilon\gt0$, existe $\delta_1$ con $|g-L_2|\lt\frac{L_2^2}{2}\varepsilon$; con $\delta=\min\{\delta_0,\delta_1\}$ queda $\left|\frac1g-\frac1{L_2}\right|\lt\varepsilon$.</p>
+<p>Para (3): $\frac fg=f\cdot\frac1g$, y por la parte (2), $\frac fg\to L_1\cdot\frac1{L_2}=\frac{L_1}{L_2}$.</p>`},
+
+{n:3,t:'La piedra fundamental',s:'Los límites de las coordenadas',
+ enun:R`<p>Probar por definición que $\displaystyle\lim_{(x,y)\to(a,b)}x=a$. ¿Qué $\delta$ sirve para $\varepsilon=0{,}01$?</p>`,
+ pistas:[R`<p>Cada cateto es menor que la hipotenusa: $|x-a|\le\|(x,y)-(a,b)\|$ (Anexo 1, desigualdad 1).</p>`],
+ sol:R`<p>Dado $\varepsilon\gt0$, sea $\delta=\varepsilon$. Si $0\lt\|(x,y)-(a,b)\|\lt\delta$, entonces
+$$|x-a|\le\sqrt{(x-a)^2+(y-b)^2}=\|(x,y)-(a,b)\|\lt\delta=\varepsilon.$$
+Para $\lim y=b$ es igual. Con $\varepsilon=0{,}01$, $\delta=0{,}01$ (o cualquiera más chico).</p>`,
+ chk:{p:'δ para ε = 0,01',vals:[0.01]}},
+
+{n:4,t:'Una función racional',s:'Evaluar con permiso',
+ enun:R`<p>Calcular $\displaystyle\lim_{(x,y)\to(2,1)}\frac{x^2y-3}{x+y}$ justificando cada paso con el álgebra de límites.</p>`,
+ pistas:[R`<p>Es un cociente de polinomios. ¿El denominador se anula en $(2,1)$?</p>`],
+ sol:R`<p>$p(x,y)=x^2y-3$ y $q(x,y)=x+y$ son polinomios; $q(2,1)=3\neq0$. Por la aplicación del álgebra de límites, el límite es $\frac{p(2,1)}{q(2,1)}=\frac{4-3}{3}=\frac13$.</p>`,
+ chk:{p:'Valor del límite',vals:[1/3]}},
+
+{n:5,t:'Con un seno adentro',s:'Usar el lema de composición',
+ enun:R`<p>Calcular $\displaystyle\lim_{(x,y)\to(0,2)}\frac{\operatorname{sen}(xy)}{x}$.</p>`,
+ pistas:[R`<p>Multiplicá y dividí por $y$: $\frac{\operatorname{sen}(xy)}{x}=\frac{\operatorname{sen}(xy)}{xy}\cdot y$ (para $x\neq0$, $y\neq0$).</p>`,
+  R`<p>Para el primer factor, $f(x,y)=xy\to0$ y $\varphi(t)=\frac{\operatorname{sen}t}{t}\to1$.</p>`],
+ sol:R`<p>Cerca de $(0,2)$ es $y\neq0$, y para $x\neq0$: $\frac{\operatorname{sen}(xy)}{x}=\frac{\operatorname{sen}(xy)}{xy}\cdot y$.</p>
+<p>Con $f(x,y)=xy\to0$ y $\varphi(t)=\frac{\operatorname{sen}t}{t}$, que tiende a $1$ cuando $t\to0$, el lema da $\frac{\operatorname{sen}(xy)}{xy}\to1$. Y $y\to2$. Por la parte (2), el límite es $1\cdot2=2$.</p>
+<p class="hint">Sobre el eje $y$ ($x=0$, $y\neq0$) la función original no está definida, pero no importa: el límite solo mira el dominio. Donde $xy=0$ con $x\neq0$ (es decir, $y=0$) estamos lejos de $(0,2)$.</p>`,
+ chk:{p:'Valor del límite',vals:[2]}},
+
+{n:6,t:'Cero por acotado',s:'Usar el corolario',
+ enun:R`<p>Calcular $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x\,y^2}{x^2+y^2}$.</p>`,
+ pistas:[R`<p>Separá en un factor que va a $0$ y uno acotado.</p>`],
+ sol:R`<p>$\frac{xy^2}{x^2+y^2}=x\cdot\frac{y^2}{x^2+y^2}$. El primer factor, $f(x,y)=x$, tiende a $0$; el segundo cumple $0\le\frac{y^2}{x^2+y^2}\le1$ porque $y^2\le x^2+y^2$. Por el corolario (cero por acotado), el límite es $0$.</p>`,
+ chk:{p:'Valor del límite',vals:[0]}},
+
+{n:7,t:'Cuando φ(t₀) ≠ L',s:'Por qué importa el detalle técnico',
+ enun:R`<p>Sea $\varphi(t)=0$ si $t\neq0$ y $\varphi(0)=1$, y sea $f(x,y)=0$ para todo $(x,y)$. Calcular $\lim_{t\to0}\varphi(t)$, $\lim_{(x,y)\to(0,0)}f(x,y)$ y $\lim_{(x,y)\to(0,0)}\varphi(f(x,y))$. ¿Contradice el lema de composición? ¿En qué paso falla la prueba?</p>`,
+ pistas:[R`<p>$\varphi(f(x,y))=\varphi(0)$ para todo $(x,y)$.</p>`],
+ sol:R`<p>$\lim_{t\to0}\varphi(t)=0=L$ (cerca de $0$, sin contar el $0$, vale $0$) y $f\to0=t_0$. Pero $\varphi(f(x,y))=\varphi(0)=1$ para todo $(x,y)$, así que $\lim\varphi(f(x,y))=1\neq L$.</p>
+<p>No contradice el lema <b>con la convención del video</b>: ahí se asume $\varphi(t_0)=L$, y esta $\varphi$ tiene $\varphi(0)=1\neq0$. Si la redefinimos con $\varphi(0)=0$, la composición pasa a valer $0$ y el lema funciona, pero es otra función. La prueba falla en el paso 1: se usa $|\varphi(t)-L|\lt\varepsilon$ para $|t-t_0|\lt\eta$ <b>incluyendo $t=t_0$</b>, y acá $|\varphi(0)-0|=1$.</p>
+<p>Moraleja: el lema necesita que $\varphi$ sea continua en $t_0$ (o, si no, que $f(x,y)\neq t_0$ cerca de $(a,b)$).</p>`,
+ chk:{p:'lim φ(f(x,y))',vals:[1]}}
+];
+window.G1EJ=EJ;
+})();
+(function(){'use strict';
+const {$,$$,h,f}=window.G1;
+const IM=window.G1IMG||{};
+const EJ=window.G1EJ||[];
+const KEY=(window.A1&&window.A1.key)||'a1';
+const T=(v,t,txt)=>`<a class="t" data-v="${v}" data-t="${t}">${txt||t}</a>`;
+
+/* ---------- render ---------- */
+function parse(s){return s.split(/[;\s]+/).filter(Boolean).map(x=>parseFloat(x.replace(',','.')));}
+let done={};try{done=JSON.parse(localStorage.getItem(KEY+'-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem(KEY+'-done',JSON.stringify(done));}catch(e){}}
+function prog(){const n=Object.keys(done).filter(k=>done[k]).length;$('#ejprog').textContent='Hechos: '+n+' de '+EJ.length+' (se guarda en este navegador)';}
+
+function build(){const list=$('#ejlist');
+  EJ.forEach(e=>{
+    const d=h('details',{class:'ejc'+(done[e.n]?' done':''),id:'ej'+e.n});
+    const sum=h('summary',{},h('span',{class:'num'},e.n),h('span',{class:'tt'},h('b',{},e.t),h('span',{},e.s)));
+    const inn=h('div',{class:'in'});
+    inn.append(h('div',{class:'enun',html:e.enun}));
+    if(e.img&&IM[e.img])inn.append(h('img',{class:'fig',src:IM[e.img],alt:'Figura del ejercicio '+e.n}));
+    if(e.rev)inn.append(h('div',{class:'revnote',html:'<b>Revisar</b>'+e.rev}));
+    if(e.extra)inn.append(h('div',{html:e.extra}));
+    const pistas=h('div',{class:'pistas'});let k=0;
+    const bP=h('button',{type:'button'},'Dame una pista');
+    const bS=h('button',{type:'button'},'Ver resolución');
+    const sol=h('div',{class:'sol',hidden:'',html:'<b>Resolución</b>'+e.sol});
+    bP.addEventListener('click',()=>{if(k<e.pistas.length){pistas.append(h('div',{class:'pista',html:'<b>Pista '+(k+1)+' de '+e.pistas.length+'</b>'+e.pistas[k]}));k++;typeset(pistas);}
+      if(k>=e.pistas.length){bP.disabled=true;bP.textContent='No hay más pistas';}else bP.textContent='Otra pista ('+k+'/'+e.pistas.length+')';});
+    bS.addEventListener('click',()=>{sol.hidden=!sol.hidden;bS.textContent=sol.hidden?'Ver resolución':'Ocultar resolución';if(!sol.hidden)typeset(sol);});
+    const bD=h('button',{type:'button','aria-pressed':!!done[e.n]},done[e.n]?'Hecho ✓':'Marcar como hecho');
+    bD.addEventListener('click',()=>{done[e.n]=!done[e.n];save();d.classList.toggle('done',!!done[e.n]);bD.setAttribute('aria-pressed',!!done[e.n]);bD.textContent=done[e.n]?'Hecho ✓':'Marcar como hecho';prog();});
+    const refs=(e.ref||[]).map(r=>h('span',{html:T(r[0],r[1],(((window.A1||{}).vlab||{})[r[0]]||('Clase '+r[0]))+' · '+r[1])+' <span class="c-mut" style="font-size:14px">'+r[2]+'</span>'}));
+    inn.append(h('div',{class:'act'},bP,bS,bD),pistas);
+    if(e.chk){const inp=h('input',{type:'text',inputmode:'text','aria-label':e.chk.p,placeholder:'ej.: 1,5 2'});const res=h('span',{class:'res'});
+      const go=()=>{const v=parse(inp.value);if(!v.length||v.some(isNaN)){res.className='res bad';res.textContent='Escribí números separados por espacio o ";".';return;}
+        if(v.length!==e.chk.vals.length){res.className='res bad';res.textContent='Faltan o sobran valores: se esperan '+e.chk.vals.length+'.';return;}
+        const bad=[];e.chk.vals.forEach((t,i)=>{if(Math.abs(v[i]-t)>Math.max(.006*Math.abs(t),.015))bad.push(i+1);});
+        if(!bad.length){res.className='res ok';res.textContent='Correcto.';}else{res.className='res bad';res.textContent='No coinciden los valores n.º '+bad.join(', ')+'. Revisá esas cuentas.';}};
+      inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+      inn.append(h('div',{class:'chk'},h('span',{},'Comprobar: '+e.chk.p),inp,h('button',{type:'button',onclick:go},'Comprobar'),res));}
+    inn.append(sol);
+    if(refs.length){const r=h('div',{class:'meta',style:'margin-top:8px'},h('span',{},'Teoría relacionada:'),...refs);inn.append(r);}
+    d.append(sum,inn);list.append(d);});
+  prog();}
+function fixWide(root){(root||document).querySelectorAll('mjx-container:not([display="true"])').forEach(m=>{m.classList.remove('wide');const p=m.parentElement;if(p&&m.getBoundingClientRect().width>p.getBoundingClientRect().width+1)m.classList.add('wide');});}
+function typeset(el){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>fixWide(el)).catch(()=>{});}
+window.G1ej={build,typeset,fixWide};
+})();
+(function(){'use strict';
+const {$,$$,h}=window.G1;const V=window.G1V;const CFG=window.A1||{};const VID=CFG.vid||{};const QZ=CFG.quiz||{};const KEY=CFG.key||'a1';
+
+function buildQuiz(id,data){const host=$('#'+id);if(!host)return;let score=0,ans=0;const sc=h('span',{class:'c-mut',style:'font:600 13.5px var(--f-mono)'},'');
+  const head=h('div',{class:'qh'},h('b',{},data.t),sc,h('button',{type:'button',onclick:()=>{host.textContent='';buildQuiz(id,data);window.G1ej.typeset(host);}},'Reiniciar'));
+  host.append(head);const upd=()=>{sc.textContent=ans?(score+' de '+data.qs.length+' correctas'):'';};
+  data.qs.forEach((q,qi)=>{const o=h('div',{class:'o'});const box=h('div',{class:'q'},h('div',{class:'p',html:(qi+1)+'. '+q.p}),o);let why=null;
+    const ord=q.o.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+    ord.forEach(i=>{const t=q.o[i];const b=h('button',{type:'button',html:t});b.dataset.k=i;b.addEventListener('click',()=>{if(why)return;ans++;const ok=i===q.c;if(ok)score++;b.classList.add(ok?'right':'wrong');if(!ok)o.querySelector('[data-k="'+q.c+'"]').classList.add('right');
+      why=h('div',{class:'why',html:'<b class="'+(ok?'ok':'bad')+'">'+(ok?'Correcto. ':'No. ')+'</b>'+q.w});box.append(why);window.G1ej.typeset(box);upd();});o.append(b);});host.append(box);});
+}
+
+/* ---------- vínculos a YouTube ---------- */
+function linkify(){$$('a.t[data-v]').forEach(a=>{const [m,s]=a.dataset.t.split(':').map(Number),sec=m*60+s;a.href='https://youtu.be/'+VID[a.dataset.v]+'?t='+sec;a.target='_blank';const f=a.firstChild;if(f&&f.nodeType===3&&/^\d+:\d\d/.test(f.nodeValue))f.nodeValue=f.nodeValue.replace(/^(\d+:\d\d)/,((CFG.vlab&&CFG.vlab[a.dataset.v])||('Cl. '+a.dataset.v))+' · $1');a.rel='noopener';a.title='Abrir el video en '+a.dataset.t;});}
+
+/* ---------- barra de herramientas, tema, navegación ---------- */
+function ui(){
+  document.addEventListener('click',e=>{const b=e.target.closest('button.go');if(!b)return;const api=(window.A1API||{})[b.dataset.viz];const el=document.getElementById(b.dataset.viz);
+    if(api&&api.set)api.set(b.dataset.p);if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('toggle',e=>{if(e.target.open)window.G1ej.fixWide(e.target);},true);
+  $('#b-open').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=true);window.G1ej.fixWide(document);});
+  $('#b-close').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=false);});
+  const br=$('#b-rev');br.addEventListener('click',()=>{const on=br.getAttribute('aria-pressed')!=='true';br.setAttribute('aria-pressed',on);document.body.classList.toggle('no-rev',!on);try{localStorage.setItem(KEY+'-rev',on?'1':'0');}catch(e){}});
+  try{if(localStorage.getItem(KEY+'-rev')==='0'){br.setAttribute('aria-pressed','false');document.body.classList.add('no-rev');}}catch(e){}
+  const bt=$('#b-theme');let mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+  const apply=()=>{const r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];};
+  bt.addEventListener('click',()=>{mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();
+  const links=$$('#nav a'),secs=links.map(a=>$(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));}
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{const id=a.getAttribute('href');if(id==='#ejercicios'){}}));
+}
+
+function init(){
+  window.G1ej.build();
+  const map=CFG.viz||{};
+  Object.keys(map).forEach(id=>{const el=$('#'+id);if(!el)return;try{V[map[id]](el);}catch(err){console.error('viz',id,err);el.append(h('p',{class:'hint'},'No se pudo cargar esta figura.'));}});
+  Object.keys(QZ).forEach(id=>buildQuiz(id,QZ[id]));
+  linkify();ui();
+  const go=()=>{if(window.MathJax&&MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(()=>MathJax.typesetPromise()).then(()=>{window.G1ej.fixWide(document);let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>window.G1ej.fixWide(document),200);});}).catch(e=>console.error(e));};
+  if(document.readyState==='complete')go();else window.addEventListener('load',go);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+</body>
+</html>

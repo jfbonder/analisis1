@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Anexo 5</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<div class="shell">
+<aside class="side" aria-label="Índice">
+  <a class="volver" href="index.html" style="display:block;margin:0 0 .6rem;font-size:.85rem;color:var(--accent,#2b59c3);text-decoration:none">&larr; Portada</a><div class="brand">Análisis 1 · FCEN-UBA</div>
+  <h2>Anexo 5</h2>
+  <nav id="nav">
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#t1">Una variable<small>La fórmula del resto y Rolle</small></a>
+    <a href="#t2">Dos variables<small>R₂ con el segmento</small></a>
+    <div class="sep"></div>
+    <a href="#ejercicios">Ejercicios<small>Para practicar</small></a>
+  </nav>
+</aside>
+<main>
+<div class="tools" role="toolbar" aria-label="Opciones">
+  <button id="b-open">Abrir todo</button>
+  <button id="b-close">Cerrar todo</button>
+  <span class="sp"></span>
+  <button id="b-rev" aria-pressed="true" title="Mostrar u ocultar las marcas de revisión (para el docente)">Marcas de revisión</button>
+  <button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="kick">Anexo teórico · acompaña a la Guía 5</div>
+  <h1>Anexo 5: Fórmulas de Lagrange del resto</h1>
+  <p class="lead">Las demostraciones de las fórmulas del resto que se usan en la Guía 5: en una variable, con una función auxiliar y el teorema de Rolle; en dos variables, mirando la función sobre el segmento que une los puntos.</p>
+  <div class="map">
+    <a href="#t1"><em>Páginas 1 a 4</em><b>Una variable</b><span>$R_n(x)=\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$, con $c$ entre $a$ y $x$.</span></a>
+    <a href="#t2"><em>Páginas 4 a 8</em><b>Dos variables</b><span>$R_2$ con las derivadas terceras en un punto $Q$ del segmento.</span></a>
+  </div>
+  <div class="legend">
+    <span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+    <span><span class="tag add">Agregado</span> no se dijo en clase</span>
+    <span><span class="tag rev">Revisar</span> dudoso, a confirmar por el docente</span>
+  </div>
+  <p class="hint">Este anexo no tiene video en el canal: todo sale de la hoja "Anexo de las Teóricas 17 y 18. Fórmulas de Lagrange del resto" (marca Pizarrón salvo indicación). Los enunciados se usan en la <a href="guia5.html">Guía 5</a>.</p>
+</section>
+
+<!-- ======================= UNA VARIABLE ======================= -->
+<section class="clase" id="t1">
+<header>
+  <div class="kick">UNA VARIABLE · <span class="tag piz">Pizarrón</span></div>
+  <h2>La fórmula del resto de orden $n$</h2>
+  <div class="meta"><span>Hoja, páginas 1 a 4.</span></div>
+</header>
+<div class="box thm"><span class="lab">Fórmula del resto (de orden $n$) en una variable</span>
+<p>Sea $f:I\to\R$, $n+1$ veces derivable en el intervalo abierto $I$, $a\in I$, $x\in I$. Entonces
+$$f(x)=f(a)+f'(a)(x-a)+\frac{f''(a)}{2}(x-a)^2+\frac{f'''(a)}{3!}(x-a)^3+\cdots+\frac{f^{(n)}(a)}{n!}(x-a)^n+R_n(x),$$
+$$R_n(x)=\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1},\qquad c\text{ en el intervalo abierto de extremos }a\text{ y }x.$$</p></div>
+<details class="dem" open><summary>Demostración</summary><div class="in">
+<p><b>La función auxiliar.</b> Consideremos que $x$ y $a$ están fijos. Formamos la función $g:I\to\R$
+$$g(t)=f(x)-f(t)-f'(t)(x-t)-\frac{f''(t)}{2}(x-t)^2-\frac{f'''(t)}{3!}(x-t)^3-\cdots-\frac{f^{(n)}(t)}{n!}(x-t)^n-\frac{K}{(n+1)!}(x-t)^{n+1},$$
+y ajustamos la constante $K$ para que $g(a)=0$.</p>
+<p class="hint"><span class="tag add">Agregado</span> Es el polinomio de Taylor "con centro móvil $t$": $g(t)=f(x)-P_n^{(t)}(x)-\frac{K}{(n+1)!}(x-t)^{n+1}$. En $t=a$ aparece el $P_n$ de siempre.</p>
+<p><b>Rolle.</b> $g$ es derivable y continua en $I$. Miremos $g$ en el intervalo cerrado $J$ de extremos $a$ y $x$: en $J$, $g$ es continua, y en el abierto es derivable. Además
+$$g(a)=0,\qquad g(x)=f(x)-f(x)-0=0.$$
+<span class="tag piz">Pizarrón</span> <i>Teorema (Rolle):</i> si $g:[\alpha,\beta]\to\R$ es continua, derivable en $(\alpha,\beta)$ y $g(\alpha)=g(\beta)$, entonces hay $c\in(\alpha,\beta)$ con $g'(c)=0$. Usando Rolle: hay $c$ estrictamente entre $a$ y $x$ ($c\neq a$, $c\neq x$) con $g'(c)=0$.</p>
+<p><b>La derivada de $g$: una suma telescópica.</b> Derivando respecto de $t$ cada término $\frac{f^{(k)}(t)}{k!}(x-t)^k$ con la regla del producto,
+$$\frac{d}{dt}\Big[\frac{f^{(k)}(t)}{k!}(x-t)^k\Big]=\frac{f^{(k+1)}(t)}{k!}(x-t)^k-\frac{f^{(k)}(t)}{(k-1)!}(x-t)^{k-1}.$$
+Al sumar de $k=0$ a $n$, cada término se cancela con uno del siguiente y queda solo el último. Con el término de $K$, que da $-\frac{K}{(n+1)!}(n+1)(x-t)^n(-1)=\frac{K}{n!}(x-t)^n$:
+$$g'(t)=-\frac{f^{(n+1)}(t)}{n!}(x-t)^n+\frac{K}{n!}(x-t)^n.$$</p>
+<p><b>En $t=c$.</b> $0=g'(c)=-\frac{f^{(n+1)}(c)}{n!}(x-c)^n+\frac{K}{n!}(x-c)^n$, y como $c\neq x$ se puede simplificar $(x-c)^n$:
+$$f^{(n+1)}(c)=K.$$</p>
+<p><b>Volver a $g(a)=0$.</b> Reemplazando $K$ en la fórmula de $g$ en $t=a$:
+$$0=g(a)=f(x)-f(a)-f'(a)(x-a)-\frac{f''(a)}{2}(x-a)^2-\cdots-\frac{f^{(n)}(a)}{n!}(x-a)^n-\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1},$$
+es decir, $f(x)=P_n(x)+\underbrace{\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}}_{R_n(x)}$. $\blacksquare$</p></div></details>
+<div class="viz" id="viz-aux"></div>
+<div class="quiz" id="quiz-1"></div>
+</section>
+
+<!-- ======================= DOS VARIABLES ======================= -->
+<section class="clase" id="t2">
+<header>
+  <div class="kick">DOS VARIABLES · <span class="tag piz">Pizarrón</span></div>
+  <h2>La fórmula de Lagrange del resto $R_2(x,y)$</h2>
+  <div class="meta"><span>Hoja, páginas 4 a 8.</span></div>
+</header>
+<div class="box thm"><span class="lab">Fórmula de Lagrange del resto $R_2(x,y)$ para $f=f(x,y)$</span>
+<p>Sea $f:D\subset\R^2\to\R$, $D$ un disco abierto centrado en $P=(a,b)$, $f$ de clase $C^3$ en $D$. Entonces $f(x,y)=P_2(x,y)+R_2(x,y)$, donde
+$$R_2(x,y)=\frac{f_{xxx}(Q)}{6}(x-a)^3+\frac{f_{xxy}(Q)}{2}(x-a)^2(y-b)+\frac{f_{xyy}(Q)}{2}(x-a)(y-b)^2+\frac{f_{yyy}(Q)}{6}(y-b)^3,$$
+con $Q$ en el segmento de extremos $(a,b)$ y $(x,y)$ (estrictamente).</p></div>
+<details class="dem" open><summary>Demostración</summary><div class="in">
+<p><b>La función auxiliar.</b> Con $P=(a,b)$ y $(x,y)$ fijos, formamos
+$$g(t)=f\big((a,b)+t\,((x,y)-(a,b))\big),\qquad t\in[0,1],$$
+que parametriza el segmento de extremos $(a,b)$ y $(x,y)$; abreviamos $(x(t),y(t))$, con $x(t)=a+t(x-a)$, $y(t)=b+t(y-b)$, $x'(t)=x-a$, $y'(t)=y-b$. $g$ es 3 veces derivable en $(0,1)$: hay $g'$, $g''$, $g'''$, y $g'''$ es continua. Calculamos el desarrollo de Taylor de $g$ en $a=0$, $n=2$.</p>
+<p><b>Primera derivada</b> (regla de la cadena):
+$$g'(t)=f_x(x(t),y(t))\,(x-a)+f_y(x(t),y(t))\,(y-b),\qquad g'(0)=f_x(a,b)(x-a)+f_y(a,b)(y-b).$$</p>
+<p><b>Segunda derivada.</b>
+$$g''(t)=\big(f_{xx}(x-a)+f_{xy}(y-b)\big)(x-a)+\big(f_{yx}(x-a)+f_{yy}(y-b)\big)(y-b)=f_{xx}(x-a)^2+2f_{xy}(x-a)(y-b)+f_{yy}(y-b)^2,$$
+todo evaluado en $(x(t),y(t))$. Entonces $\frac{g''(0)}{2}=\frac12f_{xx}(a,b)(x-a)^2+f_{xy}(a,b)(x-a)(y-b)+\frac{f_{yy}(a,b)}{2}(y-b)^2$.</p>
+<p><b>Tercera derivada.</b> Derivando cada término de la misma forma y juntando las cruzadas (Clairaut):
+$$g'''(t)=f_{xxx}(x-a)^3+3f_{xxy}(x-a)^2(y-b)+3f_{xyy}(x-a)(y-b)^2+f_{yyy}(y-b)^3,$$
+evaluado en $(x(t),y(t))$.</p>
+<p><b>Taylor de orden 2 de $g$ en $0$, en $t=1$.</b> Por la fórmula de una variable,
+$$g(1)=g(0)+g'(0)(1-0)+\frac{g''(0)}{2}(1-0)^2+\frac{g'''(c)}{6}(1-0)^3,\qquad c\in(0,1).$$
+Llamando $Q=(x(c),y(c))=(a,b)+c\,((x,y)-(a,b))$, un punto del segmento entre $(a,b)$ y $(x,y)$ (estrictamente), y como $g(1)=f(x,y)$:
+$$f(x,y)=\underbrace{f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b)+\tfrac12f_{xx}(a,b)(x-a)^2+f_{xy}(a,b)(x-a)(y-b)+\tfrac12f_{yy}(a,b)(y-b)^2}_{P_2(x,y)}$$
+$$+\underbrace{\tfrac{f_{xxx}(Q)}{6}(x-a)^3+\tfrac{f_{xxy}(Q)}{2}(x-a)^2(y-b)+\tfrac{f_{xyy}(Q)}{2}(x-a)(y-b)^2+\tfrac{f_{yyy}(Q)}{6}(y-b)^3}_{R_2(x,y)}.$$
+Quedó $f(x,y)=P_2(x,y)+R_2(x,y)$, con la expresión que habíamos dicho. $\blacksquare$</p></div></details>
+<div class="box obs"><span class="lab c-blue">Observación <span class="tag add">Agregado</span></span>
+<p>Es la misma idea que en la <a href="guia5.html">Clase 28</a> para deducir $P_2$: allá se usaba Taylor de $g$ sin el resto ("asumimos por hoy que el error es chico"); acá, con la fórmula de Lagrange de una variable, el error queda explícito.</p></div>
+<div class="viz" id="viz-qpt"></div>
+<div class="quiz" id="quiz-2"></div>
+</section>
+
+<!-- ======================= EJERCICIOS ======================= -->
+<section class="clase" id="ejercicios">
+<header>
+  <div class="kick">EJERCICIOS · <span class="tag add">Agregado</span></div>
+  <h2>Para practicar</h2>
+  <div class="meta"><span>Ejercicios nuevos para usar las fórmulas del resto, con pistas y resolución.</span></div>
+</header>
+<div class="ctl" style="margin-bottom:14px"><span class="c-mut" id="ejprog" style="font:600 13.5px var(--f-mono)"></span></div>
+<div class="ejlist" id="ejlist"></div>
+</section>
+
+<div class="foot">Material basado en la hoja "Anexo de las Teóricas 17 y 18. Fórmulas de Lagrange del resto" (sin video en el canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a>). Las secciones marcadas como <span class="tag add">Agregado</span> son material nuevo. Versión preliminar, para revisar antes de compartir.</div>
+</main>
+</div>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],macros:{"R": "\\mathbb{R}", "v": ["\\mathbf{#1}", 1], "ang": ["\\langle #1\\rangle", 1], "jh": "\\hat{\\jmath}"}},svg:{fontCache:'none'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']},startup:{typeset:false}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>
+window.G1IMG={};
+(function(){'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>Array.from(r.querySelectorAll(q));
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in (attrs||{})){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});return e;}
+function sv(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const f=(x,d=2)=>{let v=Number(Number(x).toFixed(d));if(Object.is(v,-0)||Math.abs(v)<1e-12)v=0;return String(v).replace('.',',').replace('-','−');};
+const fv=(v,d=2)=>'⟨'+v.map(x=>f(x,d)).join('; ')+'⟩';
+const fp=(v,d=2)=>'('+v.map(x=>f(x,d)).join('; ')+')';
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const add=(a,b)=>a.map((x,i)=>x+b[i]), sub=(a,b)=>a.map((x,i)=>x-b[i]), mul=(a,t)=>a.map(x=>x*t);
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), nrm=a=>Math.sqrt(dot(a,a));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=nrm(a);return n?mul(a,1/n):a;};
+const CL={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',violet:'var(--violet)',ink:'var(--ink)',mut:'var(--ink-2)',amber:'var(--amber)'};
+const TT={blue:'var(--blue-t)',red:'var(--red-t)',green:'var(--green-t)',violet:'var(--violet-t)'};
+
+function arrow(g,x1,y1,x2,y2,col,w,head){w=w||2.6;head=head||11;const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);if(L<1.5)return;
+  const ux=dx/L,uy=dy/L,hl=Math.min(head,L*.7),bx=x2-ux*hl,by=y2-uy*hl;
+  sv('line',{x1,y1,x2:bx,y2:by,style:`stroke:${col};stroke-width:${w};stroke-linecap:round`},g);
+  sv('polygon',{points:`${x2},${y2} ${bx-uy*hl*.42},${by+ux*hl*.42} ${bx+uy*hl*.42},${by-ux*hl*.42}`,style:`fill:${col}`},g);}
+function line(g,x1,y1,x2,y2,col,w,dash){return sv('line',{x1,y1,x2,y2,style:`stroke:${col};stroke-width:${w||1.5};${dash?'stroke-dasharray:'+dash+';':''}stroke-linecap:round`},g);}
+function text(g,x,y,t,col,anchor,cls){const e=sv('text',{x,y,'text-anchor':anchor||'middle',style:`fill:${col||CL.ink}`,class:cls||''},g);e.textContent=t;return e;}
+
+/* ---------- control helpers ---------- */
+function slider(label,o,cb){const inp=h('input',{type:'range',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':label});
+  const val=h('span',{},'');const upd=()=>{val.textContent=f(+inp.value,o.dec==null?1:o.dec)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();cb(+inp.value);});upd();
+  const l=h('label',{},label,inp,val);l.input=inp;l.set=v=>{inp.value=v;upd();};return l;}
+function numbox(o,cb){const i=h('input',{type:'number',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':o.label});
+  i.addEventListener('input',()=>{let v=parseFloat(i.value);if(isNaN(v))return;v=Math.max(o.min,Math.min(o.max,v));cb(v);});return i;}
+function tabs(names,cb,start){const bs=names.map((n,i)=>h('button',{type:'button','aria-pressed':i===(start||0)},n));
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===i));cb(i);}));return h('div',{class:'tabs'},bs);}
+function vhead(title,sub,tb){return h('div',{class:'vh'},h('b',{},title),sub?h('span',{},sub):null,tb||null);}
+
+/* ---------- plano 2D con puntos arrastrables ---------- */
+function Plane2D(host,o){
+  const xr=o.xr||[-6,6],yr=o.yr||[-4,4],W=o.W||640,sx=W/(xr[1]-xr[0]),H=sx*(yr[1]-yr[0]);
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Plano cartesiano interactivo'},host);
+  const X=x=>(x-xr[0])*sx,Y=y=>H-(y-yr[0])*sx;
+  const gb=sv('g',{},svg),gd=sv('g',{},svg),gh=sv('g',{},svg);
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){line(gb,X(x),0,X(x),H,'var(--grid)',1);if(x&&x%(o.tick||1)===0)text(gb,X(x),Y(0)+15,x,CL.mut,'middle','sm');}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){line(gb,0,Y(y),W,Y(y),'var(--grid)',1);if(y&&y%(o.ytick||o.tick||1)===0)text(gb,X(0)-7,Y(y)+4,y,CL.mut,'end','sm');}
+  arrow(gb,0,Y(0),W-2,Y(0),CL.mut,1.6,8);arrow(gb,X(0),H,X(0),2,CL.mut,1.6,8);
+  text(gb,W-10,Y(0)-8,o.xl||'x',CL.mut);text(gb,X(0)+12,12,o.yl||'y',CL.mut);
+  const api={svg,X,Y,sx,W,H,xr,yr,g:gd,handles:[]};
+  function toW(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x/sx+xr[0],(H-p.y)/sx+yr[0]];}
+  api.handle=function(obj,col,opt){opt=opt||{};const snap=opt.snap||.5,c=sv('circle',{r:11,class:'grab',tabindex:0,role:'slider','aria-label':opt.label||'Punto arrastrable',style:`fill:${col};stroke:var(--surface);stroke-width:3`},gh);
+    let drag=false;const clampSet=(x,y)=>{x=Math.round(x/snap)*snap;y=Math.round(y/snap)*snap;obj.x=Math.max(xr[0]+.3,Math.min(xr[1]-.3,x));obj.y=Math.max(yr[0]+.3,Math.min(yr[1]-.3,y));api.update();};
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);e.preventDefault();});
+    c.addEventListener('pointermove',e=>{if(!drag)return;const p=toW(e);clampSet(p[0],p[1]);});
+    const end=()=>{drag=false;};c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+    c.addEventListener('keydown',e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(d){e.preventDefault();clampSet(obj.x+d[0]*snap,obj.y+d[1]*snap);}});
+    api.handles.push({obj,c});return c;};
+  api.update=function(){gd.textContent='';o.draw(gd,api);api.handles.forEach(hd=>{hd.c.setAttribute('cx',X(hd.obj.x));hd.c.setAttribute('cy',Y(hd.obj.y));});if(o.onUpdate)o.onUpdate(api);};
+  return api;
+}
+
+/* ---------- vista 3D ortográfica, eje z hacia arriba, terna derecha ---------- */
+function View3D(host,o){
+  o=o||{};const W=o.W||640,H=o.H||430,scale=o.scale||40,ctr=o.ctr||[0,0,0];
+  const st={az:o.az==null?215:o.az,el:o.el==null?22:o.el};
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Vista tridimensional. Se puede girar arrastrando.'},host);
+  const g=sv('g',{},svg);
+  function P(p){const a=rad(st.az),e=rad(st.el),x=p[0]-ctr[0],y=p[1]-ctr[1],z=p[2]-ctr[2];
+    const x1=Math.cos(a)*x-Math.sin(a)*y,y1=Math.sin(a)*x+Math.cos(a)*y;
+    return [W/2+x1*scale,H/2-(z*Math.cos(e)+y1*Math.sin(e))*scale,y1*Math.cos(e)-z*Math.sin(e)];}
+  const api={svg,st,P,draw:null};
+  api.render=function(){g.textContent='';const polys=[],ops=[],txt=[];
+    const sc={
+      poly(pts,col,op,stroke){polys.push({pts:pts.map(P),col,op,stroke});},
+      line(a,b,col,w,dash){ops.push(()=>{const p=P(a),q=P(b);line(g,p[0],p[1],q[0],q[1],col,w,dash);});},
+      path(pts,col,w,dash,closed){ops.push(()=>{const q=pts.map(P);sv('polyline',{points:q.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' ')+(closed?' '+q[0][0].toFixed(1)+','+q[0][1].toFixed(1):''),style:`fill:none;stroke:${col};stroke-width:${w||1.4};${dash?'stroke-dasharray:'+dash+';':''}stroke-linejoin:round`},g);});},
+      arrow(a,b,col,w){ops.push(()=>{const p=P(a),q=P(b);arrow(g,p[0],p[1],q[0],q[1],col,w||2.8,11);});},
+      dot(a,col,r){ops.push(()=>{const p=P(a);sv('circle',{cx:p[0],cy:p[1],r:r||5,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);});},
+      disc(c,rpx,col){ops.push(()=>{const p=P(c);sv('circle',{cx:p[0],cy:p[1],r:rpx*scale,style:`fill:${col};stroke:none`},g);});},
+      text(a,t,col,dx,dy,anc){txt.push(()=>{const p=P(a);text(g,p[0]+(dx||0),p[1]+(dy||0),t,col,anc);});},
+      axes(L,neg){const ex=[[1,0,0,'x'],[0,1,0,'y'],[0,0,1,'z']];ex.forEach(e=>{const v=[e[0],e[1],e[2]];
+        if(neg!==false)sc.line(mul(v,-L),[0,0,0],'var(--line)',1.2,'4 4');
+        ops.push(()=>{const p=P([0,0,0]),q=P(mul(v,L));arrow(g,p[0],p[1],q[0],q[1],CL.mut,1.6,9);});
+        sc.text(mul(v,L*1.1),e[3],CL.mut,0,4);});},
+      box(lo,hi,col,op){const[x0,y0,z0]=lo,[x1,y1,z1]=hi;const C=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        [[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach(q=>sc.poly(q.map(i=>C[i]),col,op,col));},
+      patch(n,d,S,col,op,dashed){n=unit(n);const e=Math.abs(n[2])<.9?[0,0,1]:[1,0,0];const u=unit(cross(n,e)),v=cross(n,u),c=mul(n,d);
+        const q=[add(add(c,mul(u,S)),mul(v,S)),add(sub(c,mul(u,S)),mul(v,S)),sub(sub(c,mul(u,S)),mul(v,S)),sub(add(c,mul(u,S)),mul(v,S))];
+        sc.poly(q,col,op,col);if(dashed)sc.path(q,col,1.6,'6 5',true);return {q,c,n,u,v};},
+      circle(c,r,plane,col,w,dash){const pts=[];for(let i=0;i<=48;i++){const t=i/48*2*Math.PI,a=Math.cos(t)*r,b=Math.sin(t)*r;
+        pts.push(plane==='xy'?[c[0]+a,c[1]+b,c[2]]:plane==='xz'?[c[0]+a,c[1],c[2]+b]:[c[0],c[1]+a,c[2]+b]);}sc.path(pts,col,w||1.3,dash);},
+      surf(fn,ur,vr,nu,nv,col,op,stroke){for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const u0=ur[0]+(ur[1]-ur[0])*i/nu,u1=ur[0]+(ur[1]-ur[0])*(i+1)/nu,v0=vr[0]+(vr[1]-vr[0])*j/nv,v1=vr[0]+(vr[1]-vr[0])*(j+1)/nv;
+        const q=[fn(u0,v0),fn(u1,v0),fn(u1,v1),fn(u0,v1)];if(q.some(p=>!p||p.some(x=>!isFinite(x))))continue;polys.push({pts:q.map(P),col,op:op==null?.35:op,stroke:stroke||col,sw:.6});}},
+      sphere(c,r,col,dash){sc.disc(c,r,'var(--blue-t)');['xy','xz','yz'].forEach(p=>sc.circle(c,r,p,col||CL.blue,1.4,dash));
+        for(const k of[.5,-.5]){const rr=r*Math.sqrt(1-k*k);sc.circle([c[0],c[1],c[2]+r*k],rr,'xy',col||CL.blue,.9,dash);}}
+    };
+    if(api.draw)api.draw(sc);
+    polys.sort((a,b)=>mean(b.pts)-mean(a.pts));
+    polys.forEach(p=>{sv('polygon',{points:p.pts.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' '),style:`fill:${p.col};fill-opacity:${p.op==null?.25:p.op};stroke:${p.stroke||'none'};stroke-opacity:.55;stroke-width:${p.sw||1.2}`},g);});
+    ops.forEach(fn=>fn());txt.forEach(fn=>fn());};
+  function mean(pts){return pts.reduce((s,p)=>s+p[2],0)/pts.length;}
+  // arrastre para girar
+  let drag=null;svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,az:st.az,el:st.el};svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect(),k=W/r.width;st.az=drag.az-(e.clientX-drag.x)*k*.5;
+    if(e.pointerType==='mouse'){st.el=Math.max(-80,Math.min(85,drag.el+(e.clientY-drag.y)*k*.4));}
+    api.sync&&api.sync();api.render();});
+  const end=()=>{drag=null;};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  api.controls=function(){const a=slider('giro',{min:0,max:360,step:1,value:Math.round(((st.az%360)+360)%360),unit:'°',dec:0},v=>{st.az=v;api.render();});
+    const b=slider('inclinación',{min:-80,max:85,step:1,value:st.el,unit:'°',dec:0},v=>{st.el=v;api.render();});
+    api.sync=()=>{a.set(Math.round(((st.az%360)+360)%360));b.set(Math.round(st.el));};
+    const reset=h('button',{type:'button',onclick:()=>{st.az=o.az==null?215:o.az;st.el=o.el==null?22:o.el;api.sync();api.render();}},'Vista inicial');
+    return h('div',{class:'ctl'},a,b,reset);};
+  return api;
+}
+
+
+/* ---------- expresiones escritas por el usuario: expr('t^2-2t',['t']) -> función ---------- */
+function expr(src,vars){vars=vars||['x'];const s=String(src).replace(/\s+/g,'').replace(/\*\*/g,'^').replace(/π/g,'pi').replace(/θ/g,'th').replace(/·/g,'*').replace(/−/g,'-').replace(/,/g,'.');
+  const FN={sin:Math.sin,sen:Math.sin,cos:Math.cos,tan:Math.tan,tg:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,arcsen:Math.asin,arccos:Math.acos,arctan:Math.atan,sqrt:Math.sqrt,raiz:Math.sqrt,exp:Math.exp,ln:Math.log,log:Math.log,abs:Math.abs,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),sgn:Math.sign};
+  const C={pi:Math.PI,e:Math.E};let i=0;const err=m=>{throw new Error(m);};
+  const peek=()=>s[i];
+  function num(){const m=/^\d*\.?\d+(e[+-]?\d+)?/i.exec(s.slice(i));if(!m)err('número');i+=m[0].length;const v=parseFloat(m[0]);return ()=>v;}
+  function ident(){const m=/^[a-zA-Z_]+/.exec(s.slice(i));i+=m[0].length;let w=m[0];
+    // separar nombres pegados: "tsint" -> t, sin, t ; prioridad: funciones, constantes, variables
+    const names=[...Object.keys(FN),...Object.keys(C),...vars].sort((a,b)=>b.length-a.length);
+    const parts=[];while(w.length){const n=names.find(nm=>w.startsWith(nm));if(!n)err('nombre desconocido: '+w);parts.push(n);w=w.slice(n.length);}
+    return parts;}
+  function primary(){const c=peek();
+    if(c==='('){i++;const e=add_();if(peek()!==')')err('falta )');i++;return e;}
+    if(c==='|'){i++;const e=add_();if(peek()!=='|')err('falta |');i++;return v=>Math.abs(e(v));}
+    if(/[\d.]/.test(c))return num();
+    if(/[a-zA-Z_]/.test(c)){const parts=ident();
+      const build=k=>{const n=parts[k];
+        if(FN[n]){let arg;if(k+1<parts.length){arg=build(k+1);}else{arg=power();}const f=FN[n];return v=>f(arg(v));}
+        let a;if(n in C){const cv=C[n];a=()=>cv;}else{const j=vars.indexOf(n);a=v=>v[j];}
+        if(k+1<parts.length){const r=build(k+1);return v=>a(v)*r(v);}return a;};
+      return build(0);}
+    err('símbolo inesperado: '+(c||'fin'));}
+  function power(){const b=primary();if(peek()==='^'){i++;const e=unary();return v=>Math.pow(b(v),e(v));}return b;}
+  function unary(){if(peek()==='-'){i++;const u=unary();return v=>-u(v);}if(peek()==='+'){i++;return unary();}return power();}
+  function mul_(){let a=unary();for(;;){const c=peek();
+      if(c==='*'||c==='/'){i++;const b=unary(),l=a;a=c==='*'?(v=>l(v)*b(v)):(v=>l(v)/b(v));}
+      else if(c&&/[\d.a-zA-Z_(|]/.test(c)&&c!=='|'){const b=unary(),l=a;a=v=>l(v)*b(v);}
+      else return a;}}
+  function add_(){let a=mul_();for(;;){const c=peek();if(c==='+'||c==='-'){i++;const b=mul_(),l=a;a=c==='+'?(v=>l(v)+b(v)):(v=>l(v)-b(v));}else return a;}}
+  if(!s.length)err('vacía');const f=add_();if(i<s.length)err('sobra: '+s.slice(i));
+  return (...a)=>f(a);}
+
+/* ---------- curvas de nivel (marching squares): devuelve lista de segmentos [[x1,y1],[x2,y2]] ---------- */
+function contour(F,xr,yr,c,n){n=n||80;const dx=(xr[1]-xr[0])/n,dy=(yr[1]-yr[0])/n,segs=[];const G=[];
+  for(let i=0;i<=n;i++){G[i]=[];for(let j=0;j<=n;j++){const v=F(xr[0]+i*dx,yr[0]+j*dy);G[i][j]=isFinite(v)?((v-c)===0?1e-12:v-c):NaN;}}
+  const lerp=(a,b,pa,pb)=>{const t=a/(a-b);return [pa[0]+(pb[0]-pa[0])*t,pa[1]+(pb[1]-pa[1])*t];};
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=xr[0]+i*dx,y=yr[0]+j*dy;
+    const P=[[x,y],[x+dx,y],[x+dx,y+dy],[x,y+dy]],V=[G[i][j],G[i+1][j],G[i+1][j+1],G[i][j+1]];
+    if(V.some(isNaN))continue;const pts=[];
+    for(let k=0;k<4;k++){const a=V[k],b=V[(k+1)%4];if((a<0)!==(b<0))pts.push(lerp(a,b,P[k],P[(k+1)%4]));else if(a===0&&b!==0)pts.push(P[k]);}
+    if(pts.length===2)segs.push(pts);else if(pts.length===4){segs.push([pts[0],pts[1]]);segs.push([pts[2],pts[3]]);}}
+  return segs;}
+
+/* ---------- dibujar una curva en un Plane2D: pts = [[x,y],...] (cortes en NaN o saltos) ---------- */
+function poly2(g,api,pts,col,w,dash){let d='',pen=false,prev=null;const {X,Y}=api,lim=Math.max(api.W,api.H)*3;
+  pts.forEach(p=>{const ok=p&&isFinite(p[0])&&isFinite(p[1]);if(!ok){pen=false;prev=null;return;}const px=X(p[0]),py=Y(p[1]);
+    if(Math.abs(px)>lim||Math.abs(py)>lim){pen=false;prev=null;return;}
+    if(prev&&Math.hypot(px-prev[0],py-prev[1])>api.W*.35)pen=false;
+    d+=(pen?'L':'M')+px.toFixed(1)+' '+py.toFixed(1);pen=true;prev=[px,py];});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.5};stroke-linejoin:round;stroke-linecap:round;${dash?'stroke-dasharray:'+dash:''}`},g);}
+function segs2(g,api,segs,col,w){const {X,Y}=api;let d='';segs.forEach(s=>{d+='M'+X(s[0][0]).toFixed(1)+' '+Y(s[0][1]).toFixed(1)+'L'+X(s[1][0]).toFixed(1)+' '+Y(s[1][1]).toFixed(1);});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.2};stroke-linecap:round`},g);}
+window.G1={$,$$,h,sv,f,fv,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2};
+})();
+(function(){'use strict';
+const {$,h,sv,f,CL,line,text,slider,vhead,Plane2D,poly2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+const fact=n=>{let r=1;for(let i=2;i<=n;i++)r*=i;return r;};
+
+/* ======================================================================
+   La función auxiliar g(t) de la prueba y el punto de Rolle
+   ====================================================================== */
+const FN={
+  exp:{n:'f(x) = eˣ',d:(k,t)=>Math.exp(t)},
+  sen:{n:'f(x) = sen x',d:(k,t)=>[Math.sin(t),Math.cos(t),-Math.sin(t),-Math.cos(t)][k%4]},
+  ln:{n:'f(x) = ln(1 + x)',d:(k,t)=>k===0?Math.log(1+t):Math.pow(-1,k+1)*fact(k-1)/Math.pow(1+t,k),dom:[-.9,3]}
+};
+V.aux=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='exp',n=2,a=0,x=1.5;
+  const s=h('select',{'aria-label':'Elegir función'},...Object.keys(FN).map(k=>h('option',{value:k},FN[k].n)));
+  host.append(vhead('La función auxiliar de la prueba','g(t) = f(x) − P_n(x) "centrado en t" − K(x − t)ⁿ⁺¹/(n + 1)!, con K elegido para que g(a) = 0. Rolle da un c con g′(c) = 0, y ahí f⁽ⁿ⁺¹⁾(c) = K'),h('div',{class:'ctl'},s),body);
+  const F=()=>FN[cur];
+  const T=(t)=>{let s=0;for(let k=0;k<=n;k++)s+=F().d(k,t)/fact(k)*Math.pow(x-t,k);return s;};
+  const K=()=>(F().d(0,x)-T(a))*fact(n+1)/Math.pow(x-a,n+1);
+  const g=t=>F().d(0,x)-T(t)-K()/fact(n+1)*Math.pow(x-t,n+1);
+  const gp=t=>(g(t+1e-6)-g(t-1e-6))/2e-6;
+  let pl=null;
+  function cs(){const lo=Math.min(a,x),hi=Math.max(a,x),N=600,r=[];for(let i=1;i<N;i++){const t1=lo+(hi-lo)*i/N,t2=lo+(hi-lo)*(i+1)/N,v1=gp(t1),v2=gp(t2);if(v1*v2<0&&t2<hi)r.push(t1-v1*(t2-t1)/(v2-v1));}return r;}
+  function build(){body.textContent='';
+    pl=Plane2D(body,{xr:[-1,3.2],yr:[-1.2,1.2],tick:1,xl:'t',yl:'g',label:'Gráfico de g(t) entre a y x',draw(G,A){
+      const lo=Math.min(a,x),hi=Math.max(a,x);let m=0;const P=[];for(let i=0;i<=300;i++){const t=lo+(hi-lo)*i/300,v=g(t);P.push([t,v]);m=Math.max(m,Math.abs(v));}
+      const k=m>0?1/(m*1.1):1;poly2(G,A,P.map(p=>[p[0],p[1]*k]),CL.violet,3);
+      [[a,'a'],[x,'x']].forEach(([t,l])=>{sv('circle',{cx:A.X(t),cy:A.Y(0),r:5.5,style:'fill:var(--ink);stroke:var(--surface);stroke-width:2'},G);text(G,A.X(t),A.Y(0)+20,l,CL.ink,'middle');});
+      pl.cs=cs();pl.cs.forEach(c=>{line(G,A.X(c-.35),A.Y(g(c)*k),A.X(c+.35),A.Y(g(c)*k),CL.red,2.2);sv('circle',{cx:A.X(c),cy:A.Y(g(c)*k),r:5,style:'fill:var(--red)'},G);line(G,A.X(c),A.Y(0),A.X(c),A.Y(g(c)*k),CL.red,1,'2 3');text(G,A.X(c),A.Y(0)-8,'c',CL.red,'middle');});
+      text(G,A.W-8,16,'escala vertical ×'+f(k,1),CL.mut,'end','sm');}});
+    const sn=slider('n',{min:0,max:5,step:1,value:n,dec:0},v=>{n=v;upd();}),sa=slider('a',{min:-.8,max:3,step:.05,value:a,dec:2},v=>{a=v;upd();}),sx=slider('x',{min:-.8,max:3,step:.05,value:x,dec:2},v=>{x=v;upd();});
+    body.append(h('div',{class:'ctl'},sn,sa,sx),out);upd();}
+  function upd(){if(Math.abs(x-a)<.04){out.innerHTML='<span class="c-mut">Separá a y x.</span>';pl.update();return;}
+    pl.update();const k=K(),cc=pl.cs||[];
+    out.innerHTML=`${F().n}, n = ${n}, a = ${f(a,2)}, x = ${f(x,2)}. K = ${f(k,5)} (elegido para que g(a) = 0); además g(x) = 0 siempre.<br>`+
+      (cc.length?`<b class="c-red">Rolle: g′(c) = 0 en c = ${cc.map(c=>f(c,4)).join(', ')}</b>, y ahí f⁽${n+1}⁾(c) = ${cc.map(c=>f(F().d(n+1,c),5)).join(', ')} = K. `:'')+
+      `<span class="c-mut">Entonces R<sub>${n}</sub>(x) = f⁽ⁿ⁺¹⁾(c)/(n + 1)! · (x − a)ⁿ⁺¹ = ${f(k/fact(n+1)*Math.pow(x-a,n+1),6)}, que es f(x) − P<sub>${n}</sub>(x) = ${f(F().d(0,x)-T(a),6)}.</span>`;}
+  s.addEventListener('change',()=>{cur=s.value;if(cur==='ln'){a=Math.max(a,0);x=Math.max(x,.5);}build();});
+  build();
+};
+
+/* ======================================================================
+   Dónde está Q: el resto R2 en dos variables
+   ====================================================================== */
+V.qpt=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let tq=.5;
+  host.append(vhead('¿Dónde está Q?','f(x,y) = x^{7/2} y^{1/3} en (1,1), con (x, y) = (0,9; 1,2). Mové Q por el segmento: en algún lugar, la fórmula con las derivadas terceras en Q da exactamente R₂'),body);
+  const L=h('div',{class:'half'}),Rr=h('div',{class:'half'});body.append(L,Rr);
+  const F=(x,y)=>Math.pow(x,3.5)*Math.cbrt(y);
+  const P2=(x,y)=>{const u=x-1,v=y-1;return 1+3.5*u+v/3+35/8*u*u+7/6*u*v-v*v/9;};
+  const X=.9,Y=1.2,R2=F(X,Y)-P2(X,Y);
+  const Rq=(c,d)=>{const u=X-1,v=Y-1;return 35/16*Math.sqrt(c)*Math.cbrt(d)*u**3+35/24*Math.pow(c,1.5)*Math.pow(d,-2/3)*u*u*v-7/18*Math.pow(c,2.5)*Math.pow(d,-5/3)*u*v*v+5/81*Math.pow(c,3.5)*Math.pow(d,-8/3)*v**3;};
+  const Q=t=>[1+t*(X-1),1+t*(Y-1)];
+  let tstar=null;{let best=1e9;for(let i=1;i<1000;i++){const t=i/1000,[c,d]=Q(t),e=Math.abs(Rq(c,d)-R2);if(e<best){best=e;tstar=t;}}}
+  const pa=Plane2D(L,{W:440,xr:[.82,1.08],yr:[.96,1.24],tick:1,label:'El segmento de (1,1) a (0,9; 1,2)',draw(g,a){
+    line(g,a.X(1),a.Y(1),a.X(X),a.Y(Y),CL.violet,3);const [c,d]=Q(tq),[cs,ds]=Q(tstar);
+    sv('circle',{cx:a.X(cs),cy:a.Y(ds),r:7,style:'fill:none;stroke:var(--green);stroke-width:2.4'},g);
+    sv('circle',{cx:a.X(c),cy:a.Y(d),r:6,style:'fill:var(--red);stroke:var(--surface);stroke-width:2'},g);text(g,a.X(c)+10,a.Y(d)+4,'Q',CL.red,'start');
+    sv('circle',{cx:a.X(1),cy:a.Y(1),r:5,style:'fill:var(--ink)'},g);text(g,a.X(1)+8,a.Y(1)+14,'(1, 1)',CL.ink,'start','sm');
+    sv('circle',{cx:a.X(X),cy:a.Y(Y),r:5,style:'fill:var(--ink)'},g);text(g,a.X(X)+8,a.Y(Y)-6,'(0,9; 1,2)',CL.ink,'start','sm');}});
+  const pb=Plane2D(Rr,{W:440,xr:[-.1,1.1],yr:[-.25,.95],tick:1,xl:'t',yl:' ',label:'La fórmula del resto evaluada en Q(t), comparada con R₂',draw(g,a){
+    const k=1/0.004;const P=[];for(let i=0;i<=200;i++){const t=i/200,[c,d]=Q(t);P.push([t,Rq(c,d)*k]);}
+    poly2(g,a,P,CL.violet,2.6);line(g,a.X(-.1),a.Y(R2*k),a.X(1.1),a.Y(R2*k),CL.green,2,'6 4');
+    const [c,d]=Q(tq);sv('circle',{cx:a.X(tq),cy:a.Y(Rq(c,d)*k),r:6,style:'fill:var(--red)'},g);
+    text(g,a.W-8,16,'unidad vertical: 0,004',CL.mut,'end','sm');text(g,a.X(1.08),a.Y(R2*k)-6,'R₂ exacto',CL.green,'end','sm');}});
+  const st=slider('posición de Q (t)',{min:0,max:1,step:.005,value:tq,dec:3},v=>{tq=v;upd();});
+  body.after(h('div',{class:'ctl'},st),out);
+  function upd(){pa.update();pb.update();const [c,d]=Q(tq);
+    out.innerHTML=`R₂(0,9; 1,2) = f − P₂ = ${f(F(X,Y),6)} − ${f(P2(X,Y),6)} = <b class="c-green">${f(R2,6)}</b>. Con Q = (${f(c,4)}, ${f(d,4)}): fórmula = <b class="c-red">${f(Rq(c,d),6)}</b>.<br>`+
+      `<span class="c-mut">El teorema asegura que existe un Q del segmento donde coinciden (acá, t ≈ ${f(tstar,3)}, círculo verde); para acotar el error no hace falta saber cuál es: se acota la fórmula en todo el segmento.</span>`;}
+  upd();
+};
+})();
+(function(){const R=String.raw;
+window.A1={key:'ax5',vid:{},vlab:{},
+ viz:{'viz-aux':'aux','viz-qpt':'qpt'}};
+window.A1.quiz={
+'quiz-1':{t:'Autoevaluación: una variable',qs:[
+ {p:R`En la prueba, la constante $K$ se elige para que:`,o:[R`$g(a)=0$`,R`$g(x)=0$`,R`$g'(a)=0$`,R`$K=f^{(n+1)}(a)$`],c:0,w:R`$g(x)=0$ vale siempre; $K$ se ajusta para que también $g(a)=0$ y se pueda usar Rolle.`},
+ {p:R`Al derivar $g$, ¿qué queda?`,o:[R`solo $-\frac{f^{(n+1)}(t)}{n!}(x-t)^n+\frac{K}{n!}(x-t)^n$`,R`todos los términos del polinomio`,R`$f'(t)$`,R`$0$`],c:0,w:R`La suma es telescópica: cada término se cancela con uno del siguiente.`},
+ {p:R`¿Por qué se puede simplificar $(x-c)^n$?`,o:[R`porque Rolle da $c$ estrictamente entre $a$ y $x$, así que $c\neq x$`,R`porque $n\ge1$`,R`porque $x\gt0$`,R`porque $K\neq0$`],c:0,w:R`Si fuera $c=x$, $(x-c)^n=0$ y no se podría dividir.`}]},
+'quiz-2':{t:'Autoevaluación: dos variables',qs:[
+ {p:R`La función auxiliar en dos variables es:`,o:[R`$g(t)=f\big((a,b)+t((x,y)-(a,b))\big)$`,R`$g(t)=f(t,t)$`,R`$g(t)=f(x,y)-P_2(x,y)$`,R`la misma que en una variable`],c:0,w:R`Es $f$ restringida al segmento que une $(a,b)$ con $(x,y)$.`},
+ {p:R`El punto $Q$ de la fórmula está:`,o:['en el segmento entre (a, b) y (x, y)','en el disco, en cualquier lugar','en el borde del disco','en (a, b)'],c:0,w:R`$Q=(a,b)+c((x,y)-(a,b))$ con $c\in(0,1)$.`},
+ {p:R`¿Por qué en $g'''$ aparecen los coeficientes 1, 3, 3, 1?`,o:['porque las derivadas cruzadas de orden 3 son iguales y se juntan','por el binomio de Newton, sin relación con las derivadas','porque se dividen por 6','por la regla de L’Hôpital'],c:0,w:R`$f_{xxy}=f_{xyx}=f_{yxx}$ aparece 3 veces, igual que $f_{xyy}$. Dividiendo por $3!=6$ quedan $\frac16,\frac12,\frac12,\frac16$.`}]}
+};
+})();
+(function(){'use strict';
+const R=String.raw;
+const EJ=[
+{n:1,t:'El número e',s:'Con error menor que 10⁻⁴',
+ enun:R`<p>Usando el polinomio de Mac Laurin de $e^x$ y la fórmula del resto, calcular $e$ con error menor que $10^{-4}$. (Se puede usar que $e\lt3$.)</p>`,
+ pistas:[R`<p>$e=e^1$, y $R_n(1)=\frac{e^c}{(n+1)!}$ con $0\lt c\lt1$.</p>`,R`<p>$e^c\lt e\lt3$: buscá $n$ con $\frac{3}{(n+1)!}\lt10^{-4}$.</p>`],
+ sol:R`<p>$|R_n(1)|=\frac{e^c}{(n+1)!}\lt\frac{3}{(n+1)!}$. Con $n=7$: $\frac{3}{8!}=\frac{3}{40320}\approx7{,}4\times10^{-5}\lt10^{-4}$ (con $n=6$ da $6\times10^{-4}$, no alcanza). Entonces
+$$e\approx1+1+\frac12+\frac16+\frac1{24}+\frac1{120}+\frac1{720}+\frac1{5040}=2{,}71825\ldots$$
+(el valor es $2{,}718281\ldots$).</p>`,
+ chk:{p:'el n mínimo',vals:[7]},
+ ref:[]},
+
+{n:2,t:'Un coseno chico',s:'Usar el orden correcto',
+ enun:R`<p>Aproximar $\cos(0{,}1)$ con $P_2(x)=1-\frac{x^2}{2}$ y acotar el error con la fórmula de Lagrange. ¿Conviene pensar a $P_2$ como $P_3$?</p>`,
+ pistas:[R`<p>$P_2=P_3$ para el coseno (el término cúbico es 0). Con $R_3$ el error tiene $x^4$.</p>`],
+ sol:R`<p>$\cos(0{,}1)\approx1-0{,}005=0{,}995$. Pensado como $P_3$, $|R_3(0{,}1)|=\frac{|\cos c|}{4!}(0{,}1)^4\le\frac{10^{-4}}{24}\approx4{,}2\times10^{-6}$. (Con $R_2=\frac{\operatorname{sen}c}{6}x^3$ solo se obtiene $|R_2|\le\frac{|\operatorname{sen}c|}{6}10^{-3}\le\frac{0{,}1}{6}10^{-3}$, también chico pero peor.) El valor es $0{,}9950042\ldots$</p>`,
+ chk:{p:'la cota con R₃',vals:[1e-4/24]},
+ ref:[]},
+
+{n:3,t:'Rolle en la prueba',s:'Un caso concreto',
+ enun:R`<p>Para $f(x)=e^x$, $a=0$, $x=1$ y $n=0$, escribir la función auxiliar $g(t)$ de la demostración, calcular $K$ y encontrar el $c$ que da Rolle. ¿Qué teorema conocido se obtiene con $n=0$?</p>`,
+ pistas:[R`<p>Con $n=0$: $g(t)=f(x)-f(t)-K(x-t)$.</p>`],
+ sol:R`<p>$g(t)=e-e^t-K(1-t)$. $g(0)=0$ da $K=e-1$. $g'(t)=-e^t+K=0$ en $c=\ln(e-1)\approx0{,}541$, y efectivamente $f'(c)=e^c=e-1=K$. Con $n=0$ la fórmula es $f(x)-f(a)=f'(c)(x-a)$: el teorema del valor medio de Lagrange.</p>`,
+ chk:{p:'c',vals:[Math.log(Math.E-1)]},
+ ref:[]},
+
+{n:4,t:'El resto en dos variables',s:'Un polinomio de grado 3',
+ enun:R`<p>Sea $f(x,y)=x^3+xy^2$. Calcular $P_2$ en $(1,1)$ y verificar que $R_2(x,y)=f-P_2$ coincide con la fórmula de Lagrange (acá las derivadas terceras son constantes, así que no importa dónde esté $Q$).</p>`,
+ pistas:[R`<p>$f_{xxx}=6$, $f_{xxy}=0$, $f_{xyy}=2$, $f_{yyy}=0$.</p>`],
+ sol:R`<p>En $(1,1)$: $f=2$, $f_x=3x^2+y^2=4$, $f_y=2xy=2$, $f_{xx}=6x=6$, $f_{xy}=2y=2$, $f_{yy}=2x=2$:
+$$P_2=2+4(x-1)+2(y-1)+3(x-1)^2+2(x-1)(y-1)+(y-1)^2.$$
+La fórmula: $R_2=\frac66(x-1)^3+0+\frac22(x-1)(y-1)^2+0=(x-1)^3+(x-1)(y-1)^2$. Desarrollando $f$ en potencias de $u=x-1$, $v=y-1$: $f=(1+u)^3+(1+u)(1+v)^2$, y los términos de grado 3 son exactamente $u^3+uv^2$.</p>`,
+ ref:[]}
+];
+window.G1EJ=EJ;
+})();
+(function(){'use strict';
+const {$,$$,h,f}=window.G1;
+const IM=window.G1IMG||{};
+const EJ=window.G1EJ||[];
+const KEY=(window.A1&&window.A1.key)||'a1';
+const T=(v,t,txt)=>`<a class="t" data-v="${v}" data-t="${t}">${txt||t}</a>`;
+
+/* ---------- render ---------- */
+function parse(s){return s.split(/[;\s]+/).filter(Boolean).map(x=>parseFloat(x.replace(',','.')));}
+let done={};try{done=JSON.parse(localStorage.getItem(KEY+'-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem(KEY+'-done',JSON.stringify(done));}catch(e){}}
+function prog(){const n=Object.keys(done).filter(k=>done[k]).length;$('#ejprog').textContent='Hechos: '+n+' de '+EJ.length+' (se guarda en este navegador)';}
+
+function build(){const list=$('#ejlist');
+  EJ.forEach(e=>{
+    const d=h('details',{class:'ejc'+(done[e.n]?' done':''),id:'ej'+e.n});
+    const sum=h('summary',{},h('span',{class:'num'},e.n),h('span',{class:'tt'},h('b',{},e.t),h('span',{},e.s)));
+    const inn=h('div',{class:'in'});
+    inn.append(h('div',{class:'enun',html:e.enun}));
+    if(e.img&&IM[e.img])inn.append(h('img',{class:'fig',src:IM[e.img],alt:'Figura del ejercicio '+e.n}));
+    if(e.rev)inn.append(h('div',{class:'revnote',html:'<b>Revisar</b>'+e.rev}));
+    if(e.extra)inn.append(h('div',{html:e.extra}));
+    const pistas=h('div',{class:'pistas'});let k=0;
+    const bP=h('button',{type:'button'},'Dame una pista');
+    const bS=h('button',{type:'button'},'Ver resolución');
+    const sol=h('div',{class:'sol',hidden:'',html:'<b>Resolución</b>'+e.sol});
+    bP.addEventListener('click',()=>{if(k<e.pistas.length){pistas.append(h('div',{class:'pista',html:'<b>Pista '+(k+1)+' de '+e.pistas.length+'</b>'+e.pistas[k]}));k++;typeset(pistas);}
+      if(k>=e.pistas.length){bP.disabled=true;bP.textContent='No hay más pistas';}else bP.textContent='Otra pista ('+k+'/'+e.pistas.length+')';});
+    bS.addEventListener('click',()=>{sol.hidden=!sol.hidden;bS.textContent=sol.hidden?'Ver resolución':'Ocultar resolución';if(!sol.hidden)typeset(sol);});
+    const bD=h('button',{type:'button','aria-pressed':!!done[e.n]},done[e.n]?'Hecho ✓':'Marcar como hecho');
+    bD.addEventListener('click',()=>{done[e.n]=!done[e.n];save();d.classList.toggle('done',!!done[e.n]);bD.setAttribute('aria-pressed',!!done[e.n]);bD.textContent=done[e.n]?'Hecho ✓':'Marcar como hecho';prog();});
+    const refs=(e.ref||[]).map(r=>h('span',{html:T(r[0],r[1],(((window.A1||{}).vlab||{})[r[0]]||('Clase '+r[0]))+' · '+r[1])+' <span class="c-mut" style="font-size:14px">'+r[2]+'</span>'}));
+    inn.append(h('div',{class:'act'},bP,bS,bD),pistas);
+    if(e.chk){const inp=h('input',{type:'text',inputmode:'text','aria-label':e.chk.p,placeholder:'ej.: 1,5 2'});const res=h('span',{class:'res'});
+      const go=()=>{const v=parse(inp.value);if(!v.length||v.some(isNaN)){res.className='res bad';res.textContent='Escribí números separados por espacio o ";".';return;}
+        if(v.length!==e.chk.vals.length){res.className='res bad';res.textContent='Faltan o sobran valores: se esperan '+e.chk.vals.length+'.';return;}
+        const bad=[];e.chk.vals.forEach((t,i)=>{if(Math.abs(v[i]-t)>Math.max(.006*Math.abs(t),.015))bad.push(i+1);});
+        if(!bad.length){res.className='res ok';res.textContent='Correcto.';}else{res.className='res bad';res.textContent='No coinciden los valores n.º '+bad.join(', ')+'. Revisá esas cuentas.';}};
+      inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+      inn.append(h('div',{class:'chk'},h('span',{},'Comprobar: '+e.chk.p),inp,h('button',{type:'button',onclick:go},'Comprobar'),res));}
+    inn.append(sol);
+    if(refs.length){const r=h('div',{class:'meta',style:'margin-top:8px'},h('span',{},'Teoría relacionada:'),...refs);inn.append(r);}
+    d.append(sum,inn);list.append(d);});
+  prog();}
+function fixWide(root){(root||document).querySelectorAll('mjx-container:not([display="true"])').forEach(m=>{m.classList.remove('wide');const p=m.parentElement;if(p&&m.getBoundingClientRect().width>p.getBoundingClientRect().width+1)m.classList.add('wide');});}
+function typeset(el){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>fixWide(el)).catch(()=>{});}
+window.G1ej={build,typeset,fixWide};
+})();
+(function(){'use strict';
+const {$,$$,h}=window.G1;const V=window.G1V;const CFG=window.A1||{};const VID=CFG.vid||{};const QZ=CFG.quiz||{};const KEY=CFG.key||'a1';
+
+function buildQuiz(id,data){const host=$('#'+id);if(!host)return;let score=0,ans=0;const sc=h('span',{class:'c-mut',style:'font:600 13.5px var(--f-mono)'},'');
+  const head=h('div',{class:'qh'},h('b',{},data.t),sc,h('button',{type:'button',onclick:()=>{host.textContent='';buildQuiz(id,data);window.G1ej.typeset(host);}},'Reiniciar'));
+  host.append(head);const upd=()=>{sc.textContent=ans?(score+' de '+data.qs.length+' correctas'):'';};
+  data.qs.forEach((q,qi)=>{const o=h('div',{class:'o'});const box=h('div',{class:'q'},h('div',{class:'p',html:(qi+1)+'. '+q.p}),o);let why=null;
+    const ord=q.o.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+    ord.forEach(i=>{const t=q.o[i];const b=h('button',{type:'button',html:t});b.dataset.k=i;b.addEventListener('click',()=>{if(why)return;ans++;const ok=i===q.c;if(ok)score++;b.classList.add(ok?'right':'wrong');if(!ok)o.querySelector('[data-k="'+q.c+'"]').classList.add('right');
+      why=h('div',{class:'why',html:'<b class="'+(ok?'ok':'bad')+'">'+(ok?'Correcto. ':'No. ')+'</b>'+q.w});box.append(why);window.G1ej.typeset(box);upd();});o.append(b);});host.append(box);});
+}
+
+/* ---------- vínculos a YouTube ---------- */
+function linkify(){$$('a.t[data-v]').forEach(a=>{const [m,s]=a.dataset.t.split(':').map(Number),sec=m*60+s;a.href='https://youtu.be/'+VID[a.dataset.v]+'?t='+sec;a.target='_blank';const f=a.firstChild;if(f&&f.nodeType===3&&/^\d+:\d\d/.test(f.nodeValue))f.nodeValue=f.nodeValue.replace(/^(\d+:\d\d)/,((CFG.vlab&&CFG.vlab[a.dataset.v])||('Cl. '+a.dataset.v))+' · $1');a.rel='noopener';a.title='Abrir el video en '+a.dataset.t;});}
+
+/* ---------- barra de herramientas, tema, navegación ---------- */
+function ui(){
+  document.addEventListener('click',e=>{const b=e.target.closest('button.go');if(!b)return;const api=(window.A1API||{})[b.dataset.viz];const el=document.getElementById(b.dataset.viz);
+    if(api&&api.set)api.set(b.dataset.p);if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('toggle',e=>{if(e.target.open)window.G1ej.fixWide(e.target);},true);
+  $('#b-open').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=true);window.G1ej.fixWide(document);});
+  $('#b-close').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=false);});
+  const br=$('#b-rev');br.addEventListener('click',()=>{const on=br.getAttribute('aria-pressed')!=='true';br.setAttribute('aria-pressed',on);document.body.classList.toggle('no-rev',!on);try{localStorage.setItem(KEY+'-rev',on?'1':'0');}catch(e){}});
+  try{if(localStorage.getItem(KEY+'-rev')==='0'){br.setAttribute('aria-pressed','false');document.body.classList.add('no-rev');}}catch(e){}
+  const bt=$('#b-theme');let mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+  const apply=()=>{const r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];};
+  bt.addEventListener('click',()=>{mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();
+  const links=$$('#nav a'),secs=links.map(a=>$(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));}
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{const id=a.getAttribute('href');if(id==='#ejercicios'){}}));
+}
+
+function init(){
+  window.G1ej.build();
+  const map=CFG.viz||{};
+  Object.keys(map).forEach(id=>{const el=$('#'+id);if(!el)return;try{V[map[id]](el);}catch(err){console.error('viz',id,err);el.append(h('p',{class:'hint'},'No se pudo cargar esta figura.'));}});
+  Object.keys(QZ).forEach(id=>buildQuiz(id,QZ[id]));
+  linkify();ui();
+  const go=()=>{if(window.MathJax&&MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(()=>MathJax.typesetPromise()).then(()=>{window.G1ej.fixWide(document);let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>window.G1ej.fixWide(document),200);});}).catch(e=>console.error(e));};
+  if(document.readyState==='complete')go();else window.addEventListener('load',go);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+</body>
+</html>

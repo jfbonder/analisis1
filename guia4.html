@@ -1,0 +1,1708 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Guía 4</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<div class="shell">
+<aside class="side" aria-label="Índice">
+  <a class="volver" href="index.html" style="display:block;margin:0 0 .6rem;font-size:.85rem;color:var(--accent,#2b59c3);text-decoration:none">&larr; Portada</a><div class="brand">Análisis 1 · FCEN-UBA</div>
+  <h2>Guía 4</h2>
+  <nav id="nav">
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#t1">Clases 17 y 18<small>Derivada de una curva</small></a>
+    <a href="#t2">Clase 19<small>Derivadas parciales</small></a>
+    <a href="#t3">Clases 20 y 21<small>Diferenciabilidad y plano tangente</small></a>
+    <a href="#t4">Clase 22<small>Regla de la cadena</small></a>
+    <a href="#t5">Clase 23<small>Derivadas direccionales</small></a>
+    <a href="#t6">Clases 24 a 26<small>Función implícita y planos tangentes</small></a>
+    <div class="sep"></div>
+    <a href="#ejercicios">Ejercicios guiados<small>Los 35 de la guía, con pistas</small></a>
+  </nav>
+</aside>
+<main>
+<div class="tools" role="toolbar" aria-label="Opciones">
+  <button id="b-open">Abrir todo</button>
+  <button id="b-close">Cerrar todo</button>
+  <span class="sp"></span>
+  <button id="b-rev" aria-pressed="true" title="Mostrar u ocultar las marcas de revisión (para el docente)">Marcas de revisión</button>
+  <button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="kick">Análisis I · Matemática I · Análisis II (C) · Análisis Matemático I (Q)</div>
+  <h1>Guía 4: Diferenciación y aplicaciones</h1>
+  <p class="lead">La derivada, extendida primero a las curvas y después a las funciones de varias variables: derivadas parciales, diferenciabilidad y plano tangente, regla de la cadena, derivadas direccionales y el teorema de la función implícita. Cada tema reúne lo que se explicó en la clase grabada, con el enlace al minuto exacto, una figura que se puede mover y los ejercicios de la guía resueltos paso a paso.</p>
+  <div class="map">
+    <a href="#t1"><em>Ejercicios 1 a 3</em><b>Clases 17 y 18</b><span>Velocidad, vector derivado, recta tangente y reglas de derivación para curvas.</span></a>
+    <a href="#t2"><em>Ejercicios 4 a 8</em><b>Clase 19</b><span>Derivadas parciales, gradiente, derivación implícita, derivadas segundas y Clairaut–Schwarz.</span></a>
+    <a href="#t3"><em>Ejercicios 9 a 13</em><b>Clases 20 y 21</b><span>Qué quiere decir diferenciable, plano tangente, funciones de clase $C^1$.</span></a>
+    <a href="#t4"><em>Ejercicios 14 a 21</em><b>Clase 22</b><span>Regla de la cadena en una y varias variables, diagrama de árbol.</span></a>
+    <a href="#t5"><em>Ejercicios 22 a 29</em><b>Clase 23</b><span>Derivada direccional, $\nabla f\cdot\v{u}$ y dirección de máximo crecimiento.</span></a>
+    <a href="#t6"><em>Ejercicios 30 a 35</em><b>Clases 24, 25 y 26</b><span>Conjuntos de nivel, linealización, teorema de la función implícita y planos tangentes a superficies.</span></a>
+  </div>
+  <div class="legend">
+    <span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+    <span><span class="tag vid">Video</span> se dijo en el video pero no está en la hoja</span>
+    <span><span class="tag add">Agregado</span> no se dijo en clase</span>
+    <span><span class="tag rev">Revisar</span> dudoso, a confirmar por el docente</span>
+    <span><a class="t" data-v="17" data-t="0:00">m:ss</a> abre el video en ese minuto</span>
+  </div>
+  <p class="hint">La teoría que está detrás (diferenciable implica continua, $C^1$ implica diferenciable, Clairaut) está en el <a href="anexo3.html">Anexo 3</a>. Los límites que aparecen acá se resuelven con las herramientas de la <a href="guia3.html">Guía 3</a>.</p>
+</section>
+
+<!-- ======================= CLASES 17 Y 18 ======================= -->
+<section class="clase" id="t1">
+<header>
+  <div class="kick">CLASES 17 Y 18 · Stewart 13.2 · ejercicios 1 a 3</div>
+  <h2>Derivada de una curva y recta tangente</h2>
+  <div class="meta"><a class="t" data-v="17" data-t="0:00">Clase 17 (44 min)</a> <a class="t" data-v="18" data-t="0:00">Clase 18 (47 min)</a><span>Hoja: "Teórica 10. Diferenciabilidad de curvas y rectas tangentes".</span></div>
+</header>
+
+<p><span class="tag vid">Video</span> Empieza un tema nuevo: extender la noción de derivabilidad del CBC primero a curvas en el plano y en el espacio, y más adelante a funciones de varias variables. <a class="t" data-v="17" data-t="0:34">0:34</a></p>
+
+<h3 class="b">La interpretación física: la velocidad <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="17" data-t="1:35">1:35</a></h3>
+<p>Pensemos que $\v{r}(t)$ mide la posición de una partícula en el espacio en cada instante $t$. Queremos saber con qué velocidad se desplaza. En física la velocidad es una magnitud <b>vectorial</b>: hay que decir qué tan rápido va (la rapidez) y también en qué dirección y sentido. <a class="t" data-v="17" data-t="3:40">3:40</a></p>
+<p>Como en la secundaria, se empieza con la <b>velocidad promedio</b>: se sacan "dos fotografías", una en $t_0$ y otra en $t_0+\Delta t$, y se divide el vector desplazamiento por el tiempo transcurrido. <a class="t" data-v="17" data-t="4:40">4:40</a> <a class="t" data-v="17" data-t="7:43">7:43</a></p>
+$$\v{v}_{\text{prom}}=\frac{\v{r}(t_0+\Delta t)-\v{r}(t_0)}{\Delta t},\qquad \v{v}(t_0)=\lim_{\Delta t\to0}\frac{\v{r}(t_0+\Delta t)-\v{r}(t_0)}{\Delta t}.$$
+<p>La <b>velocidad instantánea</b> es el límite de las velocidades promedio. Si $\v{r}$ es continua, ese límite es una indeterminación del tipo $\frac00$, como en el CBC: puede existir o no. <a class="t" data-v="17" data-t="8:43">8:43</a> <a class="t" data-v="17" data-t="9:45">9:45</a></p>
+
+<h3 class="b">Definición <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="17" data-t="11:47">11:47</a></h3>
+<div class="box def"><span class="lab">Curva diferenciable</span>
+<p>Sea $\v{r}:I\subset\R\to\R^2$ (o $\R^3$) y $t\in I$. Decimos que $\v{r}$ es <b>diferenciable</b> en $t$ si existe el límite
+$$\v{r}'(t)=\lim_{h\to0}\frac{\v{r}(t+h)-\v{r}(t)}{h}.$$
+A $\v{r}'(t)$ se lo llama el <b>vector derivado</b> (o vector velocidad).</p></div>
+<p class="hint"><span class="tag vid">Video</span> "Derivable" y "diferenciable" son sinónimos para curvas. Cuando se interpreta $t$ como el tiempo, en física se escribe $\dot{\v{r}}(t_0)$ en vez de $\v{r}'(t_0)$. <a class="t" data-v="17" data-t="10:45">10:45</a> <a class="t" data-v="17" data-t="12:49">12:49</a></p>
+
+<h3 class="b">La interpretación geométrica: la recta tangente <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="17" data-t="13:50">13:50</a></h3>
+<p>Otro problema, puramente geométrico: dada la curva y un punto $P=\v{r}(t)$, encontrar la recta tangente a la curva en $P$. La estrategia es la del CBC: aproximarla por rectas secantes. <a class="t" data-v="17" data-t="15:56">15:56</a> <a class="t" data-v="17" data-t="17:56">17:56</a></p>
+<p>Tomamos otro punto de la curva, $Q=\v{r}(t+h)$. La recta secante por $P$ y $Q$ tiene vector dirección $\overrightarrow{PQ}=Q-P=\v{r}(t+h)-\v{r}(t)$, así que es $\lambda\,(\v{r}(t+h)-\v{r}(t))+\v{r}(t)$. <a class="t" data-v="17" data-t="19:57">19:57</a> <a class="t" data-v="17" data-t="21:58">21:58</a></p>
+<p>Si hacemos $h\to0$ directamente, el vector dirección tiende a $\v{0}$ y "perdemos la recta". La solución es cambiarlo por un múltiplo, que define la misma recta: dividimos por $h$. El vector $\frac{\v{r}(t+h)-\v{r}(t)}{h}$ tiene la misma dirección y el mismo sentido que $\overrightarrow{PQ}$ (si $h\gt0$), y es exactamente el cociente de la velocidad promedio. En el límite queda $\v{r}'(t)$. <a class="t" data-v="17" data-t="22:59">22:59</a> <a class="t" data-v="17" data-t="24:01">24:01</a></p>
+<div class="box thm"><span class="lab">Recta tangente <a class="t" data-v="17" data-t="26:02">26:02</a></span>
+<p>Si $\v{r}$ es diferenciable en $t$ y $\v{r}'(t)\neq\v{0}$, la parametrización admite una <b>recta tangente</b> en $P=\v{r}(t)$, dada por
+$$\lambda\cdot\v{r}'(t)+\v{r}(t),\qquad\lambda\in\R.$$</p></div>
+<p class="hint"><span class="tag vid">Video</span> "La velocidad siempre es un vector tangente al movimiento de la partícula." <a class="t" data-v="17" data-t="28:03">28:03</a></p>
+<div class="box obs"><span class="lab c-blue">¿Y si $\v{r}'(t)=\v{0}$? <span class="tag vid">Video</span> <a class="t" data-v="18" data-t="42:26">42:26</a></span>
+<p>Si el vector derivado es nulo, $\lambda\cdot\v{0}+\v{r}(t)$ es un punto y no una recta. Ejemplo: $\v{r}(t)=(\cos^3t,\operatorname{sen}^3t)$. Las coordenadas son funciones "muy buenas", pero $\v{r}'(t)=(-3\cos^2t\operatorname{sen}t,\ 3\operatorname{sen}^2t\cos t)$ y $\v{r}'(0)=(0,0)$. La clase deja de ejercicio graficarla en GeoGebra: en $t=0$ la curva tiene un <b>pico</b> (en la figura de abajo está como último ejemplo). <a class="t" data-v="18" data-t="44:29">44:29</a> <a class="t" data-v="18" data-t="46:32">46:32</a></p></div>
+<div class="viz" id="viz-tan"></div>
+
+<h3 class="b">Se deriva coordenada a coordenada <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="17" data-t="29:03">29:03</a></h3>
+<div class="box thm"><span class="lab">Teorema</span>
+<p>Si $\v{r}(t)=\ang{f(t),g(t),h(t)}$, entonces $\v{r}$ es diferenciable en $t$ si y solo si $f$, $g$ y $h$ son derivables en $t$, y
+$$\v{r}'(t)=\ang{f'(t),g'(t),h'(t)}.$$</p></div>
+<details class="dem"><summary>Demostración <a class="t" data-v="17" data-t="31:05">31:05</a></summary><div class="in">
+<p>Se escribe el cociente incremental por coordenadas. Como restar vectores es restar coordenada a coordenada, y el $\frac1h$ se distribuye:
+$$\frac{\v{r}(t+h)-\v{r}(t)}{h}=\Big\langle\frac{f(t+h)-f(t)}{h},\ \frac{g(t+h)-g(t)}{h},\ \frac{h(t+h)-h(t)}{h}\Big\rangle.$$
+Cada coordenada es el cociente incremental de la función correspondiente. Por lo que vimos en límites de funciones vectoriales, el límite del vector existe si y solo si existe el límite de cada coordenada, y entonces
+$$\v{r}'(t)=\Big\langle\lim_{h\to0}\tfrac{f(t+h)-f(t)}{h},\dots\Big\rangle=\ang{f'(t),g'(t),h'(t)}.\qquad\blacksquare$$
+<a class="t" data-v="17" data-t="33:06">33:06</a> <a class="t" data-v="17" data-t="35:10">35:10</a></p></div></details>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span> <a class="t" data-v="17" data-t="36:11">36:11</a></span>
+<p>$\v{r}(t)=(1+t^3)\,\hat\imath+te^{-t}\,\hat\jmath+\operatorname{sen}2t\,\hat k$. (1) Calcular el vector derivado. (2) Ecuación paramétrica de la recta tangente en $\v{r}(0)=\hat\imath$.</p>
+<p>(1) Derivando cada coordenada (con la regla del producto y la de la cadena):
+$$\v{r}'(t)=\ang{3t^2,\ e^{-t}+t(-e^{-t}),\ 2\cos2t}=\ang{3t^2,\ e^{-t}(1-t),\ 2\cos2t}.$$
+(2) El punto $\hat\imath=(1,0,0)$ se alcanza en $t=0$ (por inspección: $1+t^3=1$ da $t=0$, y las otras dos coordenadas también se anulan). Como $\v{r}'(0)=\ang{0,1,2}$, la recta tangente pasa por $(1,0,0)$ con dirección $(0,1,2)$:
+$$\lambda\,(0,1,2)+(1,0,0).$$
+<a class="t" data-v="17" data-t="40:16">40:16</a> <a class="t" data-v="17" data-t="42:17">42:17</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo de la Clase 18 <span class="tag vid">Video</span> <a class="t" data-v="18" data-t="4:41">4:41</a></span>
+<p>$\v{r}(t)=(t^2,\ te^{-t},\ \cos2t)$; recta tangente en $(0,0,1)$. Primero, $\v{r}'(t)=(2t,\ e^{-t}(1-t),\ -2\operatorname{sen}2t)$. Para ver si $(0,0,1)$ está en la curva hay que resolver $0=t^2$, $0=te^{-t}$, $1=\cos2t$: la primera obliga $t=0$, que verifica las otras dos. Entonces $\v{r}(0)=(0,0,1)$, $\v{r}'(0)=(0,1,0)$ y la recta tangente es $\lambda(0,1,0)+(0,0,1)$. <a class="t" data-v="18" data-t="6:42">6:42</a> <a class="t" data-v="18" data-t="8:45">8:45</a></p></div>
+<div class="box def"><span class="lab">Vector tangente unitario <span class="tag piz">Pizarrón</span></span>
+<p>Si $\v{r}'(t)\neq\v{0}$, se llama vector tangente unitario a
+$$\v{T}(t)=\frac{\v{r}'(t)}{|\v{r}'(t)|}.$$</p></div>
+
+<h3 class="b">El gráfico de una función, visto como curva <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="18" data-t="10:49">10:49</a></h3>
+<p>En el CBC, la recta tangente al gráfico de $f$ en $x_0$ es $y=f'(x_0)(x-x_0)+f(x_0)$. Ahora tenemos otro concepto de recta tangente; si los dos son buenos, tienen que dar lo mismo. El gráfico se parametriza con $\v{r}(t)=(t,f(t))$, y $\v{r}'(x_0)=(1,f'(x_0))$. La recta tangente como curva es
+$$\lambda\,(1,f'(x_0))+(x_0,f(x_0)):\qquad\begin{cases}x=\lambda+x_0\\ y=\lambda f'(x_0)+f(x_0)\end{cases}$$
+De la primera, $\lambda=x-x_0$; reemplazando, $y=f'(x_0)(x-x_0)+f(x_0)$: es la misma recta. <a class="t" data-v="18" data-t="14:50">14:50</a> <a class="t" data-v="18" data-t="18:53">18:53</a></p>
+
+<h3 class="b">Reglas de derivación <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="18" data-t="20:59">20:59</a></h3>
+<div class="box thm"><span class="lab">Teorema</span>
+<p>Sean $\v{u}(t)$, $\v{v}(t)$ dos funciones vectoriales diferenciables en $t$, $\lambda\in\R$ y $f$ una función real derivable. Entonces:</p>
+<p>(1) $(\v{u}+\v{v})'(t)=\v{u}'(t)+\v{v}'(t)$ &emsp; (2) $(\lambda\v{u})'(t)=\lambda\,\v{u}'(t)$ &emsp; (3) $[f(t)\,\v{u}(t)]'=f'(t)\,\v{u}(t)+f(t)\,\v{u}'(t)$</p>
+<p>(4) $(\v{u}\cdot\v{v})'(t)=\v{u}'(t)\cdot\v{v}(t)+\v{u}(t)\cdot\v{v}'(t)$ &emsp; (5) $(\v{u}\times\v{v})'(t)=\v{u}'(t)\times\v{v}(t)+\v{u}(t)\times\v{v}'(t)$</p>
+<p>(6) $[\v{u}(f(t))]'=\v{u}'(f(t))\,f'(t)$.</p></div>
+<p class="hint"><span class="tag vid">Video</span> (4) y (5) son operaciones nuevas, pero siguen valiendo con la regla de Leibniz: "lo maravilloso es que un producto se deriva como si fuera un producto de números". No es tan sorprendente: los productos escalar y vectorial se calculan con sumas y productos de las coordenadas. En el video no aparece (6). <a class="t" data-v="18" data-t="24:04">24:04</a> <a class="t" data-v="18" data-t="26:05">26:05</a></p>
+<details class="dem"><summary>Demostración de (4) <a class="t" data-v="18" data-t="28:09">28:09</a></summary><div class="in">
+<p>"Vamos a elegir la más usada." Sean $\v{u}=\ang{f_1,f_2,f_3}$ y $\v{v}=\ang{g_1,g_2,g_3}$. Entonces $(\v{u}\cdot\v{v})(t)=f_1g_1+f_2g_2+f_3g_3$, y derivando con la regla del producto para funciones reales:
+$$(\v{u}\cdot\v{v})'=f_1'g_1+f_1g_1'+f_2'g_2+f_2g_2'+f_3'g_3+f_3g_3'.$$
+Reordenando: primero los términos con las $f$ derivadas y después los términos con las $g$ derivadas,
+$$=\underbrace{(f_1'g_1+f_2'g_2+f_3'g_3)}_{\v{u}'\cdot\v{v}}+\underbrace{(f_1g_1'+f_2g_2'+f_3g_3')}_{\v{u}\cdot\v{v}'}.\qquad\blacksquare$$
+Las demás se prueban igual; quedan de ejercicio. <a class="t" data-v="18" data-t="31:12">31:12</a> <a class="t" data-v="18" data-t="34:16">34:16</a></p></div></details>
+<div class="box thm"><span class="lab">Aplicación <span class="tag piz">Pizarrón</span> <a class="t" data-v="18" data-t="35:16">35:16</a></span>
+<p>Si $\v{r}(t)$ es diferenciable y $|\v{r}(t)|=c$ (constante) para todo $t$, entonces $\v{r}'(t)\perp\v{r}(t)$ para todo $t$.</p>
+<p class="hint"><span class="tag vid">Video</span> "En todo movimiento circular la velocidad es perpendicular a la posición." La partícula puede ir para adelante, para atrás, acelerar o frenar: mientras no se salga de la circunferencia, vale. <a class="t" data-v="18" data-t="37:19">37:19</a></p></div>
+<details class="dem" open><summary>Demostración <a class="t" data-v="18" data-t="40:24">40:24</a></summary><div class="in">
+<p>Para sacarse de encima la raíz, se trabaja con el módulo al cuadrado: $(\v{r}\cdot\v{r})(t)=|\v{r}(t)|^2=c^2$ para todo $t$. Derivando los dos lados (la derecha es constante) y usando (4):
+$$(\v{r}\cdot\v{r})'=\v{r}'\cdot\v{r}+\v{r}\cdot\v{r}'=2\,\v{r}\cdot\v{r}'=0.$$
+Luego $\v{r}\cdot\v{r}'=0$: son perpendiculares. $\blacksquare$</p></div></details>
+<div class="quiz" id="quiz-1"></div>
+</section>
+
+<!-- ======================= CLASE 19 ======================= -->
+<section class="clase" id="t2">
+<header>
+  <div class="kick">CLASE 19 · Stewart 14.3 · ejercicios 4 a 8</div>
+  <h2>Derivadas parciales</h2>
+  <div class="meta"><a class="t" data-v="19" data-t="0:00">Clase 19 (49 min)</a><span>Hoja: "Teórica 11. Derivadas parciales".</span></div>
+</header>
+
+<h3 class="b">Repaso de una variable <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="19" data-t="0:34">0:34</a></h3>
+<p>Nos paramos en $x_0$ y nos movemos un poquito, a $x_0+h$. La pendiente de la recta secante es el <b>cociente incremental</b>
+$$m_h=\frac{\Delta y}{\Delta x}=\frac{f(x_0+h)-f(x_0)}{h}.$$
+Si el límite cuando $h\to0$ existe y es finito, es la <b>derivada</b> $f'(x_0)$, la pendiente de la recta tangente $y=f'(x_0)(x-x_0)+f(x_0)$. <a class="t" data-v="19" data-t="1:38">1:38</a> <a class="t" data-v="19" data-t="4:40">4:40</a></p>
+<p class="hint"><span class="tag vid">Video</span> En la práctica, en el CBC no se hacía el cociente incremental cada vez: se usaban las derivadas de las funciones conocidas y las reglas de derivación. Por ejemplo, para $f(x)=x^3$, $f'(x)=3x^2$ y $f'(1)=3$. <a class="t" data-v="19" data-t="6:41">6:41</a></p>
+
+<h3 class="b">Definición <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="19" data-t="8:44">8:44</a></h3>
+<p>El gráfico de $f(x,y)$ es una superficie, "una sábana flotando". Fijamos $y=y_0$ y dejamos variar $x$: sobre el segmento del plano $xy$ se dibuja, arriba, una curva. Esa curva es el gráfico de la función de una variable $\alpha(x)=f(x,y_0)$, y su derivada en $x_0$ es la pendiente de su recta tangente. Lo mismo fijando $x=x_0$: $\beta(y)=f(x_0,y)$. <a class="t" data-v="19" data-t="9:45">9:45</a> <a class="t" data-v="19" data-t="11:47">11:47</a></p>
+<div class="box def"><span class="lab">Derivadas parciales <a class="t" data-v="19" data-t="13:49">13:49</a></span>
+<p>Se definen las <b>derivadas parciales</b> de $f$ en $(x_0,y_0)$ como
+$$f_x(x_0,y_0)=\frac{\partial f}{\partial x}(x_0,y_0)=\lim_{h\to0}\frac{f(x_0+h,y_0)-f(x_0,y_0)}{h},$$
+$$f_y(x_0,y_0)=\frac{\partial f}{\partial y}(x_0,y_0)=\lim_{k\to0}\frac{f(x_0,y_0+k)-f(x_0,y_0)}{k},$$
+si estos límites existen.</p></div>
+<div class="viz" id="viz-partial"></div>
+
+<h3 class="b">Cómo se calculan <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="19" data-t="18:59">18:59</a></h3>
+<div class="box obs"><span class="lab c-blue">Observación</span>
+<p>Para calcular $f_x$ se piensa a $y$ fija y se mira $f$ como función solo de $x$, que se deriva con las reglas del CBC. Para calcular $f_y$, se toma $x$ fija y se deriva $f$ como función solo de $y$.</p>
+<p class="hint"><span class="tag vid">Video</span> "Pienso que $y$ es un número, por ejemplo 18." <a class="t" data-v="19" data-t="21:00">21:00</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo 1 <span class="tag piz">Pizarrón</span></span>
+<p>$f(x,y)=x^3+x^2y^3-2y^2$. Calcular $\frac{\partial f}{\partial x}(2,1)$ y $\frac{\partial f}{\partial y}(2,1)$.
+$$f_x(x,y)=3x^2+2xy^3,\qquad f_y(x,y)=3x^2y^2-4y,$$
+y entonces $f_x(2,1)=12+4=16$, $f_y(2,1)=12-4=8$.</p>
+<p class="hint"><span class="tag vid">Video</span> En la clase el ejemplo es $f(x,y)=x^5y-x^3+2y^2$ en $(1,2)$: $f_x=5x^4y-3x^2$, $f_y=x^5+4y$, $f_x(1,2)=7$, $f_y(1,2)=9$. <a class="t" data-v="19" data-t="19:59">19:59</a> <a class="t" data-v="19" data-t="23:00">23:00</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo 2 <span class="tag piz">Pizarrón</span></span>
+<p>$f(x,y)=\operatorname{sen}\!\left(\frac{x}{1+y}\right)$. Con la regla de la cadena:
+$$f_x(x,y)=\cos\!\Big(\frac{x}{1+y}\Big)\cdot\frac{\partial}{\partial x}\Big(\frac{x}{1+y}\Big)=\cos\!\Big(\frac{x}{1+y}\Big)\frac{1}{1+y},$$
+$$f_y(x,y)=\cos\!\Big(\frac{x}{1+y}\Big)\cdot x\cdot\Big(\frac{-1}{(1+y)^2}\Big)=-\cos\!\Big(\frac{x}{1+y}\Big)\frac{x}{(1+y)^2}.$$</p>
+<p class="hint"><span class="tag vid">Video</span> En la clase: $f(x,y)=\ln\!\left(\frac{x}{1+y}\right)$, donde esté definida. $f_x=\frac{1+y}{x}\cdot\frac{1}{1+y}=\frac1x$ y $f_y=\frac{1+y}{x}\cdot\frac{-x}{(1+y)^2}=-\frac{1}{1+y}$. <a class="t" data-v="19" data-t="23:00">23:00</a> <a class="t" data-v="19" data-t="25:03">25:03</a></p></div>
+
+<h3 class="b">El vector gradiente <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="19" data-t="26:04">26:04</a></h3>
+<div class="box def"><span class="lab">Gradiente</span>
+<p>El gradiente de $f$ es el vector de sus derivadas parciales. Con el operador <b>nabla</b> $\nabla=\left(\frac{\partial}{\partial x},\frac{\partial}{\partial y}\right)$,
+$$\nabla f=\Big(\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}\Big).$$</p></div>
+<p>En el Ejemplo 1, $\nabla f(2,1)=(16,8)$. En el Ejemplo 2, $\nabla f(x,y)=\cos\!\big(\frac{x}{1+y}\big)\frac{1}{1+y}\big(1,\frac{-x}{1+y}\big)$. <span class="tag vid">Video</span> "Tiene una significación geométrica superimportante que vamos a retomar en las clases que siguen." <a class="t" data-v="19" data-t="27:04">27:04</a></p>
+
+<h3 class="b">Derivación implícita <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="19" data-t="28:07">28:07</a></h3>
+<p>A veces una superficie no está dada como gráfico, sino como los puntos $(x,y,z)$ que satisfacen una ecuación. Si se puede pensar que $z$ es función de $x$ e $y$ (eso se formaliza en la Clase 24), se derivan los dos lados de la ecuación recordando que $z=z(x,y)$. <a class="t" data-v="19" data-t="30:16">30:16</a></p>
+<div class="box ej"><span class="lab">Ejemplo 3</span>
+<p>$x^3+y^3+z^3+6xyz=1$. Calcular $\frac{\partial z}{\partial x}$ de forma implícita. Derivando respecto de $x$ (el $1$ es constante y su derivada es $0$):
+$$3x^2+0+3z^2z_x+6yz+6xy\,z_x=0\ \Longrightarrow\ (3z^2+6xy)\,z_x=-3x^2-6yz\ \Longrightarrow\ z_x=-\frac{x^2+2yz}{z^2+2xy}.$$
+<a class="t" data-v="19" data-t="32:18">32:18</a> <a class="t" data-v="19" data-t="34:21">34:21</a></p>
+<p class="hint"><span class="tag vid">Video</span> Igual con $y$: $3y^2+3z^2z_y+6xz+6xy\,z_y=0$, así que $z_y=-\frac{y^2+2xz}{z^2+2xy}$. <a class="t" data-v="19" data-t="35:22">35:22</a></p></div>
+
+<h3 class="b">Derivadas de orden superior <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="19" data-t="37:25">37:25</a></h3>
+<p>Al calcular las derivadas parciales de $f(x,y)$ obtenemos dos funciones nuevas, $f_x(x,y)$ y $f_y(x,y)$. A cada una se le pueden calcular sus derivadas parciales: <a class="t" data-v="19" data-t="39:27">39:27</a></p>
+$$\underbrace{(f_x)_x}_{f_{xx}=\frac{\partial^2f}{\partial x^2}}\qquad\underbrace{(f_x)_y}_{f_{xy}=\frac{\partial^2f}{\partial y\,\partial x}}\qquad\underbrace{(f_y)_x}_{f_{yx}=\frac{\partial^2f}{\partial x\,\partial y}}\qquad\underbrace{(f_y)_y}_{f_{yy}=\frac{\partial^2f}{\partial y^2}}$$
+<p class="hint"><span class="tag vid">Video</span> Cuidado con el orden: en $f_{xy}$ se deriva primero respecto de $x$; en $\frac{\partial^2f}{\partial y\,\partial x}$ el orden es "como la composición", de derecha a izquierda. Las dos notaciones dicen lo mismo. <a class="t" data-v="19" data-t="42:29">42:29</a> <a class="t" data-v="19" data-t="44:33">44:33</a></p>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span></span>
+<p>$f(x,y)=x^3+x^2y^3-2y^2$. Con $f_x=3x^2+2xy^3$ y $f_y=3x^2y^2-4y$:
+$$f_{xx}=6x+2y^3,\qquad f_{xy}=6xy^2,\qquad f_{yx}=6xy^2,\qquad f_{yy}=6x^2y-4.$$
+Las dos derivadas "cruzadas" dieron igual.</p></div>
+<div class="box thm"><span class="lab">Teorema de Clairaut–Schwarz <span class="tag piz">Pizarrón</span> <a class="t" data-v="19" data-t="46:35">46:35</a></span>
+<p>Supongamos que $f_{xy}$ y $f_{yx}$ son continuas en un disco $D\subset\R^2$. Entonces, si $(a,b)\in D$,
+$$\frac{\partial^2f}{\partial x\,\partial y}(a,b)=\frac{\partial^2f}{\partial y\,\partial x}(a,b).$$</p>
+<p class="hint"><span class="tag vid">Video</span> No fue casualidad: en el ejemplo las dos cruzadas son continuas en todo $\R^2$, así que tenían que coincidir. "Va a ser muy útil más adelante, cuando estudiemos máximos y mínimos." La demostración está en el <a href="anexo3.html">Anexo 3</a>. Sin la continuidad puede fallar: <a href="#ej8">ejercicio 8</a>. <a class="t" data-v="19" data-t="48:37">48:37</a></p></div>
+<div class="quiz" id="quiz-2"></div>
+</section>
+
+<!-- ======================= CLASES 20 Y 21 ======================= -->
+<section class="clase" id="t3">
+<header>
+  <div class="kick">CLASES 20 Y 21 · Stewart 14.4 · ejercicios 9 a 13</div>
+  <h2>Diferenciabilidad y plano tangente</h2>
+  <div class="meta"><a class="t" data-v="20" data-t="0:00">Clase 20 (44 min)</a> <a class="t" data-v="21" data-t="0:00">Clase 21 (45 min)</a><span>Hoja: "Teórica 12. Diferenciación".</span></div>
+</header>
+
+<h3 class="b">La derivada en una variable, revisitada <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="20" data-t="0:35">0:35</a></h3>
+<p>¿Qué es la recta tangente a un gráfico? La recta tangente es <b>la que mejor aproxima a $f$ entre todas las rectas</b> que pasan por $(x_0,f(x_0))$. Esas rectas son $\ell(x)=m(x-x_0)+f(x_0)$, con la pendiente $m$ como incógnita. <a class="t" data-v="20" data-t="2:39">2:39</a> <a class="t" data-v="20" data-t="4:43">4:43</a></p>
+<p>Escribimos $f(x)=\ell(x)+\text{error}$. Si $f$ es continua, el error siempre tiende a $0$: eso no distingue a ninguna recta. Lo que pedimos es que el error sea chico <b>en términos relativos</b>, comparado con $|x-x_0|$: $\text{error}\ll|x-x_0|$, es decir, <a class="t" data-v="20" data-t="5:43">5:43</a> <a class="t" data-v="20" data-t="6:43">6:43</a></p>
+$$\lim_{x\to x_0}\frac{f(x)-\ell(x)}{|x-x_0|}=0.$$
+<p>Y eso determina la pendiente: si el límite es $0$, entonces $\frac{f(x)-f(x_0)}{x-x_0}-m\to0$, o sea $m=\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}=f'(x_0)$. <a class="t" data-v="20" data-t="8:45">8:45</a></p>
+
+<h3 class="b">La idea para dos variables <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="20" data-t="11:45">11:45</a></h3>
+<p><span class="tag vid">Video</span> ¿Alcanza con que existan las derivadas parciales para tener una buena noción de derivada? "La respuesta es que no va a alcanzar." Las dos derivadas parciales dan dos rectas tangentes (en las direcciones de los ejes); mirando en cualquier otra dirección aparecen otras rectas, y todas juntas parecerían generar un plano. Para un plano alcanzan dos direcciones. <a class="t" data-v="20" data-t="12:46">12:46</a> <a class="t" data-v="20" data-t="13:46">13:46</a></p>
+<p>Buscamos entonces, entre todos los planos que pasan por $(x_0,y_0,f(x_0,y_0))$,
+$$z=L(x,y)=a(x-x_0)+b(y-y_0)+f(x_0,y_0),$$
+el que <b>mejor aproxima al gráfico de $f$</b>: que el error $f(x,y)-L(x,y)$ sea chico comparado con la distancia $|(x-x_0,y-y_0)|=\sqrt{(x-x_0)^2+(y-y_0)^2}$. <a class="t" data-v="20" data-t="15:50">15:50</a> <a class="t" data-v="20" data-t="19:53">19:53</a></p>
+<div class="box def"><span class="lab">Definición <a class="t" data-v="20" data-t="21:55">21:55</a></span>
+<p>Decimos que $f$ es <b>diferenciable</b> en $(x_0,y_0)$ si existe $L(x,y)=f(x_0,y_0)+a(x-x_0)+b(y-y_0)$ tal que
+$$\lim_{(x,y)\to(x_0,y_0)}\frac{f(x,y)-L(x,y)}{\sqrt{(x-x_0)^2+(y-y_0)^2}}=0.$$
+En ese caso, $z=L(x,y)$ es el <b>plano tangente</b> a $f$ en $(x_0,y_0)$.</p>
+<p class="hint"><span class="tag vid">Video</span> Hay una indeterminación $\frac00$: no solo queremos que el numerador tienda a $0$, sino que sea "un cero más fuerte" que el denominador. "Es un plano que se va suavemente a pegar sobre el gráfico de la función." <a class="t" data-v="20" data-t="20:53">20:53</a> <a class="t" data-v="20" data-t="22:55">22:55</a></p></div>
+<details class="dem" open><summary>¿Quiénes son $a$ y $b$? <a class="t" data-v="20" data-t="23:55">23:55</a></summary><div class="in">
+<p>Si el límite es $0$, también lo es por cualquier camino. Tomemos $y=y_0$ y $x\to x_0^+$; la raíz queda $\sqrt{(x-x_0)^2}=|x-x_0|=x-x_0$:
+$$\lim_{x\to x_0^+}\frac{f(x,y_0)-f(x_0,y_0)-a(x-x_0)}{x-x_0}=0\ \Longrightarrow\ \lim_{x\to x_0^+}\frac{f(x,y_0)-f(x_0,y_0)}{x-x_0}=a.$$
+Es (el límite lateral de) el cociente incremental que define $f_x(x_0,y_0)$: $a=\frac{\partial f}{\partial x}(x_0,y_0)$. Tomando $x=x_0$ e $y\to y_0^+$ sale $b=\frac{\partial f}{\partial y}(x_0,y_0)$. <a class="t" data-v="20" data-t="25:56">25:56</a> <a class="t" data-v="20" data-t="28:00">28:00</a></p>
+<div class="revnote"><b>Revisar</b>Con $x\to x_0^+$ solo se obtiene la derivada lateral derecha. Para ver que existe $f_x(x_0,y_0)$ hay que hacer también $x\to x_0^-$ (ahí $|x-x_0|=-(x-x_0)$ y el límite da $-0=0$, así que también funciona). En la hoja y en el video solo se hace el lado derecho. ¿Agregamos la frase?</div></div></details>
+<div class="box thm"><span class="lab">Proposición (definición operativa) <a class="t" data-v="20" data-t="29:02">29:02</a></span>
+<p>$f$ es diferenciable en $(x_0,y_0)$ si y solo si existen $\frac{\partial f}{\partial x}(x_0,y_0)$ y $\frac{\partial f}{\partial y}(x_0,y_0)$, y
+$$\lim_{(x,y)\to(x_0,y_0)}\frac{f(x,y)-f(x_0,y_0)-\frac{\partial f}{\partial x}(x_0,y_0)(x-x_0)-\frac{\partial f}{\partial y}(x_0,y_0)(y-y_0)}{\sqrt{(x-x_0)^2+(y-y_0)^2}}=0.$$</p>
+<p class="hint"><span class="tag vid">Video</span> Es "mucho más operativa": se calculan las derivadas parciales, se ponen en el lugar de $a$ y $b$, y se mira si el límite da $0$. Ojo: $x,y$ son las variables; $x_0,y_0$ son números fijos. <a class="t" data-v="20" data-t="32:14">32:14</a> <a class="t" data-v="20" data-t="33:15">33:15</a></p></div>
+<div class="box obs"><span class="lab c-blue">Con el gradiente <span class="tag piz">Pizarrón</span> <a class="t" data-v="21" data-t="4:38">4:38</a></span>
+<p>Como $\frac{\partial f}{\partial x}(x_0,y_0)(x-x_0)+\frac{\partial f}{\partial y}(x_0,y_0)(y-y_0)=\nabla f(x_0,y_0)\cdot(x-x_0,y-y_0)$, la condición se escribe
+$$\lim_{(x,y)\to(x_0,y_0)}\frac{f(x,y)-f(x_0,y_0)-\nabla f(x_0,y_0)\cdot(x-x_0,y-y_0)}{|(x-x_0,y-y_0)|}=0.$$</p>
+<p class="hint"><span class="tag vid">Video</span> Llamando $P=(x,y)$ y $P_0=(x_0,y_0)$: $L(P)=f(P_0)+\nabla f(P_0)\cdot(P-P_0)$, y $\lim_{P\to P_0}\frac{f(P)-L(P)}{|P-P_0|}=0$. "A veces el uso de una buena notación simplifica mucho las cuentas." <a class="t" data-v="21" data-t="8:45">8:45</a> <a class="t" data-v="21" data-t="9:46">9:46</a></p></div>
+
+<h3 class="b">Un ejemplo diferenciable <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="20" data-t="34:18">34:18</a></h3>
+<div class="box ej"><span class="lab">Ejemplo</span>
+<p>$f(x,y)=2x^2+y^2$, $(x_0,y_0)=(1,1)$. Verificar que $f$ es diferenciable en $(1,1)$ y usar el plano tangente para aproximar $f(1{,}1;\ 0{,}95)$.</p>
+<p>$f_x=4x$, $f_y=2y$, así que $f_x(1,1)=4$, $f_y(1,1)=2$, y $f(1,1)=3$. Hay que ver que
+$$\lim_{(x,y)\to(1,1)}\frac{2x^2+y^2-3-4(x-1)-2(y-1)}{\sqrt{(x-1)^2+(y-1)^2}}=0.$$
+El truco es escribir todo en potencias de $x-1$ e $y-1$, que son las que tienden a $0$: $x^2=((x-1)+1)^2=(x-1)^2+2(x-1)+1$ e $y^2=(y-1)^2+2(y-1)+1$. Al reemplazar, todo se cancela salvo
+$$\frac{2(x-1)^2+(y-1)^2}{\sqrt{(x-1)^2+(y-1)^2}}=2(x-1)\underbrace{\frac{x-1}{\sqrt{\cdots}}}_{|\cdot|\le1}+(y-1)\underbrace{\frac{y-1}{\sqrt{\cdots}}}_{|\cdot|\le1}\ \longrightarrow\ 0$$
+(cero por acotado). Entonces $f$ es diferenciable y $f(x,y)\approx3+4(x-1)+2(y-1)$. Con $x=1{,}1$, $y=0{,}95$:
+$$f(1{,}1;\ 0{,}95)\approx3+4\cdot0{,}1+2\cdot(-0{,}05)=3+0{,}4-0{,}1=3{,}3,$$
+y el valor exacto es $2(1{,}1)^2+(0{,}95)^2=3{,}3225$.</p>
+<p class="hint"><span class="tag vid">Video</span> En la Clase 20 el punto es $(1,2)$: $f(1,2)=6$, $\nabla f(1,2)=(4,4)$, el numerador queda $2(x-1)^2+(y-2)^2$ y el plano tangente es $z=6+4(x-1)+4(y-2)$. La clase deja de tarea aproximar $f(1{,}1;\ 1{,}9)\approx6$ y comparar con el valor exacto ($6{,}03$). <a class="t" data-v="20" data-t="37:27">37:27</a> <a class="t" data-v="20" data-t="42:49">42:49</a></p></div>
+
+<h3 class="b">Un ejemplo no diferenciable <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="21" data-t="10:46">10:46</a></h3>
+<div class="box ej"><span class="lab">Ejemplo</span>
+<p>$f(x,y)=\frac{xy}{x^2+y^2}$ si $(x,y)\neq(0,0)$ y $f(0,0)=0$. Verificar que $f$ no es diferenciable en $(0,0)$.</p>
+<p>En el origen la fórmula no sirve: las derivadas parciales hay que calcularlas <b>por definición</b>. $f(h,0)=0$ y $f(0,k)=0$, así que
+$$f_x(0,0)=\lim_{h\to0}\frac{f(h,0)-f(0,0)}{h}=0,\qquad f_y(0,0)=\lim_{k\to0}\frac{f(0,k)-f(0,0)}{k}=0.$$
+El límite de la definición queda
+$$\lim_{(x,y)\to(0,0)}\frac{f(x,y)}{\sqrt{x^2+y^2}}=\lim_{(x,y)\to(0,0)}\frac{xy}{(x^2+y^2)^{3/2}}.$$
+Tomando $y=x$: $\frac{x^2}{(2x^2)^{3/2}}=\frac{x^2}{2^{3/2}|x|^3}\to\infty$. Luego $f$ no es diferenciable en $(0,0)$.</p>
+<p class="hint"><span class="tag add">Agregado</span> De hecho esta $f$ ni siquiera es continua en el origen (por las rectas $y=mx$ da $\frac{m}{1+m^2}$, que depende de $m$; Guía 3). Una función diferenciable tiene que ser continua, así que eso ya alcanzaba.</p></div>
+<div class="box ej"><span class="lab">El ejemplo de la Clase 21 <span class="tag vid">Video</span> <a class="t" data-v="21" data-t="10:46">10:46</a></span>
+<p>$f(x,y)=\frac{x^2y}{x^2+y^2}$, $f(0,0)=0$ (es el <a href="#ej11">ejercicio 11(b)</a>). Las derivadas parciales en el origen existen y valen $0$, por definición, como recién. Entonces el candidato a plano tangente es $L(x,y)=0$: <b>el plano $z=0$, "el plano del piso"</b>. "Es un error común creer que no hay candidato porque dio cero." <a class="t" data-v="21" data-t="13:48">13:48</a> <a class="t" data-v="21" data-t="18:51">18:51</a></p>
+<p>El límite es $\lim\frac{x^2y}{(x^2+y^2)^{3/2}}$: arriba hay algo de grado 3 y abajo también, así que sospechamos que no existe, y para probar que $f$ no es diferenciable alcanza con una dirección donde no dé $0$. Con $y=x$ y $x\to0^+$ (para no tener problemas con $\sqrt{x^2}=|x|$): $\frac{x^3}{2^{3/2}x^3}=\frac{1}{2^{3/2}}\neq0$. Luego $f$ no es diferenciable en $(0,0)$. <a class="t" data-v="21" data-t="24:02">24:02</a> <a class="t" data-v="21" data-t="27:08">27:08</a></p></div>
+<div class="viz" id="viz-plane"></div>
+
+<h3 class="b">Funciones de clase $C^1$ <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="21" data-t="31:11">31:11</a></h3>
+<p><span class="tag vid">Video</span> Estudiar la diferenciabilidad suele ser trabajoso: hay que calcular las derivadas parciales (a veces por definición) y después un límite que puede ser complicado. Pero para las funciones "buenas" no hace falta. <a class="t" data-v="21" data-t="30:10">30:10</a></p>
+<div class="box thm"><span class="lab">Teorema</span>
+<p>Si $f$ es tal que $f_x$ y $f_y$ existen y son continuas en un entorno de $(x_0,y_0)$, entonces $f$ es diferenciable en $(x_0,y_0)$.</p></div>
+<div class="box def"><span class="lab">Clase $C^1$ <span class="tag vid">Video</span> <a class="t" data-v="21" data-t="34:13">34:13</a></span>
+<p>Se dice que $f$ es <b>de clase $C^1$</b> si es continua y sus derivadas parciales $f_x$, $f_y$ existen y son continuas. El teorema dice: <b>$C^1$ implica diferenciable</b>. ($C^2$: además las derivadas segundas son continuas, y así siguiendo.)</p>
+<p class="hint">"Casi todas las funciones con las que se van a encontrar van a ser $C^1$, y la diferenciabilidad la vamos a tener gratis." La demostración está en el <a href="anexo3.html">Anexo 3</a>. <a class="t" data-v="21" data-t="35:15">35:15</a> <a class="t" data-v="21" data-t="36:15">36:15</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span> <a class="t" data-v="21" data-t="36:15">36:15</a></span>
+<p>$f(x,y)=xe^{xy}$. Usar el plano tangente en $(1,0)$ para aproximar $f(1{,}1;\ -0{,}1)$.</p>
+<p>$f_x=e^{xy}+x\,e^{xy}\,y=e^{xy}(1+xy)$ y $f_y=x\,e^{xy}\,x=x^2e^{xy}$ son continuas (producto de polinomios y exponenciales), así que $f$ es $C^1$ y por lo tanto diferenciable en todo $\R^2$, en particular en $(1,0)$. Como $f(1,0)=1$, $f_x(1,0)=1$, $f_y(1,0)=1$:
+$$xe^{xy}\approx1+(x-1)+(y-0)=x+y,\qquad f(1{,}1;\ -0{,}1)\approx1{,}1+(-0{,}1)=1.$$
+El valor exacto es $1{,}1\,e^{-0{,}11}=0{,}985\ldots$ <a class="t" data-v="21" data-t="40:24">40:24</a> <a class="t" data-v="21" data-t="43:25">43:25</a></p></div>
+<div class="quiz" id="quiz-3"></div>
+</section>
+
+<!-- ======================= CLASE 22 ======================= -->
+<section class="clase" id="t4">
+<header>
+  <div class="kick">CLASE 22 · Stewart 14.5 · ejercicios 14 a 21</div>
+  <h2>Regla de la cadena</h2>
+  <div class="meta"><a class="t" data-v="22" data-t="0:00">Clase 22 (58 min)</a><span>Hoja: "Teórica 13. Regla de la cadena".</span></div>
+</header>
+
+<h3 class="b">Repaso: una variable <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="22" data-t="0:36">0:36</a></h3>
+<p>Si $y=f(x)$ pero $x=g(t)$ depende a su vez del tiempo, ¿cómo se calcula $\frac{dy}{dt}$? La regla del CBC es
+$$\frac{dy}{dt}=\frac{dy}{dx}\cdot\frac{dx}{dt}=f'(x)\,x'(t):$$
+"la derivada de la de afuera evaluada en la de adentro, por la derivada de la de adentro". <span class="tag vid">Video</span> "Es como si se simplificara el $dx$; no es riguroso, pero funciona." <a class="t" data-v="22" data-t="1:38">1:38</a> <a class="t" data-v="22" data-t="2:39">2:39</a></p>
+<details class="dem"><summary>Por qué funciona <a class="t" data-v="22" data-t="3:39">3:39</a></summary><div class="in">
+<p>Que $f$ sea derivable en $a$ se puede escribir así: $f(x)=f(a)+f'(a)(x-a)+\varepsilon\,|x-a|$, con $\varepsilon\to0$ cuando $x\to a$. (El error dividido $|x-a|$ tiende a $0$; a ese cociente lo llamamos $\varepsilon$.) <a class="t" data-v="22" data-t="5:41">5:41</a> <a class="t" data-v="22" data-t="6:42">6:42</a></p>
+<p>Sea $x(t_0)=a$. Con $x=x(t)$:
+$$\frac{f(x(t))-f(x(t_0))}{t-t_0}=f'(x(t_0))\underbrace{\frac{x(t)-x(t_0)}{t-t_0}}_{\to\,x'(t_0)}+\underbrace{\varepsilon}_{\to0}\ \underbrace{\frac{|x(t)-x(t_0)|}{t-t_0}}_{\text{acotado}}.$$
+Cuando $t\to t_0$, $x(t)\to x(t_0)$ y entonces $\varepsilon\to0$; el último cociente tiene módulo que tiende a $|x'(t_0)|$, así que está acotado. Queda $\frac{df}{dt}=\frac{df}{dx}\cdot\frac{dx}{dt}$. <a class="t" data-v="22" data-t="9:46">9:46</a> <a class="t" data-v="22" data-t="11:46">11:46</a></p></div></details>
+
+<h3 class="b">La diferenciabilidad, reescrita <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="22" data-t="12:46">12:46</a></h3>
+<p>Que $f$ sea diferenciable en $(a,b)$ equivale a
+$$f(x,y)=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b)+E\,|(x-a,y-b)|,\qquad E\to0\ \text{si}\ (x,y)\to(a,b).$$
+<span class="tag vid">Video</span> "Escribir $f$ = plano + error no dice nada: cualquier cosa es otra cosa más un error. Ser diferenciable es una afirmación sobre el error." <a class="t" data-v="22" data-t="14:53">14:53</a></p>
+<p>Recordando que $|x-a|\le|(x-a,y-b)|$, $|y-b|\le|(x-a,y-b)|$ y
+$$|(x-a,y-b)|=\sqrt{(x-a)^2+(y-b)^2}\le\sqrt{2\max\{(x-a)^2,(y-b)^2\}},$$
+$$\sqrt{2\max\{(x-a)^2,(y-b)^2\}}=\sqrt2\max\{|x-a|,|y-b|\}\le\sqrt2\,(|x-a|+|y-b|),$$
+el error se puede repartir en las dos coordenadas. <a class="t" data-v="22" data-t="16:58">16:58</a> <a class="t" data-v="22" data-t="19:00">19:00</a></p>
+<div class="box thm"><span class="lab">Diferenciabilidad, versión para la cadena <a class="t" data-v="22" data-t="21:00">21:00</a></span>
+<p>$f$ es diferenciable en $(a,b)$ si y solo si
+$$f(x,y)=f(a,b)+\frac{\partial f}{\partial x}(a,b)(x-a)+\frac{\partial f}{\partial y}(a,b)(y-b)+\varepsilon_1(x-a)+\varepsilon_2(y-b),$$
+con $\varepsilon_1\to0$ y $\varepsilon_2\to0$ cuando $(x,y)\to(a,b)$.</p></div>
+
+<h3 class="b">Versión 1: $z=f(x,y)$ con $x=x(t)$, $y=y(t)$ <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="22" data-t="23:02">23:02</a></h3>
+<p>Si $\v{r}(t)=(x(t),y(t))$ con $\v{r}(t_0)=(a,b)$, restando $f(a,b)$ y dividiendo por $t-t_0$:
+$$\frac{f(x(t),y(t))-f(a,b)}{t-t_0}=f_x(a,b)\frac{x(t)-x(t_0)}{t-t_0}+f_y(a,b)\frac{y(t)-y(t_0)}{t-t_0}+\varepsilon_1\frac{x(t)-x(t_0)}{t-t_0}+\varepsilon_2\frac{y(t)-y(t_0)}{t-t_0}.$$
+Cuando $t\to t_0$, los cocientes tienden a $x'(t_0)$ e $y'(t_0)$, y $\varepsilon_1,\varepsilon_2\to0$. <a class="t" data-v="22" data-t="26:16">26:16</a> <a class="t" data-v="22" data-t="28:18">28:18</a></p>
+<div class="box thm"><span class="lab">Teorema (regla de la cadena, versión 1) <a class="t" data-v="22" data-t="29:19">29:19</a></span>
+<p>Sea $z=f(x,y)$ diferenciable en $(a,b)$ y $\v{r}(t)=(g(t),h(t))$ diferenciable en $t_0$, con $\v{r}(t_0)=(a,b)$. Entonces $f\circ\v{r}$ es derivable en $t_0$ y
+$$(f\circ\v{r})'(t_0)=\frac{\partial f}{\partial x}(a,b)\,g'(t_0)+\frac{\partial f}{\partial y}(a,b)\,h'(t_0).\qquad\text{O sea:}\quad\frac{dz}{dt}=\frac{\partial z}{\partial x}\frac{dx}{dt}+\frac{\partial z}{\partial y}\frac{dy}{dt}.$$</p></div>
+<div class="box obs"><span class="lab c-blue">Observación <span class="tag piz">Pizarrón</span> <a class="t" data-v="22" data-t="31:22">31:22</a></span>
+<p>$\frac{dz}{dt}=\left(\frac{\partial z}{\partial x},\frac{\partial z}{\partial y}\right)\cdot\left(\frac{dx}{dt},\frac{dy}{dt}\right)$, es decir,
+$$\frac{d}{dt}\big(f(\v{r}(t))\big)=\nabla f(\v{r}(t))\cdot\v{r}'(t).$$
+<span class="tag vid">Video</span> Se recupera la regla mnemotécnica: la derivada de la de afuera (ahora es el gradiente) evaluada en la de adentro, por (producto escalar) la derivada de la de adentro. <a class="t" data-v="22" data-t="32:22">32:22</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span> <a class="t" data-v="22" data-t="33:22">33:22</a></span>
+<p>$z=x^2y+3xy^4$, $x=\operatorname{sen}2t$, $y=\cos t$. Calcular $\frac{dz}{dt}\big|_{t=0}$.
+$$\frac{dz}{dt}=(2xy+3y^4)\cdot2\cos2t+(x^2+12xy^3)\cdot(-\operatorname{sen}t).$$
+Si $t=0$: $x=0$, $y=1$, y queda $(0+3)\cdot2\cdot1+(0+0)\cdot0=6$.</p>
+<p class="hint"><span class="tag vid">Video</span> También se puede reemplazar $x$ e $y$ y derivar como en el CBC; queda de ejercicio verificar que da lo mismo. <a class="t" data-v="22" data-t="34:23">34:23</a></p></div>
+<div class="viz" id="viz-chain"></div>
+
+<h3 class="b">Versión 2: $x$ e $y$ dependen de dos variables <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="22" data-t="38:32">38:32</a></h3>
+<p>Si $z=f(x,y)$ con $x=g(u,v)$, $y=h(u,v)$ (por ejemplo, coordenadas polares: $x=r\cos\theta$, $y=r\operatorname{sen}\theta$), ¿cómo se calculan $\frac{\partial z}{\partial u}$ y $\frac{\partial z}{\partial v}$? <a class="t" data-v="22" data-t="39:33">39:33</a></p>
+<div class="box thm"><span class="lab">Teorema (regla de la cadena, versión 2)</span>
+$$\frac{\partial z}{\partial u}=\frac{\partial z}{\partial x}\frac{\partial x}{\partial u}+\frac{\partial z}{\partial y}\frac{\partial y}{\partial u},\qquad\frac{\partial z}{\partial v}=\frac{\partial z}{\partial x}\frac{\partial x}{\partial v}+\frac{\partial z}{\partial y}\frac{\partial y}{\partial v}.$$
+<p class="hint">Demostración: calcular $z_u$ significa mantener $v$ constante y mirar $x$ e $y$ como funciones solo de $u$. Entonces se reduce al teorema anterior.</p></div>
+<div class="box obs"><span class="lab c-blue">Diagrama de árbol <a class="t" data-v="22" data-t="40:38">40:38</a></span>
+<p>Arriba va la variable que se quiere derivar, $z$. De ella sale una rama por cada variable de la que depende ($x$ e $y$), y de cada una de esas, una rama por cada variable de la que dependen ($u$ y $v$). Para calcular $z_u$ se buscan <b>todos los caminos</b> que van de $z$ hasta $u$; cada rama es una derivada, a lo largo de un camino se multiplican y los caminos se suman:
+$$z_u=z_x\cdot x_u+z_y\cdot y_u.$$</p>
+<p class="hint"><span class="tag vid">Video</span> "Es una regla para acordarse, no una justificación." "Si cada vez que quieran derivar arman su diagrama de árbol, no se van a poder equivocar nunca." <a class="t" data-v="22" data-t="43:41">43:41</a> <a class="t" data-v="22" data-t="45:42">45:42</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo: coordenadas polares <span class="tag vid">Video</span> <a class="t" data-v="22" data-t="47:45">47:45</a></span>
+<p>$z=f(x,y)$, $x=r\cos\theta$, $y=r\operatorname{sen}\theta$. La variación angular y la variación radial son
+$$z_\theta=f_x\cdot(-r\operatorname{sen}\theta)+f_y\cdot r\cos\theta=-y\,f_x+x\,f_y=\nabla f\cdot(-y,x),$$
+$$z_r=f_x\cos\theta+f_y\operatorname{sen}\theta=\nabla f\cdot(\cos\theta,\operatorname{sen}\theta)=\nabla f\cdot\frac{(x,y)}{|(x,y)|}.$$
+<a class="t" data-v="22" data-t="49:50">49:50</a> <a class="t" data-v="22" data-t="51:51">51:51</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span> <a class="t" data-v="22" data-t="53:53">53:53</a></span>
+<p>$z=e^x\operatorname{sen}y$, $x=uv^2$, $y=u^2v$. Calcular $z_u$ y $z_v$.
+$$z_u=z_x\,x_u+z_y\,y_u=e^x\operatorname{sen}y\cdot v^2+e^x\cos y\cdot2uv=e^{uv^2}\operatorname{sen}(u^2v)\,v^2+e^{uv^2}\cos(u^2v)\,2uv.$$
+$z_v$ queda de ejercicio: $z_v=z_x\,x_v+z_y\,y_v=e^x\operatorname{sen}y\cdot2uv+e^x\cos y\cdot u^2$. <a class="t" data-v="22" data-t="55:58">55:58</a> <a class="t" data-v="22" data-t="57:59">57:59</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span></span>
+<p>$g(u,v)=f(u^2-v^2,\ v^2-u^2)$. Probar que $v\,g_u+u\,g_v=0$.</p>
+<p>Llamamos $z=f(x,y)$ con $x=u^2-v^2$, $y=v^2-u^2$. Entonces
+$$g_u=z_x\cdot2u+z_y\cdot(-2u)=2u\,(z_x-z_y),\qquad g_v=z_x\cdot(-2v)+z_y\cdot2v=2v\,(-z_x+z_y),$$
+y $v\,g_u+u\,g_v=2uv(z_x-z_y)+2uv(-z_x+z_y)=0$.</p></div>
+<div class="quiz" id="quiz-4"></div>
+</section>
+
+<!-- ======================= CLASE 23 ======================= -->
+<section class="clase" id="t5">
+<header>
+  <div class="kick">CLASE 23 · Stewart 14.6 · ejercicios 22 a 29</div>
+  <h2>Derivadas direccionales</h2>
+  <div class="meta"><a class="t" data-v="23" data-t="0:00">Clase 23 (51 min)</a><span>Hoja: "Teórica 14. Derivadas direccionales".</span></div>
+</header>
+
+<h3 class="b">La idea <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="23" data-t="0:36">0:36</a></h3>
+<p>Las derivadas parciales representan la razón de cambio de $f$ cuando nos movemos en la dirección de los ejes coordenados, dados por los versores $\hat\imath$ y $\hat\jmath$. ¿Qué pasa si se quiere calcular la razón de cambio de $f$ en otra dirección? <a class="t" data-v="23" data-t="1:37">1:37</a></p>
+<p><span class="tag vid">Video</span> Si en la derivada parcial respecto de $x$ llamamos $t$ al incremento, evaluamos $f$ en $(x_0+t,y_0)=(x_0,y_0)+t(1,0)$: la recta que pasa por $(x_0,y_0)$ con dirección $(1,0)$. Para $f_y$, la dirección es $(0,1)$. "¿Por qué solo en $(1,0)$ y $(0,1)$? ¿No lo puedo hacer con cualquier otro vector? La respuesta es que sí." <a class="t" data-v="23" data-t="3:39">3:39</a> <a class="t" data-v="23" data-t="5:43">5:43</a></p>
+<div class="box def"><span class="lab">Derivada direccional <a class="t" data-v="23" data-t="6:45">6:45</a></span>
+<p>Dado un vector <b>unitario</b> $\v{u}=\ang{a,b}$ ($|\v{u}|=1$), se define la derivada direccional de $f$ en la dirección de $\v{u}$ como
+$$D_{\v{u}}f(x_0,y_0)=\frac{\partial f}{\partial\v{u}}(x_0,y_0)=\lim_{h\to0}\frac{f(x_0+ha,\ y_0+hb)-f(x_0,y_0)}{h}=\lim_{h\to0}\frac{f(P_0+h\v{u})-f(P_0)}{h}.$$
+En particular, $D_{\hat\imath}f=\frac{\partial f}{\partial x}$ y $D_{\hat\jmath}f=\frac{\partial f}{\partial y}$.</p></div>
+<div class="box ej"><span class="lab">Ejemplo, por definición <span class="tag piz">Pizarrón</span> <a class="t" data-v="23" data-t="9:51">9:51</a></span>
+<p>$f(x,y)=x+2y$, $P_0=(1,1)$, $\v{u}=\ang{\frac12,\frac{\sqrt3}{2}}$. Primero, $|\v{u}|=\sqrt{\frac14+\frac34}=1$.
+$$D_{\v{u}}f(1,1)=\lim_{h\to0}\frac{\big(1+\frac h2\big)+2\big(1+\frac{\sqrt3}{2}h\big)-3}{h}=\lim_{h\to0}\frac{h\big(\frac12+\sqrt3\big)}{h}=\frac{1+2\sqrt3}{2}.$$</p>
+<p class="hint"><span class="tag vid">Video</span> En la clase el punto es $(1,2)$, y da lo mismo: $f$ es lineal, así que la razón de cambio no depende del punto. <a class="t" data-v="23" data-t="11:59">11:59</a> <a class="t" data-v="23" data-t="13:00">13:00</a></p></div>
+
+<h3 class="b">Cómo se calcula: $\nabla f\cdot\v{u}$ <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="23" data-t="14:01">14:01</a></h3>
+<div class="box thm"><span class="lab">Teorema</span>
+<p>Si $f$ es diferenciable en $(x_0,y_0)$ y $\v{u}=\ang{a,b}$ es un vector unitario, entonces
+$$D_{\v{u}}f(x_0,y_0)=\frac{\partial f}{\partial x}(x_0,y_0)\,a+\frac{\partial f}{\partial y}(x_0,y_0)\,b=\nabla f(x_0,y_0)\cdot\v{u}.$$</p></div>
+<details class="dem" open><summary>Demostración <a class="t" data-v="23" data-t="21:09">21:09</a></summary><div class="in">
+<p>Definimos la recta $\v{r}(t)=P_0+t\v{u}=(x_0+ta,\ y_0+tb)$, con $\v{r}(0)=P_0$. Entonces $f(x_0+ha,y_0+hb)=f(\v{r}(h))$ y
+$$D_{\v{u}}f(x_0,y_0)=\lim_{h\to0}\frac{f(\v{r}(h))-f(\v{r}(0))}{h}=[f(\v{r}(t))]'\big|_{t=0}=(f\circ\v{r})'(0).$$
+Ese es el cociente incremental de $f\circ\v{r}$ en $0$. Como $\v{r}$ es diferenciable (es una recta) y $f$ es diferenciable en $\v{r}(0)$, por la regla de la cadena la composición es derivable y
+$$(f\circ\v{r})'(0)=\nabla f(\v{r}(0))\cdot\v{r}'(0)=\nabla f(x_0,y_0)\cdot\ang{a,b}.\qquad\blacksquare$$
+<a class="t" data-v="23" data-t="23:11">23:11</a> <a class="t" data-v="23" data-t="26:14">26:14</a></p></div></details>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span></span>
+<p>$f(x,y)=x^2y^3-4y$, $\v{v}=\ang{2,5}$, $P_0=(2,-1)$. Calcular la razón de cambio de $f$ en la dirección de $\v{v}$ en $P_0$.</p>
+<p>$\v{v}$ no es unitario: $\v{u}=\frac{\v{v}}{|\v{v}|}=\ang{\frac{2}{\sqrt{29}},\frac{5}{\sqrt{29}}}$. Además $f_x=2xy^3$, $f_y=3x^2y^2-4$, así que $\nabla f(2,-1)=(-4,8)$ y
+$$D_{\v{u}}f(2,-1)=(-4,8)\cdot\Big\langle\frac{2}{\sqrt{29}},\frac{5}{\sqrt{29}}\Big\rangle=\frac{32}{\sqrt{29}}.$$</p>
+<p class="hint"><span class="tag vid">Video</span> El ejemplo de la clase: $f(x,y)=x^2y^3-4x-y$ en $(1,2)$ con $\v{v}=(3,4)$. $f$ es un polinomio, así que es diferenciable; $\nabla f(1,2)=(12,11)$, $\v{u}=\ang{\frac35,\frac45}$ y $D_{\v{u}}f(1,2)=\frac{36+44}{5}=16$. <a class="t" data-v="23" data-t="16:05">16:05</a> <a class="t" data-v="23" data-t="19:07">19:07</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo con un ángulo <span class="tag piz">Pizarrón</span> <a class="t" data-v="23" data-t="28:25">28:25</a></span>
+<p>$f(x,y)=x^3-3xy+4y^2$; calcular $D_{\v{u}}f(1,2)$ donde $\v{u}$ viene dado por $\theta=\frac\pi6$. Como $|\v{u}|=1$, $\v{u}=\ang{\cos\theta,\operatorname{sen}\theta}=\ang{\frac{\sqrt3}{2},\frac12}$. Con $f_x=3x^2-3y$ y $f_y=-3x+8y$, $\nabla f(1,2)=(-3,13)$ y
+$$D_{\v{u}}f(1,2)=(-3,13)\cdot\Big\langle\frac{\sqrt3}{2},\frac12\Big\rangle=\frac{-3\sqrt3+13}{2}.$$</p>
+<p class="hint"><span class="tag vid">Video</span> En la clase: $f(x,y)=x^3y^2-4xy$ en $(-1,2)$ con $\theta=\frac\pi6$. $\nabla f(-1,2)=(4,0)$ y $D_{\v{u}}f=4\cdot\frac{\sqrt3}{2}=2\sqrt3$. <a class="t" data-v="23" data-t="30:26">30:26</a> <a class="t" data-v="23" data-t="31:29">31:29</a></p></div>
+<div class="box ej"><span class="lab">¿Y en $\R^3$? <span class="tag piz">Pizarrón</span></span>
+<p>$f(x,y,z)=x\operatorname{sen}(yz)$, $\v{v}=(1,2,-1)$, punto $(1,3,0)$. $f_x=\operatorname{sen}(yz)$, $f_y=xz\cos(yz)$, $f_z=xy\cos(yz)$, así que $\nabla f(1,3,0)=(0,0,3)$. Con $\v{u}=\frac{(1,2,-1)}{\sqrt6}$:
+$$D_{\v{u}}f(1,3,0)=(0,0,3)\cdot\Big(\frac1{\sqrt6},\frac2{\sqrt6},\frac{-1}{\sqrt6}\Big)=-\frac{3}{\sqrt6}.$$</p></div>
+
+<h3 class="b">La dirección de máximo crecimiento <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="23" data-t="32:32">32:32</a></h3>
+<p><span class="tag vid">Video</span> Imaginemos que el gráfico de $f$ es una montaña y estamos parados en un punto. Viene un tsunami: ¿hacia dónde hay que correr? Hacia arriba, claro, pero de todas las direcciones del plano, ¿cuál es la que sube con más inclinación? <a class="t" data-v="23" data-t="33:35">33:35</a> <a class="t" data-v="23" data-t="35:39">35:39</a></p>
+<div class="box thm"><span class="lab">Teorema <a class="t" data-v="23" data-t="36:40">36:40</a></span>
+<p>Sea $f$ diferenciable en $(x_0,y_0)$ con $\nabla f(x_0,y_0)\neq(0,0)$. La dirección $\v{u}$ en la que $D_{\v{u}}f(x_0,y_0)$ es máxima es
+$$\v{u}=\frac{\nabla f(x_0,y_0)}{|\nabla f(x_0,y_0)|},$$
+y el valor máximo de $D_{\v{u}}f(x_0,y_0)$ es $|\nabla f(x_0,y_0)|$.</p></div>
+<details class="dem" open><summary>Demostración <a class="t" data-v="23" data-t="38:45">38:45</a></summary><div class="in">
+<p>Usamos $\v{a}\cdot\v{b}=|\v{a}||\v{b}|\cos\theta$. Entonces
+$$D_{\v{u}}f(x_0,y_0)=\nabla f(x_0,y_0)\cdot\v{u}=|\nabla f(x_0,y_0)|\cdot\underbrace{|\v{u}|}_{1}\cdot\cos\theta=|\nabla f(x_0,y_0)|\cos\theta,$$
+donde $\theta\in[0,\pi]$ es el ángulo entre $\nabla f(x_0,y_0)$ y $\v{u}$. Esto es máximo si $\cos\theta=1$, o sea $\theta=0$: $\v{u}$ y $\nabla f(x_0,y_0)$ tienen la misma dirección y el mismo sentido, y como $|\v{u}|=1$, $\v{u}=\frac{\nabla f}{|\nabla f|}$. En ese caso, $D_{\v{u}}f=|\nabla f(x_0,y_0)|$. $\blacksquare$ <a class="t" data-v="23" data-t="40:49">40:49</a> <a class="t" data-v="23" data-t="41:50">41:50</a></p></div></details>
+<p class="hint"><span class="tag vid">Video</span> La dirección de más rápido <b>de</b>crecimiento es $-\frac{\nabla f}{|\nabla f|}$. Y por eso la derivada direccional se define con vectores de módulo 1: para comparar todas las direcciones con la misma vara. <a class="t" data-v="23" data-t="42:50">42:50</a></p>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span></span>
+<p>$f(x,y)=xe^y$. (1) Calcular la razón de cambio de $f$ en el punto $P=(2,0)$ en la dirección que va de $P$ a $Q=\big(\frac12,2\big)$. (2) ¿En qué dirección la razón de cambio es máxima y cuánto vale?</p>
+<p>$f_x=e^y$, $f_y=xe^y$, así que $\nabla f(2,0)=(1,2)$. (1) $\v{v}=\overrightarrow{PQ}=Q-P=\ang{-\frac32,2}$, $|\v{v}|=\sqrt{\frac94+4}=\frac52$, $\v{u}=\ang{-\frac35,\frac45}$ y $D_{\v{u}}f(2,0)=(1,2)\cdot\ang{-\frac35,\frac45}=-\frac35+\frac85=1$. (2) La dirección es $\frac{\nabla f(2,0)}{|\nabla f(2,0)|}=\frac{(1,2)}{\sqrt5}$ y el valor máximo, $|\nabla f(2,0)|=\sqrt5$.</p>
+<p class="hint"><span class="tag vid">Video</span> El ejemplo de la clase es en $\R^3$: $f(x,y,z)=x\operatorname{sen}(yz)$ en $(1,2,0)$. $\nabla f(1,2,0)=(0,0,2)$: hay que moverse en la dirección $(0,0,1)$ y la razón de cambio máxima es $|\nabla f|=2$. <a class="t" data-v="23" data-t="44:56">44:56</a> <a class="t" data-v="23" data-t="48:04">48:04</a></p></div>
+<div class="viz" id="viz-dir"></div>
+<div class="quiz" id="quiz-5"></div>
+</section>
+
+<!-- ======================= CLASES 24, 25 Y 26 ======================= -->
+<section class="clase" id="t6">
+<header>
+  <div class="kick">CLASES 24, 25 Y 26 · Stewart 14.5 (págs. 928–930) y 14.6 (págs. 940–941) · ejercicios 30 a 35</div>
+  <h2>Teorema de la función implícita y planos tangentes</h2>
+  <div class="meta"><a class="t" data-v="24" data-t="0:00">Clase 24 (52 min)</a> <a class="t" data-v="25" data-t="0:00">Clase 25 (33 min)</a> <a class="t" data-v="26" data-t="0:00">Clase 26 (51 min)</a><span>Hojas: "Teórica 15. Teorema de la función implícita y aplicaciones" y "Teórica 16. Planos tangentes a superficies".</span></div>
+</header>
+<p class="hint"><span class="tag piz">Pizarrón</span> "Este tema no está contenido en el libro de Stewart… sin embargo, ver: sección 14.5, págs. 928 a 930; sección 14.6, págs. 940 y 941."</p>
+
+<h3 class="b">El objetivo: entender los conjuntos de nivel <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="24" data-t="0:34">0:34</a></h3>
+<p>Dada $f:\R^2\to\R$ y $k\in\R$, queremos estudiar cómo es la estructura del conjunto de nivel
+$$C_k=\{(x,y)\in\R^2:\ f(x,y)=k\}.$$
+<span class="tag vid">Video</span> Al principio de la materia, con las cuádricas, los llamábamos trazas; ahora queremos entenderlos para una $f$ general. <a class="t" data-v="24" data-t="2:36">2:36</a></p>
+<div class="box ej"><span class="lab">Ejemplo: $f(x,y)=x^2+y^2$ <a class="t" data-v="24" data-t="3:37">3:37</a></span>
+<p>$C_{-1}=\{x^2+y^2=-1\}=\emptyset$, porque $x^2+y^2\ge0$. $C_0=\{x^2+y^2=0\}=\{(0,0)\}$, un punto. $C_1=\{x^2+y^2=1\}=\mathcal{C}$, la circunferencia. "Pueden ser vacíos, un punto, una curva." <a class="t" data-v="24" data-t="4:38">4:38</a> <a class="t" data-v="24" data-t="6:38">6:38</a></p>
+<p>Para ver que $C_1$ es una curva, despejamos: $y^2=1-x^2$, $y=\pm\sqrt{1-x^2}$. Las dos son correctas: cada una describe una porción distinta. Para elegir, se fija un punto: si queremos pasar por el norte $N=(0,1)$, tomamos $\varphi(x)=\sqrt{1-x^2}$; por el sur $S=(0,-1)$, la raíz negativa. Para chequear que el despeje está bien, se lo pone en la ecuación: <a class="t" data-v="24" data-t="8:39">8:39</a> <a class="t" data-v="24" data-t="9:41">9:41</a></p>
+$$f(x,\varphi(x))=x^2+\big(\sqrt{1-x^2}\big)^2=x^2+1-x^2=1\quad\forall x.$$
+<p class="hint"><span class="tag piz">Pizarrón</span> En el este $E$ no se puede despejar $y$ (hay dos $y$ para cada $x$ cerca), pero sí $x=\psi(y)=\sqrt{1-y^2}$.</p></div>
+<p>¿Y con $f(x,y)=x^3+y^3-2xy$, en $C_0$? Es una cúbica y no se sabe despejar. Y la fórmula podría ser peor: $-2\cos(x)\,y$, $-2x\log y$… <a class="t" data-v="24" data-t="13:45">13:45</a> <a class="t" data-v="24" data-t="14:46">14:46</a></p>
+
+<h3 class="b">El caso general y la idea de linealizar <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="24" data-t="15:48">15:48</a></h3>
+<p>Para $f(x,y)=k$ buscamos: 1°) que $k\in\operatorname{Im}f$, o sea que exista $(x_0,y_0)\in C_k$; 2°) despejar $y$: encontrar $y=\varphi(x)$ con $f(x,\varphi(x))=k$ para todo $x$ y $\varphi(x_0)=y_0$; 3°) que entonces $C_k$ sea el gráfico de $\varphi$ "cerca" de $(x_0,y_0)$.</p>
+<div class="box ej"><span class="lab">Primero, el problema lineal <a class="t" data-v="24" data-t="17:52">17:52</a></span>
+<p>Si $f(x,y)=ax+by+c$, la ecuación $ax+by+c=k$ da, <b>si $b\neq0$</b>, $y=\frac{k-c-ax}{b}=\varphi(x)$: una recta. Lo mismo si $f$ es lineal solo en $y$: $f(x,y)=a(x)+b(x)\,y=k$ da $y=\frac{k-a(x)}{b(x)}$ si $b(x)\neq0$. <a class="t" data-v="24" data-t="18:54">18:54</a> <a class="t" data-v="24" data-t="20:54">20:54</a></p></div>
+<p>Para el caso general, la idea es <b>linealizar</b> $f$: cambiarla por su mejor aproximación lineal. <span class="tag vid">Video</span> "Es una de las herramientas más poderosas que vamos a aprender en el curso; la van a usar en todos los cursos posteriores." <a class="t" data-v="24" data-t="16:51">16:51</a> Si $(x_0,y_0)\in C_k$ y $f$ es diferenciable allí,
+$$f(x,y)=\underbrace{f(x_0,y_0)}_{k}+\nabla f(x_0,y_0)\cdot(x-x_0,y-y_0)+E_f,\qquad\frac{E_f}{\sqrt{(x-x_0)^2+(y-y_0)^2}}\to0.$$
+Despreciando el error ("es de un orden despreciable"), $f(x,y)=k$ se cambia por la <b>ecuación linealizada</b> <a class="t" data-v="24" data-t="27:03">27:03</a> <a class="t" data-v="24" data-t="29:09">29:09</a></p>
+$$f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0)=0\ \Longrightarrow\ y=y_0-\frac{f_x(x_0,y_0)}{f_y(x_0,y_0)}(x-x_0)\quad\text{si }f_y(x_0,y_0)\neq0.$$
+<p><span class="tag vid">Video</span> Esa recta no es el despeje de verdad, sino una aproximación: va a resultar ser la recta tangente al despeje. "Siempre que hay este tipo de razonamiento tiene que haber un matemático que pregunte… hay que transformarlo en un teorema." La demostración no se ve en este curso. <a class="t" data-v="24" data-t="33:13">33:13</a></p>
+<div class="box thm"><span class="lab">Teorema de la función implícita (TFI) <a class="t" data-v="24" data-t="34:14">34:14</a></span>
+<p>Sea $f(x,y)$ una función de clase $C^1$ ($\frac{\partial f}{\partial x}$ y $\frac{\partial f}{\partial y}$ existen y son continuas). Sea $(x_0,y_0)\in\R^2$ tal que $f(x_0,y_0)=k$, y supongamos que $\frac{\partial f}{\partial y}(x_0,y_0)\neq0$. Entonces existe $\varphi(x)$ tal que $\varphi(x_0)=y_0$, $\varphi$ es de clase $C^1$ y
+$$f(x,\varphi(x))=k\qquad\forall x.$$</p>
+<p class="hint"><span class="tag vid">Video</span> "El despeje no da todo el conjunto de nivel, da una porción: es un despeje <b>local</b>, cerca del punto $x_0$." <a class="t" data-v="24" data-t="38:24">38:24</a></p></div>
+<div class="revnote"><b>Revisar</b>En la hoja dice "$\forall x$". En el video se aclara que es un despeje local. ¿Escribimos en el enunciado "para todo $x$ en un intervalo alrededor de $x_0$" y que, cerca de $(x_0,y_0)$, $C_k$ coincide con el gráfico de $\varphi$?</div>
+<div class="box obs"><span class="lab c-blue">La derivada del despeje <span class="tag piz">Pizarrón</span> <a class="t" data-v="24" data-t="39:25">39:25</a></span>
+<p>Se deriva respecto de $x$ la igualdad $f(x,\varphi(x))=k$. Con el diagrama de árbol ($f$ depende de $x$ y de $y$, e $y$ depende de $x$):
+$$\frac{\partial f}{\partial x}(x,\varphi(x))+\frac{\partial f}{\partial y}(x,\varphi(x))\cdot\varphi'(x)=0\ \Longrightarrow\ \varphi'(x)=-\frac{\frac{\partial f}{\partial x}(x,\varphi(x))}{\frac{\partial f}{\partial y}(x,\varphi(x))},\qquad\varphi'(x_0)=-\frac{f_x(x_0,y_0)}{f_y(x_0,y_0)}.$$
+<span class="tag vid">Video</span> Este es el sustento teórico de la derivación implícita de la Clase 19. Y la recta tangente al despeje, $y=y_0+\varphi'(x_0)(x-x_0)$, es exactamente la recta de la ecuación linealizada. <a class="t" data-v="24" data-t="43:41">43:41</a> <a class="t" data-v="24" data-t="44:43">44:43</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span> <a class="t" data-v="24" data-t="45:44">45:44</a></span>
+<p>$x^3+y^3=2xy$. Calcular $\frac{dy}{dx}$ en el punto $(1,1)$. Sea $f(x,y)=x^3+y^3-2xy$ y $C_0=\{f=0\}$; $(1,1)\in C_0$ porque $f(1,1)=0$. Como $f_y=3y^2-2x$ y $f_y(1,1)=1\neq0$, por el TFI existe $y=y(x)$ con $y(1)=1$ y $x^3+y(x)^3=2x\,y(x)$ para todo $x$. Como $f_x=3x^2-2y$,
+$$y'(x)=-\frac{3x^2-2y}{3y^2-2x},\qquad y'(1)=-1.$$
+<span class="tag vid">Video</span> "No conozco la fórmula del despeje, pero sé cómo se comporta cerca de $(1,1)$": $y(x)\approx1-(x-1)$. <a class="t" data-v="24" data-t="49:51">49:51</a> <a class="t" data-v="24" data-t="50:53">50:53</a></p></div>
+<div class="viz" id="viz-impl"></div>
+
+<h3 class="b">Tres variables <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="25" data-t="3:43">3:43</a></h3>
+<p>Para $f(x,y,z)=k$ buscamos despejar $z=\varphi(x,y)$ con $f(x,y,\varphi(x,y))=k$. Linealizando en $P_0=(x_0,y_0,z_0)$ queda $f_x(x-x_0)+f_y(y-y_0)+f_z(z-z_0)=0$, y se puede despejar $z$ si $f_z(P_0)\neq0$. <span class="tag vid">Video</span> "No tiene que ser cero la derivada respecto de la variable que quiero despejar." <a class="t" data-v="25" data-t="8:49">8:49</a> <a class="t" data-v="25" data-t="10:49">10:49</a></p>
+<div class="box thm"><span class="lab">TFI en tres variables <a class="t" data-v="25" data-t="13:59">13:59</a></span>
+<p>Sea $f$ de clase $C^1$, $f(x_0,y_0,z_0)=k$ y $\frac{\partial f}{\partial z}(x_0,y_0,z_0)\neq0$. Entonces existe $\varphi(x,y)$ de clase $C^1$ tal que $\varphi(x_0,y_0)=z_0$ y $f(x,y,\varphi(x,y))=k$ para todo $(x,y)$.</p></div>
+<div class="box obs"><span class="lab c-blue">Las derivadas del despeje <span class="tag piz">Pizarrón</span> <a class="t" data-v="25" data-t="16:02">16:02</a></span>
+<p>Con el árbol ($f$ depende de $x,y,z$ y $z$ depende de $x,y$), derivando $f(x,y,z)=k$ respecto de $x$ y de $y$:
+$$f_x+f_z\,\frac{\partial z}{\partial x}=0,\qquad f_y+f_z\,\frac{\partial z}{\partial y}=0\ \Longrightarrow\ \varphi_x=-\frac{f_x(x,y,\varphi(x,y))}{f_z(x,y,\varphi(x,y))},\quad\varphi_y=-\frac{f_y(x,y,\varphi(x,y))}{f_z(x,y,\varphi(x,y))}.$$
+<span class="tag vid">Video</span> Regla para acordarse: "menos $f$ derivada respecto de la variable que derivo, dividido $f$ derivada respecto de la variable que despejé". <a class="t" data-v="25" data-t="29:28">29:28</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span></span>
+<p>$x^3+y^3+z^3+6xyz=1$ en $(0,0,1)$. $f(0,0,1)=1$ y $f_z=3z^2+6xy$, $f_z(0,0,1)=3\neq0$: por el TFI existe $z=\varphi(x,y)$ con $\varphi(0,0)=1$. Como $f_x=3x^2+6yz$ y $f_y=3y^2+6xz$ se anulan en $(0,0,1)$, $\varphi_x(0,0)=\varphi_y(0,0)=0$.</p>
+<p class="hint"><span class="tag vid">Video</span> En la clase la ecuación es $x^3+y^3+z^3-6xyz=1$, con las mismas cuentas en $(0,0,1)$. El plano tangente al despeje es $z=1$: horizontal. <a class="t" data-v="25" data-t="24:25">24:25</a> <a class="t" data-v="25" data-t="31:31">31:31</a></p></div>
+
+<h3 class="b">Repaso: el plano tangente a un gráfico, geométricamente <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="26" data-t="0:36">0:36</a></h3>
+<p>Sea $S=\{(x,y,z):\ z=f(x,y)\}$ y $z_0=f(x_0,y_0)$. Las curvas
+$$\v{r}_1(t)=(x_0+t,\ y_0,\ f(x_0+t,y_0)),\qquad\v{r}_2(t)=(x_0,\ y_0+t,\ f(x_0,y_0+t))$$
+están en $S$ para todo $t$ y pasan por $(x_0,y_0,z_0)$ en $t=0$. Sus vectores tangentes $\v{r}_1'(0)=(1,0,f_x(x_0,y_0))$ y $\v{r}_2'(0)=(0,1,f_y(x_0,y_0))$ son tangentes a $S$ y linealmente independientes, así que generan el plano tangente: <a class="t" data-v="26" data-t="2:39">2:39</a> <a class="t" data-v="26" data-t="8:44">8:44</a></p>
+$$\Pi:\ \alpha\,(1,0,f_x(x_0,y_0))+\beta\,(0,1,f_y(x_0,y_0))+(x_0,y_0,z_0).$$
+<p>De ahí, $z-z_0=f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0)$, o sea $(-f_x,-f_y,1)\cdot(x-x_0,y-y_0,z-z_0)=0$. El vector normal es
+$$\v{N}=(1,0,f_x)\times(0,1,f_y)=\begin{vmatrix}\hat\imath&\hat\jmath&\hat k\\1&0&f_x\\0&1&f_y\end{vmatrix}=(-f_x,\ -f_y,\ 1).$$
+<a class="t" data-v="26" data-t="14:51">14:51</a> <a class="t" data-v="26" data-t="17:57">17:57</a></p>
+
+<h3 class="b">Superficies dadas de forma implícita <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="26" data-t="19:59">19:59</a></h3>
+<p>Sea $S_k=\{(x,y,z)\in\R^3:\ F(x,y,z)=k\}$ y $(x_0,y_0,z_0)\in S_k$. Sea $\v{r}(t)=(x(t),y(t),z(t))$ cualquier curva con $\v{r}(t)\in S_k$ para todo $t$ y $\v{r}(0)=(x_0,y_0,z_0)$. <span class="tag vid">Video</span> "Imagínense la esfera, y una curva dibujada en la pelota." Como $F(x(t),y(t),z(t))=k$ para todo $t$, derivando: <a class="t" data-v="26" data-t="22:01">22:01</a> <a class="t" data-v="26" data-t="24:03">24:03</a></p>
+$$F_x\,x'(t)+F_y\,y'(t)+F_z\,z'(t)=0\quad\Longrightarrow\quad\nabla F(x_0,y_0,z_0)\cdot\v{r}'(0)=0\ \ (t=0).$$
+<p>$\v{r}'(0)$ es cualquier vector tangente a cualquier curva de la superficie que pase por el punto. Entonces $\nabla F(x_0,y_0,z_0)\perp S$: es el vector normal al plano tangente. <a class="t" data-v="26" data-t="27:06">27:06</a> <a class="t" data-v="26" data-t="29:07">29:07</a></p>
+<div class="box thm"><span class="lab">Plano tangente a una superficie de nivel</span>
+$$\Pi:\ \nabla F(x_0,y_0,z_0)\cdot(x-x_0,\ y-y_0,\ z-z_0)=0.$$</div>
+<div class="box def"><span class="lab">Recta normal <span class="tag add">Agregado</span></span>
+<p>La recta normal a la superficie en $(x_0,y_0,z_0)$ es la recta que pasa por el punto con dirección $\nabla F(x_0,y_0,z_0)$: $\lambda\,\nabla F(x_0,y_0,z_0)+(x_0,y_0,z_0)$. (La pide el ejercicio 33; no aparece en las clases.)</p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span></span>
+<p>$\frac{x^2}{4}+y^2+\frac{z^2}{9}=3$. Hallar el plano tangente en $P_0=(-2,1,-3)$. Con $F=\frac{x^2}{4}+y^2+\frac{z^2}{9}$, $\nabla F=\big(\frac x2,2y,\frac{2z}{9}\big)$ y $\nabla F(-2,1,-3)=\big(-1,2,-\frac23\big)=\v{N}$. Entonces
+$$\Big(-1,2,-\tfrac23\Big)\cdot(x+2,\ y-1,\ z+3)=0\ \Longrightarrow\ -x+2y-\tfrac23z=6.$$</p></div>
+<div class="box ej"><span class="lab">Ejemplo de la clase <span class="tag vid">Video</span> <a class="t" data-v="26" data-t="35:16">35:16</a></span>
+<p>La esfera $x^2+y^2+z^2=1$ en $(1,0,0)$: $\nabla F=(2x,2y,2z)$, $\nabla F(1,0,0)=(2,0,0)$ y el plano es $2(x-1)+0+0=0$, o sea $x=1$. "Imagínense una pelota de tenis: el plano es vertical, apoyado sobre el ecuador." No es de la forma $z=\ldots$: acá $F_z=0$. <a class="t" data-v="26" data-t="37:18">37:18</a> <a class="t" data-v="26" data-t="39:19">39:19</a></p></div>
+<div class="viz" id="viz-surf"></div>
+<div class="box obs"><span class="lab c-blue">Gráficos y superficies implícitas <span class="tag piz">Pizarrón</span> <a class="t" data-v="26" data-t="32:11">32:11</a></span>
+<p>Todo gráfico es una superficie implícita: $z=f(x,y)$ es $F(x,y,z)=z-f(x,y)=0$. Y $\nabla F=(-f_x,-f_y,1)$: como era de esperar, es el mismo vector normal que antes.</p></div>
+<details class="dem"><summary>Por qué funciona: la condición $\nabla F\neq\v{0}$ y el TFI <a class="t" data-v="26" data-t="39:19">39:19</a></summary><div class="in">
+<p>Si $\nabla F(x_0,y_0,z_0)\neq(0,0,0)$, alguna de $F_x,F_y,F_z$ no se anula en el punto. Supongamos $F_z(x_0,y_0,z_0)\neq0$. Por el TFI se puede despejar $z=\varphi(x,y)$ de $F(x,y,z)=k$, con $\varphi(x_0,y_0)=z_0$, y la superficie coincide (localmente) con el gráfico de $\varphi$. Su normal es
+$$\v{N}=(-\varphi_x,-\varphi_y,1)=\Big(\frac{F_x}{F_z},\frac{F_y}{F_z},1\Big)=\frac{1}{F_z(x_0,y_0,z_0)}\big(F_x,F_y,F_z\big)=\frac{1}{F_z}\,\nabla F(x_0,y_0,z_0).$$
+Es un múltiplo de $\nabla F$: da el mismo plano. <a class="t" data-v="26" data-t="42:22">42:22</a> <a class="t" data-v="26" data-t="46:38">46:38</a></p>
+<p class="hint"><span class="tag vid">Video</span> Lo mismo pasa con las curvas de nivel en el plano: $\nabla f$ es normal a la recta tangente a $\{f=k\}$. <a class="t" data-v="26" data-t="49:41">49:41</a></p></div></details>
+<div class="quiz" id="quiz-6"></div>
+</section>
+
+<!-- ======================= EJERCICIOS ======================= -->
+<section class="clase" id="ejercicios">
+<header>
+  <div class="kick">PRÁCTICA 4 · 35 ejercicios</div>
+  <h2>Ejercicios guiados</h2>
+  <div class="meta"><span>Los enunciados son los de la práctica. Cada uno tiene pistas graduales, la resolución completa y, cuando hay un número para comprobar, una casilla.</span></div>
+</header>
+<div class="ctl" style="margin-bottom:14px"><span class="c-mut" id="ejprog" style="font:600 13.5px var(--f-mono)"></span></div>
+<div class="ejlist" id="ejlist"></div>
+</section>
+
+<div class="foot">Material basado en las Clases 17 a 26 del canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a>, en las hojas de las Teóricas 10 a 16 y en la Práctica 4. Las secciones marcadas como <span class="tag add">Agregado</span> son material nuevo. Versión preliminar, para revisar antes de compartir.</div>
+</main>
+</div>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],macros:{"R": "\\mathbb{R}", "v": ["\\mathbf{#1}", 1], "ang": ["\\langle #1\\rangle", 1], "jh": "\\hat{\\jmath}"}},svg:{fontCache:'none'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']},startup:{typeset:false}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>
+window.G1IMG={};
+(function(){'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>Array.from(r.querySelectorAll(q));
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in (attrs||{})){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});return e;}
+function sv(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const f=(x,d=2)=>{let v=Number(Number(x).toFixed(d));if(Object.is(v,-0)||Math.abs(v)<1e-12)v=0;return String(v).replace('.',',').replace('-','−');};
+const fv=(v,d=2)=>'⟨'+v.map(x=>f(x,d)).join('; ')+'⟩';
+const fp=(v,d=2)=>'('+v.map(x=>f(x,d)).join('; ')+')';
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const add=(a,b)=>a.map((x,i)=>x+b[i]), sub=(a,b)=>a.map((x,i)=>x-b[i]), mul=(a,t)=>a.map(x=>x*t);
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), nrm=a=>Math.sqrt(dot(a,a));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=nrm(a);return n?mul(a,1/n):a;};
+const CL={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',violet:'var(--violet)',ink:'var(--ink)',mut:'var(--ink-2)',amber:'var(--amber)'};
+const TT={blue:'var(--blue-t)',red:'var(--red-t)',green:'var(--green-t)',violet:'var(--violet-t)'};
+
+function arrow(g,x1,y1,x2,y2,col,w,head){w=w||2.6;head=head||11;const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);if(L<1.5)return;
+  const ux=dx/L,uy=dy/L,hl=Math.min(head,L*.7),bx=x2-ux*hl,by=y2-uy*hl;
+  sv('line',{x1,y1,x2:bx,y2:by,style:`stroke:${col};stroke-width:${w};stroke-linecap:round`},g);
+  sv('polygon',{points:`${x2},${y2} ${bx-uy*hl*.42},${by+ux*hl*.42} ${bx+uy*hl*.42},${by-ux*hl*.42}`,style:`fill:${col}`},g);}
+function line(g,x1,y1,x2,y2,col,w,dash){return sv('line',{x1,y1,x2,y2,style:`stroke:${col};stroke-width:${w||1.5};${dash?'stroke-dasharray:'+dash+';':''}stroke-linecap:round`},g);}
+function text(g,x,y,t,col,anchor,cls){const e=sv('text',{x,y,'text-anchor':anchor||'middle',style:`fill:${col||CL.ink}`,class:cls||''},g);e.textContent=t;return e;}
+
+/* ---------- control helpers ---------- */
+function slider(label,o,cb){const inp=h('input',{type:'range',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':label});
+  const val=h('span',{},'');const upd=()=>{val.textContent=f(+inp.value,o.dec==null?1:o.dec)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();cb(+inp.value);});upd();
+  const l=h('label',{},label,inp,val);l.input=inp;l.set=v=>{inp.value=v;upd();};return l;}
+function numbox(o,cb){const i=h('input',{type:'number',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':o.label});
+  i.addEventListener('input',()=>{let v=parseFloat(i.value);if(isNaN(v))return;v=Math.max(o.min,Math.min(o.max,v));cb(v);});return i;}
+function tabs(names,cb,start){const bs=names.map((n,i)=>h('button',{type:'button','aria-pressed':i===(start||0)},n));
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===i));cb(i);}));return h('div',{class:'tabs'},bs);}
+function vhead(title,sub,tb){return h('div',{class:'vh'},h('b',{},title),sub?h('span',{},sub):null,tb||null);}
+
+/* ---------- plano 2D con puntos arrastrables ---------- */
+function Plane2D(host,o){
+  const xr=o.xr||[-6,6],yr=o.yr||[-4,4],W=o.W||640,sx=W/(xr[1]-xr[0]),H=sx*(yr[1]-yr[0]);
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Plano cartesiano interactivo'},host);
+  const X=x=>(x-xr[0])*sx,Y=y=>H-(y-yr[0])*sx;
+  const gb=sv('g',{},svg),gd=sv('g',{},svg),gh=sv('g',{},svg);
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){line(gb,X(x),0,X(x),H,'var(--grid)',1);if(x&&x%(o.tick||1)===0)text(gb,X(x),Y(0)+15,x,CL.mut,'middle','sm');}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){line(gb,0,Y(y),W,Y(y),'var(--grid)',1);if(y&&y%(o.ytick||o.tick||1)===0)text(gb,X(0)-7,Y(y)+4,y,CL.mut,'end','sm');}
+  arrow(gb,0,Y(0),W-2,Y(0),CL.mut,1.6,8);arrow(gb,X(0),H,X(0),2,CL.mut,1.6,8);
+  text(gb,W-10,Y(0)-8,o.xl||'x',CL.mut);text(gb,X(0)+12,12,o.yl||'y',CL.mut);
+  const api={svg,X,Y,sx,W,H,xr,yr,g:gd,handles:[]};
+  function toW(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x/sx+xr[0],(H-p.y)/sx+yr[0]];}
+  api.handle=function(obj,col,opt){opt=opt||{};const snap=opt.snap||.5,c=sv('circle',{r:11,class:'grab',tabindex:0,role:'slider','aria-label':opt.label||'Punto arrastrable',style:`fill:${col};stroke:var(--surface);stroke-width:3`},gh);
+    let drag=false;const clampSet=(x,y)=>{x=Math.round(x/snap)*snap;y=Math.round(y/snap)*snap;obj.x=Math.max(xr[0]+.3,Math.min(xr[1]-.3,x));obj.y=Math.max(yr[0]+.3,Math.min(yr[1]-.3,y));api.update();};
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);e.preventDefault();});
+    c.addEventListener('pointermove',e=>{if(!drag)return;const p=toW(e);clampSet(p[0],p[1]);});
+    const end=()=>{drag=false;};c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+    c.addEventListener('keydown',e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(d){e.preventDefault();clampSet(obj.x+d[0]*snap,obj.y+d[1]*snap);}});
+    api.handles.push({obj,c});return c;};
+  api.update=function(){gd.textContent='';o.draw(gd,api);api.handles.forEach(hd=>{hd.c.setAttribute('cx',X(hd.obj.x));hd.c.setAttribute('cy',Y(hd.obj.y));});if(o.onUpdate)o.onUpdate(api);};
+  return api;
+}
+
+/* ---------- vista 3D ortográfica, eje z hacia arriba, terna derecha ---------- */
+function View3D(host,o){
+  o=o||{};const W=o.W||640,H=o.H||430,scale=o.scale||40,ctr=o.ctr||[0,0,0];
+  const st={az:o.az==null?215:o.az,el:o.el==null?22:o.el};
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Vista tridimensional. Se puede girar arrastrando.'},host);
+  const g=sv('g',{},svg);
+  function P(p){const a=rad(st.az),e=rad(st.el),x=p[0]-ctr[0],y=p[1]-ctr[1],z=p[2]-ctr[2];
+    const x1=Math.cos(a)*x-Math.sin(a)*y,y1=Math.sin(a)*x+Math.cos(a)*y;
+    return [W/2+x1*scale,H/2-(z*Math.cos(e)+y1*Math.sin(e))*scale,y1*Math.cos(e)-z*Math.sin(e)];}
+  const api={svg,st,P,draw:null};
+  api.render=function(){g.textContent='';const polys=[],ops=[],txt=[];
+    const sc={
+      poly(pts,col,op,stroke){polys.push({pts:pts.map(P),col,op,stroke});},
+      line(a,b,col,w,dash){ops.push(()=>{const p=P(a),q=P(b);line(g,p[0],p[1],q[0],q[1],col,w,dash);});},
+      path(pts,col,w,dash,closed){ops.push(()=>{const q=pts.map(P);sv('polyline',{points:q.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' ')+(closed?' '+q[0][0].toFixed(1)+','+q[0][1].toFixed(1):''),style:`fill:none;stroke:${col};stroke-width:${w||1.4};${dash?'stroke-dasharray:'+dash+';':''}stroke-linejoin:round`},g);});},
+      arrow(a,b,col,w){ops.push(()=>{const p=P(a),q=P(b);arrow(g,p[0],p[1],q[0],q[1],col,w||2.8,11);});},
+      dot(a,col,r){ops.push(()=>{const p=P(a);sv('circle',{cx:p[0],cy:p[1],r:r||5,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);});},
+      disc(c,rpx,col){ops.push(()=>{const p=P(c);sv('circle',{cx:p[0],cy:p[1],r:rpx*scale,style:`fill:${col};stroke:none`},g);});},
+      text(a,t,col,dx,dy,anc){txt.push(()=>{const p=P(a);text(g,p[0]+(dx||0),p[1]+(dy||0),t,col,anc);});},
+      axes(L,neg){const ex=[[1,0,0,'x'],[0,1,0,'y'],[0,0,1,'z']];ex.forEach(e=>{const v=[e[0],e[1],e[2]];
+        if(neg!==false)sc.line(mul(v,-L),[0,0,0],'var(--line)',1.2,'4 4');
+        ops.push(()=>{const p=P([0,0,0]),q=P(mul(v,L));arrow(g,p[0],p[1],q[0],q[1],CL.mut,1.6,9);});
+        sc.text(mul(v,L*1.1),e[3],CL.mut,0,4);});},
+      box(lo,hi,col,op){const[x0,y0,z0]=lo,[x1,y1,z1]=hi;const C=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        [[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach(q=>sc.poly(q.map(i=>C[i]),col,op,col));},
+      patch(n,d,S,col,op,dashed){n=unit(n);const e=Math.abs(n[2])<.9?[0,0,1]:[1,0,0];const u=unit(cross(n,e)),v=cross(n,u),c=mul(n,d);
+        const q=[add(add(c,mul(u,S)),mul(v,S)),add(sub(c,mul(u,S)),mul(v,S)),sub(sub(c,mul(u,S)),mul(v,S)),sub(add(c,mul(u,S)),mul(v,S))];
+        sc.poly(q,col,op,col);if(dashed)sc.path(q,col,1.6,'6 5',true);return {q,c,n,u,v};},
+      circle(c,r,plane,col,w,dash){const pts=[];for(let i=0;i<=48;i++){const t=i/48*2*Math.PI,a=Math.cos(t)*r,b=Math.sin(t)*r;
+        pts.push(plane==='xy'?[c[0]+a,c[1]+b,c[2]]:plane==='xz'?[c[0]+a,c[1],c[2]+b]:[c[0],c[1]+a,c[2]+b]);}sc.path(pts,col,w||1.3,dash);},
+      surf(fn,ur,vr,nu,nv,col,op,stroke){for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const u0=ur[0]+(ur[1]-ur[0])*i/nu,u1=ur[0]+(ur[1]-ur[0])*(i+1)/nu,v0=vr[0]+(vr[1]-vr[0])*j/nv,v1=vr[0]+(vr[1]-vr[0])*(j+1)/nv;
+        const q=[fn(u0,v0),fn(u1,v0),fn(u1,v1),fn(u0,v1)];if(q.some(p=>!p||p.some(x=>!isFinite(x))))continue;polys.push({pts:q.map(P),col,op:op==null?.35:op,stroke:stroke||col,sw:.6});}},
+      sphere(c,r,col,dash){sc.disc(c,r,'var(--blue-t)');['xy','xz','yz'].forEach(p=>sc.circle(c,r,p,col||CL.blue,1.4,dash));
+        for(const k of[.5,-.5]){const rr=r*Math.sqrt(1-k*k);sc.circle([c[0],c[1],c[2]+r*k],rr,'xy',col||CL.blue,.9,dash);}}
+    };
+    if(api.draw)api.draw(sc);
+    polys.sort((a,b)=>mean(b.pts)-mean(a.pts));
+    polys.forEach(p=>{sv('polygon',{points:p.pts.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' '),style:`fill:${p.col};fill-opacity:${p.op==null?.25:p.op};stroke:${p.stroke||'none'};stroke-opacity:.55;stroke-width:${p.sw||1.2}`},g);});
+    ops.forEach(fn=>fn());txt.forEach(fn=>fn());};
+  function mean(pts){return pts.reduce((s,p)=>s+p[2],0)/pts.length;}
+  // arrastre para girar
+  let drag=null;svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,az:st.az,el:st.el};svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect(),k=W/r.width;st.az=drag.az-(e.clientX-drag.x)*k*.5;
+    if(e.pointerType==='mouse'){st.el=Math.max(-80,Math.min(85,drag.el+(e.clientY-drag.y)*k*.4));}
+    api.sync&&api.sync();api.render();});
+  const end=()=>{drag=null;};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  api.controls=function(){const a=slider('giro',{min:0,max:360,step:1,value:Math.round(((st.az%360)+360)%360),unit:'°',dec:0},v=>{st.az=v;api.render();});
+    const b=slider('inclinación',{min:-80,max:85,step:1,value:st.el,unit:'°',dec:0},v=>{st.el=v;api.render();});
+    api.sync=()=>{a.set(Math.round(((st.az%360)+360)%360));b.set(Math.round(st.el));};
+    const reset=h('button',{type:'button',onclick:()=>{st.az=o.az==null?215:o.az;st.el=o.el==null?22:o.el;api.sync();api.render();}},'Vista inicial');
+    return h('div',{class:'ctl'},a,b,reset);};
+  return api;
+}
+
+
+/* ---------- expresiones escritas por el usuario: expr('t^2-2t',['t']) -> función ---------- */
+function expr(src,vars){vars=vars||['x'];const s=String(src).replace(/\s+/g,'').replace(/\*\*/g,'^').replace(/π/g,'pi').replace(/θ/g,'th').replace(/·/g,'*').replace(/−/g,'-').replace(/,/g,'.');
+  const FN={sin:Math.sin,sen:Math.sin,cos:Math.cos,tan:Math.tan,tg:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,arcsen:Math.asin,arccos:Math.acos,arctan:Math.atan,sqrt:Math.sqrt,raiz:Math.sqrt,exp:Math.exp,ln:Math.log,log:Math.log,abs:Math.abs,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),sgn:Math.sign};
+  const C={pi:Math.PI,e:Math.E};let i=0;const err=m=>{throw new Error(m);};
+  const peek=()=>s[i];
+  function num(){const m=/^\d*\.?\d+(e[+-]?\d+)?/i.exec(s.slice(i));if(!m)err('número');i+=m[0].length;const v=parseFloat(m[0]);return ()=>v;}
+  function ident(){const m=/^[a-zA-Z_]+/.exec(s.slice(i));i+=m[0].length;let w=m[0];
+    // separar nombres pegados: "tsint" -> t, sin, t ; prioridad: funciones, constantes, variables
+    const names=[...Object.keys(FN),...Object.keys(C),...vars].sort((a,b)=>b.length-a.length);
+    const parts=[];while(w.length){const n=names.find(nm=>w.startsWith(nm));if(!n)err('nombre desconocido: '+w);parts.push(n);w=w.slice(n.length);}
+    return parts;}
+  function primary(){const c=peek();
+    if(c==='('){i++;const e=add_();if(peek()!==')')err('falta )');i++;return e;}
+    if(c==='|'){i++;const e=add_();if(peek()!=='|')err('falta |');i++;return v=>Math.abs(e(v));}
+    if(/[\d.]/.test(c))return num();
+    if(/[a-zA-Z_]/.test(c)){const parts=ident();
+      const build=k=>{const n=parts[k];
+        if(FN[n]){let arg;if(k+1<parts.length){arg=build(k+1);}else{arg=power();}const f=FN[n];return v=>f(arg(v));}
+        let a;if(n in C){const cv=C[n];a=()=>cv;}else{const j=vars.indexOf(n);a=v=>v[j];}
+        if(k+1<parts.length){const r=build(k+1);return v=>a(v)*r(v);}return a;};
+      return build(0);}
+    err('símbolo inesperado: '+(c||'fin'));}
+  function power(){const b=primary();if(peek()==='^'){i++;const e=unary();return v=>Math.pow(b(v),e(v));}return b;}
+  function unary(){if(peek()==='-'){i++;const u=unary();return v=>-u(v);}if(peek()==='+'){i++;return unary();}return power();}
+  function mul_(){let a=unary();for(;;){const c=peek();
+      if(c==='*'||c==='/'){i++;const b=unary(),l=a;a=c==='*'?(v=>l(v)*b(v)):(v=>l(v)/b(v));}
+      else if(c&&/[\d.a-zA-Z_(|]/.test(c)&&c!=='|'){const b=unary(),l=a;a=v=>l(v)*b(v);}
+      else return a;}}
+  function add_(){let a=mul_();for(;;){const c=peek();if(c==='+'||c==='-'){i++;const b=mul_(),l=a;a=c==='+'?(v=>l(v)+b(v)):(v=>l(v)-b(v));}else return a;}}
+  if(!s.length)err('vacía');const f=add_();if(i<s.length)err('sobra: '+s.slice(i));
+  return (...a)=>f(a);}
+
+/* ---------- curvas de nivel (marching squares): devuelve lista de segmentos [[x1,y1],[x2,y2]] ---------- */
+function contour(F,xr,yr,c,n){n=n||80;const dx=(xr[1]-xr[0])/n,dy=(yr[1]-yr[0])/n,segs=[];const G=[];
+  for(let i=0;i<=n;i++){G[i]=[];for(let j=0;j<=n;j++){const v=F(xr[0]+i*dx,yr[0]+j*dy);G[i][j]=isFinite(v)?((v-c)===0?1e-12:v-c):NaN;}}
+  const lerp=(a,b,pa,pb)=>{const t=a/(a-b);return [pa[0]+(pb[0]-pa[0])*t,pa[1]+(pb[1]-pa[1])*t];};
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=xr[0]+i*dx,y=yr[0]+j*dy;
+    const P=[[x,y],[x+dx,y],[x+dx,y+dy],[x,y+dy]],V=[G[i][j],G[i+1][j],G[i+1][j+1],G[i][j+1]];
+    if(V.some(isNaN))continue;const pts=[];
+    for(let k=0;k<4;k++){const a=V[k],b=V[(k+1)%4];if((a<0)!==(b<0))pts.push(lerp(a,b,P[k],P[(k+1)%4]));else if(a===0&&b!==0)pts.push(P[k]);}
+    if(pts.length===2)segs.push(pts);else if(pts.length===4){segs.push([pts[0],pts[1]]);segs.push([pts[2],pts[3]]);}}
+  return segs;}
+
+/* ---------- dibujar una curva en un Plane2D: pts = [[x,y],...] (cortes en NaN o saltos) ---------- */
+function poly2(g,api,pts,col,w,dash){let d='',pen=false,prev=null;const {X,Y}=api,lim=Math.max(api.W,api.H)*3;
+  pts.forEach(p=>{const ok=p&&isFinite(p[0])&&isFinite(p[1]);if(!ok){pen=false;prev=null;return;}const px=X(p[0]),py=Y(p[1]);
+    if(Math.abs(px)>lim||Math.abs(py)>lim){pen=false;prev=null;return;}
+    if(prev&&Math.hypot(px-prev[0],py-prev[1])>api.W*.35)pen=false;
+    d+=(pen?'L':'M')+px.toFixed(1)+' '+py.toFixed(1);pen=true;prev=[px,py];});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.5};stroke-linejoin:round;stroke-linecap:round;${dash?'stroke-dasharray:'+dash:''}`},g);}
+function segs2(g,api,segs,col,w){const {X,Y}=api;let d='';segs.forEach(s=>{d+='M'+X(s[0][0]).toFixed(1)+' '+Y(s[0][1]).toFixed(1)+'L'+X(s[1][0]).toFixed(1)+' '+Y(s[1][1]).toFixed(1);});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.2};stroke-linecap:round`},g);}
+window.G1={$,$$,h,sv,f,fv,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2};
+})();
+(function(){'use strict';
+const {$,h,sv,f,fv,CL,TT,arrow,line,text,slider,vhead,Plane2D,View3D,contour,poly2,segs2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+const G4=window.G4=window.G4||{};
+/* derivadas numéricas */
+G4.d1=(F,t,e)=>{e=e||1e-5;return (F(t+e)-F(t-e))/(2*e);};
+G4.gr=(F,x,y,e)=>{e=e||1e-5;return [(F(x+e,y)-F(x-e,y))/(2*e),(F(x,y+e)-F(x,y-e))/(2*e)];};
+G4.sel=(obj,label)=>h('select',{'aria-label':label||'Elegir ejemplo'},...Object.keys(obj).map(k=>h('option',{value:k},obj[k].n)));
+G4.num=(x,d)=>f(x,d==null?3:d);
+
+/* ======================================================================
+   Clases 17 y 18 · de la recta secante a la recta tangente
+   ====================================================================== */
+const CUR={
+  e1a:{n:'Ej. 1(a): r(t) = (t − 2, t² + 1)',r:t=>[t-2,t*t+1],t:[-2,2],t0:1,xr:[-5,2],yr:[-1,6]},
+  e1b:{n:'Ej. 1(b): r(t) = (sen t, 2 cos t)',r:t=>[Math.sin(t),2*Math.cos(t)],t:[0,2*Math.PI],t0:Math.PI/4,xr:[-3,3],yr:[-2.6,2.6]},
+  e2a:{n:'Ej. 2(a): x = 1 + 2√t, y = −t',r:t=>[1+2*Math.sqrt(t),-t],t:[0,9],ts:[.05,9],t0:1,xr:[-1,8],yr:[-9.5,1]},
+  e2b:{n:'Ej. 2(b): x = eᵗ, y = t eᵗ',r:t=>[Math.exp(t),t*Math.exp(t)],t:[-2,1.6],t0:0,xr:[-1,5.5],yr:[-1.5,8]},
+  ast:{n:'Clase 18: r(t) = (cos³t, sen³t)',r:t=>[Math.pow(Math.cos(t),3),Math.pow(Math.sin(t),3)],t:[0,2*Math.PI],t0:0,xr:[-1.6,1.6],yr:[-1.3,1.3]}
+};
+V.tan=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='e1a',t0=1,hh=1;
+  const sel=G4.sel(CUR);
+  host.append(vhead('De la secante a la tangente','Mové h hacia 0: la recta secante por P y Q gira hasta la tangente'),h('div',{class:'ctl'},sel),body);
+  let pl=null,st=null,sh=null;
+  function build(){const C=CUR[cur];body.textContent='';
+    const span=Math.max(C.xr[1]-C.xr[0],C.yr[1]-C.yr[0]);
+    pl=Plane2D(body,{xr:C.xr,yr:C.yr,tick:span>8?2:1,label:'Curva, punto P = r(t₀), punto Q = r(t₀ + h)',draw(g,a){
+      const pts=[];for(let i=0;i<=400;i++){const t=C.t[0]+(C.t[1]-C.t[0])*i/400;pts.push(C.r(t));}
+      poly2(g,a,pts,CL.blue,2.6);
+      const {P,Q,sq,dr}=geo();const L=40;
+      // recta secante (naranja) y tangente (verde)
+      const nsq=Math.hypot(sq[0],sq[1]),ndr=Math.hypot(dr[0],dr[1]);
+      if(nsq>1e-9)line(g,a.X(P[0]-L*sq[0]/nsq),a.Y(P[1]-L*sq[1]/nsq),a.X(P[0]+L*sq[0]/nsq),a.Y(P[1]+L*sq[1]/nsq),CL.amber,1.8);
+      if(ndr>1e-6)line(g,a.X(P[0]-L*dr[0]/ndr),a.Y(P[1]-L*dr[1]/ndr),a.X(P[0]+L*dr[0]/ndr),a.Y(P[1]+L*dr[1]/ndr),CL.green,2.2,'7 5');
+      arrow(g,a.X(P[0]),a.Y(P[1]),a.X(P[0]+sq[0]),a.Y(P[1]+sq[1]),CL.amber,2.6);
+      if(ndr>1e-6)arrow(g,a.X(P[0]),a.Y(P[1]),a.X(P[0]+dr[0]),a.Y(P[1]+dr[1]),CL.red,3.2);
+      sv('circle',{cx:a.X(Q[0]),cy:a.Y(Q[1]),r:5.5,style:'fill:var(--amber);stroke:var(--surface);stroke-width:2'},g);
+      sv('circle',{cx:a.X(P[0]),cy:a.Y(P[1]),r:6,style:'fill:var(--ink);stroke:var(--surface);stroke-width:2'},g);
+      text(g,a.X(P[0])-10,a.Y(P[1])-10,'P',CL.ink,'end');text(g,a.X(Q[0])+10,a.Y(Q[1])-8,'Q',CL.amber,'start');
+    }});
+    st=slider('t₀',{min:C.ts?C.ts[0]:C.t[0],max:C.ts?C.ts[1]:C.t[1],step:.01,value:t0,dec:2},x=>{t0=x;upd();});
+    sh=slider('h',{min:-1.5,max:1.5,step:.01,value:hh,dec:2},x=>{hh=Math.abs(x)<.005?.005:x;upd();});
+    body.append(h('div',{class:'ctl'},st,sh),out);upd();}
+  function geo(){const C=CUR[cur],tq=Math.min(C.t[1],Math.max(C.t[0],t0+hh)),hq=(tq-t0)||1e-9,P=C.r(t0),Q=C.r(tq);
+    return {P,Q,hq,sq:[(Q[0]-P[0])/hq,(Q[1]-P[1])/hq],dr:[G4.d1(t=>C.r(t)[0],t0,1e-6),G4.d1(t=>C.r(t)[1],t0,1e-6)]};}
+  function upd(){pl.update();const {P,Q,sq,dr}=geo();
+    const zero=Math.hypot(dr[0],dr[1])<1e-4;
+    out.innerHTML=`P = r(${f(t0,2)}) = (${f(P[0])}, ${f(P[1])}). &nbsp;<span style="color:var(--amber)">Cociente (r(t₀+h) − r(t₀))/h = (${f(sq[0])}, ${f(sq[1])})</span> &nbsp;→&nbsp; <b class="c-red">r′(t₀) = (${f(dr[0])}, ${f(dr[1])})</b>.<br>`+
+      (zero?`<b class="c-red">r′(t₀) = (0, 0): la fórmula λ·r′(t₀) + r(t₀) no da una recta.</b> <span class="c-mut">Mirá la forma de la curva en P: es un pico.</span>`:
+      `<span class="c-green">Recta tangente (verde punteada): λ·(${f(dr[0])}, ${f(dr[1])}) + (${f(P[0])}, ${f(P[1])}).</span> <span class="c-mut">Con h chico, la secante naranja casi coincide con ella.</span>`);}
+  sel.addEventListener('change',()=>{cur=sel.value;t0=CUR[cur].t0;hh=1;build();});
+  API['viz-tan']={set(k){if(CUR[k]){cur=k;sel.value=k;t0=CUR[k].t0;hh=1;build();}}};
+  build();
+};
+
+/* ======================================================================
+   utilidades 3D: gráfico de f en una ventana centrada en (x0,y0)
+   coordenadas de la vista: X=(x−x0)/R, Y=(y−y0)/R, Z=(z−z0)/S
+   ====================================================================== */
+G4.win=function(F,x0,y0,R,S){const z0=F(x0,y0);return {x0,y0,z0,R,S,
+  P:(x,y,z)=>[(x-x0)/R,(y-y0)/R,(z-z0)/S],
+  surf(sc,col,op,n,clip){clip=clip||1.25;sc.surf((u,v)=>{const x=x0+u*R,y=y0+v*R,z=F(x,y);if(!isFinite(z))return null;const Z=(z-z0)/S;if(Math.abs(Z)>clip)return null;return [u,v,Z];},[-1,1],[-1,1],n||22,n||22,col||'var(--blue)',op==null?.22:op,col||'var(--blue)');}};};
+
+/* ======================================================================
+   Clase 19 · derivadas parciales como pendientes de dos cortes
+   ====================================================================== */
+const PAR={
+  s1:{n:'Hoja: f = x³ + x²y³ − 2y², en (2, 1)',F:(x,y)=>x**3+x*x*y**3-2*y*y,p:[2,1],R:.7},
+  e4a:{n:'Ej. 4(a): f = x²y³, en (2, 1)',F:(x,y)=>x*x*y**3,p:[2,1],R:.6},
+  e4b:{n:'Ej. 4(b): f = y/(1 + x²y²), en (1, 1)',F:(x,y)=>y/(1+x*x*y*y),p:[1,1],R:1.2},
+  v1:{n:'Clase 19: f = x⁵y − x³ + 2y², en (1, 2)',F:(x,y)=>x**5*y-x**3+2*y*y,p:[1,2],R:.6},
+  pb:{n:'Un paraboloide: f = 4 − x² − y²',F:(x,y)=>4-x*x-y*y,p:[1,.5],R:1.6}
+};
+V.partial=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='s1',dx=0,dy=0;
+  const sel=G4.sel(PAR);
+  host.append(vhead('Las dos derivadas parciales','Corte con y = y₀ (naranja) y corte con x = x₀ (violeta): las pendientes de sus tangentes son f_x y f_y'),h('div',{class:'ctl'},sel),body);
+  const v=View3D(body,{scale:150,H:430,ctr:[0,0,0],az:230,el:22});
+  let W=null;
+  function prep(){const P=PAR[cur],F=P.F,R=P.R;let lo=Infinity,hi=-Infinity;const z0=F(P.p[0],P.p[1]);
+    for(let i=0;i<=20;i++)for(let j=0;j<=20;j++){const z=F(P.p[0]-R+2*R*i/20,P.p[1]-R+2*R*j/20);if(isFinite(z)){lo=Math.min(lo,z-z0);hi=Math.max(hi,z-z0);}}
+    const g0=G4.gr(F,P.p[0],P.p[1]),sg=(Math.abs(g0[0])+Math.abs(g0[1]))*R;W=G4.win(F,P.p[0],P.p[1],R,Math.max(sg,Math.max(Math.abs(lo),Math.abs(hi))/3,1e-3));}
+  v.draw=sc=>{const P=PAR[cur],F=P.F,x0=P.p[0]+dx,y0=P.p[1]+dy;const {R,S}=W;const z0=F(x0,y0);
+    sc.axes(1.3);
+    W.surf(sc,'var(--blue)',.16,20);
+    const c1=[],c2=[];for(let i=0;i<=60;i++){const u=-1+2*i/60;c1.push(W.P(W.x0+u*R,y0,F(W.x0+u*R,y0)));c2.push(W.P(x0,W.y0+u*R,F(x0,W.y0+u*R)));}
+    const cl=a=>a.filter(p=>Math.abs(p[2])<=1.3);
+    sc.path(cl(c1),CL.amber,3);sc.path(cl(c2),CL.violet,3);
+    const g=G4.gr(F,x0,y0),L=.55*R;
+    sc.line(W.P(x0-L,y0,z0-L*g[0]),W.P(x0+L,y0,z0+L*g[0]),CL.amber,2,'6 4');
+    sc.line(W.P(x0,y0-L,z0-L*g[1]),W.P(x0,y0+L,z0+L*g[1]),CL.violet,2,'6 4');
+    // proyecciones en el plano z = mínimo
+    const zb=-1.25;sc.line([-1,(y0-W.y0)/R,zb],[1,(y0-W.y0)/R,zb],CL.amber,1.2,'3 3');sc.line([(x0-W.x0)/R,-1,zb],[(x0-W.x0)/R,1,zb],CL.violet,1.2,'3 3');
+    sc.line(W.P(x0,y0,z0),[(x0-W.x0)/R,(y0-W.y0)/R,zb],'var(--ink-2)',1,'2 3');
+    sc.dot(W.P(x0,y0,z0),CL.red,5.5);sc.text([(x0-W.x0)/R,(y0-W.y0)/R,zb],'(x₀, y₀)',CL.ink,8,14,'start');};
+  const sx=slider('mover x₀',{min:-.6,max:.6,step:.05,value:0,dec:2},x=>{dx=x;upd();}),sy=slider('mover y₀',{min:-.6,max:.6,step:.05,value:0,dec:2},x=>{dy=x;upd();});
+  body.append(h('div',{class:'ctl'},sx,sy),v.controls(),out);
+  function upd(){v.render();const P=PAR[cur],x0=P.p[0]+dx,y0=P.p[1]+dy,g=G4.gr(P.F,x0,y0);
+    out.innerHTML=`${P.n.split(':').pop()}. Punto (x₀, y₀) = (${f(x0,2)}, ${f(y0,2)}), f(x₀, y₀) = ${f(P.F(x0,y0))}.<br><span style="color:var(--amber)">Corte y = ${f(y0,2)}: α(x) = f(x, ${f(y0,2)}), pendiente α′(x₀) = <b>f_x = ${f(g[0])}</b></span> &nbsp; <span class="c-violet">Corte x = ${f(x0,2)}: β(y) = f(${f(x0,2)}, y), pendiente β′(y₀) = <b>f_y = ${f(g[1])}</b></span><br>∇f(x₀, y₀) = (${f(g[0])}, ${f(g[1])}). <span class="c-mut">La figura no está a escala en z: se achica o se estira para que entre.</span>`;}
+  sel.addEventListener('change',()=>{cur=sel.value;dx=dy=0;sx.set(0);sy.set(0);prep();upd();});
+  API['viz-partial']={set(k){if(PAR[k]){cur=k;sel.value=k;dx=dy=0;sx.set(0);sy.set(0);prep();upd();}}};
+  prep();upd();
+};
+
+/* ======================================================================
+   Clases 20 y 21 · plano tangente y zoom
+   ====================================================================== */
+const DIF={
+  v20:{n:'Clase 20: 2x² + y² en (1, 2)',F:(x,y)=>2*x*x+y*y,p:[1,2],ok:1},
+  s12:{n:'Hoja: 2x² + y² en (1, 1)',F:(x,y)=>2*x*x+y*y,p:[1,1],ok:1},
+  v21:{n:'Clase 21: x e^{xy} en (1, 0)',F:(x,y)=>x*Math.exp(x*y),p:[1,0],ok:1},
+  e11:{n:'Clase 21 y ej. 11(b): x²y/(x² + y²) en (0, 0)',F:(x,y)=>(x===0&&y===0)?0:x*x*y/(x*x+y*y),p:[0,0],ok:0},
+  sxy:{n:'Hoja: xy/(x² + y²) en (0, 0)',F:(x,y)=>(x===0&&y===0)?0:x*y/(x*x+y*y),p:[0,0],ok:0},
+  e13b:{n:'Ej. 13(b): (x⁴ − y⁴)/(x² + y²) en (0, 0)',F:(x,y)=>(x===0&&y===0)?0:(x**4-y**4)/(x*x+y*y),p:[0,0],ok:1},
+  abs:{n:'Ej. 6: |x| + |y| en (0, 0)',F:(x,y)=>Math.abs(x)+Math.abs(y),p:[0,0],ok:0,nop:1}
+};
+V.plane=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='v20',R=.4;
+  const sel=G4.sel(DIF);
+  host.append(vhead('El plano tangente y el zoom','Achicá la ventana: si f es diferenciable, el gráfico se "pega" al plano; si no, la forma no cambia'),h('div',{class:'ctl'},sel),body);
+  const v=View3D(body,{scale:150,H:430,ctr:[0,0,0],az:305,el:18});
+  // plano candidato con derivadas parciales (por definición, con h chico)
+  const cand=P=>{if(P.nop)return null;const e=1e-6,F=P.F,[x0,y0]=P.p;return [(F(x0+e,y0)-F(x0,y0))/e,(F(x0,y0+e)-F(x0,y0))/e];};
+  const kz=P=>{const g=cand(P);return g?Math.max(1,Math.abs(g[0])+Math.abs(g[1])):1;};
+  v.draw=sc=>{const P=DIF[cur],F=P.F,[x0,y0]=P.p,z0=F(x0,y0),g=cand(P),k=kz(P);
+    // zoom igual en x, y, z (con la altura achicada por un factor fijo k)
+    sc.axes(1.3);
+    if(g)sc.poly([[-1,-1],[1,-1],[1,1],[-1,1]].map(([u,w])=>[u,w,(g[0]*u+g[1]*w)/k]),'var(--green)',.22,'var(--green)');
+    sc.surf((u,w)=>{const x=x0+u*R,y=y0+w*R,z=F(x,y);if(!isFinite(z))return null;const Z=(z-z0)/(R*k);if(Math.abs(Z)>1.6)return null;return [u,w,Z];},[-1,1],[-1,1],26,26,'var(--blue)',.2,'var(--blue)');
+    sc.dot([0,0,0],CL.red,5);};
+  const sr=slider('ventana',{min:.02,max:.8,step:.01,value:R,dec:2},x=>{R=x;upd();});
+  body.append(h('div',{class:'ctl'},sr),v.controls(),out);
+  function ratio(P){const g=cand(P);if(!g)return null;const F=P.F,[x0,y0]=P.p,z0=F(x0,y0);let w=0;
+    for(let k=0;k<72;k++){const a=2*Math.PI*k/72,x=x0+R*Math.cos(a),y=y0+R*Math.sin(a);const e=Math.abs(F(x,y)-z0-g[0]*(x-x0)-g[1]*(y-y0))/R;if(isFinite(e))w=Math.max(w,e);}return w;}
+  function upd(){v.render();const P=DIF[cur],g=cand(P),q=ratio(P);
+    out.innerHTML=`${P.n}. `+(g?`Derivadas parciales en el punto: f_x ≈ ${f(g[0])}, f_y ≈ ${f(g[1])}; candidato a plano tangente (verde): z = ${f(P.F(...P.p))} + ${f(g[0])}(x − x₀) + ${f(g[1])}(y − y₀).<br>`+
+      `En la circunferencia de radio ${f(R,2)} alrededor del punto, el mayor valor de |f − L| / distancia es <b>${f(q,4)}</b>. `+
+      (P.ok?'<b class="c-green">Tiende a 0 cuando la ventana se achica: f es diferenciable.</b>':'<b class="c-red">No tiende a 0: f no es diferenciable en el punto.</b>'):
+      '<b class="c-red">No existen las derivadas parciales en (0, 0): no hay candidato a plano tangente.</b> ')+
+      ` <span class="c-mut">El zoom es el mismo en x, y, z (la altura está achicada siempre por el mismo factor, ${f(kz(P),1)}): un gráfico diferenciable visto de muy cerca parece un plano.</span>`;}
+  sel.addEventListener('change',()=>{cur=sel.value;upd();});
+  API['viz-plane']={set(k){if(DIF[k]){cur=k;sel.value=k;upd();}}};
+  upd();
+};
+})();
+(function(){'use strict';
+const {$,h,sv,f,CL,arrow,line,text,slider,vhead,Plane2D,View3D,contour,poly2,segs2,cross,unit,dot,nrm}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+const G4=window.G4;
+
+/* curvas de nivel de fondo */
+function levels(g,a,F,xr,yr,n){let lo=Infinity,hi=-Infinity;for(let i=0;i<=24;i++)for(let j=0;j<=24;j++){const z=F(xr[0]+(xr[1]-xr[0])*i/24,yr[0]+(yr[1]-yr[0])*j/24);if(isFinite(z)){lo=Math.min(lo,z);hi=Math.max(hi,z);}}
+  for(let k=1;k<n;k++){const c=lo+(hi-lo)*k/n;segs2(g,a,contour(F,xr,yr,c,70),'var(--line)',1.2);}}
+
+/* ======================================================================
+   Clase 22 · regla de la cadena: z(t) = f(r(t)), z′ = ∇f·r′
+   ====================================================================== */
+const CH={
+  v22:{n:'Clase 22 y hoja: z = x²y + 3xy⁴, x = sen 2t, y = cos t',F:(x,y)=>x*x*y+3*x*y**4,r:t=>[Math.sin(2*t),Math.cos(t)],t:[-Math.PI,Math.PI],t0:0,xr:[-1.6,1.6],yr:[-1.3,1.3]},
+  e14a:{n:'Ej. 14(a): f = x² + y² + xy, r(t) = (sen t, eᵗ)',F:(x,y)=>x*x+y*y+x*y,r:t=>[Math.sin(t),Math.exp(t)],t:[-2.5,.9],t0:0,xr:[-1.8,1.8],yr:[-.4,2.8]},
+  pol:{n:'Una circunferencia: f = x² − y², r(t) = (cos t, sen t)',F:(x,y)=>x*x-y*y,r:t=>[Math.cos(t),Math.sin(t)],t:[0,2*Math.PI],t0:.6,xr:[-1.6,1.6],yr:[-1.3,1.3]}
+};
+V.chain=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let cur='v22',t0=0;
+  const sel=G4.sel(CH);
+  host.append(vhead('La regla de la cadena','Mové t: la flecha azul es r′(t), la roja ∇f; su producto escalar es la pendiente de z(t)'),h('div',{class:'ctl'},sel),body);
+  const L=h('div',{class:'half'}),R=h('div',{class:'half'});body.append(L,R);let pa=null,pb=null,st=null;const ctl=h('div',{class:'ctl'});body.after(ctl,out);
+  function geo(){const C=CH[cur],P=C.r(t0),dr=[G4.d1(t=>C.r(t)[0],t0),G4.d1(t=>C.r(t)[1],t0)],g=G4.gr(C.F,P[0],P[1]);return {C,P,dr,g,dz:g[0]*dr[0]+g[1]*dr[1]};}
+  function build(){const C=CH[cur];L.textContent='';R.textContent='';ctl.textContent='';
+    pa=Plane2D(L,{W:440,xr:C.xr,yr:C.yr,tick:1,label:'Plano xy: curvas de nivel de f y la curva r(t)',draw(g,a){
+      levels(g,a,C.F,C.xr,C.yr,12);
+      const pts=[];for(let i=0;i<=300;i++)pts.push(C.r(C.t[0]+(C.t[1]-C.t[0])*i/300));poly2(g,a,pts,'var(--ink-2)',2);
+      const {P,dr,g:gr}=geo();const sc=.35;
+      arrow(g,a.X(P[0]),a.Y(P[1]),a.X(P[0]+sc*gr[0]),a.Y(P[1]+sc*gr[1]),CL.red,3);
+      arrow(g,a.X(P[0]),a.Y(P[1]),a.X(P[0]+sc*dr[0]),a.Y(P[1]+sc*dr[1]),CL.blue,3);
+      sv('circle',{cx:a.X(P[0]),cy:a.Y(P[1]),r:6,style:'fill:var(--ink);stroke:var(--surface);stroke-width:2'},g);}});
+    let lo=Infinity,hi=-Infinity;const zs=[];for(let i=0;i<=300;i++){const t=C.t[0]+(C.t[1]-C.t[0])*i/300,p=C.r(t),z=C.F(p[0],p[1]);zs.push([t,z]);lo=Math.min(lo,z);hi=Math.max(hi,z);}
+    const pad=(hi-lo)*.12+.2,yr=[Math.floor(lo-pad),Math.ceil(hi+pad)],tr=[Math.floor(C.t[0]),Math.ceil(C.t[1])];
+    const ky=Math.max(1,(yr[1]-yr[0])/(tr[1]-tr[0])*.8);
+    pb=Plane2D(R,{W:440,xr:tr,yr:[yr[0]/ky,yr[1]/ky],tick:1,xl:'t',yl:'z',label:'Gráfico de z(t) = f(r(t))',draw(g,a){
+      poly2(g,a,zs.map(p=>[p[0],p[1]/ky]),CL.violet,2.6);
+      const {P,dz}=geo(),z=C.F(P[0],P[1]),Lh=.8;
+      line(g,a.X(t0-Lh),a.Y((z-Lh*dz)/ky),a.X(t0+Lh),a.Y((z+Lh*dz)/ky),CL.green,2.2,'6 4');
+      sv('circle',{cx:a.X(t0),cy:a.Y(z/ky),r:6,style:'fill:var(--ink);stroke:var(--surface);stroke-width:2'},g);
+      if(ky>1)text(g,a.W-8,16,'escala z: ×'+f(ky,1),CL.mut,'end','sm');}});
+    st=slider('t',{min:C.t[0],max:C.t[1],step:.01,value:t0,dec:2},x=>{t0=x;upd();});ctl.append(st);upd();}
+  function upd(){pa.update();pb.update();const {P,dr,g,dz}=geo();
+    out.innerHTML=`t = ${f(t0,2)}: r(t) = (${f(P[0])}, ${f(P[1])}). &nbsp;<span class="c-red">∇f(r(t)) = (${f(g[0])}, ${f(g[1])})</span>, &nbsp;<span class="c-blue">r′(t) = (${f(dr[0])}, ${f(dr[1])})</span>.<br>`+
+      `<b>dz/dt = f_x·x′ + f_y·y′ = ${f(g[0])}·${f(dr[0])} + ${f(g[1])}·${f(dr[1])} = <span class="c-green">${f(dz)}</span></b> &nbsp;<span class="c-mut">(pendiente de la recta verde en el gráfico de z). Cuando r′ es tangente a una curva de nivel, ∇f ⊥ r′ y dz/dt = 0.</span>`;}
+  sel.addEventListener('change',()=>{cur=sel.value;t0=CH[cur].t0;build();});
+  API['viz-chain']={set(k){if(CH[k]){cur=k;sel.value=k;t0=CH[k].t0;build();}}};
+  build();
+};
+
+/* ======================================================================
+   Clase 23 · derivada direccional y dirección de máximo crecimiento
+   ====================================================================== */
+const DR={
+  v1:{n:'Clase 23: f = x²y³ − 4x − y en (1, 2)',F:(x,y)=>x*x*y**3-4*x-y,p:[1,2],xr:[-1,3.2],yr:[.4,3.4],sc:.06,th:Math.atan2(4,3)},
+  v2:{n:'Clase 23: f = x³y² − 4xy en (−1, 2), θ = π/6',F:(x,y)=>x**3*y*y-4*x*y,p:[-1,2],xr:[-2.6,.8],yr:[.6,3.4],sc:.18,th:Math.PI/6},
+  s2:{n:'Hoja: f = x e^y en (2, 0)',F:(x,y)=>x*Math.exp(y),p:[2,0],xr:[0,3.6],yr:[-1.2,1.6],sc:.5,th:Math.atan2(4,-3)},
+  e24:{n:'Ej. 24: f = 4y√x en (4, 1)',F:(x,y)=>x>0?4*y*Math.sqrt(x):NaN,p:[4,1],xr:[2,6],yr:[-.4,2.6],sc:.12,th:0},
+  mt:{n:'Ej. 29: la montaña (unidades de 20 m)',F:(x,y)=>1000-.005*(20*x)**2-.01*(20*y)**2,p:[3,2],xr:[-1,5],yr:[-.6,4],sc:.06,th:-Math.PI/2,k:20}
+};
+V.dir=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let cur='v1',th=0;
+  const sel=G4.sel(DR);
+  host.append(vhead('Derivada direccional','Girá v: la razón de cambio es ∇f·v = |∇f| cos θ, máxima cuando v apunta como ∇f'),h('div',{class:'ctl'},sel),body);
+  const L=h('div',{class:'half'}),R=h('div',{class:'half'});body.append(L,R);let pa=null,pb=null,s=null;const ctl=h('div',{class:'ctl'});body.after(ctl,out);
+  const grad=D=>{const g=G4.gr(D.F,D.p[0],D.p[1]);const k=D.k||1;return [g[0]/k,g[1]/k];};
+  function build(){const D=DR[cur];th=D.th;L.textContent='';R.textContent='';ctl.textContent='';
+    pa=Plane2D(L,{W:440,xr:D.xr,yr:D.yr,tick:1,label:'Curvas de nivel de f, el punto, ∇f (rojo) y v (azul)',draw(g,a){
+      levels(g,a,D.F,D.xr,D.yr,12);const P=D.p,gr=grad(D),k=D.k||1,gs=D.sc*k;
+      arrow(g,a.X(P[0]),a.Y(P[1]),a.X(P[0]+gs*gr[0]),a.Y(P[1]+gs*gr[1]),CL.red,3);
+      arrow(g,a.X(P[0]),a.Y(P[1]),a.X(P[0]+Math.cos(th)),a.Y(P[1]+Math.sin(th)),CL.blue,3);
+      sv('circle',{cx:a.X(P[0]),cy:a.Y(P[1]),r:1*a.sx,style:'fill:none;stroke:var(--blue);stroke-dasharray:3 4;stroke-width:1'},g);
+      sv('circle',{cx:a.X(P[0]),cy:a.Y(P[1]),r:6,style:'fill:var(--ink);stroke:var(--surface);stroke-width:2'},g);}});
+    const gr=grad(D),M=Math.hypot(gr[0],gr[1]),ky=Math.max(1,Math.ceil(M/2.5));
+    pb=Plane2D(R,{W:440,xr:[-.4,6.6],yr:[-(Math.ceil(M/ky)+.6),Math.ceil(M/ky)+.6],tick:1,xl:'θ',yl:'D_v f',label:'D_v f como función del ángulo de v',draw(g,a){
+      const pts=[];for(let i=0;i<=200;i++){const t=2*Math.PI*i/200;pts.push([t,(gr[0]*Math.cos(t)+gr[1]*Math.sin(t))/ky]);}poly2(g,a,pts,CL.violet,2.6);
+      const tm=(Math.atan2(gr[1],gr[0])+2*Math.PI)%(2*Math.PI);line(g,a.X(tm),a.Y(0),a.X(tm),a.Y(M/ky),CL.red,1.6,'4 3');text(g,a.X(tm),a.Y(M/ky)-8,'máx = |∇f|',CL.red,'middle','sm');
+      const t=((th%(2*Math.PI))+2*Math.PI)%(2*Math.PI);sv('circle',{cx:a.X(t),cy:a.Y((gr[0]*Math.cos(t)+gr[1]*Math.sin(t))/ky),r:6,style:'fill:var(--blue);stroke:var(--surface);stroke-width:2'},g);
+      if(ky>1)text(g,a.W-8,16,'escala vertical: ×'+ky,CL.mut,'end','sm');}});
+    s=slider('ángulo de v',{min:0,max:360,step:1,value:Math.round(((th*180/Math.PI)%360+360)%360),dec:0,unit:'°'},x=>{th=x*Math.PI/180;upd();});
+    const bm=h('button',{type:'button',onclick:()=>{const gr=grad(DR[cur]);th=Math.atan2(gr[1],gr[0]);s.set(Math.round(((th*180/Math.PI)%360+360)%360));upd();}},'v = ∇f/|∇f|');
+    ctl.append(s,bm);upd();}
+  function upd(){pa.update();pb.update();const D=DR[cur],gr=grad(D),M=Math.hypot(gr[0],gr[1]),v=[Math.cos(th),Math.sin(th)],dv=gr[0]*v[0]+gr[1]*v[1];
+    const cos=dv/M;
+    out.innerHTML=`${D.n}. <span class="c-red">∇f = (${f(gr[0])}, ${f(gr[1])})</span>, |∇f| = ${f(M)}. <span class="c-blue">v = (${f(v[0])}, ${f(v[1])})</span>, |v| = 1.<br>`+
+      `<b>D_v f = ∇f·v = ${f(dv)}</b> = |∇f| cos θ con cos θ = ${f(cos)}. `+(Math.abs(cos-1)<1e-3?'<b class="c-green">Es el máximo: v tiene la dirección y el sentido de ∇f.</b>':Math.abs(cos+1)<1e-3?'<b class="c-red">Es el mínimo: v apunta como −∇f.</b>':Math.abs(cos)<2e-2?'<span class="c-mut">v es (casi) tangente a la curva de nivel: la razón de cambio es 0.</span>':'')+
+      (D.k?` <span class="c-mut">Cada unidad de la figura son ${D.k} m; el gradiente está en metros de altura por metro.</span>`:'');}
+  sel.addEventListener('change',()=>{cur=sel.value;build();});
+  API['viz-dir']={set(k){if(DR[k]){cur=k;sel.value=k;build();}}};
+  build();
+};
+
+/* ======================================================================
+   Clases 24 y 25 · teorema de la función implícita en el plano
+   ====================================================================== */
+const IM={
+  cir:{n:'Clase 24: x² + y² (circunferencias)',F:(x,y)=>x*x+y*y,p:{x:0,y:1},xr:[-2,2],yr:[-1.6,1.6]},
+  fol:{n:'Clase 24: x³ + y³ − 2xy',F:(x,y)=>x**3+y**3-2*x*y,p:{x:1,y:1},xr:[-2,2],yr:[-1.6,1.8]},
+  e30:{n:'Ej. 30: x² − y³',F:(x,y)=>x*x-y**3,p:{x:1,y:1},xr:[-2,2],yr:[-1,1.8]},
+  e31a:{n:'Ej. 31(a): x²/4 − y²',F:(x,y)=>x*x/4-y*y,p:{x:2,y:0},xr:[-3.6,3.6],yr:[-2,2]},
+  e31b:{n:'Ej. 31(b): x⁵ + y² + xy',F:(x,y)=>x**5+y*y+x*y,p:{x:1,y:1},xr:[-1.6,1.8],yr:[-2.2,1.8]}
+};
+V.impl=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='cir';const P={x:0,y:1};
+  const sel=G4.sel(IM);
+  host.append(vhead('El teorema de la función implícita','Arrastrá el punto: se dibuja la curva de nivel que pasa por él, la recta linealizada y ∇f'),h('div',{class:'ctl'},sel),body);
+  let pl=null;
+  function build(){const D=IM[cur];P.x=D.p.x;P.y=D.p.y;body.textContent='';
+    pl=Plane2D(body,{xr:D.xr,yr:D.yr,tick:1,label:'Curva de nivel por el punto, recta tangente y gradiente',draw(g,a){
+      levels(g,a,D.F,D.xr,D.yr,14);
+      const k=D.F(P.x,P.y),gr=G4.gr(D.F,P.x,P.y),M=Math.hypot(gr[0],gr[1]);
+      segs2(g,a,contour(D.F,D.xr,D.yr,k,140),CL.blue,3);
+      const box=.45;sv('rect',{x:a.X(P.x-box),y:a.Y(P.y+box),width:2*box*a.sx,height:2*box*a.sx,style:'fill:var(--green);fill-opacity:.07;stroke:var(--green);stroke-dasharray:5 4'},g);
+      if(M>1e-3){const tg=[-gr[1]/M,gr[0]/M],Lr=6;line(g,a.X(P.x-Lr*tg[0]),a.Y(P.y-Lr*tg[1]),a.X(P.x+Lr*tg[0]),a.Y(P.y+Lr*tg[1]),CL.green,2,'7 5');
+        const s=Math.min(.9/M,.6);arrow(g,a.X(P.x),a.Y(P.y),a.X(P.x+s*gr[0]),a.Y(P.y+s*gr[1]),CL.red,3);}
+    }});
+    pl.handle(P,CL.ink,{label:'Punto (x₀, y₀)',snap:.05});body.append(out);
+    const o=pl.update;pl.update=function(){o();_upd();};pl.update();}
+  function _upd(){const D=IM[cur],k=D.F(P.x,P.y),gr=G4.gr(D.F,P.x,P.y),e=1e-3;
+    let msg='';
+    if(Math.abs(gr[1])>e)msg+=`<b class="c-green">f_y ≠ 0: cerca del punto la curva es un gráfico y = φ(x)</b>, con φ′(x₀) = −f_x/f_y = ${f(-gr[0]/gr[1])}. `;
+    else msg+=`<b class="c-red">f_y = 0: el teorema no permite despejar y = φ(x).</b> `;
+    if(Math.abs(gr[0])>e)msg+=Math.abs(gr[1])>e?`También f_x ≠ 0, así que se puede despejar x = ψ(y).`:`<b class="c-green">Pero f_x ≠ 0: se puede despejar x = ψ(y)</b>, con ψ′(y₀) = −f_y/f_x = ${f(-gr[1]/gr[0])}.`;
+    else msg+=Math.abs(gr[1])>e?'':` <b class="c-red">Y f_x = 0 también: ∇f = (0, 0) y el teorema no dice nada.</b> Mirá la forma de la curva cerca del punto.`;
+    out.innerHTML=`(x₀, y₀) = (${f(P.x,2)}, ${f(P.y,2)}), k = f(x₀, y₀) = ${f(k)}. <span class="c-red">∇f = (${f(gr[0])}, ${f(gr[1])})</span>.<br>`+
+      (Math.hypot(gr[0],gr[1])>e?`<span class="c-green">Ecuación linealizada: ${f(gr[0])}(x − x₀) + ${f(gr[1])}(y − y₀) = 0</span> (recta verde, tangente a la curva).<br>`:'')+msg;}
+  sel.addEventListener('change',()=>{cur=sel.value;build();});
+  API['viz-impl']={set(k){if(IM[k]){cur=k;sel.value=k;build();}}};
+  build();
+};
+
+/* ======================================================================
+   Clase 26 · plano tangente a una superficie de nivel: ∇F es normal
+   ====================================================================== */
+const SF={
+  esf:{n:'Clase 26: esfera x² + y² + z² = 1',F:p=>p[0]*p[0]+p[1]*p[1]+p[2]*p[2],gF:p=>[2*p[0],2*p[1],2*p[2]],par:(u,v)=>[Math.cos(u)*Math.cos(v),Math.sin(u)*Math.cos(v),Math.sin(v)],ur:[0,2*Math.PI],vr:[-Math.PI/2,Math.PI/2],u0:0,v0:0,sc:160,ctr:[0,0,0],g:.45},
+  t16:{n:'Hoja: x²/4 + y² + z²/9 = 3',F:p=>p[0]*p[0]/4+p[1]*p[1]+p[2]*p[2]/9,gF:p=>[p[0]/2,2*p[1],2*p[2]/9],par:(u,v)=>{const s=Math.sqrt(3);return [2*s*Math.cos(u)*Math.cos(v),s*Math.sin(u)*Math.cos(v),3*s*Math.sin(v)];},ur:[0,2*Math.PI],vr:[-Math.PI/2,Math.PI/2],u0:3*Math.PI/4,v0:-Math.asin(1/Math.sqrt(3)),sc:34,ctr:[0,0,0],g:1.4},
+  e33a:{n:'Ej. 33(a): 2(x − 2)² + (y − 1)² + (z − 3)² = 10',F:p=>2*(p[0]-2)**2+(p[1]-1)**2+(p[2]-3)**2,gF:p=>[4*(p[0]-2),2*(p[1]-1),2*(p[2]-3)],par:(u,v)=>{const s=Math.sqrt(10);return [2+s/Math.SQRT2*Math.cos(u)*Math.cos(v),1+s*Math.sin(u)*Math.cos(v),3+s*Math.sin(v)];},ur:[0,2*Math.PI],vr:[-Math.PI/2,Math.PI/2],u0:Math.atan2(Math.SQRT2,1),v0:Math.asin(2/Math.sqrt(10)),sc:34,ctr:[2,1,3],g:.35}
+};
+V.surfN=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='esf',u0=0,v0=0;
+  const sel=G4.sel(SF);
+  host.append(vhead('∇F es normal a la superficie','Una curva sobre la superficie pasa por P; su vector tangente (azul) es perpendicular a ∇F (rojo)'),h('div',{class:'ctl'},sel),body);
+  const v=View3D(body,{scale:120,H:440,ctr:[0,0,0],az:35,el:20});
+  const pt=()=>SF[cur].par(u0,v0);
+  const M=p=>{const S=SF[cur],k=S.sc/120;return [0,1,2].map(i=>(p[i]-S.ctr[i])*k);};
+  const tang=()=>{const S=SF[cur],e=1e-5;return [0,1,2].map(i=>(S.par(u0+e,v0)[i]-S.par(u0-e,v0)[i])/(2*e));};
+  v.draw=sc=>{const S=SF[cur];const P=pt(),gF=S.gF(P),n=unit(gF),T=unit(tang()),T2=unit(cross(n,T)),L=S.g*2.2;
+    sc.surf((a,b)=>M(S.par(a,b)),S.ur,S.vr,28,16,'var(--blue)',.12,'var(--blue)');
+    const c=[];for(let i=0;i<=80;i++)c.push(M(S.par(S.ur[0]+(S.ur[1]-S.ur[0])*i/80,v0)));sc.path(c,CL.violet,2.4);
+    sc.poly([[1,1],[1,-1],[-1,-1],[-1,1]].map(([a,b])=>M([0,1,2].map(i=>P[i]+L*(a*T[i]+b*T2[i])))),'var(--green)',.25,'var(--green)');
+    sc.arrow(M(P),M([0,1,2].map(i=>P[i]+S.g*1.6*T[i])),CL.blue,3);
+    sc.arrow(M(P),M([0,1,2].map(i=>P[i]+S.g*2*n[i])),CL.red,3.2);
+    sc.dot(M(P),CL.ink,5);};
+  const su=slider('mover P (u)',{min:0,max:360,step:1,value:0,dec:0,unit:'°'},x=>{u0=x*Math.PI/180;upd();});
+  const sv_=slider('mover P (v)',{min:-80,max:80,step:1,value:0,dec:0,unit:'°'},x=>{v0=x*Math.PI/180;upd();});
+  body.append(h('div',{class:'ctl'},su,sv_),v.controls(),out);
+  function upd(){const S=SF[cur];v.render();const P=pt(),gF=S.gF(P),T=tang(),k=S.F(P);
+    out.innerHTML=`P = (${f(P[0])}, ${f(P[1])}, ${f(P[2])}), F(P) = ${f(k)}. <span class="c-red">∇F(P) = (${f(gF[0])}, ${f(gF[1])}, ${f(gF[2])})</span>, <span class="c-blue">r′(0) = (${f(T[0])}, ${f(T[1])}, ${f(T[2])})</span>.<br>`+
+      `<b>∇F(P)·r′(0) = ${f(gF[0]*T[0]+gF[1]*T[1]+gF[2]*T[2],4)}</b>: son perpendiculares. Plano tangente (verde): <b>${f(gF[0])}(x − ${f(P[0])}) + ${f(gF[1])}(y − ${f(P[1])}) + ${f(gF[2])}(z − ${f(P[2])}) = 0</b>.`;}
+  function setup(){const S=SF[cur];u0=S.u0;v0=S.v0;su.set(Math.round(((u0*180/Math.PI)%360+360)%360));sv_.set(Math.round(v0*180/Math.PI));upd();}
+  sel.addEventListener('change',()=>{cur=sel.value;setup();});
+  API['viz-surf']={set(k){if(SF[k]){cur=k;sel.value=k;setup();}}};
+  setup();
+};
+})();
+(function(){const R=String.raw;
+window.A1={key:'g4',
+ vid:{17:'TlrzSkHSZ80',18:'JxZpQYBKq0Q',19:'-fMqZkZ-MKA',20:'0OCmiw9_nZc',21:'3BUiW3Kz5ug',22:'MrmScucdmyQ',23:'bMcIwjB2Lss',24:'owZkSEhHpeQ',25:'8fGQsRsl4j8',26:'tQ3CviGMFJ8'},
+ viz:{'viz-tan':'tan','viz-partial':'partial','viz-plane':'plane','viz-chain':'chain','viz-dir':'dir','viz-impl':'impl','viz-surf':'surfN'}};
+window.A1.quiz={
+'quiz-1':{t:'Autoevaluación de las Clases 17 y 18',qs:[
+ {p:R`Si $\v{r}(t)=(t^2,\ e^{t},\ \operatorname{sen}t)$, entonces $\v{r}'(0)$ es:`,o:[R`$(0,1,1)$`,R`$(0,1,0)$`,R`$(2,1,1)$`,R`$(0,0,1)$`],c:0,w:R`Se deriva cada coordenada: $\v{r}'(t)=(2t,e^t,\cos t)$ y en $t=0$ queda $(0,1,1)$. La opción $(0,1,0)$ evalúa $\operatorname{sen}$ en vez de su derivada.`},
+ {p:R`La recta tangente a $\v{r}(t)$ en $\v{r}(t_0)$, si $\v{r}'(t_0)\neq\v{0}$, es:`,o:[R`$\lambda\,\v{r}'(t_0)+\v{r}(t_0)$`,R`$\lambda\,\v{r}(t_0)+\v{r}'(t_0)$`,R`$\v{r}'(t_0)\,(t-t_0)$`,R`$\lambda\,(\v{r}(t_0)-\v{r}'(t_0))$`],c:0,w:R`El vector dirección es el vector derivado y el punto de paso es $\v{r}(t_0)$. La segunda opción los intercambia.`},
+ {p:R`¿Por qué en la secante se divide $\v{r}(t+h)-\v{r}(t)$ por $h$?`,o:['para que el vector dirección no tienda a 0 y sobreviva en el límite','porque así la recta pasa por el origen','para que el vector tenga módulo 1','porque h siempre es positivo'],c:0,w:R`Si no se divide, el vector dirección tiende a $\v{0}$ y "se pierde la recta". Dividir por $h$ da un múltiplo del mismo vector, que define la misma recta.`},
+ {p:R`Si $|\v{r}(t)|=5$ para todo $t$, entonces:`,o:[R`$\v{r}(t)\cdot\v{r}'(t)=0$ para todo $t$`,R`$\v{r}'(t)=\v{0}$ para todo $t$`,R`$|\v{r}'(t)|=5$`,R`$\v{r}'(t)$ es paralelo a $\v{r}(t)$`],c:0,w:R`Derivando $\v{r}\cdot\v{r}=25$ queda $2\,\v{r}\cdot\v{r}'=0$: la velocidad es perpendicular a la posición. El módulo de la velocidad puede ser cualquiera.`},
+ {p:R`$(\v{u}\cdot\v{v})'$ es igual a:`,o:[R`$\v{u}'\cdot\v{v}+\v{u}\cdot\v{v}'$`,R`$\v{u}'\cdot\v{v}'$`,R`$\v{u}'\times\v{v}+\v{u}\times\v{v}'$`,R`$\v{u}'\cdot\v{v}-\v{u}\cdot\v{v}'$`],c:0,w:R`Vale la regla del producto (Leibniz). El error típico es derivar "factor a factor" como en $\v{u}'\cdot\v{v}'$.`}]},
+'quiz-2':{t:'Autoevaluación de la Clase 19',qs:[
+ {p:R`Si $f(x,y)=x^2y^3$, entonces $f_y(1,2)$ vale:`,o:['12','16','4','24'],c:0,w:R`$f_y=3x^2y^2$, que en $(1,2)$ da $12$. El $16$ es $f_x(1,2)=2xy^3$.`},
+ {p:R`$f_x(x_0,y_0)$ es la pendiente de la recta tangente a la curva que se obtiene:`,o:[R`cortando el gráfico con el plano $y=y_0$`,R`cortando el gráfico con el plano $x=x_0$`,R`cortando el gráfico con el plano $z=f(x_0,y_0)$`,R`proyectando el gráfico sobre el plano $xy$`],c:0,w:R`Para $f_x$ se fija $y=y_0$ y se deja variar $x$: la curva es $\alpha(x)=f(x,y_0)$.`},
+ {p:R`En la notación de la clase, $f_{xy}$ significa:`,o:[R`primero derivar respecto de $x$ y después respecto de $y$`,R`primero respecto de $y$ y después respecto de $x$`,R`derivar respecto de $xy$`,R`el producto $f_x\cdot f_y$`],c:0,w:R`$f_{xy}=(f_x)_y=\frac{\partial^2f}{\partial y\,\partial x}$. En la notación con $\partial$ se lee de derecha a izquierda.`},
+ {p:R`Si $x^2+z^2+yz=3$ define $z=z(x,y)$, entonces $z_x$ es:`,o:[R`$-\dfrac{2x}{2z+y}$`,R`$-\dfrac{2z+y}{2x}$`,R`$-2x$`,R`$\dfrac{2x}{2z+y}$`],c:0,w:R`Derivando respecto de $x$: $2x+2z\,z_x+y\,z_x=0$. La segunda opción da vuelta el cociente.`},
+ {p:R`El teorema de Clairaut–Schwarz asegura $f_{xy}=f_{yx}$ si:`,o:[R`$f_{xy}$ y $f_{yx}$ son continuas en un disco`,R`$f_x$ y $f_y$ existen`,R`$f$ es continua`,R`siempre, sin hipótesis`],c:0,w:R`Sin la continuidad de las cruzadas puede fallar: el ejercicio 8 da $f_{xy}(0,0)=-1$ y $f_{yx}(0,0)=1$.`}]},
+'quiz-3':{t:'Autoevaluación de las Clases 20 y 21',qs:[
+ {p:R`Si existen $f_x(0,0)$ y $f_y(0,0)$, entonces:`,o:[R`$f$ puede no ser diferenciable en $(0,0)$`,R`$f$ es diferenciable en $(0,0)$`,R`$f$ es continua en $(0,0)$`,R`$f$ es de clase $C^1$`],c:0,w:R`"No va a alcanzar." Ejemplo: $\frac{x^2y}{x^2+y^2}$ tiene derivadas parciales nulas en el origen y no es diferenciable.`},
+ {p:R`Si $f(1,2)=3$, $f_x(1,2)=-1$ y $f_y(1,2)=4$, el plano tangente es:`,o:[R`$z=3-(x-1)+4(y-2)$`,R`$z=3-x+4y$`,R`$z=-(x-1)+4(y-2)$`,R`$-x+4y-z=3$`],c:0,w:R`$z=f(x_0,y_0)+f_x(x-x_0)+f_y(y-y_0)$. La segunda opción se olvida de restar el punto.`},
+ {p:R`¿Qué condición dice que $f$ es diferenciable en $P_0$?`,o:[R`$\dfrac{f(P)-L(P)}{|P-P_0|}\to0$`,R`$f(P)-L(P)\to0$`,R`$\dfrac{f(P)-L(P)}{|P-P_0|}\to1$`,R`$f(P)\to f(P_0)$`],c:0,w:R`Que $f-L\to0$ pasa para cualquier plano por el punto si $f$ es continua; lo que caracteriza al plano tangente es que el error sea chico comparado con la distancia.`},
+ {p:R`Si $f$ es de clase $C^1$, entonces:`,o:['f es diferenciable','f no es diferenciable','f solo es continua','las derivadas segundas son continuas'],c:0,w:R`Es el teorema: $C^1$ implica diferenciable. "La diferenciabilidad la tenemos gratis."`},
+ {p:R`Para $f(x,y)=2x^2+y^2$, el plano tangente en $(1,1)$ aproxima $f(1{,}1;\ 0{,}95)$ por:`,o:['3,3','3,3225','3','3,5'],c:0,w:R`$3+4\cdot0{,}1+2\cdot(-0{,}05)=3{,}3$. El $3{,}3225$ es el valor exacto, no la aproximación.`}]},
+'quiz-4':{t:'Autoevaluación de la Clase 22',qs:[
+ {p:R`Si $z=f(x,y)$, $x=t^2$, $y=3t$, entonces $\frac{dz}{dt}$ es:`,o:[R`$f_x\cdot2t+f_y\cdot3$`,R`$f_x+f_y$`,R`$f_x\cdot t^2+f_y\cdot3t$`,R`$(f_x+f_y)(2t+3)$`],c:0,w:R`$\frac{dz}{dt}=f_x\frac{dx}{dt}+f_y\frac{dy}{dt}$, con las derivadas evaluadas en $(t^2,3t)$.`},
+ {p:R`$\frac{d}{dt}f(\v{r}(t))$ es:`,o:[R`$\nabla f(\v{r}(t))\cdot\v{r}'(t)$`,R`$\nabla f(\v{r}'(t))\cdot\v{r}(t)$`,R`$\nabla f(t)\cdot\v{r}'(t)$`,R`$|\nabla f|\,|\v{r}'|$`],c:0,w:R`La derivada de la de afuera (el gradiente) evaluada en la de adentro, por la derivada de la de adentro.`},
+ {p:R`Si $z=f(x,y)$ con $x=x(u,v)$, $y=y(u,v)$, ¿cuántos términos tiene $z_u$?`,o:['2','1','4','3'],c:0,w:R`En el árbol hay dos caminos de $z$ a $u$: uno por $x$ y otro por $y$. $z_u=z_xx_u+z_yy_u$.`},
+ {p:R`Si $z=f(x,y)$, $x=r\cos\theta$, $y=r\operatorname{sen}\theta$, entonces $z_\theta$ es:`,o:[R`$-y\,f_x+x\,f_y$`,R`$x\,f_x+y\,f_y$`,R`$f_x\cos\theta+f_y\operatorname{sen}\theta$`,R`$-r\,(f_x+f_y)$`],c:0,w:R`$x_\theta=-r\operatorname{sen}\theta=-y$ e $y_\theta=r\cos\theta=x$. La tercera opción es $z_r$.`},
+ {p:R`En la demostración de la regla de la cadena se usa que $f$ es:`,o:['diferenciable (el error es chico comparado con la distancia)','solo continua','de clase C²','una función lineal'],c:0,w:R`Se escribe $f=$ plano tangente $+\ \varepsilon_1(x-a)+\varepsilon_2(y-b)$ con $\varepsilon_i\to0$; eso es la diferenciabilidad.`}]},
+'quiz-5':{t:'Autoevaluación de la Clase 23',qs:[
+ {p:R`Para calcular $D_{\v{v}}f$ con $\v{v}=(3,4)$ hay que usar:`,o:[R`$\v{u}=\left(\frac35,\frac45\right)$`,R`$\v{v}=(3,4)$ directamente`,R`$\v{u}=\left(\frac37,\frac47\right)$`,R`$\v{u}=(4,-3)$`],c:0,w:R`La derivada direccional se define con vectores unitarios: se divide por $|\v{v}|=5$. Dividir por $3+4=7$ no da módulo 1.`},
+ {p:R`Si $\nabla f(P)=(2,-1)$ y $\v{u}=\left(0,1\right)$, entonces $D_{\v{u}}f(P)$ es:`,o:['−1','2','1','√5'],c:0,w:R`$\nabla f\cdot\v{u}=2\cdot0+(-1)\cdot1=-1$. Con $\v{u}=\hat\jmath$ es la derivada parcial respecto de $y$.`},
+ {p:R`El valor máximo de $D_{\v{u}}f(P)$ entre todos los $\v{u}$ unitarios es:`,o:[R`$|\nabla f(P)|$`,R`$1$`,R`$|\nabla f(P)|^2$`,R`$f_x(P)+f_y(P)$`],c:0,w:R`$D_{\v{u}}f=|\nabla f|\cos\theta$, máximo con $\theta=0$.`},
+ {p:R`¿En qué dirección $f$ decrece más rápido?`,o:[R`$-\nabla f/|\nabla f|$`,R`perpendicular a $\nabla f$`,R`$\nabla f/|\nabla f|$`,R`la del eje $x$ negativo`],c:0,w:R`Con $\theta=\pi$, $\cos\theta=-1$: la dirección opuesta al gradiente. En la perpendicular la razón de cambio es 0.`},
+ {p:R`El teorema $D_{\v{u}}f=\nabla f\cdot\v{u}$ se prueba con:`,o:['la regla de la cadena aplicada a f(P₀ + t u)','el teorema de Clairaut','la definición de derivada parcial','la desigualdad triangular'],c:0,w:R`Con la recta $\v{r}(t)=P_0+t\v{u}$, $D_{\v{u}}f=(f\circ\v{r})'(0)=\nabla f(P_0)\cdot\v{r}'(0)$.`}]},
+'quiz-6':{t:'Autoevaluación de las Clases 24, 25 y 26',qs:[
+ {p:R`Para despejar $y=\varphi(x)$ de $f(x,y)=k$ cerca de $(x_0,y_0)$, el TFI pide:`,o:[R`$f_y(x_0,y_0)\neq0$`,R`$f_x(x_0,y_0)\neq0$`,R`$f(x_0,y_0)\neq0$`,R`$\nabla f(x_0,y_0)=0$`],c:0,w:R`"No tiene que ser cero la derivada respecto de la variable que quiero despejar."`},
+ {p:R`Si $f(x,y)=k$ define $y=\varphi(x)$, entonces $\varphi'(x_0)$ es:`,o:[R`$-\dfrac{f_x(x_0,y_0)}{f_y(x_0,y_0)}$`,R`$-\dfrac{f_y(x_0,y_0)}{f_x(x_0,y_0)}$`,R`$\dfrac{f_x(x_0,y_0)}{f_y(x_0,y_0)}$`,R`$f_x(x_0,y_0)$`],c:0,w:R`Derivando $f(x,\varphi(x))=k$: $f_x+f_y\varphi'=0$.`},
+ {p:R`El conjunto $\{x^2+y^2=0\}$ es:`,o:['un solo punto','vacío','una circunferencia','una recta'],c:0,w:R`Solo $(0,0)$ cumple $x^2+y^2=0$. Ahí $\nabla f=(0,0)$ y el TFI no se aplica.`},
+ {p:R`El plano tangente a $F(x,y,z)=k$ en $P_0$ tiene vector normal:`,o:[R`$\nabla F(P_0)$`,R`$(F_x,F_y,-1)$`,R`$(-F_x,-F_y,1)$`,R`$\v{r}'(0)$ de una curva en la superficie`],c:0,w:R`$\nabla F(P_0)$ es perpendicular a todos los vectores tangentes $\v{r}'(0)$. $(-f_x,-f_y,1)$ es el normal de un gráfico $z=f(x,y)$.`},
+ {p:R`El plano tangente a $x^2+y^2+z^2=1$ en $(1,0,0)$ es:`,o:[R`$x=1$`,R`$z=1$`,R`$x+y+z=1$`,R`$z=0$`],c:0,w:R`$\nabla F(1,0,0)=(2,0,0)$, así que el plano es $2(x-1)=0$: vertical, "apoyado sobre el ecuador".`}]}
+};
+})();
+(function(){'use strict';
+const R=String.raw;
+const go=(viz,p,txt)=>`<button type="button" class="go" data-viz="${viz}" data-p="${p}">${txt||'Ver en la figura'}</button>`;
+const EJ=[
+{n:1,t:'Vector posición y vector tangente',s:'Derivada de una curva',
+ enun:R`<p>Para cada una de las curvas dadas a continuación</p>
+<p class="items">(a) $\v{r}(t)=(t-2,\ t^2+1)$, $-2\le t\le2$, $t=1$, &emsp; (b) $\v{r}(t)=(\operatorname{sen}t,\ 2\cos t)$, $0\le t\le2\pi$, $t=\frac\pi4$,</p>
+<p>resolver los siguientes ítems: i. Graficar. ii. Calcular la derivada $\v{r}'(t)$. iii. Para el valor de $t$ dado, graficar el vector posición $\v{r}(t)$ y el vector tangente $\v{r}'(t)$.</p>`,
+ pistas:[R`<p>Para graficar, eliminá $t$: en (a) despejá $t=x+2$; en (b) usá $\operatorname{sen}^2t+\cos^2t=1$.</p>`,
+  R`<p>La derivada se calcula coordenada a coordenada. El vector tangente se dibuja con la cola en el punto $\v{r}(t)$.</p>`],
+ sol:R`<p><b>(a)</b> Con $t=x+2$, $y=(x+2)^2+1$: un arco de parábola de vértice $(-2,1)$, que va de $\v{r}(-2)=(-4,5)$ a $\v{r}(2)=(0,5)$. $\v{r}'(t)=(1,\ 2t)$. En $t=1$: $\v{r}(1)=(-1,2)$ y $\v{r}'(1)=(1,2)$, que se dibuja desde $(-1,2)$ (llega a $(0,4)$). ${go('viz-tan','e1a','Ver (a)')}</p>
+<p><b>(b)</b> $x^2+\frac{y^2}{4}=\operatorname{sen}^2t+\cos^2t=1$: la elipse de semiejes $1$ y $2$, recorrida entera, empezando en $(0,2)$ y en sentido horario. $\v{r}'(t)=(\cos t,\ -2\operatorname{sen}t)$. En $t=\frac\pi4$: $\v{r}\big(\frac\pi4\big)=\big(\frac{\sqrt2}{2},\sqrt2\big)$ y $\v{r}'\big(\frac\pi4\big)=\big(\frac{\sqrt2}{2},-\sqrt2\big)$. ${go('viz-tan','e1b','Ver (b)')}</p>
+<p class="hint">El vector posición va del origen al punto; el vector tangente va desde el punto, en la dirección del recorrido.</p>`,
+ chk:{p:'(a): las dos coordenadas de r′(1)',vals:[1,2]},
+ ref:[[17,'29:03','derivar coordenada a coordenada'],[17,'36:11','ejemplo']]},
+
+{n:2,t:'Recta tangente',s:'Primero, encontrar el t del punto',
+ enun:R`<p>Para cada una de las siguientes curvas, hallar la ecuación paramétrica de la recta tangente en el punto dado. Graficar la curva y la recta tangente hallada.</p>
+<p class="items">(a) $x=1+2\sqrt t,\ y=-t$, $0\le t\le9$, $(3,-1)$, &emsp; (b) $x=e^t,\ y=te^t$, $-2\le t\le3$, $(1,0)$.</p>`,
+ pistas:[R`<p>Como en el ejemplo de la Clase 17: primero hay que ver para qué $t_0$ la curva pasa por el punto.</p>`,
+  R`<p>En (a), $-t=-1$ da $t_0=1$; en (b), $e^t=1$ da $t_0=0$. Verificá la otra coordenada.</p>`,
+  R`<p>La recta es $\lambda\,\v{r}'(t_0)+\v{r}(t_0)$.</p>`],
+ sol:R`<p><b>(a)</b> De $y=-t=-1$ sale $t_0=1$, y $x=1+2\sqrt1=3$: el punto es $\v{r}(1)$. $\v{r}'(t)=\big(\frac{1}{\sqrt t},\,-1\big)$ (para $t\gt0$), $\v{r}'(1)=(1,-1)$. Recta tangente:
+$$\lambda\,(1,-1)+(3,-1).$$
+La curva es $x=1+2\sqrt{-y}$, la mitad de la parábola $y=-\frac{(x-1)^2}{4}$ con $x\ge1$. ${go('viz-tan','e2a','Ver (a)')}</p>
+<p><b>(b)</b> De $x=e^t=1$ sale $t_0=0$, y $y=0\cdot e^0=0$. $\v{r}'(t)=(e^t,\ e^t+te^t)$, $\v{r}'(0)=(1,1)$. Recta tangente:
+$$\lambda\,(1,1)+(1,0),$$
+o sea $y=x-1$. ${go('viz-tan','e2b','Ver (b)')}</p>`,
+ chk:{p:'(a): las coordenadas de r′(t₀)',vals:[1,-1]},
+ ref:[[17,'40:16','encontrar t₀'],[18,'7:44','¿el punto está en la curva?']]},
+
+{n:3,t:'Vector tangente unitario',s:'Dividir por el módulo',
+ enun:R`<p>Para cada una de las siguientes curvas, encontrar el vector tangente unitario en el punto determinado por el valor de $t$ indicado.</p>
+<p class="items">(a) $\v{r}(t)=(te^{-t},\ \tan t,\ t^2+t)$, $t=0$, &emsp; (b) $\v{r}(t)=(t^3+3t,\ t^2+1,\ 3t+4)$, $t=1$.</p>`,
+ pistas:[R`<p>$\v{T}(t)=\frac{\v{r}'(t)}{|\v{r}'(t)|}$.</p>`,R`<p>En (a), la derivada de $te^{-t}$ es $e^{-t}(1-t)$ y la de $\tan t$ es $\frac{1}{\cos^2t}$.</p>`],
+ sol:R`<p><b>(a)</b> $\v{r}'(t)=\big(e^{-t}(1-t),\ \frac{1}{\cos^2t},\ 2t+1\big)$, $\v{r}'(0)=(1,1,1)$, $|\v{r}'(0)|=\sqrt3$:
+$$\v{T}(0)=\Big(\frac{1}{\sqrt3},\frac{1}{\sqrt3},\frac{1}{\sqrt3}\Big).$$</p>
+<p><b>(b)</b> $\v{r}'(t)=(3t^2+3,\ 2t,\ 3)$, $\v{r}'(1)=(6,2,3)$, $|\v{r}'(1)|=\sqrt{36+4+9}=7$:
+$$\v{T}(1)=\Big(\frac67,\frac27,\frac37\Big).$$</p>`,
+ chk:{p:'(b): las tres coordenadas de T(1)',vals:[6/7,2/7,3/7]},
+ ref:[[17,'29:03','derivar coordenada a coordenada']]},
+
+{n:4,t:'Derivadas parciales y gradiente',s:'Cortes del gráfico',
+ enun:R`<p>Para cada una de las siguientes funciones, hallar las derivadas parciales $f_x$ y $f_y$. Graficar $f$ y, para el punto $p$ indicado, ubicar $(p,f(p))$ y graficar $\nabla f(p)$.</p>
+$$\text{(a)}\ f(x,y)=x^2y^3,\ p=(2,1),\qquad\text{(b)}\ f(x,y)=\frac{y}{1+x^2y^2},\ p=(1,1).$$`,
+ pistas:[R`<p>Para $f_x$, pensá $y$ como un número fijo; para $f_y$, al revés.</p>`,
+  R`<p>En (b), para $f_x$ el numerador $y$ es constante: derivá $\frac{1}{1+x^2y^2}$. Para $f_y$, usá la regla del cociente.</p>`],
+ sol:R`<p><b>(a)</b> $f_x=2xy^3$, $f_y=3x^2y^2$. En $p=(2,1)$: $f(p)=4$, el punto del gráfico es $(2,1,4)$ y $\nabla f(2,1)=(4,12)$. ${go('viz-partial','e4a','Ver los cortes en (2, 1)')}</p>
+<p><b>(b)</b> $f_x=y\cdot\frac{-2xy^2}{(1+x^2y^2)^2}=-\frac{2xy^3}{(1+x^2y^2)^2}$ y
+$$f_y=\frac{(1+x^2y^2)-y\cdot2x^2y}{(1+x^2y^2)^2}=\frac{1-x^2y^2}{(1+x^2y^2)^2}.$$
+En $p=(1,1)$: $f(p)=\frac12$, el punto es $\big(1,1,\frac12\big)$ y $\nabla f(1,1)=\big(-\frac12,0\big)$. ${go('viz-partial','e4b','Ver los cortes en (1, 1)')}</p>
+<p class="hint">$\nabla f(p)$ es un vector del plano $xy$: se dibuja con la cola en $p$.</p>`,
+ chk:{p:'(a): ∇f(2, 1)',vals:[4,12]},
+ ref:[[19,'13:49','definición'],[19,'26:04','gradiente']]},
+
+{n:5,t:'Derivadas parciales de primer orden',s:'Reglas de derivación',
+ enun:R`<p>Calcular las derivadas parciales de primer orden de las siguientes funciones.</p>
+<p class="items">(a) $f(x,y)=x^4+2xy+y^3x-1$, &emsp; (b) $f(x,y)=\operatorname{sen}(x)$, &emsp; (c) $f(x,y)=x^2\operatorname{sen}^2(y)$, &emsp; (d) $f(x,y)=xe^{x^2+y^2}$, &emsp; (e) $f(x,y,z)=ye^x+z$.</p>`,
+ pistas:[R`<p>En (b), $f$ no depende de $y$: ¿cuánto da $f_y$?</p>`,R`<p>En (d), para $f_x$ hay un producto ($x$ por la exponencial) y una regla de la cadena.</p>`],
+ sol:R`<p><b>(a)</b> $f_x=4x^3+2y+y^3$, $f_y=2x+3y^2x$.</p>
+<p><b>(b)</b> $f_x=\cos x$, $f_y=0$.</p>
+<p><b>(c)</b> $f_x=2x\operatorname{sen}^2y$, $f_y=x^2\cdot2\operatorname{sen}y\cos y=x^2\operatorname{sen}(2y)$.</p>
+<p><b>(d)</b> $f_x=e^{x^2+y^2}+x\,e^{x^2+y^2}\,2x=(1+2x^2)\,e^{x^2+y^2}$, $f_y=x\,e^{x^2+y^2}\,2y=2xy\,e^{x^2+y^2}$.</p>
+<p><b>(e)</b> $f_x=ye^x$, $f_y=e^x$, $f_z=1$.</p>`,
+ chk:{p:'(d): f_x(1, 0) y f_y(1, 1)',vals:[3*Math.E,2*Math.exp(2)]},
+ ref:[[19,'18:59','cómo se calculan']]},
+
+{n:6,t:'La función |x| + |y|',s:'Cuando no hay derivada parcial',
+ enun:R`<p>Sea $f:\R^2\to\R$ definida por $f(x,y)=|x|+|y|$.</p>
+<p>(a) Graficarla en GeoGebra y, a partir de la observación del gráfico, conjeturar sobre la existencia o no de $f_x(0,0)$ y $f_y(0,0)$.<br>(b) Justificar analíticamente las conjeturas hechas en el ítem anterior.</p>`,
+ pistas:[R`<p>El gráfico es una pirámide invertida (con la punta en el origen). El corte $y=0$ es $z=|x|$: ¿tiene recta tangente en $x=0$?</p>`,R`<p>Escribí el cociente incremental $\frac{f(h,0)-f(0,0)}{h}=\frac{|h|}{h}$ y mirá los límites laterales.</p>`],
+ sol:R`<p><b>(a)</b> El gráfico es una "pirámide" con aristas sobre los planos $x=0$ e $y=0$ y la punta abajo, en el origen. El corte con $y=0$ es la curva $z=|x|$, que tiene un pico en $x=0$: conjeturamos que no existe $f_x(0,0)$. Por simetría, tampoco $f_y(0,0)$. ${go('viz-plane','abs','Ver el gráfico')}</p>
+<p><b>(b)</b> $$\frac{f(h,0)-f(0,0)}{h}=\frac{|h|}{h}=\begin{cases}1&h\gt0\\-1&h\lt0\end{cases}$$
+Los límites laterales son distintos, así que no existe $f_x(0,0)$. Igual, $\frac{f(0,k)-f(0,0)}{k}=\frac{|k|}{k}$ y no existe $f_y(0,0)$.</p>`,
+ ref:[[19,'13:49','definición de derivada parcial']]},
+
+{n:7,t:'Derivadas segundas',s:'Las cuatro y las cruzadas',
+ enun:R`<p>Calcular las derivadas parciales de segundo orden de las siguientes funciones.</p>
+<p class="items">(a) $f(x,y)=x^3y^5+2x^4y$, &emsp; (b) $f(x,y)=\operatorname{sen}^2(x+y)$, &emsp; (c) $f(x,y)=\sqrt{x^2+y^2}$, &emsp; (d) $f(x,y)=\dfrac{xy}{x-y}$.</p>`,
+ pistas:[R`<p>Calculá primero $f_x$ y $f_y$, y después derivá cada una respecto de $x$ y de $y$.</p>`,
+  R`<p>Como todas son $C^2$ donde están definidas, por Clairaut $f_{xy}=f_{yx}$: te sirve de control.</p>`,
+  R`<p>En (b) usá $2\operatorname{sen}u\cos u=\operatorname{sen}2u$. En (d), $f_x=\frac{y(x-y)-xy}{(x-y)^2}=-\frac{y^2}{(x-y)^2}$.</p>`],
+ sol:R`<p><b>(a)</b> $f_x=3x^2y^5+8x^3y$, $f_y=5x^3y^4+2x^4$.
+$$f_{xx}=6xy^5+24x^2y,\quad f_{xy}=f_{yx}=15x^2y^4+8x^3,\quad f_{yy}=20x^3y^3.$$</p>
+<p><b>(b)</b> $f_x=f_y=2\operatorname{sen}(x+y)\cos(x+y)=\operatorname{sen}(2x+2y)$, y las cuatro derivadas segundas valen $2\cos(2x+2y)$.</p>
+<p><b>(c)</b> (para $(x,y)\neq(0,0)$) $f_x=\frac{x}{\sqrt{x^2+y^2}}$, $f_y=\frac{y}{\sqrt{x^2+y^2}}$.
+$$f_{xx}=\frac{y^2}{(x^2+y^2)^{3/2}},\quad f_{xy}=f_{yx}=-\frac{xy}{(x^2+y^2)^{3/2}},\quad f_{yy}=\frac{x^2}{(x^2+y^2)^{3/2}}.$$</p>
+<p><b>(d)</b> (para $x\neq y$) $f_x=-\frac{y^2}{(x-y)^2}$, $f_y=\frac{x(x-y)+xy}{(x-y)^2}=\frac{x^2}{(x-y)^2}$.
+$$f_{xx}=\frac{2y^2}{(x-y)^3},\quad f_{xy}=f_{yx}=-\frac{2xy}{(x-y)^3},\quad f_{yy}=\frac{2x^2}{(x-y)^3}.$$</p>`,
+ chk:{p:'(a): f_xy(1, 1) y f_yy(1, 1)',vals:[23,20]},
+ ref:[[19,'37:25','derivadas de orden superior'],[19,'46:35','Clairaut–Schwarz']]},
+
+{n:8,t:'Las cruzadas no coinciden',s:'¿Contradice a Clairaut–Schwarz?',
+ enun:R`<p>Sea $f:\R^2\to\R$ definida por $f(x,y)=\dfrac{x^3y-xy^3}{x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$.</p>
+<p>(a) Graficarla en GeoGebra. (b) Hallar $f_x(x,y)$ y $f_y(x,y)$ para $(x,y)\neq(0,0)$. (c) Hallar $f_x(0,0)$ y $f_y(0,0)$. (d) Demostrar que $f_{xy}(0,0)=-1$ y $f_{yx}(0,0)=1$. ¿Contradice esto al Teorema de Clairaut–Schwarz? ¿Por qué? (Sugerencia: graficar en GeoGebra $f_{xy}$ y $f_{yx}$.)</p>`,
+ pistas:[R`<p>(c) por definición: $f(h,0)=0$ y $f(0,k)=0$.</p>`,
+  R`<p>(d) $f_{xy}(0,0)=(f_x)_y(0,0)=\lim_{k\to0}\frac{f_x(0,k)-f_x(0,0)}{k}$. Calculá $f_x(0,k)$ con la fórmula de (b).</p>`,
+  R`<p>Para Clairaut, ¿son continuas $f_{xy}$ y $f_{yx}$ en el origen?</p>`],
+ sol:R`<p><b>(a)</b> Es una "silla" suave, que se anula sobre los ejes y sobre las rectas $y=\pm x$.</p>
+<p><b>(b)</b> Con la regla del cociente y simplificando:
+$$f_x=\frac{y\,(x^4+4x^2y^2-y^4)}{(x^2+y^2)^2},\qquad f_y=\frac{x\,(x^4-4x^2y^2-y^4)}{(x^2+y^2)^2}.$$</p>
+<p><b>(c)</b> $f(h,0)=0$ y $f(0,k)=0$, así que $f_x(0,0)=\lim\frac{0-0}{h}=0$ y $f_y(0,0)=0$.</p>
+<p><b>(d)</b> De (b), $f_x(0,k)=\frac{k(-k^4)}{k^4}=-k$ y $f_y(h,0)=\frac{h\cdot h^4}{h^4}=h$. Entonces
+$$f_{xy}(0,0)=\lim_{k\to0}\frac{f_x(0,k)-f_x(0,0)}{k}=\lim_{k\to0}\frac{-k}{k}=-1,\qquad f_{yx}(0,0)=\lim_{h\to0}\frac{f_y(h,0)-f_y(0,0)}{h}=\lim_{h\to0}\frac{h}{h}=1.$$
+<b>No contradice</b> el teorema: Clairaut–Schwarz pide que $f_{xy}$ y $f_{yx}$ sean continuas en un disco alrededor del punto, y acá no lo son en el origen. Para $(x,y)\neq(0,0)$ se obtiene $f_{xy}=f_{yx}=\frac{x^6+9x^4y^2-9x^2y^4-y^6}{(x^2+y^2)^3}$, que vale $1$ sobre el eje $x$ y $-1$ sobre el eje $y$: no tiene límite en el origen.</p>`,
+ chk:{p:'f_xy(0, 0) y f_yx(0, 0)',vals:[-1,1]},
+ ref:[[19,'46:35','Clairaut–Schwarz']]},
+
+{n:9,t:'¿Hay plano tangente?',s:'Gráficos de funciones C¹',
+ enun:R`<p>Para cada una de las siguientes superficies, estudiar la existencia del plano tangente en el punto dado. En caso de que exista, dar la ecuación.</p>
+<p class="items">(a) $z=3y^2-2x^2+x$, $(2,-1,-3)$, &emsp; (b) $z=\sqrt{xy}$, $(1,1,1)$, &emsp; (c) $z=xe^{xy}$, $(2,0,2)$.</p>`,
+ pistas:[R`<p>Si las derivadas parciales existen y son continuas cerca del punto, $f$ es $C^1$ y por lo tanto diferenciable: hay plano tangente.</p>`,
+  R`<p>En (b), $f_x=\frac{y}{2\sqrt{xy}}$ es continua donde $xy\gt0$, que incluye un entorno de $(1,1)$.</p>`],
+ sol:R`<p>El plano tangente es $z=f(x_0,y_0)+f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0)$.</p>
+<p><b>(a)</b> Polinomio, $C^1$ en todo $\R^2$. $f_x=-4x+1$, $f_y=6y$; en $(2,-1)$: $f_x=-7$, $f_y=-6$, $f=-3$.
+$$z=-3-7(x-2)-6(y+1)\iff z=-7x-6y+5.$$</p>
+<p><b>(b)</b> $f_x=\frac{y}{2\sqrt{xy}}$, $f_y=\frac{x}{2\sqrt{xy}}$ son continuas donde $xy\gt0$; en $(1,1)$ valen $\frac12$.
+$$z=1+\tfrac12(x-1)+\tfrac12(y-1)\iff z=\tfrac{x+y}{2}.$$</p>
+<p><b>(c)</b> $f_x=e^{xy}(1+xy)$, $f_y=x^2e^{xy}$, continuas en todo $\R^2$; en $(2,0)$: $f_x=1$, $f_y=4$, $f=2$.
+$$z=2+(x-2)+4y\iff z=x+4y.$$</p>`,
+ chk:{p:'(a): los coeficientes a, b, c de z = ax + by + c',vals:[-7,-6,5]},
+ ref:[[21,'31:11','C¹ implica diferenciable'],[20,'29:02','plano tangente']]},
+
+{n:10,t:'Superficie y plano tangente',s:'Para graficar',
+ enun:R`<p>Graficar en GeoGebra la superficie $z=x^2+xy+3y^2$ y su plano tangente en $(1,1,5)$.</p>`,
+ pistas:[R`<p>Es un polinomio: es $C^1$ y diferenciable. Calculá $f_x$ y $f_y$ en $(1,1)$.</p>`],
+ sol:R`<p>$f_x=2x+y$, $f_y=x+6y$; en $(1,1)$: $f_x=3$, $f_y=7$ y $f(1,1)=5$. El plano tangente es
+$$z=5+3(x-1)+7(y-1)\iff z=3x+7y-5.$$
+En GeoGebra 3D: escribir <code>z = x^2 + x y + 3 y^2</code> y <code>z = 3x + 7y - 5</code>. Al acercar la cámara al punto $(1,1,5)$, la superficie y el plano se confunden.</p>`,
+ chk:{p:'coeficientes a, b, c de z = ax + by + c',vals:[3,7,-5]},
+ ref:[[20,'29:02','plano tangente']]},
+
+{n:11,t:'Estudiar la diferenciabilidad',s:'Un caso C¹ y uno por definición',
+ enun:R`<p>Estudiar la diferenciabilidad de las siguientes funciones en el punto dado.</p>
+<p>(a) $f(x,y)=1+x\ln(xy-5)$ en $(2,3)$, &emsp; (b) $f(x,y)=\dfrac{x^2y}{x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$, en $(0,0)$.</p>`,
+ pistas:[R`<p>(a) Mirá dónde son continuas las derivadas parciales: el logaritmo pide $xy\gt5$.</p>`,
+  R`<p>(b) Es el ejemplo de la Clase 21. Derivadas parciales en el origen por definición, y después el límite de la definición con $y=x$.</p>`],
+ sol:R`<p><b>(a)</b> $f_x=\ln(xy-5)+\frac{xy}{xy-5}$, $f_y=\frac{x^2}{xy-5}$, continuas en $\{xy\gt5\}$, que es un entorno de $(2,3)$ (allí $xy=6$). Entonces $f$ es $C^1$ cerca de $(2,3)$ y es <b>diferenciable</b>. (En $(2,3)$: $f=1$, $f_x=6$, $f_y=4$; plano tangente $z=1+6(x-2)+4(y-3)$.)</p>
+<p><b>(b)</b> $f(h,0)=0$ y $f(0,k)=0$, así que $f_x(0,0)=f_y(0,0)=0$ y el candidato es $L=0$. El límite de la definición es
+$$\lim_{(x,y)\to(0,0)}\frac{x^2y}{(x^2+y^2)^{3/2}};\qquad\text{con }y=x,\ x\to0^+:\ \frac{x^3}{2^{3/2}x^3}=\frac{1}{2^{3/2}}\neq0.$$
+Entonces $f$ <b>no es diferenciable</b> en $(0,0)$. ${go('viz-plane','e11','Ver el zoom')}</p>`,
+ chk:{p:'(a): f_x(2, 3) y f_y(2, 3)',vals:[6,4]},
+ ref:[[21,'10:46','el mismo ejemplo'],[21,'31:11','C¹ implica diferenciable']]},
+
+{n:12,t:'Estimar con el plano tangente',s:'Aproximación lineal',
+ enun:R`<p>Sea $f:\R^2\to\R$ una función diferenciable tal que $f(2,5)=6$, $f_x(2,5)=1$ y $f_y(2,5)=-1$. Estimar el valor de $f(2{,}2;\ 4{,}9)$.</p>`,
+ pistas:[R`<p>$f(x,y)\approx f(2,5)+f_x(2,5)(x-2)+f_y(2,5)(y-5)$.</p>`],
+ sol:R`<p>Como $f$ es diferenciable, cerca de $(2,5)$ se parece a su plano tangente:
+$$f(2{,}2;\ 4{,}9)\approx6+1\cdot0{,}2+(-1)\cdot(-0{,}1)=6{,}3.$$</p>`,
+ chk:{p:'Estimación',vals:[6.3]},
+ ref:[[21,'40:24','aproximar con el plano tangente']]},
+
+{n:13,t:'Continuidad, derivadas parciales y diferenciabilidad',s:'Tres funciones en el origen',
+ enun:R`<p>Estudiar la continuidad, existencia de derivadas parciales y diferenciabilidad de las siguientes funciones en el origen. En caso de que exista, dar la ecuación del plano tangente al gráfico de $f$ en el origen.</p>
+<p>(a) $f(x,y,z)=\sqrt{|xyz|}$,<br>(b) $f(x,y)=\dfrac{x^4-y^4}{x^2+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$,<br>(c) $f(x,y)=\dfrac{x^2}{x^2+y^2}\operatorname{sen}\!\Big(\dfrac{1}{\sqrt{x^2+y^2}}\Big)$ si $(x,y)\neq(0,0)$, $f(0,0)=0$.</p>`,
+ pistas:[R`<p>(a) Sobre los ejes $f=0$. Para la diferenciabilidad, acotá $|xyz|\le\rho^3$, con $\rho$ la distancia al origen.</p>`,
+  R`<p>(b) Factorizá: $x^4-y^4=(x^2-y^2)(x^2+y^2)$.</p>`,
+  R`<p>(c) Mirá la función sobre el eje $x$: $f(x,0)=\operatorname{sen}\frac{1}{|x|}$.</p>`],
+ sol:R`<p><b>(a)</b> <i>Continua</i>: $\sqrt{|xyz|}$ es composición de continuas y vale $0$ en el origen. <i>Parciales</i>: $f(h,0,0)=f(0,h,0)=f(0,0,h)=0$, así que las tres valen $0$. <i>Diferenciable</i>: el candidato es $L=0$ y, con $\rho=\sqrt{x^2+y^2+z^2}$, como $|x|,|y|,|z|\le\rho$,
+$$\frac{|f(x,y,z)|}{\rho}\le\frac{\sqrt{\rho^3}}{\rho}=\sqrt\rho\ \to0.$$
+Es diferenciable; el "plano" tangente al gráfico (en $\R^4$) es $w=0$.</p>
+<p><b>(b)</b> Para $(x,y)\neq(0,0)$, $f=\frac{(x^2-y^2)(x^2+y^2)}{x^2+y^2}=x^2-y^2$, y en el origen también vale $0=0^2-0^2$. Entonces $f(x,y)=x^2-y^2$ en todo $\R^2$: es un polinomio, continuo, con $f_x(0,0)=f_y(0,0)=0$, diferenciable. Plano tangente: $z=0$. ${go('viz-plane','e13b','Ver el zoom')}</p>
+<p><b>(c)</b> <i>No es continua</i>: sobre el eje $x$, $f(x,0)=\operatorname{sen}\frac{1}{|x|}$, que oscila entre $-1$ y $1$ y no tiene límite cuando $x\to0$. <i>Parciales</i>: $f(0,k)=0$ da $f_y(0,0)=0$; pero $\frac{f(h,0)-f(0,0)}{h}=\frac{1}{h}\operatorname{sen}\frac{1}{|h|}$ no tiene límite, así que no existe $f_x(0,0)$. <i>No es diferenciable</i> (no hay candidato a plano tangente, y además no es continua).</p>`,
+ ref:[[21,'10:46','diferenciabilidad en el origen'],[20,'29:02','definición operativa']]}
+];
+window.G1EJ=EJ;
+})();
+(function(){'use strict';
+const R=String.raw;
+const go=(viz,p,txt)=>`<button type="button" class="go" data-viz="${viz}" data-p="${p}">${txt||'Ver en la figura'}</button>`;
+const EJ=[
+{n:14,t:'Regla de la cadena: f(r(t))',s:'Versión 1',
+ enun:R`<p>Utilizar la regla de la cadena para calcular la derivada de la composición $f\circ\v{r}$ en cada uno de los siguientes casos.</p>
+<p class="items">(a) $f(x,y)=x^2+y^2+xy$, $\v{r}(t)=(\operatorname{sen}t,\ e^t)$, &emsp; (b) $f(x,y)=\cos(x+4y)$, $\v{r}(t)=\big(5t^4,\ \frac1t\big)$, &emsp; (c) $f(x,y)=\sqrt{1+x^2+y^2}$, $\v{r}(t)=(\ln t,\ \cos t)$.</p>`,
+ pistas:[R`<p>$(f\circ\v{r})'(t)=f_x(\v{r}(t))\,x'(t)+f_y(\v{r}(t))\,y'(t)=\nabla f(\v{r}(t))\cdot\v{r}'(t)$.</p>`,
+  R`<p>Al final, reemplazá $x$ e $y$ por sus expresiones en $t$.</p>`],
+ sol:R`<p><b>(a)</b> $f_x=2x+y$, $f_y=2y+x$, $x'=\cos t$, $y'=e^t$:
+$$(f\circ\v{r})'(t)=(2\operatorname{sen}t+e^t)\cos t+(2e^t+\operatorname{sen}t)\,e^t.$$
+${go('viz-chain','e14a','Ver (a)')}</p>
+<p><b>(b)</b> $f_x=-\operatorname{sen}(x+4y)$, $f_y=-4\operatorname{sen}(x+4y)$, $x'=20t^3$, $y'=-\frac{1}{t^2}$:
+$$(f\circ\v{r})'(t)=-\operatorname{sen}\!\Big(5t^4+\frac4t\Big)\Big(20t^3-\frac{4}{t^2}\Big).$$</p>
+<p><b>(c)</b> $f_x=\frac{x}{\sqrt{1+x^2+y^2}}$, $f_y=\frac{y}{\sqrt{1+x^2+y^2}}$, $x'=\frac1t$, $y'=-\operatorname{sen}t$:
+$$(f\circ\v{r})'(t)=\frac{\frac{\ln t}{t}-\cos t\operatorname{sen}t}{\sqrt{1+\ln^2t+\cos^2t}}.$$</p>
+<p class="hint">En los tres casos se puede verificar reemplazando primero y derivando después, como sugiere la Clase 22.</p>`,
+ chk:{p:'(a): el valor de la derivada en t = 0',vals:[3]},
+ ref:[[22,'33:22','ejemplo'],[22,'31:22','∇f·r′']]},
+
+{n:15,t:'Con datos numéricos',s:'Sin fórmulas',
+ enun:R`<p>Si $z=f(x,y)$, $x=g(t)$, $y=h(t)$ y se sabe que $g(3)=2$, $h(3)=7$, $g'(3)=5$, $h'(3)=-4$, $f_x(2,7)=6$, $f_y(2,7)=-8$, determinar $\frac{dz}{dt}$ cuando $t=3$.</p>`,
+ pistas:[R`<p>Las derivadas de $f$ se evalúan en $(g(3),h(3))=(2,7)$.</p>`],
+ sol:R`<p>$$\frac{dz}{dt}\Big|_{t=3}=f_x(2,7)\,g'(3)+f_y(2,7)\,h'(3)=6\cdot5+(-8)(-4)=62.$$</p>`,
+ chk:{p:'dz/dt en t = 3',vals:[62]},
+ ref:[[22,'29:19','teorema']]},
+
+{n:16,t:'Regla de la cadena con dos variables',s:'Versión 2',
+ enun:R`<p>Utilizar la regla de la cadena para calcular $\frac{\partial z}{\partial s}$ y $\frac{\partial z}{\partial t}$ en cada uno de los siguientes casos.</p>
+<p class="items">(a) $z=x^2y^3$, $x=s\cos t$, $y=s\operatorname{sen}t$, &emsp; (b) $z=\operatorname{sen}x\cos y$, $x=st^2$, $y=s^2t$, &emsp; (c) $z=e^{x+2y}$, $x=\frac st$, $y=\frac ts$.</p>`,
+ pistas:[R`<p>Árbol: $z\to x,y$ y cada una $\to s,t$. $z_s=z_xx_s+z_yy_s$ y $z_t=z_xx_t+z_yy_t$.</p>`],
+ sol:R`<p><b>(a)</b> $z_x=2xy^3$, $z_y=3x^2y^2$; $x_s=\cos t$, $y_s=\operatorname{sen}t$, $x_t=-s\operatorname{sen}t$, $y_t=s\cos t$.
+$$z_s=2xy^3\cos t+3x^2y^2\operatorname{sen}t,\qquad z_t=-2xy^3\,s\operatorname{sen}t+3x^2y^2\,s\cos t.$$
+Reemplazando: $z_s=5s^4\operatorname{sen}^3t\cos^2t$ y $z_t=s^5\operatorname{sen}^2t\cos t\,(3\cos^2t-2\operatorname{sen}^2t)$.</p>
+<p><b>(b)</b> $z_x=\cos x\cos y$, $z_y=-\operatorname{sen}x\operatorname{sen}y$; $x_s=t^2$, $y_s=2st$, $x_t=2st$, $y_t=s^2$.
+$$z_s=t^2\cos x\cos y-2st\operatorname{sen}x\operatorname{sen}y,\qquad z_t=2st\cos x\cos y-s^2\operatorname{sen}x\operatorname{sen}y,$$
+con $x=st^2$, $y=s^2t$.</p>
+<p><b>(c)</b> $z_x=e^{x+2y}$, $z_y=2e^{x+2y}$; $x_s=\frac1t$, $y_s=-\frac{t}{s^2}$, $x_t=-\frac{s}{t^2}$, $y_t=\frac1s$.
+$$z_s=e^{\frac st+\frac{2t}{s}}\Big(\frac1t-\frac{2t}{s^2}\Big),\qquad z_t=e^{\frac st+\frac{2t}{s}}\Big(-\frac{s}{t^2}+\frac2s\Big).$$</p>`,
+ chk:{p:'(a): z_s en s = 1, t = π/4',vals:[5*Math.pow(Math.SQRT1_2,5)]},
+ ref:[[22,'40:38','diagrama de árbol'],[22,'53:53','ejemplo']]},
+
+{n:17,t:'Diagramas de árbol',s:'Escribir la regla',
+ enun:R`<p>Utilizando un diagrama de árbol, escribir la regla de la cadena para las derivadas parciales indicadas. Suponer que todas las funciones son diferenciables.</p>
+<p>(a) $z=f(x,y)$, $x=x(r,s,t)$, $y=y(r,s,t)$: $\frac{\partial z}{\partial r}$, $\frac{\partial z}{\partial s}$, $\frac{\partial z}{\partial t}$.<br>(b) $w=f(x,y,z)$, $x=x(r,s)$, $y=y(r,s)$, $z=z(r,s)$: $\frac{\partial w}{\partial r}$, $\frac{\partial w}{\partial s}$.</p>`,
+ pistas:[R`<p>Cada camino de la variable de arriba a la de abajo es un producto de derivadas; los caminos se suman.</p>`],
+ sol:R`<p><b>(a)</b> De $z$ salen dos ramas ($x$, $y$) y de cada una, tres ($r$, $s$, $t$). Hay dos caminos a cada variable:
+$$\frac{\partial z}{\partial r}=\frac{\partial z}{\partial x}\frac{\partial x}{\partial r}+\frac{\partial z}{\partial y}\frac{\partial y}{\partial r},\quad\frac{\partial z}{\partial s}=\frac{\partial z}{\partial x}\frac{\partial x}{\partial s}+\frac{\partial z}{\partial y}\frac{\partial y}{\partial s},\quad\frac{\partial z}{\partial t}=\frac{\partial z}{\partial x}\frac{\partial x}{\partial t}+\frac{\partial z}{\partial y}\frac{\partial y}{\partial t}.$$</p>
+<p><b>(b)</b> De $w$ salen tres ramas y de cada una, dos. Hay tres caminos a cada variable:
+$$\frac{\partial w}{\partial r}=\frac{\partial w}{\partial x}\frac{\partial x}{\partial r}+\frac{\partial w}{\partial y}\frac{\partial y}{\partial r}+\frac{\partial w}{\partial z}\frac{\partial z}{\partial r},\qquad\frac{\partial w}{\partial s}=\frac{\partial w}{\partial x}\frac{\partial x}{\partial s}+\frac{\partial w}{\partial y}\frac{\partial y}{\partial s}+\frac{\partial w}{\partial z}\frac{\partial z}{\partial s}.$$</p>`,
+ ref:[[22,'40:38','diagrama de árbol']]},
+
+{n:18,t:'Derivadas en un punto',s:'Primero calcular x, y en el punto',
+ enun:R`<p>Utilizar la regla de la cadena para calcular las derivadas parciales indicadas en el punto dado en cada uno de los siguientes casos.</p>
+<p>(a) $z=x^4+x^2y$, $x=s+2t-u$, $y=stu^2$: $\frac{\partial z}{\partial s}$, $\frac{\partial z}{\partial t}$, $\frac{\partial z}{\partial u}$ en $(s,t,u)=(4,2,1)$.<br>(b) $w=xy+yz+zx$, $x=r\cos\theta$, $y=r\operatorname{sen}\theta$, $z=r\theta$: $\frac{\partial w}{\partial r}$, $\frac{\partial w}{\partial\theta}$ en $(r,\theta)=\big(2,\frac\pi2\big)$.</p>`,
+ pistas:[R`<p>(a) En $(4,2,1)$: $x=4+4-1=7$, $y=4\cdot2\cdot1=8$.</p>`,R`<p>(b) En $\big(2,\frac\pi2\big)$: $x=0$, $y=2$, $z=\pi$.</p>`],
+ sol:R`<p><b>(a)</b> $z_x=4x^3+2xy=4\cdot343+2\cdot7\cdot8=1484$ y $z_y=x^2=49$. Además $x_s=1$, $x_t=2$, $x_u=-1$, $y_s=tu^2=2$, $y_t=su^2=4$, $y_u=2stu=16$.
+$$z_s=1484\cdot1+49\cdot2=1582,\quad z_t=1484\cdot2+49\cdot4=3164,\quad z_u=1484\cdot(-1)+49\cdot16=-700.$$</p>
+<p><b>(b)</b> $w_x=y+z=2+\pi$, $w_y=x+z=\pi$, $w_z=y+x=2$. Con $x_r=\cos\theta=0$, $y_r=\operatorname{sen}\theta=1$, $z_r=\theta=\frac\pi2$, $x_\theta=-r\operatorname{sen}\theta=-2$, $y_\theta=r\cos\theta=0$, $z_\theta=r=2$:
+$$w_r=(2+\pi)\cdot0+\pi\cdot1+2\cdot\tfrac\pi2=2\pi,\qquad w_\theta=(2+\pi)(-2)+\pi\cdot0+2\cdot2=-2\pi.$$</p>`,
+ chk:{p:'(a): z_s, z_t, z_u',vals:[1582,3164,-700]},
+ ref:[[22,'40:38','diagrama de árbol']]},
+
+{n:19,t:'La temperatura del insecto',s:'Una aplicación',
+ enun:R`<p>Sea $T(x,y)$ la temperatura (en grados Celsius) en un punto $(x,y)$. Un insecto se arrastra de tal modo que su posición después de $t$ segundos está dada por $x=\sqrt{1+t}$, $y=2+\frac13t$, donde $x$ e $y$ se miden en centímetros. La función temperatura satisface $T_x(2,3)=4$ y $T_y(2,3)=3$. ¿Qué tan rápido se eleva la temperatura del insecto en su trayectoria después de $3$ segundos?</p>`,
+ pistas:[R`<p>En $t=3$: $x=\sqrt4=2$, $y=2+1=3$. ¡Justo el punto donde conocemos las derivadas!</p>`],
+ sol:R`<p>$\frac{dT}{dt}=T_x\frac{dx}{dt}+T_y\frac{dy}{dt}$, con $\frac{dx}{dt}=\frac{1}{2\sqrt{1+t}}$ y $\frac{dy}{dt}=\frac13$. En $t=3$ el insecto está en $(2,3)$, $\frac{dx}{dt}=\frac14$ y
+$$\frac{dT}{dt}\Big|_{t=3}=4\cdot\frac14+3\cdot\frac13=2\ \ ^\circ\text{C por segundo}.$$</p>`,
+ chk:{p:'dT/dt en t = 3',vals:[2]},
+ ref:[[22,'0:36','interpretación: una cantidad que varía con el tiempo']]},
+
+{n:20,t:'Una ecuación en derivadas parciales',s:'z = f(x − y)',
+ enun:R`<p>Sea $z=f(x-y)$ con $f:\R\to\R$ una función derivable. Demostrar que $\dfrac{\partial z}{\partial x}+\dfrac{\partial z}{\partial y}=0$.</p>`,
+ pistas:[R`<p>Llamá $u=x-y$. El árbol es $z\to u\to x,y$.</p>`],
+ sol:R`<p>Con $u=x-y$, $z=f(u)$: $\frac{\partial z}{\partial x}=f'(u)\frac{\partial u}{\partial x}=f'(x-y)\cdot1$ y $\frac{\partial z}{\partial y}=f'(u)\frac{\partial u}{\partial y}=f'(x-y)\cdot(-1)$. Sumando: $f'(x-y)-f'(x-y)=0$.</p>
+<p class="hint">Es el mismo razonamiento que el ejemplo de la hoja $g(u,v)=f(u^2-v^2,v^2-u^2)$.</p>`,
+ ref:[[22,'40:38','diagrama de árbol']]},
+
+{n:21,t:'Una derivada segunda con la cadena',s:'Cuidado con el producto',
+ enun:R`<p>Sean $z=f(x,y)$ con $f$ una función $C^2$, $x=r^2+s^2$ e $y=2rs$. Determinar $\dfrac{\partial^2z}{\partial r\,\partial s}$ en función de las derivadas parciales de $f$.</p>`,
+ pistas:[R`<p>Primero $z_r=f_x\cdot2r+f_y\cdot2s$. Ahora derivá respecto de $s$: hay productos.</p>`,
+  R`<p>$f_x$ y $f_y$ también dependen de $s$ a través de $x$ e $y$: $\frac{\partial}{\partial s}f_x=f_{xx}\cdot2s+f_{xy}\cdot2r$.</p>`],
+ sol:R`<p>$z_r=2r\,f_x+2s\,f_y$, donde $f_x$, $f_y$ están evaluadas en $(r^2+s^2,2rs)$. Derivando respecto de $s$ (regla del producto y árbol para $f_x$, $f_y$, con $x_s=2s$, $y_s=2r$):
+$$z_{rs}=2r\,(f_{xx}\cdot2s+f_{xy}\cdot2r)+2f_y+2s\,(f_{yx}\cdot2s+f_{yy}\cdot2r).$$
+Como $f$ es $C^2$, $f_{xy}=f_{yx}$ (Clairaut) y
+$$\frac{\partial^2z}{\partial r\,\partial s}=4rs\,f_{xx}+4(r^2+s^2)\,f_{xy}+4rs\,f_{yy}+2f_y.$$</p>`,
+ ref:[[22,'40:38','diagrama de árbol'],[19,'46:35','Clairaut–Schwarz']]},
+
+{n:22,t:'Derivada direccional',s:'Normalizar el vector',
+ enun:R`<p>Calcular la derivada direccional de $f$ en el punto dado en la dirección del vector $\v{v}$.</p>
+<p class="items">(a) $f(x,y)=\dfrac{x}{x^2+y^2}$, $(1,2)$, $\v{v}=(3,5)$, &emsp; (b) $f(x,y,z)=xe^y+ye^z+ze^x$, $(0,0,0)$, $\v{v}=(5,1,-2)$.</p>`,
+ pistas:[R`<p>Las funciones son diferenciables en el punto: $D_{\v{u}}f=\nabla f\cdot\v{u}$ con $\v{u}=\frac{\v{v}}{|\v{v}|}$.</p>`],
+ sol:R`<p><b>(a)</b> $f_x=\frac{y^2-x^2}{(x^2+y^2)^2}$, $f_y=\frac{-2xy}{(x^2+y^2)^2}$; $\nabla f(1,2)=\big(\frac{3}{25},-\frac{4}{25}\big)$. Con $\v{u}=\frac{(3,5)}{\sqrt{34}}$:
+$$D_{\v{u}}f(1,2)=\frac{1}{\sqrt{34}}\Big(\frac{9}{25}-\frac{20}{25}\Big)=-\frac{11}{25\sqrt{34}}\approx-0{,}0755.$$</p>
+<p><b>(b)</b> $\nabla f=(e^y+ze^x,\ xe^y+e^z,\ ye^z+e^x)$, $\nabla f(0,0,0)=(1,1,1)$. Con $\v{u}=\frac{(5,1,-2)}{\sqrt{30}}$:
+$$D_{\v{u}}f(0,0,0)=\frac{5+1-2}{\sqrt{30}}=\frac{4}{\sqrt{30}}\approx0{,}730.$$</p>`,
+ chk:{p:'(a) y (b)',vals:[-11/(25*Math.sqrt(34)),4/Math.sqrt(30)]},
+ ref:[[23,'14:01','D_u f = ∇f·u'],[23,'16:05','ejemplo']]},
+
+{n:23,t:'Dirección dada por un ángulo',s:'u = (cos θ, sen θ)',
+ enun:R`<p>Calcular la derivada direccional de $f$ en el punto dado en la dirección que indica el ángulo $\theta$.</p>
+<p class="items">(a) $f(x,y)=x^3y^4+x^4y^3$, $(1,1)$, $\theta=\frac\pi6$, &emsp; (b) $f(x,y)=ye^{-x}$, $(0,4)$, $\theta=\frac{2\pi}{3}$.</p>`,
+ pistas:[R`<p>El vector unitario con ángulo $\theta$ es $(\cos\theta,\operatorname{sen}\theta)$.</p>`],
+ sol:R`<p><b>(a)</b> $\nabla f=(3x^2y^4+4x^3y^3,\ 4x^3y^3+3x^4y^2)$, $\nabla f(1,1)=(7,7)$, $\v{u}=\big(\frac{\sqrt3}{2},\frac12\big)$:
+$$D_{\v{u}}f(1,1)=\frac{7\sqrt3}{2}+\frac72=\frac{7(\sqrt3+1)}{2}\approx9{,}562.$$</p>
+<p><b>(b)</b> $\nabla f=(-ye^{-x},\ e^{-x})$, $\nabla f(0,4)=(-4,1)$, $\v{u}=\big(-\frac12,\frac{\sqrt3}{2}\big)$:
+$$D_{\v{u}}f(0,4)=2+\frac{\sqrt3}{2}\approx2{,}866.$$</p>`,
+ chk:{p:'(a) y (b)',vals:[7*(Math.sqrt(3)+1)/2,2+Math.sqrt(3)/2]},
+ ref:[[23,'28:25','ejemplo con un ángulo']]},
+
+{n:24,t:'Máxima razón de cambio',s:'El gradiente',
+ enun:R`<p>Sea $f:\R^2\to\R$ definida por $f(x,y)=4y\sqrt x$. Determinar la máxima razón de cambio de $f$ en el punto $(4,1)$ y la dirección en la cual se presenta.</p>`,
+ pistas:[R`<p>La máxima razón de cambio es $|\nabla f|$, en la dirección $\frac{\nabla f}{|\nabla f|}$.</p>`],
+ sol:R`<p>$f_x=\frac{2y}{\sqrt x}$, $f_y=4\sqrt x$, así que $\nabla f(4,1)=(1,8)$. La máxima razón de cambio es $|\nabla f(4,1)|=\sqrt{65}\approx8{,}06$, en la dirección $\frac{(1,8)}{\sqrt{65}}$. ${go('viz-dir','e24','Ver en la figura')}</p>`,
+ chk:{p:'Máxima razón de cambio',vals:[Math.sqrt(65)]},
+ ref:[[23,'36:40','dirección de máximo crecimiento']]},
+
+{n:25,t:'¿En qué direcciones vale 1?',s:'Una ecuación trigonométrica',
+ enun:R`<p>Encontrar las direcciones en las cuales la derivada direccional de $f(x,y)=ye^{-xy}$ en el punto $(0,2)$ vale $1$.</p>`,
+ pistas:[R`<p>Con $\v{u}=(a,b)$, $a^2+b^2=1$, hay que resolver $\nabla f(0,2)\cdot(a,b)=1$.</p>`,R`<p>$\nabla f(0,2)=(-4,1)$: queda $b=1+4a$; reemplazá en $a^2+b^2=1$.</p>`],
+ sol:R`<p>$f_x=-y^2e^{-xy}$, $f_y=e^{-xy}(1-xy)$, $\nabla f(0,2)=(-4,1)$. Buscamos $(a,b)$ unitario con $-4a+b=1$, o sea $b=1+4a$. Entonces
+$$a^2+(1+4a)^2=1\iff17a^2+8a=0\iff a=0\ \text{ o }\ a=-\tfrac{8}{17}.$$
+Las direcciones son $\v{u}=(0,1)$ y $\v{u}=\big(-\frac{8}{17},-\frac{15}{17}\big)$.</p>
+<p class="hint">Como $|\nabla f(0,2)|=\sqrt{17}\gt1$, había que esperar dos soluciones: $D_{\v{u}}f=\sqrt{17}\cos\theta=1$ tiene dos ángulos.</p>`,
+ chk:{p:'las coordenadas de la segunda dirección',vals:[-8/17,-15/17]},
+ ref:[[23,'14:01','D_u f = ∇f·u']]},
+
+{n:26,t:'Solo cuatro direcciones',s:'f = x^{1/3} y^{1/3}',
+ enun:R`<p>Sea $f(x,y)=x^{1/3}y^{1/3}$.</p>
+<p>(a) Usando la definición de derivada direccional, mostrar que $\frac{\partial f}{\partial x}(0,0)=\frac{\partial f}{\partial y}(0,0)=0$ y que $\pm\v{e}_1$, $\pm\v{e}_2$ son las únicas direcciones para las cuales existe la derivada direccional en el origen.<br>(b) Mostrar que $f$ es continua en $(0,0)$. ¿Es $f$ diferenciable en $(0,0)$?</p>`,
+ pistas:[R`<p>Con $\v{u}=(a,b)$: $\frac{f(ha,hb)}{h}=\frac{h^{2/3}(ab)^{1/3}}{h}=h^{-1/3}(ab)^{1/3}$.</p>`,
+  R`<p>Si $f$ fuera diferenciable, sería $D_{\v{u}}f(0,0)=\nabla f(0,0)\cdot\v{u}$ para todo $\v{u}$.</p>`],
+ sol:R`<p><b>(a)</b> Para $\v{u}=(a,b)$ unitario:
+$$\frac{f(ha,hb)-f(0,0)}{h}=\frac{(ha)^{1/3}(hb)^{1/3}}{h}=\frac{(ab)^{1/3}}{h^{1/3}}.$$
+Si $ab\neq0$, esto tiende a $\pm\infty$: no existe. Si $ab=0$ (es decir, $\v{u}=\pm\v{e}_1$ o $\pm\v{e}_2$), el cociente es $0$ y la derivada vale $0$. En particular, $f_x(0,0)=f_y(0,0)=0$.</p>
+<p><b>(b)</b> $|f(x,y)|=|x|^{1/3}|y|^{1/3}\le\rho^{2/3}\to0$ (con $\rho=|(x,y)|$): es continua. <b>No es diferenciable</b>: si lo fuera, existirían todas las derivadas direccionales y valdrían $\nabla f(0,0)\cdot\v{u}=0$, pero en las direcciones con $ab\neq0$ no existen.</p>`,
+ ref:[[23,'6:45','definición'],[23,'14:01','diferenciable ⇒ D_u f = ∇f·u']]},
+
+{n:27,t:'Todas las direcciones, pero no continua',s:'Las derivadas direccionales no alcanzan',
+ enun:R`<p>Consideremos la función $f(x,y)=\dfrac{x^3y}{x^6+y^2}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$. Probar que $f$ admite derivadas direccionales en el origen para todo vector unitario $\v{v}\in\R^2$. Sin embargo, $f$ tampoco es continua en el origen.</p>`,
+ pistas:[R`<p>$\frac{f(ta,tb)}{t}=\frac{t\,a^3b}{t^4a^6+b^2}$. Separá los casos $b\neq0$ y $b=0$.</p>`,R`<p>Para la continuidad, probá la curva $y=x^3$.</p>`],
+ sol:R`<p>Sea $\v{v}=(a,b)$ unitario. $\frac{f(ta,tb)-f(0,0)}{t}=\frac{t^4a^3b}{t(t^6a^6+t^2b^2)}=\frac{t\,a^3b}{t^4a^6+b^2}$.</p>
+<p>Si $b\neq0$, cuando $t\to0$ el denominador tiende a $b^2\neq0$ y el cociente a $0$: $D_{\v{v}}f(0,0)=0$. Si $b=0$, $f(ta,0)=0$ y también $D_{\v{v}}f(0,0)=0$. Existen todas.</p>
+<p>Pero sobre la curva $y=x^3$: $f(x,x^3)=\frac{x^6}{2x^6}=\frac12\neq0=f(0,0)$, así que $f$ no es continua en el origen (y por lo tanto tampoco es diferenciable).</p>`,
+ chk:{p:'el valor de f sobre la curva y = x³',vals:[0.5]},
+ ref:[[23,'6:45','definición de derivada direccional']]},
+
+{n:28,t:'Continua, con todas las direccionales, no diferenciable',s:'El último ejemplo',
+ enun:R`<p>Sea $f(x,y)=\dfrac{|x|\,y}{\sqrt{x^2+y^2}}$ si $(x,y)\neq(0,0)$, $f(0,0)=0$. Probar que en el origen $f$ es continua, admite todas las derivadas direccionales, pero $f$ no es diferenciable.</p>`,
+ pistas:[R`<p>Continuidad: $\frac{|x|}{\sqrt{x^2+y^2}}\le1$.</p>`,R`<p>$\frac{f(ta,tb)}{t}=\frac{|t||a|\,tb}{t\,|t|}=|a|\,b$. ¿Es eso igual a $\nabla f(0,0)\cdot(a,b)$?</p>`],
+ sol:R`<p><i>Continua</i>: $|f(x,y)|=\frac{|x|}{\sqrt{x^2+y^2}}|y|\le|y|\to0$ (cero por acotado).</p>
+<p><i>Direccionales</i>: para $\v{u}=(a,b)$ unitario, $\frac{f(ta,tb)}{t}=\frac{|t||a|\,tb}{t\,|t|\sqrt{a^2+b^2}}=|a|\,b$. Existen todas y $D_{\v{u}}f(0,0)=|a|\,b$. En particular $f_x(0,0)=0$ (con $(1,0)$) y $f_y(0,0)=0$ (con $(0,1)$).</p>
+<p><i>No diferenciable</i>: si lo fuera, $D_{\v{u}}f(0,0)=\nabla f(0,0)\cdot\v{u}=0$ para todo $\v{u}$. Pero con $\v{u}=\big(\frac{1}{\sqrt2},\frac{1}{\sqrt2}\big)$ da $\frac12\neq0$.</p>`,
+ chk:{p:'D_u f(0,0) con u = (1/√2, 1/√2)',vals:[0.5]},
+ ref:[[23,'14:01','diferenciable ⇒ D_u f = ∇f·u']]},
+
+{n:29,t:'Escalando una montaña',s:'Subir o bajar',
+ enun:R`<p>Supongamos que escalás una montaña cuya forma está dada por la ecuación $z=1000-0{,}005x^2-0{,}01y^2$ donde $x$, $y$ y $z$ se dan en metros y estás en el punto $(60,40,966)$. El eje de las $x$ positivas va hacia el este y el eje de las $y$ positivas va hacia el norte.</p>
+<p>(a) Si caminás hacia el sur, ¿empezarás a ascender o descender? ¿Cuál es la razón de cambio en esa dirección?<br>(b) ¿En qué dirección está la máxima pendiente? ¿Cuál es la razón de cambio en esa dirección?</p>`,
+ pistas:[R`<p>El sur es la dirección $(0,-1)$.</p>`,R`<p>$\nabla z=(-0{,}01x,\ -0{,}02y)$.</p>`],
+ sol:R`<p>$\nabla z(60,40)=(-0{,}6;\ -0{,}8)$.</p>
+<p><b>(a)</b> Hacia el sur, $\v{u}=(0,-1)$: $D_{\v{u}}z=(-0{,}6)\cdot0+(-0{,}8)(-1)=0{,}8\gt0$. Empezás a <b>ascender</b>, a razón de $0{,}8$ metros de altura por metro recorrido.</p>
+<p><b>(b)</b> En la dirección de $\nabla z$: $\frac{(-0{,}6;\ -0{,}8)}{1}=\big(-\frac35,-\frac45\big)$ (hacia el sudoeste, más al sur que al oeste). La razón de cambio es $|\nabla z(60,40)|=1$. ${go('viz-dir','mt','Ver la montaña')}</p>`,
+ chk:{p:'(a) y (b): las dos razones de cambio',vals:[0.8,1]},
+ ref:[[23,'32:32','la montaña y el tsunami']]},
+
+{n:30,t:'Un despeje que no es C¹',s:'Cuando el TFI no se aplica',
+ enun:R`<p>Sea $f:\R^2\to\R$ definida por $f(x,y)=x^2-y^3$. Mostrar que sobre la curva de nivel $f(x,y)=0$ podemos despejar $y$ en función de $x$ (i.e. $y=\phi(x)$). ¿Es $\phi$ de clase $C^1$ en un entorno del cero? ¿Puede aplicarse el teorema de la función implícita en el punto $(0,0)$?</p>`,
+ pistas:[R`<p>$y^3=x^2$ tiene una única solución real: $y=x^{2/3}$.</p>`,R`<p>Calculá $\phi'(x)$ para $x\neq0$: ¿qué pasa cerca de $0$? ¿Y cuánto vale $f_y(0,0)$?</p>`],
+ sol:R`<p>$x^2-y^3=0\iff y=\sqrt[3]{x^2}=x^{2/3}=\phi(x)$, para todo $x$ (la raíz cúbica es única). El conjunto de nivel es el gráfico de $\phi$.</p>
+<p>$\phi$ <b>no es $C^1$</b> cerca de $0$: para $x\neq0$, $\phi'(x)=\frac23x^{-1/3}$, que tiende a $\pm\infty$; y en $0$, $\frac{\phi(h)-\phi(0)}{h}=h^{-1/3}$ no tiene límite. El gráfico tiene un pico (una cúspide) en el origen.</p>
+<p>El TFI <b>no se puede aplicar</b>: $f_y=-3y^2$ y $f_y(0,0)=0$. (Tampoco $f_x(0,0)=0$.) No contradice nada: el teorema da una condición suficiente; acá hay despeje, pero no es $C^1$. ${go('viz-impl','e30','Ver la curva')}</p>`,
+ ref:[[24,'34:14','TFI'],[24,'31:10','la condición f_y ≠ 0']]},
+
+{n:31,t:'Conjuntos de nivel y despejes',s:'El TFI en tres ejemplos',
+ enun:R`<p>Para cada uno de los conjuntos de nivel $\mathcal{S}$ y los puntos $\v{a}$ dados a continuación</p>
+<p>(a) $\mathcal{S}=\{(x,y):\ f(x,y)=1\}$ con $f(x,y)=\frac14x^2-y^2$ y $\v{a}=(2,0)$,<br>(b) $\mathcal{S}=\{(x,y):\ g(x,y)=3\}$ con $g(x,y)=x^5+y^2+xy$ y $\v{a}=(1,1)$,<br>(c) $\mathcal{S}=\{(x,y,z):\ h(x,y,z)=0\}$ con $h(x,y,z)=x^3+2y^3+z^3-3xyz-2y-8$ y $\v{a}=(0,0,2)$,</p>
+<p>resolver los siguientes ítems: i. Mostrar que $\v{a}\in\mathcal{S}$. ii. Calcular las derivadas parciales de la función en el punto $\v{a}$. iii. Determinar si en un entorno del punto $\v{a}$ el conjunto de nivel resulta ser el gráfico de una función $\phi$. iv. Calcular la derivada o las derivadas parciales, según corresponda, de cada una de las funciones $\phi$ que quedan definidas en el ítem anterior.</p>`,
+ pistas:[R`<p>Para cada variable cuya derivada parcial no se anula en $\v{a}$, el TFI permite despejarla.</p>`,
+  R`<p>La derivada del despeje: menos la derivada respecto de la variable que derivo, dividido la derivada respecto de la variable que despejé.</p>`],
+ sol:R`<p><b>(a)</b> i. $f(2,0)=1$. ii. $f_x=\frac x2=1$, $f_y=-2y=0$. iii. Como $f_y(2,0)=0$, no se puede despejar $y=\phi(x)$ (de hecho, es el vértice de la hipérbola: para $x$ un poco mayor que $2$ hay dos valores de $y$). Pero $f_x(2,0)\neq0$: cerca de $\v{a}$ es el gráfico de $x=\psi(y)$. iv. $\psi'(0)=-\frac{f_y}{f_x}=0$. ${go('viz-impl','e31a','Ver (a)')}</p>
+<p><b>(b)</b> i. $g(1,1)=1+1+1=3$. ii. $g_x=5x^4+y=6$, $g_y=2y+x=3$. iii. Las dos no se anulan: se puede despejar $y=\phi(x)$ y también $x=\psi(y)$. iv. $\phi'(1)=-\frac{g_x}{g_y}=-2$ y $\psi'(1)=-\frac{g_y}{g_x}=-\frac12$. ${go('viz-impl','e31b','Ver (b)')}</p>
+<p><b>(c)</b> i. $h(0,0,2)=8-8=0$. ii. $h_x=3x^2-3yz=0$, $h_y=6y^2-3xz-2=-2$, $h_z=3z^2-3xy=12$. iii. Como $h_z\neq0$, cerca de $\v{a}$ es el gráfico de $z=\phi(x,y)$; como $h_y\neq0$, también de $y=\psi(x,z)$. No se puede asegurar $x$ en función de $(y,z)$, porque $h_x=0$. iv. $\phi_x(0,0)=-\frac{h_x}{h_z}=0$, $\phi_y(0,0)=-\frac{h_y}{h_z}=\frac16$; $\psi_x(0,2)=-\frac{h_x}{h_y}=0$, $\psi_z(0,2)=-\frac{h_z}{h_y}=6$.</p>`,
+ chk:{p:'(b): φ′(1)',vals:[-2]},
+ ref:[[24,'34:14','TFI'],[25,'13:59','TFI en tres variables']]},
+
+{n:32,t:'Despejar x',s:'TFI con la primera variable',
+ enun:R`<p>Sea $f:\R^3\to\R$ definida como $f(x,y,z)=x^3-2y^2+z^2$.</p>
+<p>(a) Demostrar que $f(x,y,z)=0$ define una función implícita $x=\varphi(y,z)$ en un entorno del punto $(1,1,1)$.<br>(b) Encontrar $\frac{\partial\varphi}{\partial y}(1,1)$ y $\frac{\partial\varphi}{\partial z}(1,1)$.</p>`,
+ pistas:[R`<p>Ahora la variable que se despeja es $x$: hace falta $f_x(1,1,1)\neq0$.</p>`],
+ sol:R`<p><b>(a)</b> $f$ es un polinomio ($C^1$), $f(1,1,1)=1-2+1=0$ y $f_x=3x^2$, $f_x(1,1,1)=3\neq0$. Por el TFI existe $x=\varphi(y,z)$, $C^1$, con $\varphi(1,1)=1$ y $f(\varphi(y,z),y,z)=0$.</p>
+<p><b>(b)</b> $f_y=-4y=-4$ y $f_z=2z=2$ en $(1,1,1)$:
+$$\frac{\partial\varphi}{\partial y}(1,1)=-\frac{f_y}{f_x}=\frac43,\qquad\frac{\partial\varphi}{\partial z}(1,1)=-\frac{f_z}{f_x}=-\frac23.$$</p>`,
+ chk:{p:'φ_y(1, 1) y φ_z(1, 1)',vals:[4/3,-2/3]},
+ ref:[[25,'13:59','TFI en tres variables'],[25,'29:28','la regla para acordarse']]},
+
+{n:33,t:'Plano tangente y recta normal',s:'Superficies implícitas',
+ enun:R`<p>Para cada una de las siguientes superficies de $\R^3$ determinar las ecuaciones del plano tangente y la recta normal a la superficie en el punto indicado.</p>
+<p class="items">(a) $2(x-2)^2+(y-1)^2+(z-3)^2=10$, $(3,3,5)$, &emsp; (b) $y=x^2-z^2$, $(4,7,3)$, &emsp; (c) $xy+yz+zx=5$, $(1,2,1)$.</p>`,
+ pistas:[R`<p>Escribí cada superficie como $F(x,y,z)=k$ y calculá $\nabla F$ en el punto: es el normal.</p>`,R`<p>En (b), $F(x,y,z)=x^2-z^2-y=0$.</p>`],
+ sol:R`<p>Plano: $\nabla F(P_0)\cdot(x-x_0,y-y_0,z-z_0)=0$. Recta normal: $\lambda\,\nabla F(P_0)+P_0$.</p>
+<p><b>(a)</b> $\nabla F=(4(x-2),\ 2(y-1),\ 2(z-3))=(4,4,4)$. Plano: $4(x-3)+4(y-3)+4(z-5)=0\iff x+y+z=11$. Recta: $\lambda(1,1,1)+(3,3,5)$. ${go('viz-surf','e33a','Ver (a)')}</p>
+<p><b>(b)</b> $F=x^2-z^2-y$, $\nabla F=(2x,-1,-2z)=(8,-1,-6)$. Plano: $8(x-4)-(y-7)-6(z-3)=0\iff8x-y-6z=7$. Recta: $\lambda(8,-1,-6)+(4,7,3)$.</p>
+<p><b>(c)</b> $\nabla F=(y+z,\ x+z,\ x+y)=(3,2,3)$. Plano: $3(x-1)+2(y-2)+3(z-1)=0\iff3x+2y+3z=10$. Recta: $\lambda(3,2,3)+(1,2,1)$.</p>`,
+ chk:{p:'(b): coeficientes a, b, c, d del plano ax + by + cz = d',vals:[8,-1,-6,7]},
+ ref:[[26,'29:07','plano tangente a una superficie de nivel']]},
+
+{n:34,t:'Dos superficies tangentes',s:'Mismo plano tangente',
+ enun:R`<p>Demostrar que el elipsoide $3x^2+2y^2+z^2=9$ y la esfera $x^2+y^2+z^2-8x-6y-8z+24=0$ son tangentes en el punto $(1,1,2)$ (es decir, que tienen el mismo plano tangente en ese punto).</p>`,
+ pistas:[R`<p>Verificá que el punto está en las dos y compará los gradientes: si son paralelos, los planos (que pasan por el mismo punto) coinciden.</p>`],
+ sol:R`<p>El punto está en las dos: $3+2+4=9$ y $1+1+4-8-6-16+24=0$.</p>
+<p>$\nabla F_1=(6x,4y,2z)=(6,4,4)$ y $\nabla F_2=(2x-8,\ 2y-6,\ 2z-8)=(-6,-4,-4)=-\nabla F_1$. Los vectores normales son paralelos y los planos pasan por el mismo punto, así que son el mismo plano:
+$$6(x-1)+4(y-1)+4(z-2)=0\iff3x+2y+2z=9.$$</p>`,
+ ref:[[26,'29:07','plano tangente a una superficie de nivel']]},
+
+{n:35,t:'Las rectas normales a una esfera',s:'Todas pasan por el centro',
+ enun:R`<p>Demostrar que toda recta normal a la esfera $x^2+y^2+z^2=r^2$ pasa por el centro de la esfera.</p>`,
+ pistas:[R`<p>$\nabla F(x_0,y_0,z_0)=2(x_0,y_0,z_0)$. ¿Para qué $\lambda$ la recta normal pasa por el origen?</p>`],
+ sol:R`<p>Sea $P_0=(x_0,y_0,z_0)$ en la esfera. Con $F=x^2+y^2+z^2$, $\nabla F(P_0)=2P_0\neq\v{0}$ (porque $|P_0|=r\gt0$). La recta normal es
+$$\lambda\cdot2P_0+P_0=(2\lambda+1)\,P_0,$$
+y con $\lambda=-\frac12$ da el origen, que es el centro. ${go('viz-surf','esf','Ver la esfera')}</p>
+<p class="hint">Geométricamente: el radio es perpendicular al plano tangente, como en la circunferencia.</p>`,
+ ref:[[26,'35:16','el ejemplo de la esfera']]}
+];
+window.G1EJ=(window.G1EJ||[]).concat(EJ);
+})();
+(function(){'use strict';
+const {$,$$,h,f}=window.G1;
+const IM=window.G1IMG||{};
+const EJ=window.G1EJ||[];
+const KEY=(window.A1&&window.A1.key)||'a1';
+const T=(v,t,txt)=>`<a class="t" data-v="${v}" data-t="${t}">${txt||t}</a>`;
+
+/* ---------- render ---------- */
+function parse(s){return s.split(/[;\s]+/).filter(Boolean).map(x=>parseFloat(x.replace(',','.')));}
+let done={};try{done=JSON.parse(localStorage.getItem(KEY+'-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem(KEY+'-done',JSON.stringify(done));}catch(e){}}
+function prog(){const n=Object.keys(done).filter(k=>done[k]).length;$('#ejprog').textContent='Hechos: '+n+' de '+EJ.length+' (se guarda en este navegador)';}
+
+function build(){const list=$('#ejlist');
+  EJ.forEach(e=>{
+    const d=h('details',{class:'ejc'+(done[e.n]?' done':''),id:'ej'+e.n});
+    const sum=h('summary',{},h('span',{class:'num'},e.n),h('span',{class:'tt'},h('b',{},e.t),h('span',{},e.s)));
+    const inn=h('div',{class:'in'});
+    inn.append(h('div',{class:'enun',html:e.enun}));
+    if(e.img&&IM[e.img])inn.append(h('img',{class:'fig',src:IM[e.img],alt:'Figura del ejercicio '+e.n}));
+    if(e.rev)inn.append(h('div',{class:'revnote',html:'<b>Revisar</b>'+e.rev}));
+    if(e.extra)inn.append(h('div',{html:e.extra}));
+    const pistas=h('div',{class:'pistas'});let k=0;
+    const bP=h('button',{type:'button'},'Dame una pista');
+    const bS=h('button',{type:'button'},'Ver resolución');
+    const sol=h('div',{class:'sol',hidden:'',html:'<b>Resolución</b>'+e.sol});
+    bP.addEventListener('click',()=>{if(k<e.pistas.length){pistas.append(h('div',{class:'pista',html:'<b>Pista '+(k+1)+' de '+e.pistas.length+'</b>'+e.pistas[k]}));k++;typeset(pistas);}
+      if(k>=e.pistas.length){bP.disabled=true;bP.textContent='No hay más pistas';}else bP.textContent='Otra pista ('+k+'/'+e.pistas.length+')';});
+    bS.addEventListener('click',()=>{sol.hidden=!sol.hidden;bS.textContent=sol.hidden?'Ver resolución':'Ocultar resolución';if(!sol.hidden)typeset(sol);});
+    const bD=h('button',{type:'button','aria-pressed':!!done[e.n]},done[e.n]?'Hecho ✓':'Marcar como hecho');
+    bD.addEventListener('click',()=>{done[e.n]=!done[e.n];save();d.classList.toggle('done',!!done[e.n]);bD.setAttribute('aria-pressed',!!done[e.n]);bD.textContent=done[e.n]?'Hecho ✓':'Marcar como hecho';prog();});
+    const refs=(e.ref||[]).map(r=>h('span',{html:T(r[0],r[1],(((window.A1||{}).vlab||{})[r[0]]||('Clase '+r[0]))+' · '+r[1])+' <span class="c-mut" style="font-size:14px">'+r[2]+'</span>'}));
+    inn.append(h('div',{class:'act'},bP,bS,bD),pistas);
+    if(e.chk){const inp=h('input',{type:'text',inputmode:'text','aria-label':e.chk.p,placeholder:'ej.: 1,5 2'});const res=h('span',{class:'res'});
+      const go=()=>{const v=parse(inp.value);if(!v.length||v.some(isNaN)){res.className='res bad';res.textContent='Escribí números separados por espacio o ";".';return;}
+        if(v.length!==e.chk.vals.length){res.className='res bad';res.textContent='Faltan o sobran valores: se esperan '+e.chk.vals.length+'.';return;}
+        const bad=[];e.chk.vals.forEach((t,i)=>{if(Math.abs(v[i]-t)>Math.max(.006*Math.abs(t),.015))bad.push(i+1);});
+        if(!bad.length){res.className='res ok';res.textContent='Correcto.';}else{res.className='res bad';res.textContent='No coinciden los valores n.º '+bad.join(', ')+'. Revisá esas cuentas.';}};
+      inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+      inn.append(h('div',{class:'chk'},h('span',{},'Comprobar: '+e.chk.p),inp,h('button',{type:'button',onclick:go},'Comprobar'),res));}
+    inn.append(sol);
+    if(refs.length){const r=h('div',{class:'meta',style:'margin-top:8px'},h('span',{},'Teoría relacionada:'),...refs);inn.append(r);}
+    d.append(sum,inn);list.append(d);});
+  prog();}
+function fixWide(root){(root||document).querySelectorAll('mjx-container:not([display="true"])').forEach(m=>{m.classList.remove('wide');const p=m.parentElement;if(p&&m.getBoundingClientRect().width>p.getBoundingClientRect().width+1)m.classList.add('wide');});}
+function typeset(el){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>fixWide(el)).catch(()=>{});}
+window.G1ej={build,typeset,fixWide};
+})();
+(function(){'use strict';
+const {$,$$,h}=window.G1;const V=window.G1V;const CFG=window.A1||{};const VID=CFG.vid||{};const QZ=CFG.quiz||{};const KEY=CFG.key||'a1';
+
+function buildQuiz(id,data){const host=$('#'+id);if(!host)return;let score=0,ans=0;const sc=h('span',{class:'c-mut',style:'font:600 13.5px var(--f-mono)'},'');
+  const head=h('div',{class:'qh'},h('b',{},data.t),sc,h('button',{type:'button',onclick:()=>{host.textContent='';buildQuiz(id,data);window.G1ej.typeset(host);}},'Reiniciar'));
+  host.append(head);const upd=()=>{sc.textContent=ans?(score+' de '+data.qs.length+' correctas'):'';};
+  data.qs.forEach((q,qi)=>{const o=h('div',{class:'o'});const box=h('div',{class:'q'},h('div',{class:'p',html:(qi+1)+'. '+q.p}),o);let why=null;
+    const ord=q.o.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+    ord.forEach(i=>{const t=q.o[i];const b=h('button',{type:'button',html:t});b.dataset.k=i;b.addEventListener('click',()=>{if(why)return;ans++;const ok=i===q.c;if(ok)score++;b.classList.add(ok?'right':'wrong');if(!ok)o.querySelector('[data-k="'+q.c+'"]').classList.add('right');
+      why=h('div',{class:'why',html:'<b class="'+(ok?'ok':'bad')+'">'+(ok?'Correcto. ':'No. ')+'</b>'+q.w});box.append(why);window.G1ej.typeset(box);upd();});o.append(b);});host.append(box);});
+}
+
+/* ---------- vínculos a YouTube ---------- */
+function linkify(){$$('a.t[data-v]').forEach(a=>{const [m,s]=a.dataset.t.split(':').map(Number),sec=m*60+s;a.href='https://youtu.be/'+VID[a.dataset.v]+'?t='+sec;a.target='_blank';const f=a.firstChild;if(f&&f.nodeType===3&&/^\d+:\d\d/.test(f.nodeValue))f.nodeValue=f.nodeValue.replace(/^(\d+:\d\d)/,((CFG.vlab&&CFG.vlab[a.dataset.v])||('Cl. '+a.dataset.v))+' · $1');a.rel='noopener';a.title='Abrir el video en '+a.dataset.t;});}
+
+/* ---------- barra de herramientas, tema, navegación ---------- */
+function ui(){
+  document.addEventListener('click',e=>{const b=e.target.closest('button.go');if(!b)return;const api=(window.A1API||{})[b.dataset.viz];const el=document.getElementById(b.dataset.viz);
+    if(api&&api.set)api.set(b.dataset.p);if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('toggle',e=>{if(e.target.open)window.G1ej.fixWide(e.target);},true);
+  $('#b-open').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=true);window.G1ej.fixWide(document);});
+  $('#b-close').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=false);});
+  const br=$('#b-rev');br.addEventListener('click',()=>{const on=br.getAttribute('aria-pressed')!=='true';br.setAttribute('aria-pressed',on);document.body.classList.toggle('no-rev',!on);try{localStorage.setItem(KEY+'-rev',on?'1':'0');}catch(e){}});
+  try{if(localStorage.getItem(KEY+'-rev')==='0'){br.setAttribute('aria-pressed','false');document.body.classList.add('no-rev');}}catch(e){}
+  const bt=$('#b-theme');let mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+  const apply=()=>{const r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];};
+  bt.addEventListener('click',()=>{mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();
+  const links=$$('#nav a'),secs=links.map(a=>$(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));}
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{const id=a.getAttribute('href');if(id==='#ejercicios'){}}));
+}
+
+function init(){
+  window.G1ej.build();
+  const map=CFG.viz||{};
+  Object.keys(map).forEach(id=>{const el=$('#'+id);if(!el)return;try{V[map[id]](el);}catch(err){console.error('viz',id,err);el.append(h('p',{class:'hint'},'No se pudo cargar esta figura.'));}});
+  Object.keys(QZ).forEach(id=>buildQuiz(id,QZ[id]));
+  linkify();ui();
+  const go=()=>{if(window.MathJax&&MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(()=>MathJax.typesetPromise()).then(()=>{window.G1ej.fixWide(document);let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>window.G1ej.fixWide(document),200);});}).catch(e=>console.error(e));};
+  if(document.readyState==='complete')go();else window.addEventListener('load',go);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+</body>
+</html>

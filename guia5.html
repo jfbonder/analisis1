@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Guía 5</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<div class="shell">
+<aside class="side" aria-label="Índice">
+  <a class="volver" href="index.html" style="display:block;margin:0 0 .6rem;font-size:.85rem;color:var(--accent,#2b59c3);text-decoration:none">&larr; Portada</a><div class="brand">Análisis 1 · FCEN-UBA</div>
+  <h2>Guía 5</h2>
+  <nav id="nav">
+    <a href="#inicio" class="on">Inicio</a>
+    <a href="#t1">Clase 27<small>Taylor en una variable</small></a>
+    <a href="#t2">Clase 28<small>Taylor en dos variables</small></a>
+    <div class="sep"></div>
+    <a href="#ejercicios">Ejercicios guiados<small>Los 15 de la guía y uno más</small></a>
+  </nav>
+</aside>
+<main>
+<div class="tools" role="toolbar" aria-label="Opciones">
+  <button id="b-open">Abrir todo</button>
+  <button id="b-close">Cerrar todo</button>
+  <span class="sp"></span>
+  <button id="b-rev" aria-pressed="true" title="Mostrar u ocultar las marcas de revisión (para el docente)">Marcas de revisión</button>
+  <button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button>
+</div>
+
+<section id="inicio" class="hero">
+  <div class="kick">Análisis I · Matemática I · Análisis II (C) · Análisis Matemático I (Q)</div>
+  <h1>Guía 5: Polinomio de Taylor</h1>
+  <p class="lead">Aproximar funciones generales por funciones simples, los polinomios. La recta tangente fue el primer ejemplo; ahora le agregamos correcciones de grado 2, 3, … en una variable y la corrección cuadrática en dos variables, con la fórmula de Lagrange para estimar el error.</p>
+  <div class="map">
+    <a href="#t1"><em>Ejercicios 1 a 8</em><b>Clase 27</b><span>Polinomio de Taylor de orden $n$, resto, fórmula de Lagrange.</span></a>
+    <a href="#t2"><em>Ejercicios 9 a 15</em><b>Clase 28</b><span>Taylor de orden 2 en dos variables, matriz hessiana, resto de Lagrange.</span></a>
+  </div>
+  <div class="legend">
+    <span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+    <span><span class="tag vid">Video</span> se dijo en el video pero no está en la hoja</span>
+    <span><span class="tag add">Agregado</span> no se dijo en clase</span>
+    <span><span class="tag rev">Revisar</span> dudoso, a confirmar por el docente</span>
+    <span><a class="t" data-v="27" data-t="0:00">m:ss</a> abre el video en ese minuto</span>
+  </div>
+  <div class="revnote"><b>Revisar</b>Hay dos versiones de la práctica en la carpeta: "practica5-nueva" (11 ejercicios, con el resto de Lagrange en dos variables y $x^y$) y "practica-taylor-nueva" (15 ejercicios, con más ejercicios de una variable). Usé la segunda, que parece la más nueva. ¿Es la correcta?</div>
+</section>
+
+<!-- ======================= CLASE 27 ======================= -->
+<section class="clase" id="t1">
+<header>
+  <div class="kick">CLASE 27 · ejercicios 1 a 8</div>
+  <h2>Taylor en una variable</h2>
+  <div class="meta"><a class="t" data-v="27" data-t="0:00">Clase 27 (52 min)</a><span>Hoja: "Polinomio de Taylor" (Teórica 17), páginas 1 a 4.</span></div>
+</header>
+
+<h3 class="b">La idea: mejorar la recta tangente <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="27" data-t="0:35">0:35</a></h3>
+<p>La idea de Taylor es aproximar funciones generales por funciones simples: los polinomios. El primer ejemplo ya lo vimos sin ponerle nombre: la recta tangente $\ell(x)=f(a)+f'(a)(x-a)$, que aproxima bien a $f$ cerca de $a$: el resto $r(x)=f(x)-\ell(x)$ cumple $\lim_{x\to a}\frac{r(x)}{x-a}=0$. <a class="t" data-v="27" data-t="1:36">1:36</a> <a class="t" data-v="27" data-t="4:43">4:43</a></p>
+<p>Pero la recta "captura la inclinación de la función, no cómo se curva". Para mejorar, le sumamos a la recta tangente una <b>corrección cuadrática</b>: <a class="t" data-v="27" data-t="6:46">6:46</a> <a class="t" data-v="27" data-t="9:49">9:49</a></p>
+$$P_2(x)=\underbrace{f(a)+f'(a)(x-a)}_{P_1(x)}+\alpha\,(x-a)^2.$$
+<p>¿Cómo elegir $\alpha$? Queremos que el error $R_2(x)=f(x)-P_2(x)$ sea de un orden de magnitud más chico que el de la recta: <a class="t" data-v="27" data-t="12:50">12:50</a> <a class="t" data-v="27" data-t="14:56">14:56</a></p>
+$$\lim_{x\to a}\frac{R_2(x)}{(x-a)^2}=0.$$
+<p class="hint"><span class="tag vid">Video</span> "Si $x-a$ es $0{,}1$, $(x-a)^2$ es $0{,}01$: es un error de un orden de magnitud más chico."</p>
+<details class="dem" open><summary>Cuánto vale $\alpha$: dos veces L'Hôpital <a class="t" data-v="27" data-t="15:57">15:57</a></summary><div class="in">
+<p>El límite $\lim_{x\to a}\frac{f(x)-[f(a)+f'(a)(x-a)+\alpha(x-a)^2]}{(x-a)^2}$ es $\frac00$. Aplicando L'Hôpital,
+$$=\lim_{x\to a}\frac{f'(x)-f'(a)-2\alpha(x-a)}{2(x-a)},$$
+que vuelve a ser $\frac00$; aplicando otra vez,
+$$=\lim_{x\to a}\frac{f''(x)-2\alpha}{2}=\frac{f''(a)-2\alpha}{2}$$
+(si $f''$ es continua). Esto vale $0$ si y solo si $\alpha=\frac{f''(a)}{2}$: hay un único valor que sirve. <a class="t" data-v="27" data-t="19:00">19:00</a> <a class="t" data-v="27" data-t="21:06">21:06</a> <a class="t" data-v="27" data-t="22:07">22:07</a></p></div></details>
+
+<h3 class="b">El polinomio de Taylor de orden $n$ <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="27" data-t="35:31">35:31</a></h3>
+<div class="box def"><span class="lab">Definición</span>
+<p>Sea $f:I\to\R$, $n$ veces derivable en el intervalo abierto $I$ (existen $f',f'',\dots,f^{(n)}$), y $a\in I$. El <b>polinomio de Taylor de orden $n$</b> (grado $n$) de $f$ en $a$ es
+$$P_n(x)=f(a)+f'(a)(x-a)+\frac{f''(a)}{2}(x-a)^2+\frac{f'''(a)}{3!}(x-a)^3+\cdots+\frac{f^{(n)}(a)}{n!}(x-a)^n,$$
+con $n!=n\cdot(n-1)\cdots2\cdot1$. Si $a=0$ se lo llama <b>polinomio de Mac Laurin</b>.</p>
+<p class="hint">$P_n$ aproxima a $f$ cerca de $a$. Con $n=1$ es la recta tangente. <span class="tag vid">Video</span> Los factoriales "son lo que sale cuando uno hace las cuentas de L'Hôpital". <a class="t" data-v="27" data-t="38:37">38:37</a></p></div>
+<div class="box thm"><span class="lab">Teorema <span class="tag vid">Video</span> <a class="t" data-v="27" data-t="24:11">24:11</a> <a class="t" data-v="27" data-t="39:37">39:37</a></span>
+<p>Si $f$ es de clase $C^k$ en $I$ (continua, con derivadas continuas hasta la de orden $k$), entonces
+$$\lim_{x\to a}\frac{f(x)-P_k(x)}{(x-a)^k}=0.$$</p>
+<p class="hint">"Cada vez que agrego un término mejoro el error en un orden de magnitud: es como tener un dígito más preciso." La demostración es aplicar L'Hôpital $k$ veces. <a class="t" data-v="27" data-t="40:39">40:39</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span></span>
+<p>$f(x)=\operatorname{sen}x$, $a=0$, $n=4$. $f'=\cos x$, $f''=-\operatorname{sen}x$, $f'''=-\cos x$, $f^{(4)}=\operatorname{sen}x$; en $0$: $0,1,0,-1,0$. Entonces
+$$P_4(x)=x-\frac16x^3.$$</p></div>
+<div class="box ej"><span class="lab">Ejemplo: $\sqrt x$ en $a=1$ <span class="tag vid">Video</span> <a class="t" data-v="27" data-t="26:11">26:11</a></span>
+<p>$f(1)=1$, $f'(x)=\frac{1}{2\sqrt x}$, $f'(1)=\frac12$: $P_1(x)=1+\frac12(x-1)$, y $\sqrt{1{,}1}\approx1{,}05$ (la calculadora da $1{,}0488\ldots$). Con $f''(x)=-\frac{1}{4}x^{-3/2}$, $f''(1)=-\frac14$:
+$$P_2(x)=1+\tfrac12(x-1)-\tfrac18(x-1)^2,\qquad\sqrt{1{,}1}\approx1{,}05-\tfrac18\cdot0{,}01=1{,}04875.$$
+<a class="t" data-v="27" data-t="28:18">28:18</a> <a class="t" data-v="27" data-t="31:27">31:27</a> <a class="t" data-v="27" data-t="32:28">32:28</a></p></div>
+<div class="box ej"><span class="lab">Ejemplos: $\cos x$ y $e^x$ en $a=0$ <span class="tag vid">Video</span> <a class="t" data-v="27" data-t="33:29">33:29</a></span>
+<p>$\cos0=1$, $-\operatorname{sen}0=0$, $-\cos0=-1$: $P_2(x)=1-\frac{x^2}{2}$. Para $e^x$, todas las derivadas son $e^x$ y valen $1$ en $0$:
+$$P_k(x)=1+x+\frac{x^2}{2}+\frac{x^3}{3!}+\cdots+\frac{x^k}{k!}.$$
+<a class="t" data-v="27" data-t="40:39">40:39</a> <a class="t" data-v="27" data-t="42:42">42:42</a></p></div>
+<div class="viz" id="viz-tay1"></div>
+<p class="hint"><span class="tag vid">Video</span> En GeoGebra: <code>PolinomioTaylor(f, a, n)</code>, con un deslizador para $n$. Con el coseno, los grados 2 y 3 dan el mismo polinomio (porque $f'''(0)=0$), y lo mismo 4 y 5. <a class="t" data-v="27" data-t="46:46">46:46</a> <a class="t" data-v="27" data-t="49:52">49:52</a></p>
+
+<h3 class="b">Propiedades y el resto <span class="tags"><span class="tag piz">Pizarrón</span></span></h3>
+<div class="box obs"><span class="lab c-blue">Propiedades del polinomio de Taylor de orden $n$ en $a$</span>
+<p>1) $P_n$ es el único polinomio $Q$ de grado a lo sumo $n$ tal que $f(a)=Q(a)$, $f'(a)=Q'(a)$, …, $f^{(n)}(a)=Q^{(n)}(a)$.</p>
+<p>2) $P_n$ es el único polinomio $Q$ de grado $\le n$ tal que $\lim_{x\to a}\frac{f(x)-Q(x)}{(x-a)^n}=0$.</p>
+<p>Se llama <b>resto</b> (o error) de orden $n$ a $R_n(x)=f(x)-P_n(x)$; la propiedad 2 dice $\lim_{x\to a}\frac{R_n(x)}{(x-a)^n}=0$.</p></div>
+<div class="box thm"><span class="lab">3) Fórmula de Lagrange del resto</span>
+<p>Si $f:I\to\R$ es $n+1$ veces derivable en $I$, entonces
+$$R_n(x)=f(x)-P_n(x)=\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1},$$
+con $c$ (desconocido) entre $a$ y $x$.</p>
+<p class="hint">La demostración está en el "Anexo de las Teóricas 17 y 18" (<a href="anexo5.html">Anexo 5</a>), junto con la de dos variables. <span class="tag add">Agregado</span> Con $n=0$ es el teorema del valor medio: $f(x)-f(a)=f'(c)(x-a)$.</p></div>
+<div class="box ej"><span class="lab">Ejemplo: calcular aproximadamente $\operatorname{sen}\frac12$</span>
+<p>Con $P_4(x)=x-\frac{x^3}{6}$: $\operatorname{sen}\frac12\approx P_4\big(\frac12\big)=\frac12-\frac{1}{48}=\frac{23}{48}$. El resto es $R_4(x)=\frac{f^{(5)}(c)}{5!}x^5=\frac{\cos c}{120}x^5$, y como $0\lt c\lt\frac12$ y $|\cos c|\le1$,
+$$\Big|R_4\big(\tfrac12\big)\Big|=\frac{|\cos c|}{120}\cdot\frac{1}{32}\le\frac{1}{120\cdot32}=\frac{1}{3840}\approx0{,}00026.$$</p>
+<p class="hint"><span class="tag add">Agregado</span> El valor exacto es $\operatorname{sen}\frac12=0{,}479426\ldots$ y $\frac{23}{48}=0{,}479167$: el error real es $0{,}00026$, justo debajo de la cota.</p></div>
+<div class="quiz" id="quiz-1"></div>
+</section>
+
+<!-- ======================= CLASE 28 ======================= -->
+<section class="clase" id="t2">
+<header>
+  <div class="kick">CLASE 28 · ejercicios 9 a 15</div>
+  <h2>Taylor en dos variables</h2>
+  <div class="meta"><a class="t" data-v="28" data-t="0:00">Clase 28 (59 min)</a><span>Hojas: "Polinomio de Taylor" (Teórica 17, págs. 4 a 9) y "Polinomio de Taylor, parte 2" (Teórica 18).</span></div>
+</header>
+
+<h3 class="b">Qué buscamos <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="28" data-t="0:35">0:35</a></h3>
+<p>El plano tangente es la aproximación "de orden 1": $L(x,y)=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b)$ es un polinomio de grado 1 en $x,y$. El <b>grado</b> de un monomio es la suma de sus exponentes ($xy$ tiene grado 2, $x^5y$ tiene grado 6), y el de un polinomio es el mayor grado de sus monomios. Buscamos un polinomio $Q$ de grado $\le2$ ("de orden 2") tal que <a class="t" data-v="28" data-t="3:38">3:38</a> <a class="t" data-v="28" data-t="4:39">4:39</a> <a class="t" data-v="28" data-t="6:40">6:40</a></p>
+$$\lim_{(x,y)\to(a,b)}\frac{f(x,y)-Q(x,y)}{\|(x,y)-(a,b)\|^2}=0.$$
+
+<h3 class="b">Cómo se deduce: un corte de una variable <span class="tags"><span class="tag vid">Video</span></span> <a class="t" data-v="28" data-t="8:42">8:42</a></h3>
+<p>Como tantas veces, nos remitimos a una variable. Miramos $f$ a lo largo del segmento que une $(a,b)$ con $(x,y)$:
+$$\mathbf r(t)=t\,(x,y)+(1-t)(a,b)=t\,(x-a,\ y-b)+(a,b),\qquad g(t)=f(\mathbf r(t)),\quad t\in[0,1].$$
+$g(0)=f(a,b)$ y $g(1)=f(x,y)$. Usando Taylor de orden 2 para $g$ en $0$, evaluado en $t=1$: $f(x,y)=g(1)\approx g(0)+g'(0)+\frac{g''(0)}{2}$. <a class="t" data-v="28" data-t="10:43">10:43</a> <a class="t" data-v="28" data-t="13:49">13:49</a></p>
+<p>Con la regla de la cadena, $g'(t)=f_x(\mathbf r(t))(x-a)+f_y(\mathbf r(t))(y-b)$, y derivando otra vez,
+$$g''(t)=\big[f_{xx}(\mathbf r(t))(x-a)+f_{xy}(\mathbf r(t))(y-b)\big](x-a)+\big[f_{yx}(\mathbf r(t))(x-a)+f_{yy}(\mathbf r(t))(y-b)\big](y-b).$$
+<a class="t" data-v="28" data-t="17:56">17:56</a> <a class="t" data-v="28" data-t="19:00">19:00</a></p>
+<p>En $t=0$, $\mathbf r(0)=(a,b)$: $g(0)+g'(0)$ es el plano tangente, y $\frac{g''(0)}{2}$ son todos los términos de grado 2. Si $f$ es $C^2$, las cruzadas coinciden y quedan tres términos. <a class="t" data-v="28" data-t="23:03">23:03</a> <a class="t" data-v="28" data-t="28:12">28:12</a></p>
+<div class="box def"><span class="lab">Polinomio de Taylor de orden 2 <span class="tag piz">Pizarrón</span></span>
+<p>Sea $f=f(x,y)$, $f:D\to\R$, de clase $C^2$ en $D$ (disco abierto centrado en $P=(a,b)$): existen $f_x,f_y,f_{xx},f_{xy}=f_{yx},f_{yy}$ en $D$ y son todas continuas. El polinomio de Taylor de orden 2 de $f$ en torno a $P$ es
+$$P_2(x,y)=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b)+\tfrac12f_{xx}(a,b)(x-a)^2+f_{xy}(a,b)(x-a)(y-b)+\tfrac12f_{yy}(a,b)(y-b)^2.$$</p>
+<p class="hint"><span class="tag vid">Video</span> Para acordarse: plano tangente más un medio de todas las derivadas segundas. Si se deriva dos veces respecto de $x$, va $(x-a)$ dos veces; la cruzada aparece dos veces ($f_{xy}$ y $f_{yx}$), cada una con $\frac12$, y por eso queda sin el $\frac12$. <a class="t" data-v="28" data-t="29:12">29:12</a> <a class="t" data-v="28" data-t="30:12">30:12</a></p></div>
+<div class="viz" id="viz-tay2"></div>
+<div class="box ej"><span class="lab">Ejemplo: $e^{x+y}$ en $(0,0)$ <span class="tag vid">Video</span> <a class="t" data-v="28" data-t="31:14">31:14</a></span>
+<p>Todas las derivadas, de cualquier orden, son $e^{x+y}$, y valen $1$ en el origen. Entonces $P_1(x,y)=1+x+y$ (el plano tangente) y
+$$P_2(x,y)=1+x+y+\tfrac12x^2+xy+\tfrac12y^2.$$
+<a class="t" data-v="28" data-t="34:16">34:16</a> <a class="t" data-v="28" data-t="35:16">35:16</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span></span>
+<p>$f(x,y)=x^{1/2}+xy+y^{1/2}$, $P=(1,4)$, $n=2$. $f_x=\frac12x^{-1/2}+y$, $f_y=x+\frac12y^{-1/2}$, $f_{xx}=-\frac14x^{-3/2}$, $f_{xy}=1=f_{yx}$, $f_{yy}=-\frac14y^{-3/2}$, continuas en un disco alrededor de $(1,4)$. En $P$: $f=7$, $f_x=\frac92$, $f_y=\frac54$, $f_{xx}=-\frac14$, $f_{xy}=1$, $f_{yy}=-\frac{1}{32}$:
+$$P_2(x,y)=7+\tfrac92(x-1)+\tfrac54(y-4)+\tfrac12\big(-\tfrac14\big)(x-1)^2+\tfrac12\big(-\tfrac{1}{32}\big)(y-4)^2+(x-1)(y-4).$$
+Con $(x,y)=(1{,}1;\ 3{,}8)$: $P_2=7{,}178125$, y $f(1{,}1;\ 3{,}8)=7{,}178167\ldots$</p></div>
+<div class="box ej"><span class="lab">Ejemplo de la clase <span class="tag vid">Video</span> <a class="t" data-v="28" data-t="43:57">43:57</a></span>
+<p>$f(x,y)=\ln\big(1+(x-1)y\big)$ en $(1,0)$; aproximar $f(1{,}1;\ -0{,}2)$. Con $u=1+(x-1)y$: $f_x=\frac yu$, $f_y=\frac{x-1}{u}$, $f_{xx}=-\frac{y^2}{u^2}$, $f_{xy}=\frac{1}{u^2}$, $f_{yy}=-\frac{(x-1)^2}{u^2}$. En $(1,0)$: $f=0$, $f_x=f_y=0$, $f_{xx}=0$, $f_{xy}=1$, $f_{yy}=0$. Entonces el plano tangente es $z=0$ y
+$$P_2(x,y)=(x-1)\,y.$$
+<span class="tag vid">Video</span> "El plano tangente, si bien es la mejor aproximación de orden 1, no da mucha información." Con $P_2$: $f(1{,}1;\ -0{,}2)\approx0{,}1\cdot(-0{,}2)=-0{,}02$, y $\ln(0{,}98)=-0{,}0202\ldots$ <a class="t" data-v="28" data-t="48:20">48:20</a> <a class="t" data-v="28" data-t="50:52">50:52</a> <a class="t" data-v="28" data-t="52:24">52:24</a></p></div>
+
+<h3 class="b">Propiedades <span class="tags"><span class="tag piz">Pizarrón</span></span> <a class="t" data-v="28" data-t="36:18">36:18</a></h3>
+<div class="box obs"><span class="lab c-blue">Propiedades de $P_2$</span>
+<p>1) $\displaystyle\lim_{(x,y)\to(a,b)}\frac{f(x,y)-P_2(x,y)}{\|(x,y)-(a,b)\|^2}=0$, y $P_2$ es el único polinomio de grado $\le2$ con esa propiedad.</p>
+<p>2) $P_2$ es el único polinomio $Q$ de grado $\le2$ cuyo valor y cuyas derivadas hasta orden 2 coinciden con las de $f$ en $P$: $Q(P)=f(P)$, $Q_x(P)=f_x(P)$, $Q_y(P)=f_y(P)$, $Q_{xx}(P)=f_{xx}(P)$, $Q_{xy}(P)=f_{xy}(P)$, $Q_{yy}(P)=f_{yy}(P)$.</p>
+<p class="hint">Vinculado a $n=1$: $\lim\frac{f-P_1}{\|(x,y)-(a,b)\|}=0$ es exactamente que $f$ sea diferenciable en $(a,b)$. <span class="tag vid">Video</span> "El polinomio está copiando la curvatura que tiene la función en ese punto." <a class="t" data-v="28" data-t="40:32">40:32</a> <a class="t" data-v="28" data-t="42:42">42:42</a></p></div>
+<div class="box ej"><span class="lab">Ejemplo <span class="tag piz">Pizarrón</span></span>
+<p>Comprobar que $\displaystyle\lim_{(x,y)\to(1,0)}\frac{x\ln(1+y)-xy+\frac12y^2}{(x-1)^2+y^2}=0$.</p>
+<p>Sea $f(x,y)=x\ln(1+y)$ (debe ser $y\gt-1$), $P=(1,0)$. $f_x=\ln(1+y)$, $f_y=\frac{x}{1+y}$, $f_{xx}=0$, $f_{xy}=\frac{1}{1+y}$, $f_{yy}=-\frac{x}{(1+y)^2}$. En $(1,0)$: $f=0$, $f_x=0$, $f_y=1$, $f_{xx}=0$, $f_{xy}=1$, $f_{yy}=-1$. Entonces
+$$P_2(x,y)=y+(x-1)y-\tfrac12y^2=xy-\tfrac12y^2,$$
+y el límite pedido es exactamente $\lim\frac{f-P_2}{\|(x,y)-(1,0)\|^2}$, que vale $0$ por la propiedad 1.</p></div>
+
+<h3 class="b">La matriz hessiana <span class="tags"><span class="tag piz">Pizarrón</span></span></h3>
+<div class="box def"><span class="lab">Hessiana</span>
+<p>Si $f$ es $C^2$ en un disco centrado en $P$, se llama <b>matriz hessiana</b> de $f$ en $P$ a
+$$Hf(P)=\begin{pmatrix}f_{xx}(P)&f_{xy}(P)\\f_{yx}(P)&f_{yy}(P)\end{pmatrix};\qquad\text{si }f=f(x,y,z):\ Hf(P)=\begin{pmatrix}f_{xx}&f_{xy}&f_{xz}\\f_{yx}&f_{yy}&f_{yz}\\f_{zx}&f_{zy}&f_{zz}\end{pmatrix}(P).$$
+Con ella, la fórmula se abrevia:
+$$P_2(x,y)=f(P)+\nabla f(P)\cdot(x-a,\ y-b)+\tfrac12\,(x-a\ \ y-b)\,Hf(a,b)\begin{pmatrix}x-a\\y-b\end{pmatrix}.$$
+En tres variables es igual, con $(x-a,y-b,z-c)$.</p></div>
+
+<h3 class="b">El resto de Lagrange en dos variables <span class="tags"><span class="tag piz">Pizarrón</span></span></h3>
+<p class="hint">Esta parte está en la hoja de la Teórica 18; en la Clase 28 no se desarrolla.</p>
+<div class="box thm"><span class="lab">Fórmula de Lagrange del resto $R_2$</span>
+<p>Sea $f=f(x,y)$ de clase $C^3$ en un disco $D$ centrado en $P=(a,b)$ (existen y son continuas en $D$ todas las derivadas parciales de orden 3), y $R_2(x,y)=f(x,y)-P_2(x,y)$. En el segmento de extremos $(a,b)$ y $(x,y)$ hay un punto $Q=(c,d)$ (desconocido) tal que
+$$R_2(x,y)=\frac{f_{xxx}(Q)}{6}(x-a)^3+\frac{f_{xxy}(Q)}{2}(x-a)^2(y-b)+\frac{f_{xyy}(Q)}{2}(x-a)(y-b)^2+\frac{f_{yyy}(Q)}{6}(y-b)^3.$$</p></div>
+<div class="box obs"><span class="lab c-blue">Observaciones sobre esta fórmula</span>
+<p>1) Aparecen todas las derivadas de orden 3, algunas escondidas: $f_{xxy}(Q)=f_{xyx}(Q)=f_{yxx}(Q)$, y lo mismo con $f_{yyx}$, $f_{yxy}$, $f_{xyy}$.</p>
+<p>2) Todos los términos tienen grado 3. Por eso $\frac{R_2(x,y)}{\|(x,y)-(a,b)\|^2}$ es una suma de términos de grado 3 sobre $(x-a)^2+(y-b)^2$, y con técnicas básicas de límites tiende a $0$.</p>
+<p>3) $Q=(c,d)$, entre $(x,y)$ y $(a,b)$, es el análogo del valor intermedio $c$ entre $a$ y $x$ en la fórmula de una variable.</p></div>
+<div class="box ej"><span class="lab">Ejemplo</span>
+<p>Hallar $P_2$ y la fórmula de Lagrange del resto para $f(x,y)=x^{7/2}y^{1/3}$, $P=(1,1)$, y aproximar $(0{,}9)^{7/2}(1{,}2)^{1/3}$.</p>
+<p>$f(1,1)=1$; $f_x=\frac72x^{5/2}y^{1/3}$, $f_y=\frac13x^{7/2}y^{-2/3}$; $f_{xx}=\frac{35}{4}x^{3/2}y^{1/3}$, $f_{xy}=\frac76x^{5/2}y^{-2/3}$, $f_{yy}=-\frac29x^{7/2}y^{-5/3}$. En $(1,1)$:
+$$P_2(x,y)=1+\tfrac72(x-1)+\tfrac13(y-1)+\tfrac12\cdot\tfrac{35}{4}(x-1)^2+\tfrac76(x-1)(y-1)+\tfrac12\big(-\tfrac29\big)(y-1)^2.$$
+Las terceras: $f_{xxx}=\frac{105}{8}x^{1/2}y^{1/3}$, $f_{xxy}=\frac{35}{12}x^{3/2}y^{-2/3}$, $f_{xyy}=-\frac79x^{5/2}y^{-5/3}$, $f_{yyy}=\frac{10}{27}x^{7/2}y^{-8/3}$, continuas en un disco alrededor de $(1,1)$. Con $Q=(c,d)$:
+$$R_2(x,y)=\tfrac{35}{16}c^{1/2}d^{1/3}(x-1)^3+\tfrac{35}{24}c^{3/2}d^{-2/3}(x-1)^2(y-1)-\tfrac{7}{18}c^{5/2}d^{-5/3}(x-1)(y-1)^2+\tfrac{5}{81}c^{7/2}d^{-8/3}(y-1)^3.$$</p>
+<p><b>Aproximación.</b> $(0{,}9)^{7/2}(1{,}2)^{1/3}=f(0{,}9;\ 1{,}2)\approx P_2(0{,}9;\ 1{,}2)$:
+$$1+\tfrac72(-0{,}1)+\tfrac13(0{,}2)+\tfrac{35}{8}(-0{,}1)^2+\tfrac76(-0{,}1)(0{,}2)-\tfrac19(0{,}2)^2=0{,}732639.$$</p>
+<p><b>El error.</b> $Q=t\big((0{,}9;1{,}2)-(1,1)\big)+(1,1)$, $t\in[0,1]$: entonces $0{,}9\le c\le1$ (así que $c^{1/2},c^{3/2},c^{5/2},c^{7/2}\le1$) y $1\le d\le1{,}2$ (así que $d^{1/3}\le(1{,}2)^{1/3}\le2$ y $d^{-2/3},d^{-5/3},d^{-8/3}\le1$). Con la desigualdad triangular:
+$$|R_2(0{,}9;1{,}2)|\le\tfrac{35}{16}\cdot1\cdot2\cdot\tfrac{1}{1000}+\tfrac{35}{24}\cdot1\cdot1\cdot\tfrac{2}{1000}+\tfrac{7}{18}\cdot1\cdot1\cdot\tfrac{4}{1000}+\tfrac{5}{81}\cdot1\cdot1\cdot\tfrac{8}{1000}\approx0{,}0093.$$
+El valor exacto es $0{,}734924\ldots$: el error real es $0{,}0023$.</p></div>
+<div class="revnote"><b>Revisar</b>En la hoja (Teórica 18, págs. 5 a 7) figuran $P_2(0{,}9;1{,}2)=0{,}736194$ y la cota $\approx0{,}00671$. Rehaciendo las cuentas con los mismos coeficientes da $0{,}732639$ y $0{,}00934$ (verificado en la computadora); acá puse estos valores. Además, en la expresión de $P_2$ de la hoja el coeficiente de $(x-1)(y-1)$ parece $\frac13$ y en la evaluación $\frac12$; con $f_{xy}(1,1)=\frac76$ es $\frac76$.</div>
+<div class="quiz" id="quiz-2"></div>
+</section>
+
+<!-- ======================= EJERCICIOS ======================= -->
+<section class="clase" id="ejercicios">
+<header>
+  <div class="kick">PRÁCTICA 5 · 15 ejercicios y uno agregado</div>
+  <h2>Ejercicios guiados</h2>
+  <div class="meta"><span>Los enunciados son los de la práctica ("practica-taylor-nueva"). Cada uno tiene pistas graduales, la resolución completa y, cuando hay un número para comprobar, una casilla.</span></div>
+</header>
+<div class="ctl" style="margin-bottom:14px"><span class="c-mut" id="ejprog" style="font:600 13.5px var(--f-mono)"></span></div>
+<div class="ejlist" id="ejlist"></div>
+</section>
+
+<div class="foot">Material basado en las Clases 27 y 28 del canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a>, en las hojas de las Teóricas 17 y 18 y en la Práctica 5. Las secciones marcadas como <span class="tag add">Agregado</span> son material nuevo. Versión preliminar, para revisar antes de compartir.</div>
+</main>
+</div>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],macros:{"R": "\\mathbb{R}", "v": ["\\mathbf{#1}", 1], "ang": ["\\langle #1\\rangle", 1], "jh": "\\hat{\\jmath}"}},svg:{fontCache:'none'},options:{skipHtmlTags:['script','noscript','style','textarea','pre']},startup:{typeset:false}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>
+window.G1IMG={};
+(function(){'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>Array.from(r.querySelectorAll(q));
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in (attrs||{})){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});return e;}
+function sv(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const f=(x,d=2)=>{let v=Number(Number(x).toFixed(d));if(Object.is(v,-0)||Math.abs(v)<1e-12)v=0;return String(v).replace('.',',').replace('-','−');};
+const fv=(v,d=2)=>'⟨'+v.map(x=>f(x,d)).join('; ')+'⟩';
+const fp=(v,d=2)=>'('+v.map(x=>f(x,d)).join('; ')+')';
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const add=(a,b)=>a.map((x,i)=>x+b[i]), sub=(a,b)=>a.map((x,i)=>x-b[i]), mul=(a,t)=>a.map(x=>x*t);
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), nrm=a=>Math.sqrt(dot(a,a));
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=nrm(a);return n?mul(a,1/n):a;};
+const CL={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',violet:'var(--violet)',ink:'var(--ink)',mut:'var(--ink-2)',amber:'var(--amber)'};
+const TT={blue:'var(--blue-t)',red:'var(--red-t)',green:'var(--green-t)',violet:'var(--violet-t)'};
+
+function arrow(g,x1,y1,x2,y2,col,w,head){w=w||2.6;head=head||11;const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);if(L<1.5)return;
+  const ux=dx/L,uy=dy/L,hl=Math.min(head,L*.7),bx=x2-ux*hl,by=y2-uy*hl;
+  sv('line',{x1,y1,x2:bx,y2:by,style:`stroke:${col};stroke-width:${w};stroke-linecap:round`},g);
+  sv('polygon',{points:`${x2},${y2} ${bx-uy*hl*.42},${by+ux*hl*.42} ${bx+uy*hl*.42},${by-ux*hl*.42}`,style:`fill:${col}`},g);}
+function line(g,x1,y1,x2,y2,col,w,dash){return sv('line',{x1,y1,x2,y2,style:`stroke:${col};stroke-width:${w||1.5};${dash?'stroke-dasharray:'+dash+';':''}stroke-linecap:round`},g);}
+function text(g,x,y,t,col,anchor,cls){const e=sv('text',{x,y,'text-anchor':anchor||'middle',style:`fill:${col||CL.ink}`,class:cls||''},g);e.textContent=t;return e;}
+
+/* ---------- control helpers ---------- */
+function slider(label,o,cb){const inp=h('input',{type:'range',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':label});
+  const val=h('span',{},'');const upd=()=>{val.textContent=f(+inp.value,o.dec==null?1:o.dec)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();cb(+inp.value);});upd();
+  const l=h('label',{},label,inp,val);l.input=inp;l.set=v=>{inp.value=v;upd();};return l;}
+function numbox(o,cb){const i=h('input',{type:'number',min:o.min,max:o.max,step:o.step||1,value:o.value,'aria-label':o.label});
+  i.addEventListener('input',()=>{let v=parseFloat(i.value);if(isNaN(v))return;v=Math.max(o.min,Math.min(o.max,v));cb(v);});return i;}
+function tabs(names,cb,start){const bs=names.map((n,i)=>h('button',{type:'button','aria-pressed':i===(start||0)},n));
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===i));cb(i);}));return h('div',{class:'tabs'},bs);}
+function vhead(title,sub,tb){return h('div',{class:'vh'},h('b',{},title),sub?h('span',{},sub):null,tb||null);}
+
+/* ---------- plano 2D con puntos arrastrables ---------- */
+function Plane2D(host,o){
+  const xr=o.xr||[-6,6],yr=o.yr||[-4,4],W=o.W||640,sx=W/(xr[1]-xr[0]),H=sx*(yr[1]-yr[0]);
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Plano cartesiano interactivo'},host);
+  const X=x=>(x-xr[0])*sx,Y=y=>H-(y-yr[0])*sx;
+  const gb=sv('g',{},svg),gd=sv('g',{},svg),gh=sv('g',{},svg);
+  for(let x=Math.ceil(xr[0]);x<=xr[1];x++){line(gb,X(x),0,X(x),H,'var(--grid)',1);if(x&&x%(o.tick||1)===0)text(gb,X(x),Y(0)+15,x,CL.mut,'middle','sm');}
+  for(let y=Math.ceil(yr[0]);y<=yr[1];y++){line(gb,0,Y(y),W,Y(y),'var(--grid)',1);if(y&&y%(o.ytick||o.tick||1)===0)text(gb,X(0)-7,Y(y)+4,y,CL.mut,'end','sm');}
+  arrow(gb,0,Y(0),W-2,Y(0),CL.mut,1.6,8);arrow(gb,X(0),H,X(0),2,CL.mut,1.6,8);
+  text(gb,W-10,Y(0)-8,o.xl||'x',CL.mut);text(gb,X(0)+12,12,o.yl||'y',CL.mut);
+  const api={svg,X,Y,sx,W,H,xr,yr,g:gd,handles:[]};
+  function toW(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x/sx+xr[0],(H-p.y)/sx+yr[0]];}
+  api.handle=function(obj,col,opt){opt=opt||{};const snap=opt.snap||.5,c=sv('circle',{r:11,class:'grab',tabindex:0,role:'slider','aria-label':opt.label||'Punto arrastrable',style:`fill:${col};stroke:var(--surface);stroke-width:3`},gh);
+    let drag=false;const clampSet=(x,y)=>{x=Math.round(x/snap)*snap;y=Math.round(y/snap)*snap;obj.x=Math.max(xr[0]+.3,Math.min(xr[1]-.3,x));obj.y=Math.max(yr[0]+.3,Math.min(yr[1]-.3,y));api.update();};
+    c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);e.preventDefault();});
+    c.addEventListener('pointermove',e=>{if(!drag)return;const p=toW(e);clampSet(p[0],p[1]);});
+    const end=()=>{drag=false;};c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+    c.addEventListener('keydown',e=>{const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];if(d){e.preventDefault();clampSet(obj.x+d[0]*snap,obj.y+d[1]*snap);}});
+    api.handles.push({obj,c});return c;};
+  api.update=function(){gd.textContent='';o.draw(gd,api);api.handles.forEach(hd=>{hd.c.setAttribute('cx',X(hd.obj.x));hd.c.setAttribute('cy',Y(hd.obj.y));});if(o.onUpdate)o.onUpdate(api);};
+  return api;
+}
+
+/* ---------- vista 3D ortográfica, eje z hacia arriba, terna derecha ---------- */
+function View3D(host,o){
+  o=o||{};const W=o.W||640,H=o.H||430,scale=o.scale||40,ctr=o.ctr||[0,0,0];
+  const st={az:o.az==null?215:o.az,el:o.el==null?22:o.el};
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.label||'Vista tridimensional. Se puede girar arrastrando.'},host);
+  const g=sv('g',{},svg);
+  function P(p){const a=rad(st.az),e=rad(st.el),x=p[0]-ctr[0],y=p[1]-ctr[1],z=p[2]-ctr[2];
+    const x1=Math.cos(a)*x-Math.sin(a)*y,y1=Math.sin(a)*x+Math.cos(a)*y;
+    return [W/2+x1*scale,H/2-(z*Math.cos(e)+y1*Math.sin(e))*scale,y1*Math.cos(e)-z*Math.sin(e)];}
+  const api={svg,st,P,draw:null};
+  api.render=function(){g.textContent='';const polys=[],ops=[],txt=[];
+    const sc={
+      poly(pts,col,op,stroke){polys.push({pts:pts.map(P),col,op,stroke});},
+      line(a,b,col,w,dash){ops.push(()=>{const p=P(a),q=P(b);line(g,p[0],p[1],q[0],q[1],col,w,dash);});},
+      path(pts,col,w,dash,closed){ops.push(()=>{const q=pts.map(P);sv('polyline',{points:q.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' ')+(closed?' '+q[0][0].toFixed(1)+','+q[0][1].toFixed(1):''),style:`fill:none;stroke:${col};stroke-width:${w||1.4};${dash?'stroke-dasharray:'+dash+';':''}stroke-linejoin:round`},g);});},
+      arrow(a,b,col,w){ops.push(()=>{const p=P(a),q=P(b);arrow(g,p[0],p[1],q[0],q[1],col,w||2.8,11);});},
+      dot(a,col,r){ops.push(()=>{const p=P(a);sv('circle',{cx:p[0],cy:p[1],r:r||5,style:`fill:${col};stroke:var(--surface);stroke-width:2`},g);});},
+      disc(c,rpx,col){ops.push(()=>{const p=P(c);sv('circle',{cx:p[0],cy:p[1],r:rpx*scale,style:`fill:${col};stroke:none`},g);});},
+      text(a,t,col,dx,dy,anc){txt.push(()=>{const p=P(a);text(g,p[0]+(dx||0),p[1]+(dy||0),t,col,anc);});},
+      axes(L,neg){const ex=[[1,0,0,'x'],[0,1,0,'y'],[0,0,1,'z']];ex.forEach(e=>{const v=[e[0],e[1],e[2]];
+        if(neg!==false)sc.line(mul(v,-L),[0,0,0],'var(--line)',1.2,'4 4');
+        ops.push(()=>{const p=P([0,0,0]),q=P(mul(v,L));arrow(g,p[0],p[1],q[0],q[1],CL.mut,1.6,9);});
+        sc.text(mul(v,L*1.1),e[3],CL.mut,0,4);});},
+      box(lo,hi,col,op){const[x0,y0,z0]=lo,[x1,y1,z1]=hi;const C=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        [[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]].forEach(q=>sc.poly(q.map(i=>C[i]),col,op,col));},
+      patch(n,d,S,col,op,dashed){n=unit(n);const e=Math.abs(n[2])<.9?[0,0,1]:[1,0,0];const u=unit(cross(n,e)),v=cross(n,u),c=mul(n,d);
+        const q=[add(add(c,mul(u,S)),mul(v,S)),add(sub(c,mul(u,S)),mul(v,S)),sub(sub(c,mul(u,S)),mul(v,S)),sub(add(c,mul(u,S)),mul(v,S))];
+        sc.poly(q,col,op,col);if(dashed)sc.path(q,col,1.6,'6 5',true);return {q,c,n,u,v};},
+      circle(c,r,plane,col,w,dash){const pts=[];for(let i=0;i<=48;i++){const t=i/48*2*Math.PI,a=Math.cos(t)*r,b=Math.sin(t)*r;
+        pts.push(plane==='xy'?[c[0]+a,c[1]+b,c[2]]:plane==='xz'?[c[0]+a,c[1],c[2]+b]:[c[0],c[1]+a,c[2]+b]);}sc.path(pts,col,w||1.3,dash);},
+      surf(fn,ur,vr,nu,nv,col,op,stroke){for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const u0=ur[0]+(ur[1]-ur[0])*i/nu,u1=ur[0]+(ur[1]-ur[0])*(i+1)/nu,v0=vr[0]+(vr[1]-vr[0])*j/nv,v1=vr[0]+(vr[1]-vr[0])*(j+1)/nv;
+        const q=[fn(u0,v0),fn(u1,v0),fn(u1,v1),fn(u0,v1)];if(q.some(p=>!p||p.some(x=>!isFinite(x))))continue;polys.push({pts:q.map(P),col,op:op==null?.35:op,stroke:stroke||col,sw:.6});}},
+      sphere(c,r,col,dash){sc.disc(c,r,'var(--blue-t)');['xy','xz','yz'].forEach(p=>sc.circle(c,r,p,col||CL.blue,1.4,dash));
+        for(const k of[.5,-.5]){const rr=r*Math.sqrt(1-k*k);sc.circle([c[0],c[1],c[2]+r*k],rr,'xy',col||CL.blue,.9,dash);}}
+    };
+    if(api.draw)api.draw(sc);
+    polys.sort((a,b)=>mean(b.pts)-mean(a.pts));
+    polys.forEach(p=>{sv('polygon',{points:p.pts.map(x=>x[0].toFixed(1)+','+x[1].toFixed(1)).join(' '),style:`fill:${p.col};fill-opacity:${p.op==null?.25:p.op};stroke:${p.stroke||'none'};stroke-opacity:.55;stroke-width:${p.sw||1.2}`},g);});
+    ops.forEach(fn=>fn());txt.forEach(fn=>fn());};
+  function mean(pts){return pts.reduce((s,p)=>s+p[2],0)/pts.length;}
+  // arrastre para girar
+  let drag=null;svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,az:st.az,el:st.el};svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect(),k=W/r.width;st.az=drag.az-(e.clientX-drag.x)*k*.5;
+    if(e.pointerType==='mouse'){st.el=Math.max(-80,Math.min(85,drag.el+(e.clientY-drag.y)*k*.4));}
+    api.sync&&api.sync();api.render();});
+  const end=()=>{drag=null;};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  api.controls=function(){const a=slider('giro',{min:0,max:360,step:1,value:Math.round(((st.az%360)+360)%360),unit:'°',dec:0},v=>{st.az=v;api.render();});
+    const b=slider('inclinación',{min:-80,max:85,step:1,value:st.el,unit:'°',dec:0},v=>{st.el=v;api.render();});
+    api.sync=()=>{a.set(Math.round(((st.az%360)+360)%360));b.set(Math.round(st.el));};
+    const reset=h('button',{type:'button',onclick:()=>{st.az=o.az==null?215:o.az;st.el=o.el==null?22:o.el;api.sync();api.render();}},'Vista inicial');
+    return h('div',{class:'ctl'},a,b,reset);};
+  return api;
+}
+
+
+/* ---------- expresiones escritas por el usuario: expr('t^2-2t',['t']) -> función ---------- */
+function expr(src,vars){vars=vars||['x'];const s=String(src).replace(/\s+/g,'').replace(/\*\*/g,'^').replace(/π/g,'pi').replace(/θ/g,'th').replace(/·/g,'*').replace(/−/g,'-').replace(/,/g,'.');
+  const FN={sin:Math.sin,sen:Math.sin,cos:Math.cos,tan:Math.tan,tg:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,arcsen:Math.asin,arccos:Math.acos,arctan:Math.atan,sqrt:Math.sqrt,raiz:Math.sqrt,exp:Math.exp,ln:Math.log,log:Math.log,abs:Math.abs,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sec:x=>1/Math.cos(x),csc:x=>1/Math.sin(x),cot:x=>1/Math.tan(x),sgn:Math.sign};
+  const C={pi:Math.PI,e:Math.E};let i=0;const err=m=>{throw new Error(m);};
+  const peek=()=>s[i];
+  function num(){const m=/^\d*\.?\d+(e[+-]?\d+)?/i.exec(s.slice(i));if(!m)err('número');i+=m[0].length;const v=parseFloat(m[0]);return ()=>v;}
+  function ident(){const m=/^[a-zA-Z_]+/.exec(s.slice(i));i+=m[0].length;let w=m[0];
+    // separar nombres pegados: "tsint" -> t, sin, t ; prioridad: funciones, constantes, variables
+    const names=[...Object.keys(FN),...Object.keys(C),...vars].sort((a,b)=>b.length-a.length);
+    const parts=[];while(w.length){const n=names.find(nm=>w.startsWith(nm));if(!n)err('nombre desconocido: '+w);parts.push(n);w=w.slice(n.length);}
+    return parts;}
+  function primary(){const c=peek();
+    if(c==='('){i++;const e=add_();if(peek()!==')')err('falta )');i++;return e;}
+    if(c==='|'){i++;const e=add_();if(peek()!=='|')err('falta |');i++;return v=>Math.abs(e(v));}
+    if(/[\d.]/.test(c))return num();
+    if(/[a-zA-Z_]/.test(c)){const parts=ident();
+      const build=k=>{const n=parts[k];
+        if(FN[n]){let arg;if(k+1<parts.length){arg=build(k+1);}else{arg=power();}const f=FN[n];return v=>f(arg(v));}
+        let a;if(n in C){const cv=C[n];a=()=>cv;}else{const j=vars.indexOf(n);a=v=>v[j];}
+        if(k+1<parts.length){const r=build(k+1);return v=>a(v)*r(v);}return a;};
+      return build(0);}
+    err('símbolo inesperado: '+(c||'fin'));}
+  function power(){const b=primary();if(peek()==='^'){i++;const e=unary();return v=>Math.pow(b(v),e(v));}return b;}
+  function unary(){if(peek()==='-'){i++;const u=unary();return v=>-u(v);}if(peek()==='+'){i++;return unary();}return power();}
+  function mul_(){let a=unary();for(;;){const c=peek();
+      if(c==='*'||c==='/'){i++;const b=unary(),l=a;a=c==='*'?(v=>l(v)*b(v)):(v=>l(v)/b(v));}
+      else if(c&&/[\d.a-zA-Z_(|]/.test(c)&&c!=='|'){const b=unary(),l=a;a=v=>l(v)*b(v);}
+      else return a;}}
+  function add_(){let a=mul_();for(;;){const c=peek();if(c==='+'||c==='-'){i++;const b=mul_(),l=a;a=c==='+'?(v=>l(v)+b(v)):(v=>l(v)-b(v));}else return a;}}
+  if(!s.length)err('vacía');const f=add_();if(i<s.length)err('sobra: '+s.slice(i));
+  return (...a)=>f(a);}
+
+/* ---------- curvas de nivel (marching squares): devuelve lista de segmentos [[x1,y1],[x2,y2]] ---------- */
+function contour(F,xr,yr,c,n){n=n||80;const dx=(xr[1]-xr[0])/n,dy=(yr[1]-yr[0])/n,segs=[];const G=[];
+  for(let i=0;i<=n;i++){G[i]=[];for(let j=0;j<=n;j++){const v=F(xr[0]+i*dx,yr[0]+j*dy);G[i][j]=isFinite(v)?((v-c)===0?1e-12:v-c):NaN;}}
+  const lerp=(a,b,pa,pb)=>{const t=a/(a-b);return [pa[0]+(pb[0]-pa[0])*t,pa[1]+(pb[1]-pa[1])*t];};
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=xr[0]+i*dx,y=yr[0]+j*dy;
+    const P=[[x,y],[x+dx,y],[x+dx,y+dy],[x,y+dy]],V=[G[i][j],G[i+1][j],G[i+1][j+1],G[i][j+1]];
+    if(V.some(isNaN))continue;const pts=[];
+    for(let k=0;k<4;k++){const a=V[k],b=V[(k+1)%4];if((a<0)!==(b<0))pts.push(lerp(a,b,P[k],P[(k+1)%4]));else if(a===0&&b!==0)pts.push(P[k]);}
+    if(pts.length===2)segs.push(pts);else if(pts.length===4){segs.push([pts[0],pts[1]]);segs.push([pts[2],pts[3]]);}}
+  return segs;}
+
+/* ---------- dibujar una curva en un Plane2D: pts = [[x,y],...] (cortes en NaN o saltos) ---------- */
+function poly2(g,api,pts,col,w,dash){let d='',pen=false,prev=null;const {X,Y}=api,lim=Math.max(api.W,api.H)*3;
+  pts.forEach(p=>{const ok=p&&isFinite(p[0])&&isFinite(p[1]);if(!ok){pen=false;prev=null;return;}const px=X(p[0]),py=Y(p[1]);
+    if(Math.abs(px)>lim||Math.abs(py)>lim){pen=false;prev=null;return;}
+    if(prev&&Math.hypot(px-prev[0],py-prev[1])>api.W*.35)pen=false;
+    d+=(pen?'L':'M')+px.toFixed(1)+' '+py.toFixed(1);pen=true;prev=[px,py];});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.5};stroke-linejoin:round;stroke-linecap:round;${dash?'stroke-dasharray:'+dash:''}`},g);}
+function segs2(g,api,segs,col,w){const {X,Y}=api;let d='';segs.forEach(s=>{d+='M'+X(s[0][0]).toFixed(1)+' '+Y(s[0][1]).toFixed(1)+'L'+X(s[1][0]).toFixed(1)+' '+Y(s[1][1]).toFixed(1);});
+  return sv('path',{d,style:`fill:none;stroke:${col};stroke-width:${w||2.2};stroke-linecap:round`},g);}
+window.G1={$,$$,h,sv,f,fv,fp,rad,deg,add,sub,mul,dot,nrm,cross,unit,CL,TT,arrow,line,text,slider,numbox,tabs,vhead,Plane2D,View3D,expr,contour,poly2,segs2};
+})();
+(function(){'use strict';
+const {$,h,sv,f,CL,arrow,line,text,slider,vhead,Plane2D,View3D,poly2}=window.G1;
+const V=window.G1V=window.G1V||{};
+const API=window.A1API=window.A1API||{};
+const fact=n=>{let r=1;for(let i=2;i<=n;i++)r*=i;return r;};
+const sel=o=>h('select',{'aria-label':'Elegir ejemplo'},...Object.keys(o).map(k=>h('option',{value:k},o[k].n)));
+
+/* ======================================================================
+   Taylor en una variable: P_n y el resto
+   d(k,a) = derivada k-ésima en a (fórmulas exactas)
+   ====================================================================== */
+const T1={
+  sen:{n:'sen x en a = 0',f:Math.sin,d:(k,a)=>[Math.sin(a),Math.cos(a),-Math.sin(a),-Math.cos(a)][k%4],a:0,xr:[-7,7],yr:[-3,3],n0:4},
+  cos:{n:'cos x en a = 0',f:Math.cos,d:(k,a)=>[Math.cos(a),-Math.sin(a),-Math.cos(a),Math.sin(a)][k%4],a:0,xr:[-7,7],yr:[-3,3],n0:2},
+  exp:{n:'eˣ en a = 0',f:Math.exp,d:(k,a)=>Math.exp(a),a:0,xr:[-5,3],yr:[-2,8],n0:3},
+  sq:{n:'√x en a = 1 (Clase 27)',f:x=>x>=0?Math.sqrt(x):NaN,d:(k,a)=>{let c=1,p=.5;for(let i=0;i<k;i++){c*=p;p-=1;}return c*Math.pow(a,.5-k);},a:1,xr:[-.5,4.5],yr:[-1,2.6],n0:2},
+  geo:{n:'1/(1 − x) en a = 0',f:x=>1/(1-x),d:(k,a)=>fact(k)/Math.pow(1-a,k+1),a:0,xr:[-2.5,1.6],yr:[-1,6],n0:3},
+  ln:{n:'ln(1 + x) en a = 0',f:x=>x>-1?Math.log(1+x):NaN,d:(k,a)=>k===0?Math.log(1+a):Math.pow(-1,k+1)*fact(k-1)/Math.pow(1+a,k),a:0,xr:[-1.4,2.6],yr:[-2.5,1.8],n0:3}
+};
+V.tay1=function(host){
+  const body=h('div',{class:'vb'}),out=h('div',{class:'out'});let cur='sen',n=4,xs=0.5;
+  const s=sel(T1);
+  host.append(vhead('Polinomios de Taylor en una variable','Subí el grado n: el polinomio (rojo) se pega a f (azul) en un intervalo cada vez más grande alrededor de a'),h('div',{class:'ctl'},s),body);
+  let pl=null,sn=null,sx=null;const ctl=h('div',{class:'ctl'});
+  const Pn=(T,x)=>{let s=0;for(let k=0;k<=n;k++)s+=T.d(k,T.a)/fact(k)*Math.pow(x-T.a,k);return s;};
+  function build(){const T=T1[cur];n=T.n0;xs=T.a+.5;body.textContent='';ctl.textContent='';
+    pl=Plane2D(body,{xr:T.xr,yr:T.yr,tick:1,label:'f y su polinomio de Taylor de grado n',draw(g,a){
+      const F=[],Q=[];for(let i=0;i<=500;i++){const x=T.xr[0]+(T.xr[1]-T.xr[0])*i/500;F.push([x,T.f(x)]);Q.push([x,Pn(T,x)]);}
+      poly2(g,a,F,CL.blue,3);poly2(g,a,Q,CL.red,2.2);
+      const fx=T.f(xs),px=Pn(T,xs);if(isFinite(fx)){line(g,a.X(xs),a.Y(fx),a.X(xs),a.Y(px),CL.green,3);sv('circle',{cx:a.X(xs),cy:a.Y(fx),r:4,style:'fill:var(--blue)'},g);sv('circle',{cx:a.X(xs),cy:a.Y(px),r:4,style:'fill:var(--red)'},g);}
+      sv('circle',{cx:a.X(T.a),cy:a.Y(T.f(T.a)),r:5.5,style:'fill:var(--ink);stroke:var(--surface);stroke-width:2'},g);text(g,a.X(T.a),a.Y(0)+16,'a',CL.ink,'middle');}});
+    sn=slider('grado n',{min:0,max:12,step:1,value:n,dec:0},v=>{n=v;upd();});
+    sx=slider('x',{min:T.xr[0],max:T.xr[1],step:.01,value:xs,dec:2},v=>{xs=v;upd();});
+    ctl.append(sn,sx);body.append(ctl,out);upd();}
+  function upd(){pl.update();const T=T1[cur],fx=T.f(xs),px=Pn(T,xs),R=fx-px,h_=xs-T.a;
+    let terms=[];for(let k=0;k<=Math.min(n,6);k++){const c=T.d(k,T.a)/fact(k);if(Math.abs(c)>1e-12)terms.push((terms.length?(c<0?' − ':' + '):(c<0?'−':''))+f(Math.abs(c),4)+(k?'·(x − a)'+(k>1?'<sup>'+k+'</sup>':''):''));}
+    out.innerHTML=`P<sub>${n}</sub>(x) = ${terms.join('')||'0'}${n>6?' + …':''}<br>`+
+      `En x = ${f(xs,2)}: f(x) = ${f(fx,6)}, P<sub>${n}</sub>(x) = ${f(px,6)}, <b class="c-green">resto R<sub>${n}</sub>(x) = ${f(R,6)}</b>`+(Math.abs(h_)>1e-9?`, &nbsp;R<sub>${n}</sub>/(x − a)<sup>${n}</sup> = ${f(R/Math.pow(h_,n),4)}`:'')+`.<br><span class="c-mut">Si x se acerca a a, el resto va a 0 más rápido que (x − a)ⁿ.${cur==='cos'||cur==='sen'?' En sen y cos, dos grados seguidos dan el mismo polinomio (derivadas que se anulan en 0).':''}${cur==='geo'||cur==='ln'?' Fuera de (−1, 1) los polinomios no se pegan a la función por más que subas n.':''}</span>`;}
+  s.addEventListener('change',()=>{cur=s.value;build();});
+  API['viz-tay1']={set(k){if(T1[k]){cur=k;s.value=k;build();}}};
+  build();
+};
+
+/* ======================================================================
+   Taylor en dos variables: plano tangente, P2 y el corte g(t)
+   ====================================================================== */
+const T2={
+  exy:{n:'Clase 28: e^{x+y} en (0, 0)',F:(x,y)=>Math.exp(x+y),p:[0,0],R:.9},
+  lnv:{n:'Clase 28: ln(1 + (x − 1)y) en (1, 0)',F:(x,y)=>{const u=1+(x-1)*y;return u>0?Math.log(u):NaN;},p:[1,0],R:.8},
+  hoja:{n:'Hoja: √x + xy + √y en (1, 4)',F:(x,y)=>x>0&&y>0?Math.sqrt(x)+x*y+Math.sqrt(y):NaN,p:[1,4],R:.8},
+  sinsin:{n:'Ej. 12: sen x · sen y en (0, 0)',F:(x,y)=>Math.sin(x)*Math.sin(y),p:[0,0],R:1.4},
+  e14:{n:'Ej. 14: e^{xy} cos(x + y) en (0, 0)',F:(x,y)=>Math.exp(x*y)*Math.cos(x+y),p:[0,0],R:1.2}
+};
+V.tay2=function(host){
+  const body=h('div',{class:'vb pol2'}),out=h('div',{class:'out'});let cur='exy',th=Math.PI/4;
+  const s=sel(T2);
+  host.append(vhead('Taylor de orden 2 en dos variables','Superficie (azul), plano tangente P₁ (verde) y P₂ (rojo). A la derecha, el corte g(t) = f(P + t·v) en la dirección de v'),h('div',{class:'ctl'},s),body);
+  const L=h('div',{class:'half'}),Rr=h('div',{class:'half'});body.append(L,Rr);
+  const v=View3D(L,{W:440,scale:130,H:440,ctr:[0,0,0],az:300,el:22});
+  let pb=null;const ctl=h('div',{class:'ctl'});body.after(ctl,out);
+  const D=(F,x,y)=>{const e=1e-4;const f0=F(x,y);return {f0,fx:(F(x+e,y)-F(x-e,y))/(2*e),fy:(F(x,y+e)-F(x,y-e))/(2*e),fxx:(F(x+e,y)-2*f0+F(x-e,y))/(e*e),fyy:(F(x,y+e)-2*f0+F(x,y-e))/(e*e),fxy:(F(x+e,y+e)-F(x+e,y-e)-F(x-e,y+e)+F(x-e,y-e))/(4*e*e)};};
+  let d=null,S=1;
+  const P1=(u,w)=>d.f0+d.fx*u+d.fy*w,P2=(u,w)=>P1(u,w)+.5*d.fxx*u*u+d.fxy*u*w+.5*d.fyy*w*w;
+  function prep(){const T=T2[cur];d=D(T.F,T.p[0],T.p[1]);let m=0;const R=T.R;for(let i=0;i<=16;i++)for(let j=0;j<=16;j++){const z=T.F(T.p[0]-R+2*R*i/16,T.p[1]-R+2*R*j/16)-d.f0;if(isFinite(z))m=Math.max(m,Math.abs(z));}S=Math.max((Math.abs(d.fx)+Math.abs(d.fy))*R,m/3,(Math.abs(d.fxx)+Math.abs(d.fyy)+Math.abs(d.fxy))*R*R/2,.2);}
+  v.draw=sc=>{const T=T2[cur],R=T.R,[a,b]=T.p;const Z=z=>(z-d.f0)/S;
+    sc.axes(1.25);
+    sc.surf((u,w)=>{const z=T.F(a+u*R,b+w*R);if(!isFinite(z))return null;const zz=Z(z);return Math.abs(zz)>1.4?null:[u,w,zz];},[-1,1],[-1,1],20,20,'var(--blue)',.16,'var(--blue)');
+    sc.surf((u,w)=>{const zz=Z(P1(u*R,w*R));return Math.abs(zz)>1.4?null:[u,w,zz];},[-1,1],[-1,1],6,6,'var(--green)',.12,'var(--green)');
+    sc.surf((u,w)=>{const zz=Z(P2(u*R,w*R));return Math.abs(zz)>1.4?null:[u,w,zz];},[-1,1],[-1,1],12,12,'var(--red)',.08,'var(--red)');
+    const c=Math.cos(th),s_=Math.sin(th);const seg=[];for(let i=0;i<=40;i++){const t=-1+2*i/40;const z=T.F(a+t*R*c,b+t*R*s_);if(isFinite(z))seg.push([t*c,t*s_,Z(z)]);}sc.path(seg,CL.violet,3);
+    sc.line([-c,-s_,-1.3],[c,s_,-1.3],CL.violet,1.2,'4 4');sc.dot([0,0,0],CL.ink,5);};
+  function build(){const T=T2[cur];prep();Rr.textContent='';ctl.textContent='';
+    const R=T.R,c=()=>Math.cos(th),s_=()=>Math.sin(th);
+    const g=t=>T.F(T.p[0]+t*c(),T.p[1]+t*s_());
+    pb=Plane2D(Rr,{W:440,xr:[-R*1.1,R*1.1],yr:[-1.2,1.2],tick:1,xl:'t',yl:' ',label:'g(t) = f(P + t v) y sus aproximaciones',draw(gg,A){const q=t=>(t-d.f0)/S;
+      const G=[],Q1=[],Q2=[];for(let i=0;i<=300;i++){const t=-R*1.1+2.2*R*i/300,u=t*c(),w=t*s_();G.push([t,q(g(t))]);Q1.push([t,q(P1(u,w))]);Q2.push([t,q(P2(u,w))]);}
+      poly2(gg,A,Q1,CL.green,2,'6 4');poly2(gg,A,Q2,CL.red,2.2);poly2(gg,A,G,CL.violet,3);
+      sv('circle',{cx:A.X(0),cy:A.Y(0),r:5,style:'fill:var(--ink)'},gg);text(gg,A.W-8,16,'altura: (z − f(P))/'+f(S,2),CL.mut,'end','sm');}});
+    const sa=slider('dirección de v',{min:0,max:360,step:1,value:Math.round(th*180/Math.PI),dec:0,unit:'°'},x=>{th=x*Math.PI/180;upd();});
+    ctl.append(sa);L.append(v.controls());upd();}
+  function upd(){v.render();pb.update();const T=T2[cur],R=T.R;let e1=0,e2=0;const r=R*.35;
+    for(let k=0;k<48;k++){const a_=2*Math.PI*k/48,u=r*Math.cos(a_),w=r*Math.sin(a_),z=T.F(T.p[0]+u,T.p[1]+w);if(!isFinite(z))continue;e1=Math.max(e1,Math.abs(z-P1(u,w)));e2=Math.max(e2,Math.abs(z-P2(u,w)));}
+    const fm=x=>f(x,4);
+    out.innerHTML=`${T.n}. f(P) = ${fm(d.f0)}, ∇f(P) = (${fm(d.fx)}, ${fm(d.fy)}), f_xx = ${fm(d.fxx)}, f_xy = ${fm(d.fxy)}, f_yy = ${fm(d.fyy)}.<br>`+
+      `P₂(x, y) = f(P) + f_x(x − a) + f_y(y − b) + ½f_xx(x − a)² + f_xy(x − a)(y − b) + ½f_yy(y − b)².<br>`+
+      `A distancia ${f(r,2)} de P: máx |f − P₁| = <span class="c-green">${fm(e1)}</span>, máx |f − P₂| = <span class="c-red">${fm(e2)}</span>. <span class="c-mut">El corte g(t) es una función de una variable: su Taylor de grado 2 en t = 0 es P₂ restringido a la recta (así se dedujo la fórmula en la Clase 28).</span>`;}
+  s.addEventListener('change',()=>{cur=s.value;L.querySelectorAll('.ctl').forEach(e=>e.remove());build();});
+  API['viz-tay2']={set(k){if(T2[k]){cur=k;s.value=k;L.querySelectorAll('.ctl').forEach(e=>e.remove());build();}}};
+  build();
+};
+})();
+(function(){const R=String.raw;
+window.A1={key:'g5',vid:{27:'Cj73Vck1q9w',28:'MCdVuN24XZk'},
+ viz:{'viz-tay1':'tay1','viz-tay2':'tay2'}};
+window.A1.quiz={
+'quiz-1':{t:'Autoevaluación de la Clase 27',qs:[
+ {p:R`El coeficiente de $(x-a)^3$ en el polinomio de Taylor de $f$ en $a$ es:`,o:[R`$\frac{f'''(a)}{6}$`,R`$\frac{f'''(a)}{3}$`,R`$f'''(a)$`,R`$\frac{f'''(a)}{9}$`],c:0,w:R`Es $\frac{f'''(a)}{3!}$ y $3!=6$. Dividir por 3 es el error típico.`},
+ {p:R`El polinomio de Mac Laurin de grado 3 de $e^x$ es:`,o:[R`$1+x+\frac{x^2}{2}+\frac{x^3}{6}$`,R`$1+x+x^2+x^3$`,R`$x+\frac{x^2}{2}+\frac{x^3}{3}$`,R`$1+x+\frac{x^2}{2}+\frac{x^3}{3}$`],c:0,w:R`Todas las derivadas valen 1 en 0, y se divide por los factoriales.`},
+ {p:R`Si $P_n$ es el polinomio de Taylor de orden $n$ de $f$ en $a$ (con $f$ de clase $C^n$), entonces:`,o:[R`$\frac{f(x)-P_n(x)}{(x-a)^n}\to0$`,R`$f(x)=P_n(x)$ cerca de $a$`,R`$f(x)-P_n(x)\to1$`,R`$\frac{f(x)-P_n(x)}{(x-a)^{n+1}}\to0$`],c:0,w:R`El resto es de un orden más chico que $(x-a)^n$. Con exponente $n+1$ no siempre vale.`},
+ {p:R`En la fórmula de Lagrange $R_n(x)=\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$, el número $c$:`,o:['está entre a y x, pero no se sabe cuál es','es a','es x','es el punto medio entre a y x'],c:0,w:R`Por eso, para estimar el error se acota $|f^{(n+1)}(c)|$ en todo el intervalo entre $a$ y $x$.`},
+ {p:R`¿Por qué el polinomio de Taylor de grado 3 de $\cos x$ en 0 es igual al de grado 2?`,o:[R`porque $\cos'''(0)=\operatorname{sen}0=0$`,R`porque el coseno es par`,R`porque $\cos0=1$`,R`no son iguales`],c:0,w:R`El término de grado 3 tiene coeficiente $\frac{f'''(0)}{3!}=0$. (Que sea par es la razón de fondo: todas las derivadas impares se anulan en 0.)`}]},
+'quiz-2':{t:'Autoevaluación de la Clase 28',qs:[
+ {p:R`En $P_2(x,y)$, el término con la derivada cruzada es:`,o:[R`$f_{xy}(a,b)(x-a)(y-b)$`,R`$\frac12f_{xy}(a,b)(x-a)(y-b)$`,R`$2f_{xy}(a,b)(x-a)(y-b)$`,R`$f_{xy}(a,b)(x-a)^2$`],c:0,w:R`Aparecen $f_{xy}$ y $f_{yx}$, cada una con $\frac12$; como son iguales (Clairaut), suman $f_{xy}$.`},
+ {p:R`$P_2$ de $f(x,y)=e^{x+y}$ en $(0,0)$ es:`,o:[R`$1+x+y+\frac12x^2+xy+\frac12y^2$`,R`$1+x+y+x^2+xy+y^2$`,R`$1+x+y+\frac12(x+y)$`,R`$1+x+y$`],c:0,w:R`Todas las derivadas valen 1. Es $1+(x+y)+\frac12(x+y)^2$.`},
+ {p:R`El polinomio de Taylor de orden 1 de $f$ en $(a,b)$ es:`,o:['el plano tangente','la hessiana','el gradiente','una recta'],c:0,w:R`$P_1=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b)$.`},
+ {p:R`Si $f$ es $C^2$ y $P_2$ es su Taylor de orden 2 en $P$, entonces $\frac{f-P_2}{\|(x,y)-P\|^2}$:`,o:['tiende a 0','tiende a 1','está acotado pero no tiende a 0','puede no tener límite'],c:0,w:R`Es la propiedad que caracteriza a $P_2$.`},
+ {p:R`Para deducir $P_2$, en la Clase 28 se usa:`,o:[R`Taylor en una variable para $g(t)=f\big((a,b)+t(x-a,y-b)\big)$`,R`el teorema de la función implícita`,R`la regla de L'Hôpital en dos variables`,R`la fórmula de Lagrange`],c:0,w:R`Se mira $f$ en el segmento de $(a,b)$ a $(x,y)$ y se usa Taylor de $g$ en $t=0$, evaluado en $t=1$.`}]}
+};
+})();
+(function(){'use strict';
+const R=String.raw;
+const go=(viz,p,txt)=>`<button type="button" class="go" data-viz="${viz}" data-p="${p}">${txt||'Ver en la figura'}</button>`;
+const EJ=[
+{n:1,t:'Polinomios de Taylor',s:'Ocho cálculos directos',
+ enun:R`<p>Calcular el polinomio de Taylor de las siguientes funciones hasta el orden indicado en el punto dado.</p>
+<p class="items">(a) $f(x)=\frac{1}{1-x}$, orden 5, $x_0=0$. &emsp; (b) $f(x)=\operatorname{sen}x$, orden 4, $x_0=0$. &emsp; (c) $f(x)=\operatorname{sen}x$, orden 5, $x_0=0$. &emsp; (d) $f(x)=\cos x$, orden 5, $x_0=0$. &emsp; (e) $f(x)=\ln x$, orden 4, $x_0=1$. &emsp; (f) $f(x)=\sqrt x$, orden 3, $x_0=4$. &emsp; (g) $f(x)=e^x$, orden 5, $x_0=0$. &emsp; (h) $f(x)=(1+x)^6$, orden 6, $x_0=0$.</p>`,
+ pistas:[R`<p>Calculá las derivadas hasta el orden pedido, evaluálas en $x_0$ y dividí por los factoriales.</p>`,
+  R`<p>En (a), $f^{(k)}(x)=\frac{k!}{(1-x)^{k+1}}$. En (e), $f^{(k)}(x)=\frac{(-1)^{k+1}(k-1)!}{x^k}$.</p>`],
+ sol:R`<p><b>(a)</b> $f^{(k)}(0)=k!$: $P_5=1+x+x^2+x^3+x^4+x^5$. ${go('viz-tay1','geo','Ver')}</p>
+<p><b>(b)</b> $P_4=x-\frac{x^3}{6}$ (el ejemplo de la hoja). <b>(c)</b> $P_5=x-\frac{x^3}{6}+\frac{x^5}{120}$. ${go('viz-tay1','sen','Ver')}</p>
+<p><b>(d)</b> $P_5=1-\frac{x^2}{2}+\frac{x^4}{24}$ (el de grado 5 coincide con el de grado 4). ${go('viz-tay1','cos','Ver')}</p>
+<p><b>(e)</b> $f(1)=0$, $f'(1)=1$, $f''(1)=-1$, $f'''(1)=2$, $f^{(4)}(1)=-6$:
+$$P_4=(x-1)-\frac{(x-1)^2}{2}+\frac{(x-1)^3}{3}-\frac{(x-1)^4}{4}.$$</p>
+<p><b>(f)</b> $f(4)=2$, $f'(4)=\frac14$, $f''(4)=-\frac{1}{32}$, $f'''(4)=\frac{3}{256}$:
+$$P_3=2+\frac{x-4}{4}-\frac{(x-4)^2}{64}+\frac{(x-4)^3}{512}.$$</p>
+<p><b>(g)</b> $P_5=1+x+\frac{x^2}{2}+\frac{x^3}{6}+\frac{x^4}{24}+\frac{x^5}{120}$. ${go('viz-tay1','exp','Ver')}</p>
+<p><b>(h)</b> Es un polinomio de grado 6: su Taylor de orden 6 es él mismo, $1+6x+15x^2+20x^3+15x^4+6x^5+x^6$ (binomio de Newton).</p>`,
+ chk:{p:'(f): los coeficientes de (x − 4)² y (x − 4)³',vals:[-1/64,1/512]},
+ ref:[[27,'35:31','definición'],[27,'40:39','ejemplo eˣ']]},
+
+{n:2,t:'Mac Laurin y potencias de (x − a)',s:'Desarrollar',
+ enun:R`<p>(a) Hallar el polinomio de Mac Laurin de grado tres para la función $f(x)=\ln(x+1)^2$.<br>(b) Hallar el polinomio de Mac Laurin de grado tres para la función $g(x)=e^{x+2}$.<br>(c) Desarrollar la función $p(x)=x^4-5x^3+5x^2+x+2$ en potencias de $x-2$.<br>(d) Desarrollar la función $g(x)=\sqrt x$ en potencias de $x-1$ hasta orden 3.</p>`,
+ pistas:[R`<p>(a) $\ln(x+1)^2=2\ln(1+x)$. (b) $e^{x+2}=e^2e^x$.</p>`,R`<p>(c) Calculá $p(2)$, $p'(2)$, …, $p^{(4)}(2)$: como $p$ es de grado 4, el desarrollo es exacto.</p>`],
+ sol:R`<p><b>(a)</b> Leyendo $\ln\big((x+1)^2\big)=2\ln(1+x)$: $P_3=2x-x^2+\frac23x^3$.</p>
+<p><b>(b)</b> $g^{(k)}(0)=e^2$ para todo $k$: $P_3=e^2\big(1+x+\frac{x^2}{2}+\frac{x^3}{6}\big)$.</p>
+<p><b>(c)</b> $p(2)=0$, $p'(2)=-7$, $p''(2)=-2$, $p'''(2)=18$, $p^{(4)}=24$:
+$$p(x)=-7(x-2)-(x-2)^2+3(x-2)^3+(x-2)^4.$$</p>
+<p><b>(d)</b> $\sqrt x\approx1+\frac12(x-1)-\frac18(x-1)^2+\frac{1}{16}(x-1)^3$.</p>`,
+ rev:R`Interpretación de (a): se tomó $\ln\big((x+1)^2\big)$. Si se lee $\big(\ln(x+1)\big)^2$, el resultado es $x^2-x^3$.`,
+ chk:{p:'(c): los coeficientes de (x − 2), (x − 2)², (x − 2)³, (x − 2)⁴',vals:[-7,-1,3,1]},
+ ref:[[27,'35:31','definición']]},
+
+{n:3,t:'El polinomio de orden n',s:'Encontrar el patrón',
+ enun:R`<p>Obtener el polinomio de Taylor de orden $n$ de las siguientes funciones en $x_0=0$.</p>
+<p class="items">(a) $\frac{1}{1-x}$ &emsp; (b) $\cos x$ &emsp; (c) $\operatorname{sen}x$ &emsp; (d) $e^{2x}$ &emsp; (e) $\frac{1}{(1-x)^2}$ &emsp; (f) $\ln(1+x)$</p>
+<p>Para cada uno de los ítems del ejercicio, usar GeoGebra para graficar la función junto con sus polinomios de Taylor de grados $n=1,2,3$ y $4$.</p>`,
+ pistas:[R`<p>Calculá las primeras derivadas en 0 hasta ver el patrón.</p>`,R`<p>(e) es la derivada de (a): $\frac{1}{(1-x)^2}=\big(\frac{1}{1-x}\big)'$.</p>`],
+ sol:R`<p><b>(a)</b> $\sum_{k=0}^nx^k=1+x+\cdots+x^n$. ${go('viz-tay1','geo','Ver')}</p>
+<p><b>(b)</b> $\sum_{2j\le n}\frac{(-1)^jx^{2j}}{(2j)!}=1-\frac{x^2}{2}+\frac{x^4}{24}-\cdots$ ${go('viz-tay1','cos','Ver')}</p>
+<p><b>(c)</b> $\sum_{2j+1\le n}\frac{(-1)^jx^{2j+1}}{(2j+1)!}=x-\frac{x^3}{6}+\frac{x^5}{120}-\cdots$</p>
+<p><b>(d)</b> $f^{(k)}(0)=2^k$: $\sum_{k=0}^n\frac{2^k}{k!}x^k$.</p>
+<p><b>(e)</b> $f^{(k)}(0)=(k+1)!$: $\sum_{k=0}^n(k+1)x^k=1+2x+3x^2+\cdots+(n+1)x^n$.</p>
+<p><b>(f)</b> $f^{(k)}(0)=(-1)^{k+1}(k-1)!$ para $k\ge1$: $\sum_{k=1}^n\frac{(-1)^{k+1}}{k}x^k=x-\frac{x^2}{2}+\frac{x^3}{3}-\cdots$ ${go('viz-tay1','ln','Ver')}</p>
+<p class="hint">En GeoGebra: <code>PolinomioTaylor(f, 0, n)</code> con un deslizador $n$, como en la Clase 27.</p>`,
+ chk:{p:'(d): el coeficiente de x³',vals:[8/6]},
+ ref:[[27,'46:46','GeoGebra']]},
+
+{n:4,t:'Leer derivadas en el polinomio',s:'Al revés',
+ enun:R`<p>Si el polinomio de Taylor de $f$ de orden 5 en $x_0=2$ es $p(x)=(x-2)^5+3(x-2)^4+3(x-2)^2-8$, calcular $f^{(3)}(2)$ y $f^{(4)}(2)$. ¿Se puede conocer el valor de $f^{(6)}(2)$? ¿Cuánto vale $f^{(6)}(2)$ si el polinomio $p$ es de orden 7?</p>`,
+ pistas:[R`<p>El coeficiente de $(x-2)^k$ es $\frac{f^{(k)}(2)}{k!}$.</p>`],
+ sol:R`<p>El coeficiente de $(x-2)^3$ es $0$, así que $f^{(3)}(2)=0$. El de $(x-2)^4$ es $3$, así que $f^{(4)}(2)=3\cdot4!=72$.</p>
+<p>El polinomio de orden 5 no tiene información sobre $f^{(6)}(2)$. Si $p$ es el de orden 7, el coeficiente de $(x-2)^6$ es $0$ y entonces $f^{(6)}(2)=0$.</p>`,
+ chk:{p:'f⁽³⁾(2) y f⁽⁴⁾(2)',vals:[0,72]},
+ ref:[[27,'35:31','definición']]},
+
+{n:5,t:'Producto y cociente',s:'Multiplicar polinomios',
+ enun:R`<p>Los polinomios de Taylor de orden 4 en $x_0=2$ de las funciones $f$ y $g$ son, respectivamente, $p(x)=-2+3(x-2)-3(x-2)^2+(x-2)^3$ y $q(x)=5+12(x-2)^2-7(x-2)^4$. Hallar el polinomio de Taylor de orden 2 de $t(x)=f(x)g(x)$ y $s(x)=f(x)/g(x)$ en $x_0=2$.</p>`,
+ pistas:[R`<p>Leé $f(2)$, $f'(2)$, $f''(2)$ y lo mismo para $g$, y usá las reglas del producto y del cociente.</p>`,
+  R`<p>Más rápido: multiplicá $p\cdot q$ y quedate con los términos de grado $\le2$ en $u=x-2$.</p>`],
+ sol:R`<p>Con $u=x-2$: $p=-2+3u-3u^2+\ldots$, $q=5+12u^2+\ldots$. Producto hasta grado 2: $(-2)(5)+3\cdot5\,u+\big((-3)\cdot5+(-2)\cdot12\big)u^2$:
+$$t:\ -10+15(x-2)-39(x-2)^2.$$
+Para el cociente, $s=c_0+c_1u+c_2u^2$ con $s\cdot q=p$ hasta grado 2: $5c_0=-2$, $5c_1=3$, $5c_2+12c_0=-3$, así que
+$$s:\ -\tfrac25+\tfrac35(x-2)+\tfrac{9}{25}(x-2)^2.$$</p>
+<p class="hint">Que se pueda multiplicar los polinomios y truncar es consecuencia de la propiedad 2 de unicidad: $f g-P_t$ dividido $(x-2)^2$ tiende a 0.</p>`,
+ chk:{p:'coeficientes de t: constante, (x − 2), (x − 2)²',vals:[-10,15,-39]},
+ ref:[]},
+
+{n:6,t:'La expresión del resto',s:'Lagrange',
+ enun:R`<p>Escribir la expresión del resto en cada caso:</p>
+<p>(a) $e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\frac{x^4}{4!}+R_4(x)$.<br>(b) $\frac{1}{1-x}=1+x+x^2+x^3+x^4+x^5+R_5(x)$.<br>(c) $\operatorname{sen}x=x-\frac{x^3}{3!}+\frac{x^5}{5!}+R_5(x)$.<br>(d) $\operatorname{sen}x=x-\frac{x^3}{3!}+\frac{x^5}{5!}+R_6(x)$.<br>(e) $\ln x=(x-1)-\frac12(x-1)^2+\frac13(x-1)^3+R_3(x)$.</p>`,
+ pistas:[R`<p>$R_n(x)=\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$, con $c$ entre $a$ y $x$.</p>`],
+ sol:R`<p>En todos, $c$ está entre $x_0$ y $x$.</p>
+<p><b>(a)</b> $R_4(x)=\frac{e^c}{5!}x^5$. <b>(b)</b> $f^{(6)}(x)=\frac{6!}{(1-x)^7}$: $R_5(x)=\frac{x^6}{(1-c)^7}$. <b>(c)</b> $f^{(6)}=-\operatorname{sen}$: $R_5(x)=-\frac{\operatorname{sen}c}{6!}x^6$. <b>(d)</b> $f^{(7)}=-\cos$: $R_6(x)=-\frac{\cos c}{7!}x^7$. <b>(e)</b> $f^{(4)}(x)=-\frac{6}{x^4}$: $R_3(x)=-\frac{6}{c^4\,4!}(x-1)^4=-\frac{(x-1)^4}{4c^4}$.</p>
+<p class="hint">(c) y (d) son el mismo polinomio, porque el término de grado 6 del seno es 0; el resto se puede escribir de las dos formas.</p>`,
+ ref:[]},
+
+{n:7,t:'Estimar un error',s:'√1,2',
+ enun:R`<p>(a) Hallar $p$, el polinomio de Mac Laurin de orden 2, y la expresión del resto para la función $f(x)=\sqrt{1+x}$.<br>(b) Estimar el error que se comete al aproximar $f(0{,}2)$ por $p(0{,}2)$.</p>`,
+ pistas:[R`<p>$f'''(x)=\frac38(1+x)^{-5/2}$.</p>`,R`<p>Con $0\lt c\lt0{,}2$, $(1+c)^{-5/2}\lt1$.</p>`],
+ sol:R`<p><b>(a)</b> $f(0)=1$, $f'(0)=\frac12$, $f''(0)=-\frac14$: $p(x)=1+\frac x2-\frac{x^2}{8}$. Resto: $R_2(x)=\frac{f'''(c)}{3!}x^3=\frac{x^3}{16(1+c)^{5/2}}$.</p>
+<p><b>(b)</b> $p(0{,}2)=1{,}095$. Como $0\lt c\lt0{,}2$, $(1+c)^{5/2}\gt1$ y
+$$|R_2(0{,}2)|\lt\frac{(0{,}2)^3}{16}=0{,}0005.$$
+(El valor exacto es $\sqrt{1{,}2}=1{,}095445\ldots$: el error es $0{,}00045$.)</p>`,
+ chk:{p:'la cota del error',vals:[0.0005]},
+ ref:[]},
+
+{n:8,t:'¿En qué intervalo alcanza?',s:'Despejar x de la cota',
+ enun:R`<p>Hallar un intervalo que contenga a $x_0=0$ tal que la diferencia entre</p>
+<p>(a) $\cos x$ y $1-\frac{x^2}{2}+\frac{x^4}{4!}$ sea menor que $5\times10^{-5}$.<br>(b) $\operatorname{sen}x$ y $x$ sea menor que $10^{-3}$.</p>`,
+ pistas:[R`<p>Truco: $1-\frac{x^2}{2}+\frac{x^4}{24}$ es $P_5$ del coseno (no solo $P_4$), y $x$ es $P_2$ del seno.</p>`,R`<p>Acotá $|\cos c|$ y $|\operatorname{sen}c|$ por 1.</p>`],
+ sol:R`<p><b>(a)</b> Como es $P_5$, $|R_5(x)|=\frac{|\cos c|}{6!}|x|^6\le\frac{|x|^6}{720}$. Pidiendo $\frac{|x|^6}{720}\lt5\times10^{-5}$: $|x|\lt(0{,}036)^{1/6}\approx0{,}5746$. Sirve el intervalo $(-0{,}57;\ 0{,}57)$.</p>
+<p><b>(b)</b> Como $x=P_2$ del seno, $|R_2(x)|=\frac{|\cos c|}{3!}|x|^3\le\frac{|x|^3}{6}\lt10^{-3}$ si $|x|\lt(0{,}006)^{1/3}\approx0{,}1817$. Sirve $(-0{,}18;\ 0{,}18)$.</p>
+<p class="hint">Con $P_4$ y $P_1$ también sale, pero da intervalos más chicos.</p>`,
+ chk:{p:'los dos radios (a) y (b)',vals:[0.5746,0.1817]},
+ ref:[]},
+
+{n:9,t:'Taylor de orden 1 y 2 en dos variables',s:'Ocho funciones',
+ enun:R`<p>Calcular los polinomios de Taylor de primer y segundo orden de las funciones dadas en el punto indicado.</p>
+<p class="items">(a) $(x+y)^2$ en $(0,0)$; &emsp; (b) $e^{x+y}$ en $(0,0)$; &emsp; (c) $\frac{1}{x^2+y^2+1}$ en $(0,0)$; &emsp; (d) $x+xy+2y$ en $(1,1)$; &emsp; (e) $e^{(x-1)^2}\cos y$ en $(1,0)$; &emsp; (f) $e^x\operatorname{sen}(xy)$ en $\big(2,\frac\pi4\big)$; &emsp; (g) $\ln(1+xy)$ en $(2,3)$; &emsp; (h) $f(x,y,z)=x+\sqrt y+\sqrt[3]z$ en $(2,3,4)$.</p>
+<p>En los ítems (a)–(g), usar GeoGebra para realizar un gráfico de cada función junto con sus polinomios de Taylor.</p>`,
+ pistas:[R`<p>Calculá $f$, $f_x$, $f_y$, $f_{xx}$, $f_{xy}$, $f_{yy}$ en el punto y reemplazá en la fórmula de $P_2$.</p>`,
+  R`<p>A veces conviene usar Taylor de una variable: en (c), $\frac{1}{1+u}\approx1-u$ con $u=x^2+y^2$.</p>`],
+ sol:R`<p><b>(a)</b> $P_1=0$, $P_2=(x+y)^2$ (es un polinomio de grado 2).</p>
+<p><b>(b)</b> $P_1=1+x+y$, $P_2=1+x+y+\frac12x^2+xy+\frac12y^2$ (ejemplo de la Clase 28). ${go('viz-tay2','exy','Ver')}</p>
+<p><b>(c)</b> $\nabla f(0,0)=(0,0)$, $f_{xx}=f_{yy}=-2$, $f_{xy}=0$: $P_1=1$, $P_2=1-x^2-y^2$.</p>
+<p><b>(d)</b> $f(1,1)=4$, $\nabla f=(1+y,\ x+2)=(2,3)$, $f_{xx}=f_{yy}=0$, $f_{xy}=1$: $P_1=4+2(x-1)+3(y-1)$, $P_2=P_1+(x-1)(y-1)$, que es la misma $f$.</p>
+<p><b>(e)</b> $f(1,0)=1$, $\nabla f(1,0)=(0,0)$, $f_{xx}=2$, $f_{xy}=0$, $f_{yy}=-1$: $P_1=1$, $P_2=1+(x-1)^2-\frac12y^2$.</p>
+<p><b>(f)</b> $f=e^2$, $f_x=e^2$, $f_y=0$, $f_{xx}=e^2\big(1-\frac{\pi^2}{16}\big)$, $f_{xy}=-\frac{\pi}{2}e^2$, $f_{yy}=-4e^2$:
+$$P_1=e^2+e^2(x-2),\quad P_2=P_1+\tfrac{e^2}{2}\big(1-\tfrac{\pi^2}{16}\big)(x-2)^2-\tfrac{\pi e^2}{2}(x-2)\big(y-\tfrac\pi4\big)-2e^2\big(y-\tfrac\pi4\big)^2.$$</p>
+<p><b>(g)</b> $f=\ln7$, $\nabla f=\big(\frac37,\frac27\big)$, $f_{xx}=-\frac{9}{49}$, $f_{xy}=\frac{1}{49}$, $f_{yy}=-\frac{4}{49}$:
+$$P_1=\ln7+\tfrac37(x-2)+\tfrac27(y-3),\quad P_2=P_1-\tfrac{9}{98}(x-2)^2+\tfrac{1}{49}(x-2)(y-3)-\tfrac{2}{49}(y-3)^2.$$</p>
+<p><b>(h)</b> $f=2+\sqrt3+\sqrt[3]4$, $\nabla f=\big(1,\frac{1}{2\sqrt3},\frac{1}{3\sqrt[3]{16}}\big)$; las cruzadas son 0, $f_{xx}=0$, $f_{yy}=-\frac{1}{4\cdot3^{3/2}}$, $f_{zz}=-\frac{2}{9\cdot4^{5/3}}$:
+$$P_2=P_1-\tfrac{1}{24\sqrt3}(y-3)^2-\tfrac{1}{9\cdot4^{5/3}}(z-4)^2,\quad P_1=2+\sqrt3+\sqrt[3]4+(x-2)+\tfrac{y-3}{2\sqrt3}+\tfrac{z-4}{3\sqrt[3]{16}}.$$</p>`,
+ chk:{p:'(g): f_xx, f_xy, f_yy en (2, 3)',vals:[-9/49,1/49,-4/49]},
+ ref:[[28,'31:14','ejemplo eˣ⁺ʸ'],[28,'29:12','la fórmula']]},
+
+{n:10,t:'Aproximar con el plano tangente',s:'x eʸ',
+ enun:R`<p>Sea $f:\R^2\to\R$ definida por $f(x,y)=xe^y$.</p>
+<p>(a) Calcular el polinomio de Taylor de orden 1 de $f$ centrado en $(1,0)$.<br>(b) Usar este polinomio para aproximar el valor $f(0{,}98;\ 0{,}02)$.</p>`,
+ pistas:[R`<p>$f_x=e^y$, $f_y=xe^y$.</p>`],
+ sol:R`<p><b>(a)</b> $f(1,0)=1$, $\nabla f(1,0)=(1,1)$: $P_1=1+(x-1)+y=x+y$.</p>
+<p><b>(b)</b> $f(0{,}98;0{,}02)\approx0{,}98+0{,}02=1$. (El valor exacto es $0{,}98\,e^{0{,}02}=0{,}99980\ldots$)</p>`,
+ chk:{p:'la aproximación',vals:[1]},
+ ref:[[28,'0:35','orden 1 = plano tangente']]},
+
+{n:11,t:'Aproximar e^{0,4}',s:'Un truco con dos variables',
+ enun:R`<p>Sea $f:\R^2\to\R$ definida por $f(x,y)=e^{x^2-y^2}$.</p>
+<p>(a) Calcular el polinomio de Taylor de orden 1 de $f$ centrado en $(1,1)$.<br>(b) Usar el ítem anterior para aproximar $e^{4/10}$ usando que $\frac{4}{10}=\big(1+\frac{1}{10}\big)^2-\big(1-\frac{1}{10}\big)^2$.</p>`,
+ pistas:[R`<p>$e^{0{,}4}=f(1{,}1;\ 0{,}9)$.</p>`],
+ sol:R`<p><b>(a)</b> $f(1,1)=1$, $f_x=2xe^{x^2-y^2}$, $f_y=-2ye^{x^2-y^2}$, $\nabla f(1,1)=(2,-2)$: $P_1=1+2(x-1)-2(y-1)$.</p>
+<p><b>(b)</b> $e^{0{,}4}=f(1{,}1;0{,}9)\approx1+2\cdot0{,}1-2\cdot(-0{,}1)=1{,}4$. (El valor exacto es $1{,}4918\ldots$: una aproximación de orden 1 desde bastante lejos.)</p>`,
+ chk:{p:'la aproximación',vals:[1.4]},
+ ref:[]},
+
+{n:12,t:'El mejor polinomio de grado 2',s:'sen x · sen y',
+ enun:R`<p>Calcular el polinomio de segundo grado que mejor aproxima en el origen a la función $f(x,y)=\operatorname{sen}(x)\operatorname{sen}(y)$.</p>`,
+ pistas:[R`<p>"El que mejor aproxima" es el de Taylor de orden 2 (propiedad 1).</p>`,R`<p>O bien: $\operatorname{sen}x\approx x$, $\operatorname{sen}y\approx y$, y el producto de los restos es de orden más alto.</p>`],
+ sol:R`<p>$f(0,0)=0$, $f_x=\cos x\operatorname{sen}y$, $f_y=\operatorname{sen}x\cos y$ (ambas $0$ en el origen), $f_{xx}=f_{yy}=0$ y $f_{xy}=\cos x\cos y=1$. Entonces $P_2=xy$. ${go('viz-tay2','sinsin','Ver')}</p>`,
+ ref:[[28,'36:18','propiedades']]},
+
+{n:13,t:'Taylor de una composición',s:'Encontrar ∇g',
+ enun:R`<p>Sean $f:\R^2\to\R^2$ definida por $f(x,y)=(x+1,\ 2y-e^x)$ y $g:\R^2\to\R$ diferenciable, tales que el polinomio de Taylor de grado 2 de $g\circ f$ en $(0,0)$ es $p(x,y)=4+3x-2y-x^2+5xy$. Calcular $\nabla g(1,-1)$.</p>`,
+ pistas:[R`<p>De $p$ se lee $\nabla(g\circ f)(0,0)=(3,-2)$. Y $f(0,0)=(1,-1)$.</p>`,R`<p>Regla de la cadena: $\nabla(g\circ f)(0,0)=\nabla g(1,-1)\cdot Df(0,0)$.</p>`],
+ sol:R`<p>La parte lineal de $p$ da $\nabla(g\circ f)(0,0)=(3,-2)$. $f(0,0)=(1,-1)$ y $Df=\begin{pmatrix}1&0\\-e^x&2\end{pmatrix}$, $Df(0,0)=\begin{pmatrix}1&0\\-1&2\end{pmatrix}$. Si $\nabla g(1,-1)=(g_u,g_v)$:
+$$(g_u,g_v)\begin{pmatrix}1&0\\-1&2\end{pmatrix}=(g_u-g_v,\ 2g_v)=(3,-2)\ \Longrightarrow\ g_v=-1,\ g_u=2.$$
+$\nabla g(1,-1)=(2,-1)$.</p>`,
+ chk:{p:'∇g(1, −1)',vals:[2,-1]},
+ ref:[[22,'29:19','regla de la cadena']]},
+
+{n:14,t:'Un límite con Taylor',s:'e^{xy} cos(x + y)',
+ enun:R`<p>Sea $f(x,y)=e^{xy}\cos(x+y)$.</p>
+<p>(a) Hallar el polinomio de Taylor de orden 2 de $f$ centrado en $(0,0)$.<br>(b) Calcular $\displaystyle\lim_{(x,y)\to(0,0)}\frac{f(x,y)+x^2+y^2-1}{x^2+y^2}$.</p>`,
+ pistas:[R`<p>(a) $e^{xy}\approx1+xy$ y $\cos u\approx1-\frac{u^2}{2}$.</p>`,R`<p>(b) Escribí $f=P_2+R$ con $\frac{R}{x^2+y^2}\to0$.</p>`],
+ sol:R`<p><b>(a)</b> $(1+xy)\big(1-\frac{(x+y)^2}{2}\big)$ truncado en grado 2: $1+xy-\frac{x^2+2xy+y^2}{2}$, es decir $P_2=1-\frac{x^2}{2}-\frac{y^2}{2}$ (se puede verificar con las derivadas: $f_{xy}(0,0)=0$). ${go('viz-tay2','e14','Ver')}</p>
+<p><b>(b)</b> $f+x^2+y^2-1=P_2+R+x^2+y^2-1=\frac{x^2+y^2}{2}+R$, con $\frac{R}{x^2+y^2}\to0$. El límite es $\frac12$.</p>`,
+ chk:{p:'el límite',vals:[0.5]},
+ ref:[[28,'36:18','propiedad 1']]},
+
+{n:15,t:'¿Qué límites existen?',s:'Leer el polinomio de orden 3',
+ enun:R`<p>Sea $f:\R^2\to\R$ una función de clase $C^3$ tal que su polinomio de Taylor de orden 3 en $(1,1)$ es $p(x,y)=1-3x+x^2+xy+y^2-y^3$. Analizar la existencia de los siguientes límites:</p>
+$$\text{(a)}\ \lim_{(x,y)\to(1,1)}\frac{f(x,y)}{\|(x,y)-(1,1)\|},\qquad\text{(b)}\ \lim_{(x,y)\to(1,1)}\frac{f(x,y)}{\|(x,y)-(1,1)\|^2}.$$`,
+ pistas:[R`<p>Reescribí $p$ en potencias de $u=x-1$, $v=y-1$.</p>`,R`<p>$p=u^2+uv-2v^2-v^3$. ¿Qué pasa por $v=0$ y por $u=0$?</p>`],
+ sol:R`<p>Con $u=x-1$, $v=y-1$: $p=u^2+uv-2v^2-v^3$ (no tiene término constante ni lineal), y $f=p+R$ con $\frac{R}{\rho^3}\to0$, $\rho=\|(u,v)\|$.</p>
+<p><b>(a)</b> $\frac{|f|}{\rho}\le\frac{|u|^2+|u||v|+2|v|^2}{\rho}+\frac{|v|^3}{\rho}+\frac{|R|}{\rho}\le4\rho+\rho^2+\frac{|R|}{\rho}\to0$. El límite existe y vale $0$.</p>
+<p><b>(b)</b> $\frac{f}{\rho^2}=\frac{u^2+uv-2v^2}{u^2+v^2}+(\text{algo}\to0)$. Por $v=0$ da $1$; por $u=0$ da $-2$. El límite no existe.</p>`,
+ chk:{p:'(b): los límites por v = 0 y por u = 0',vals:[1,-2]},
+ ref:[]},
+
+{n:16,t:'Usar Taylor de una variable en dos',s:'Ejercicio integrador',
+ enun:R`<p><span class="tag add">Agregado</span> Usando polinomios de Taylor de una variable, calcular el polinomio de Taylor de orden 2 de $f(x,y)=\ln(1+x+2y)$ en $(0,0)$ y verificarlo con la fórmula de las derivadas.</p>`,
+ pistas:[R`<p>$\ln(1+u)\approx u-\frac{u^2}{2}$ con $u=x+2y$.</p>`],
+ sol:R`<p>$P_2=(x+2y)-\frac{(x+2y)^2}{2}=x+2y-\frac{x^2}{2}-2xy-2y^2$.</p>
+<p>Con derivadas: $f_x=\frac{1}{u+1}$, $f_y=\frac{2}{1+u}$, $f_{xx}=-\frac{1}{(1+u)^2}$, $f_{xy}=-\frac{2}{(1+u)^2}$, $f_{yy}=-\frac{4}{(1+u)^2}$; en el origen: $1,2,-1,-2,-4$, y $P_2=x+2y+\frac12(-1)x^2+(-2)xy+\frac12(-4)y^2$, lo mismo.</p>`,
+ chk:{p:'coeficientes de x², xy, y²',vals:[-0.5,-2,-2]},
+ ref:[[28,'29:12','la fórmula']]}
+];
+window.G1EJ=EJ;
+})();
+(function(){'use strict';
+const {$,$$,h,f}=window.G1;
+const IM=window.G1IMG||{};
+const EJ=window.G1EJ||[];
+const KEY=(window.A1&&window.A1.key)||'a1';
+const T=(v,t,txt)=>`<a class="t" data-v="${v}" data-t="${t}">${txt||t}</a>`;
+
+/* ---------- render ---------- */
+function parse(s){return s.split(/[;\s]+/).filter(Boolean).map(x=>parseFloat(x.replace(',','.')));}
+let done={};try{done=JSON.parse(localStorage.getItem(KEY+'-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem(KEY+'-done',JSON.stringify(done));}catch(e){}}
+function prog(){const n=Object.keys(done).filter(k=>done[k]).length;$('#ejprog').textContent='Hechos: '+n+' de '+EJ.length+' (se guarda en este navegador)';}
+
+function build(){const list=$('#ejlist');
+  EJ.forEach(e=>{
+    const d=h('details',{class:'ejc'+(done[e.n]?' done':''),id:'ej'+e.n});
+    const sum=h('summary',{},h('span',{class:'num'},e.n),h('span',{class:'tt'},h('b',{},e.t),h('span',{},e.s)));
+    const inn=h('div',{class:'in'});
+    inn.append(h('div',{class:'enun',html:e.enun}));
+    if(e.img&&IM[e.img])inn.append(h('img',{class:'fig',src:IM[e.img],alt:'Figura del ejercicio '+e.n}));
+    if(e.rev)inn.append(h('div',{class:'revnote',html:'<b>Revisar</b>'+e.rev}));
+    if(e.extra)inn.append(h('div',{html:e.extra}));
+    const pistas=h('div',{class:'pistas'});let k=0;
+    const bP=h('button',{type:'button'},'Dame una pista');
+    const bS=h('button',{type:'button'},'Ver resolución');
+    const sol=h('div',{class:'sol',hidden:'',html:'<b>Resolución</b>'+e.sol});
+    bP.addEventListener('click',()=>{if(k<e.pistas.length){pistas.append(h('div',{class:'pista',html:'<b>Pista '+(k+1)+' de '+e.pistas.length+'</b>'+e.pistas[k]}));k++;typeset(pistas);}
+      if(k>=e.pistas.length){bP.disabled=true;bP.textContent='No hay más pistas';}else bP.textContent='Otra pista ('+k+'/'+e.pistas.length+')';});
+    bS.addEventListener('click',()=>{sol.hidden=!sol.hidden;bS.textContent=sol.hidden?'Ver resolución':'Ocultar resolución';if(!sol.hidden)typeset(sol);});
+    const bD=h('button',{type:'button','aria-pressed':!!done[e.n]},done[e.n]?'Hecho ✓':'Marcar como hecho');
+    bD.addEventListener('click',()=>{done[e.n]=!done[e.n];save();d.classList.toggle('done',!!done[e.n]);bD.setAttribute('aria-pressed',!!done[e.n]);bD.textContent=done[e.n]?'Hecho ✓':'Marcar como hecho';prog();});
+    const refs=(e.ref||[]).map(r=>h('span',{html:T(r[0],r[1],(((window.A1||{}).vlab||{})[r[0]]||('Clase '+r[0]))+' · '+r[1])+' <span class="c-mut" style="font-size:14px">'+r[2]+'</span>'}));
+    inn.append(h('div',{class:'act'},bP,bS,bD),pistas);
+    if(e.chk){const inp=h('input',{type:'text',inputmode:'text','aria-label':e.chk.p,placeholder:'ej.: 1,5 2'});const res=h('span',{class:'res'});
+      const go=()=>{const v=parse(inp.value);if(!v.length||v.some(isNaN)){res.className='res bad';res.textContent='Escribí números separados por espacio o ";".';return;}
+        if(v.length!==e.chk.vals.length){res.className='res bad';res.textContent='Faltan o sobran valores: se esperan '+e.chk.vals.length+'.';return;}
+        const bad=[];e.chk.vals.forEach((t,i)=>{if(Math.abs(v[i]-t)>Math.max(.006*Math.abs(t),.015))bad.push(i+1);});
+        if(!bad.length){res.className='res ok';res.textContent='Correcto.';}else{res.className='res bad';res.textContent='No coinciden los valores n.º '+bad.join(', ')+'. Revisá esas cuentas.';}};
+      inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')go();});
+      inn.append(h('div',{class:'chk'},h('span',{},'Comprobar: '+e.chk.p),inp,h('button',{type:'button',onclick:go},'Comprobar'),res));}
+    inn.append(sol);
+    if(refs.length){const r=h('div',{class:'meta',style:'margin-top:8px'},h('span',{},'Teoría relacionada:'),...refs);inn.append(r);}
+    d.append(sum,inn);list.append(d);});
+  prog();}
+function fixWide(root){(root||document).querySelectorAll('mjx-container:not([display="true"])').forEach(m=>{m.classList.remove('wide');const p=m.parentElement;if(p&&m.getBoundingClientRect().width>p.getBoundingClientRect().width+1)m.classList.add('wide');});}
+function typeset(el){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>fixWide(el)).catch(()=>{});}
+window.G1ej={build,typeset,fixWide};
+})();
+(function(){'use strict';
+const {$,$$,h}=window.G1;const V=window.G1V;const CFG=window.A1||{};const VID=CFG.vid||{};const QZ=CFG.quiz||{};const KEY=CFG.key||'a1';
+
+function buildQuiz(id,data){const host=$('#'+id);if(!host)return;let score=0,ans=0;const sc=h('span',{class:'c-mut',style:'font:600 13.5px var(--f-mono)'},'');
+  const head=h('div',{class:'qh'},h('b',{},data.t),sc,h('button',{type:'button',onclick:()=>{host.textContent='';buildQuiz(id,data);window.G1ej.typeset(host);}},'Reiniciar'));
+  host.append(head);const upd=()=>{sc.textContent=ans?(score+' de '+data.qs.length+' correctas'):'';};
+  data.qs.forEach((q,qi)=>{const o=h('div',{class:'o'});const box=h('div',{class:'q'},h('div',{class:'p',html:(qi+1)+'. '+q.p}),o);let why=null;
+    const ord=q.o.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+    ord.forEach(i=>{const t=q.o[i];const b=h('button',{type:'button',html:t});b.dataset.k=i;b.addEventListener('click',()=>{if(why)return;ans++;const ok=i===q.c;if(ok)score++;b.classList.add(ok?'right':'wrong');if(!ok)o.querySelector('[data-k="'+q.c+'"]').classList.add('right');
+      why=h('div',{class:'why',html:'<b class="'+(ok?'ok':'bad')+'">'+(ok?'Correcto. ':'No. ')+'</b>'+q.w});box.append(why);window.G1ej.typeset(box);upd();});o.append(b);});host.append(box);});
+}
+
+/* ---------- vínculos a YouTube ---------- */
+function linkify(){$$('a.t[data-v]').forEach(a=>{const [m,s]=a.dataset.t.split(':').map(Number),sec=m*60+s;a.href='https://youtu.be/'+VID[a.dataset.v]+'?t='+sec;a.target='_blank';const f=a.firstChild;if(f&&f.nodeType===3&&/^\d+:\d\d/.test(f.nodeValue))f.nodeValue=f.nodeValue.replace(/^(\d+:\d\d)/,((CFG.vlab&&CFG.vlab[a.dataset.v])||('Cl. '+a.dataset.v))+' · $1');a.rel='noopener';a.title='Abrir el video en '+a.dataset.t;});}
+
+/* ---------- barra de herramientas, tema, navegación ---------- */
+function ui(){
+  document.addEventListener('click',e=>{const b=e.target.closest('button.go');if(!b)return;const api=(window.A1API||{})[b.dataset.viz];const el=document.getElementById(b.dataset.viz);
+    if(api&&api.set)api.set(b.dataset.p);if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('toggle',e=>{if(e.target.open)window.G1ej.fixWide(e.target);},true);
+  $('#b-open').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=true);window.G1ej.fixWide(document);});
+  $('#b-close').addEventListener('click',()=>{$$('details.dem,details.ejc').forEach(d=>d.open=false);});
+  const br=$('#b-rev');br.addEventListener('click',()=>{const on=br.getAttribute('aria-pressed')!=='true';br.setAttribute('aria-pressed',on);document.body.classList.toggle('no-rev',!on);try{localStorage.setItem(KEY+'-rev',on?'1':'0');}catch(e){}});
+  try{if(localStorage.getItem(KEY+'-rev')==='0'){br.setAttribute('aria-pressed','false');document.body.classList.add('no-rev');}}catch(e){}
+  const bt=$('#b-theme');let mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+  const apply=()=>{const r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];};
+  bt.addEventListener('click',()=>{mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();
+  const links=$$('#nav a'),secs=links.map(a=>$(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));}
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>{const id=a.getAttribute('href');if(id==='#ejercicios'){}}));
+}
+
+function init(){
+  window.G1ej.build();
+  const map=CFG.viz||{};
+  Object.keys(map).forEach(id=>{const el=$('#'+id);if(!el)return;try{V[map[id]](el);}catch(err){console.error('viz',id,err);el.append(h('p',{class:'hint'},'No se pudo cargar esta figura.'));}});
+  Object.keys(QZ).forEach(id=>buildQuiz(id,QZ[id]));
+  linkify();ui();
+  const go=()=>{if(window.MathJax&&MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(()=>MathJax.typesetPromise()).then(()=>{window.G1ej.fixWide(document);let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>window.G1ej.fixWide(document),200);});}).catch(e=>console.error(e));};
+  if(document.readyState==='complete')go();else window.addEventListener('load',go);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Análisis 1 · Portada</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: cuaderno de clase. Los colores de lapicera son los de las hojas escaneadas:
+   azul = definiciones y vector a, rojo = resultados enmarcados y vector b, verde = demostraciones y resultado, violeta = observaciones y proyecciones. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --surface-2:#eef1f6; --ink:#1a2233; --ink-2:#54607a; --line:#d8dde7; --grid:#e3e8f0;
+  --blue:#1f4fd8; --red:#cf2e2e; --green:#13794a; --violet:#6b3fc4; --amber:#b86a00;
+  --blue-t:rgba(31,79,216,.10); --red-t:rgba(207,46,46,.09); --green-t:rgba(19,121,74,.11); --violet-t:rgba(107,63,196,.12);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1c2533; --ink:#e6eaf2; --ink-2:#9aa7bc; --line:#2a3548; --grid:#202a3a;
+  --blue:#7ea3ff; --red:#ff8080; --green:#4fd18b; --violet:#b99cff; --amber:#f0b45a;
+  --blue-t:rgba(126,163,255,.14); --red-t:rgba(255,128,128,.12); --green-t:rgba(79,209,139,.13); --violet-t:rgba(185,156,255,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;margin:0}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;letter-spacing:-.01em;text-wrap:balance;margin:0}
+a{color:var(--blue)}
+p{margin:.6em 0}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;max-width:1120px;margin:0 auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 4px 26px 0}
+.side .brand{font:700 13px/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.side h2{font-size:22px;margin-bottom:18px}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3;border-left:3px solid transparent}
+.side nav a small{display:block;color:var(--ink-2);font-size:12.5px}
+.side nav a:hover{background:var(--surface-2)}
+.side nav a.on{background:var(--surface);border-left-color:var(--blue);box-shadow:var(--shadow)}
+.side .sep{height:1px;background:var(--line);margin:10px 0}
+main{min-width:0;padding-top:20px}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tools .sp{flex:1}
+button,.btn{font:600 14px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+button:hover{border-color:var(--blue)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--blue-t);border-color:var(--blue);color:var(--blue)}
+.hero{padding:10px 0 26px}
+.hero .kick{font:600 13px var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.hero h1{font-size:clamp(34px,6vw,54px);margin:6px 0 12px}
+.hero p.lead{font-size:19px;max-width:60ch;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}@media (max-width:560px){.map{grid-template-columns:minmax(0,1fr)}}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.map a b{display:block;font:700 18px var(--f-display);margin-bottom:2px}
+.map a span{color:var(--ink-2);font-size:14.5px;line-height:1.4;display:block}
+.map a em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;font-size:14px;color:var(--ink-2)}
+section.clase{margin:0 0 56px}
+section.clase>header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+section.clase>header .kick{font:600 13px var(--f-mono);color:var(--ink-2)}
+section.clase>header h2{font-size:clamp(26px,4.2vw,36px);margin:4px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--ink-2);align-items:center}
+h3.b{font-size:23px;margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+h3.b .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11.5px var(--f-mono);letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid currentColor;white-space:nowrap}
+.tag.piz{color:var(--blue)} .tag.vid{color:var(--green)} .tag.add{color:var(--violet)} .tag.rev{color:var(--amber);background:rgba(240,180,90,.14)}
+body.no-rev .tag.rev,body.no-rev .revnote{display:none}
+.revnote{border:1px dashed var(--amber);background:rgba(240,180,90,.10);border-radius:10px;padding:8px 12px;margin:12px 0;font-size:15.5px}
+.revnote b{font:600 12px var(--f-mono);text-transform:uppercase;color:var(--amber);margin-right:6px}
+.t{font:600 12.5px var(--f-mono);text-decoration:none;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 7px;white-space:nowrap;display:inline-block;line-height:1.7}
+.t:hover{border-color:var(--red);color:var(--red)}
+.t::before{content:"▶ ";color:var(--red);font-size:10px}
+.box{border-radius:10px;padding:12px 16px;margin:14px 0;background:var(--surface);border:1px solid var(--line);border-left-width:5px;box-shadow:var(--shadow)}
+.box>.lab{font:700 12.5px var(--f-mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.box.def{border-left-color:var(--blue)} .box.def>.lab{color:var(--blue)}
+.box.thm{border-left-color:var(--red);background:linear-gradient(var(--red-t),var(--red-t)),var(--surface)} .box.thm>.lab{color:var(--red)}
+.box.obs{border-left-color:var(--violet)} .box.obs>.lab{color:var(--violet)}
+.box.ej{border-left-color:var(--green)} .box.ej>.lab{color:var(--green)}
+.box p:first-of-type{margin-top:0} .box p:last-child{margin-bottom:0}
+details.dem{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details.dem>summary{cursor:pointer;padding:10px 14px;font:600 15px var(--f-body);color:var(--green);list-style:none;display:flex;gap:8px;align-items:center}
+details.dem>summary::-webkit-details-marker{display:none}
+details.dem>summary::before{content:"▸";transition:transform .15s}
+details.dem[open]>summary::before{transform:rotate(90deg)}
+details.dem>.in{padding:2px 16px 14px;border-top:1px solid var(--line)}
+details.dem .qed{float:right;color:var(--green)}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container[display="true"]{margin:.7em 0 !important}
+mjx-container.wide{display:block;overflow-x:auto;overflow-y:hidden;margin:.35em 0;padding-bottom:2px}
+.viz{margin:18px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.viz>.vh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.viz>.vh b{font:700 15px var(--f-display)} .viz>.vh span{color:var(--ink-2);font-size:14px}
+.viz .tabs{display:flex;gap:6px;margin-left:auto}
+.viz .vb{padding:12px 14px 14px}
+.viz svg{display:block;width:100%;height:auto;max-width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz svg .grab{touch-action:none;cursor:grab} .viz svg .grab:active{cursor:grabbing}
+.viz svg text{font:600 13px var(--f-mono);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.viz svg text.sm{font-size:11.5px;fill:var(--ink-2)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 2px;align-items:center}
+.ctl label{display:flex;gap:8px;align-items:center;font:600 13.5px var(--f-mono);color:var(--ink-2)}
+.ctl input[type=range]{width:130px;accent-color:var(--blue)}
+.ctl input[type=number]{width:62px;font:600 14px var(--f-mono);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ctl input[type=text],.ctl select,.vh select{font:600 14px var(--f-mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.ctl input[type=text]{min-width:0}
+.ctl .res.bad{color:var(--red)} .ctl .res.ok{color:var(--green)}
+.half{min-width:0}
+.pol2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media (max-width:760px){.pol2{grid-template-columns:1fr}}
+p.items{line-height:2.1}
+p.items mjx-container{margin-right:.2em}
+button.go{font:600 13px var(--f-mono);padding:4px 10px;margin:4px 6px 0 0;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:6px;cursor:pointer}
+button.go:hover{background:var(--blue-t)}
+.ctl .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 10px;border:1px solid var(--line);border-radius:8px}
+.ctl .grp>b{font:700 13px var(--f-mono)}
+.out{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font:500 14.5px/1.65 var(--f-mono);overflow-x:auto}
+.out b{font-weight:600}
+.c-blue{color:var(--blue)} .c-red{color:var(--red)} .c-green{color:var(--green)} .c-violet{color:var(--violet)} .c-mut{color:var(--ink-2)}
+.hint{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ejlist{display:flex;flex-direction:column;gap:12px}
+details.ejc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+details.ejc>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;gap:12px;align-items:center}
+details.ejc>summary::-webkit-details-marker{display:none}
+details.ejc .num{font:700 20px var(--f-display);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--green-t);color:var(--green);flex:none}
+details.ejc.done .num{background:var(--green);color:var(--surface)}
+details.ejc .tt{flex:1;min-width:0}
+details.ejc .tt b{display:block;font:700 17px var(--f-display)}
+details.ejc .tt span{font-size:14px;color:var(--ink-2)}
+details.ejc>.in{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.ejc .enun{margin:10px 0}
+.ejc img.fig{display:block;max-width:100%;max-height:230px;margin:8px 0;background:#fff;border-radius:8px;padding:6px}
+.pistas{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.pista{border-left:4px solid var(--violet);background:var(--violet-t);padding:8px 12px;border-radius:0 8px 8px 0}
+.pista>b{font:700 12px var(--f-mono);color:var(--violet);text-transform:uppercase;display:block}
+.sol{border-left:4px solid var(--green);background:var(--green-t);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.sol>b{font:700 12px var(--f-mono);color:var(--green);text-transform:uppercase;display:block}
+.ejc .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.chk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:96px;font:600 14px var(--f-mono);padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chk .res{font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.quiz{margin:26px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+.quiz>.qh{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:14px 14px 0 0}
+.quiz>.qh b{font:700 17px var(--f-display);flex:1}
+.q{padding:12px 16px;border-bottom:1px solid var(--line)} .q:last-child{border-bottom:0}
+.q .p{font-weight:600;margin-bottom:6px}
+.q .o{display:flex;flex-direction:column;gap:6px}
+.q .o button{text-align:left;font:400 16px var(--f-body);padding:8px 12px;line-height:1.4}
+.q .o button.right{border-color:var(--green);background:var(--green-t)} .q .o button.wrong{border-color:var(--red);background:var(--red-t)}
+.q .why{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:15.5px}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .side .brand,.side h2,.side .sep{display:none}
+  .side nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}
+  .side nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface)}
+  .side nav a small{display:none}
+  .tools{top:calc(env(safe-area-inset-top,0px) + 52px)}
+  html{scroll-padding-top:120px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}details.dem>summary::before{transition:none}}
+</style>
+<style>
+.wrap{max-width:900px;margin:0 auto}
+.tools{top:env(safe-area-inset-top,0px)}
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:8px 0 6px}
+@media (max-width:700px){.how{grid-template-columns:minmax(0,1fr)}}
+.how div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.how b{font:700 16px var(--f-display);display:block;margin-bottom:2px}
+.how span{color:var(--ink-2);font-size:14.5px;line-height:1.45;display:block}
+h2.sec{font:700 24px var(--f-display);margin:34px 0 4px}
+p.sub{color:var(--ink-2);margin:0 0 16px}
+ol.path{list-style:none;margin:0;padding:0;position:relative}
+ol.path::before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:var(--line)}
+li.st{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;margin-bottom:16px;position:relative}
+.num{width:40px;height:40px;border-radius:50%;background:var(--blue);color:var(--surface);font:700 18px var(--f-display);display:flex;align-items:center;justify-content:center;z-index:1}
+.bd{min-width:0}
+a.gu,a.ax{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow)}
+a.gu:hover,a.ax:hover{border-color:var(--blue)}
+a.gu:focus-visible,a.ax:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+a.gu em,a.ax em{font:600 12px var(--f-mono);font-style:normal;color:var(--blue);display:block}
+a.ax em{color:var(--violet)}
+a.gu b{font:700 20px var(--f-display);display:block;margin:2px 0}
+a.ax b{font:700 16px var(--f-display);display:block;margin:2px 0}
+a.gu span,a.ax span{color:var(--ink-2);font-size:14.5px;line-height:1.45;display:block}
+a.gu small{display:block;margin-top:6px;font:600 12.5px var(--f-mono);color:var(--green)}
+.axs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px;padding-left:14px;border-left:3px solid var(--violet-t)}
+@media (max-width:640px){.axs{grid-template-columns:minmax(0,1fr)}}
+.legend2{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--ink-2);font-size:14.5px;margin-top:10px}
+</style>
+<div class="wrap"><main>
+<div class="tools" role="toolbar" aria-label="Opciones"><span class="sp" style="flex:1"></span><button id="b-theme" title="Cambiar entre tema claro y oscuro">Tema</button></div>
+<section class="hero">
+<div class="kick">FCEN-UBA · Análisis I · Matemática I · Análisis II (C) · Análisis Matemático I (Q)</div>
+<h1>Análisis 1: material de estudio</h1>
+<p class="lead">Nueve guías y siete anexos teóricos que acompañan las clases grabadas de la materia. Cada uno reúne lo que se explicó en el video y en las hojas de la teórica, con figuras que se pueden mover, autoevaluaciones y los ejercicios de la práctica resueltos paso a paso.</p>
+<div class="how">
+<div><b>Teoría con el video</b><span>Cada resultado tiene un enlace que abre la clase en el minuto exacto en que se explica.</span></div>
+<div><b>Figuras interactivas</b><span>Se arrastran puntos, se mueven deslizadores y se giran las figuras en 3D.</span></div>
+<div><b>Ejercicios guiados</b><span>Pistas graduales, la resolución completa y una casilla para comprobar el resultado.</span></div>
+</div>
+<div class="legend2">
+<span><span class="tag piz">Pizarrón</span> sale de la hoja de la clase</span>
+<span><span class="tag vid">Video</span> se dijo en el video</span>
+<span><span class="tag add">Agregado</span> no se dijo en clase</span>
+</div>
+</section>
+<h2 class="sec">El recorrido</h2>
+<p class="sub">En el orden de la materia. Los anexos (en violeta) tienen las demostraciones que quedaron fuera de las clases.</p>
+<ol class="path">
+<li class="st">
+<div class="num" aria-hidden="true">1</div>
+<div class="bd">
+<a class="gu" href="guia1.html"><em>Guía 1 · Clases 1 a 6</em><b>Geometría en R² y R³</b><span>Puntos y vectores, producto interno y proyecciones, producto vectorial, rectas y planos.</span><small>19 ejercicios guiados</small></a>
+
+</div></li>
+<li class="st">
+<div class="num" aria-hidden="true">2</div>
+<div class="bd">
+<a class="gu" href="guia2.html"><em>Guía 2 · Clases 7 a 13</em><b>Curvas y superficies</b><span>Curvas paramétricas, coordenadas polares, cónicas, superficies y cuádricas.</span><small>14 ejercicios guiados</small></a>
+
+</div></li>
+<li class="st">
+<div class="num" aria-hidden="true">3</div>
+<div class="bd">
+<a class="gu" href="guia3.html"><em>Guía 3 · Clases 14 y 15</em><b>Límites y continuidad</b><span>Funciones de varias variables, curvas de nivel, límites, caminos y continuidad.</span><small>12 ejercicios guiados</small></a>
+<div class="axs"><a class="ax" href="anexo1.html"><em>Anexo 1</em><b>Resultados teóricos sobre límites</b><span>Límites iterados y el test de las curvas.</span></a><a class="ax" href="anexo2.html"><em>Anexo 2</em><b>Álgebra de límites</b><span>Suma, producto, composición y sándwich, con ε y δ.</span></a></div>
+</div></li>
+<li class="st">
+<div class="num" aria-hidden="true">4</div>
+<div class="bd">
+<a class="gu" href="guia4.html"><em>Guía 4 · Clases 17 a 26</em><b>Diferenciación y aplicaciones</b><span>Derivadas parciales, diferenciabilidad, plano tangente, regla de la cadena, derivadas direccionales, función implícita.</span><small>35 ejercicios guiados</small></a>
+<div class="axs"><a class="ax" href="anexo3.html"><em>Anexo 3</em><b>Diferenciación y teorema de Clairaut</b><span>Diferenciable ⇒ continua, C¹ ⇒ diferenciable, Clairaut.</span></a><a class="ax" href="anexo4.html"><em>Anexo 4</em><b>Diferenciación general</b><span>Funciones de Rⁿ en Rᵏ, la matriz diferencial y la regla de la cadena.</span></a></div>
+</div></li>
+<li class="st">
+<div class="num" aria-hidden="true">5</div>
+<div class="bd">
+<a class="gu" href="guia5.html"><em>Guía 5 · Clases 27 y 28</em><b>Polinomio de Taylor</b><span>Taylor en una y en dos variables, la matriz hessiana.</span><small>16 ejercicios guiados</small></a>
+<div class="axs"><a class="ax" href="anexo5.html"><em>Anexo 5</em><b>Fórmulas de Lagrange del resto</b><span>El resto en una y en dos variables (solo la hoja).</span></a></div>
+</div></li>
+<li class="st">
+<div class="num" aria-hidden="true">6</div>
+<div class="bd">
+<a class="gu" href="guia6.html"><em>Guía 6 · Clases 29 a 33</em><b>Extremos y multiplicadores de Lagrange</b><span>Puntos críticos, criterio del hessiano, extremos en regiones compactas, Lagrange.</span><small>16 ejercicios guiados</small></a>
+<div class="axs"><a class="ax" href="anexo6.html"><em>Anexo 6</em><b>Criterio del hessiano</b><span>La demostración, con la forma cuadrática.</span></a></div>
+</div></li>
+<li class="st">
+<div class="num" aria-hidden="true">7</div>
+<div class="bd">
+<a class="gu" href="guia7.html"><em>Guía 7 · Clases 34 y 35</em><b>Campos vectoriales</b><span>Campos conservativos y potenciales, líneas de flujo, rotor y divergencia.</span><small>18 ejercicios guiados</small></a>
+
+</div></li>
+<li class="st">
+<div class="num" aria-hidden="true">8</div>
+<div class="bd">
+<a class="gu" href="guia8.html"><em>Guía 8 · Clases 36 a 40</em><b>Integrales dobles y triples</b><span>Sumas de Riemann, Fubini, regiones de tipo I y II, integrales triples y regiones elementales.</span><small>20 ejercicios guiados</small></a>
+
+</div></li>
+<li class="st">
+<div class="num" aria-hidden="true">9</div>
+<div class="bd">
+<a class="gu" href="guia9.html"><em>Guía 9 · Clases 41 a 44</em><b>Cambio de variables</b><span>El jacobiano, coordenadas polares, cambios lineales, cilíndricas y esféricas.</span><small>21 ejercicios guiados</small></a>
+<div class="axs"><a class="ax" href="anexoint.html"><em>Anexo de Integración</em><b>Teoremas sobre integración</b><span>Teorema fundamental, Barrow y la idea del cambio de variables. Acompaña a las Guías 8 y 9.</span></a></div>
+</div></li>
+</ol>
+<div class="foot">Basado en las clases del canal <a href="https://www.youtube.com/@analisismatematico1-exacta340" target="_blank" rel="noopener">Análisis Matemático 1 (FCEN-UBA)</a>, en las hojas de las teóricas y en las prácticas de la materia. Versión preliminar, en revisión.</div>
+</main></div>
+<script>
+(function(){var KEY='a1-portada',bt=document.getElementById('b-theme'),mode='auto';try{mode=localStorage.getItem(KEY+'-theme')||'auto';}catch(e){}
+function apply(){var r=document.documentElement;if(mode==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',mode);bt.textContent='Tema: '+({auto:'automático',light:'claro',dark:'oscuro'})[mode];}
+bt.addEventListener('click',function(){mode=mode==='auto'?'dark':mode==='dark'?'light':'auto';try{localStorage.setItem(KEY+'-theme',mode);}catch(e){}apply();});apply();})();
+</script>
+
+</body>
+</html>
