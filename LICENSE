@@ -1,0 +1,13 @@
+Este repositorio contiene material con dos tipos de licencia.
+
+1. TEXTO, FIGURAS Y EJERCICIOS (el contenido de las páginas HTML: resúmenes de
+   las clases, enunciados, ejercicios guiados y autoevaluaciones): licencia
+   Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional
+   (CC BY-NC-SA 4.0). Ver el archivo LICENSE-texto.
+
+2. CÓDIGO (los scripts y estilos incluidos en las páginas HTML para las
+   visualizaciones interactivas): licencia MIT. Ver el archivo LICENSE-code.
+
+Las bibliotecas de terceros que las páginas cargan desde Internet (MathJax,
+tipografías de Google Fonts) y los videos de YouTube enlazados no forman parte
+de este repositorio y tienen sus propias licencias y condiciones.
